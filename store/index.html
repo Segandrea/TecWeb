@@ -8,30 +8,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
   <style>
-  .checked {
-    color: orange;
-  }
-  
     body {
-        padding-top: 4.5rem;
+      padding-top: 4.5rem;
     }
 
     @media screen and (max-width: 767px) {
       body {
-        padding-bottom: 4rem;
+          padding-bottom: 4rem;
       }
     }
+
+    .black {
+      color: black;
+    }
+
+    .white {
+      color: white;
+    }
+
+    .orange {
+      color: #ffc107;
+    }
   </style>
+
+  <script>
+    let showSearchBar = () => {
+      let searchBar = document.getElementById("search-bar");
+      let datePicker = document .getElementById("date-picker");
+      datePicker.classList.toggle("d-none");
+      searchBar.classList.toggle("d-none");
+    };
+
+    let showDatePicker = () => {
+      let datePicker = document .getElementById("date-picker");
+      let searchBar = document.getElementById("search-bar");
+      searchBar.classList.toggle("d-none");
+      datePicker.classList.toggle("d-none");
+    };
+
+    let setupDatePicker = (self) => {
+      self.type = 'date';
+      if (!self.value) {
+          self.value = new Date().toISOString().split('T')[0];
+      }
+    };
+  </script>
 </head>
 <body>
+  <!-- header -->
   <header>
+    <!-- top navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="journal-bookmark-fill.svg" class="img-fluid align-text-top" width="24" style="filter: invert(100%);" alt="...">
+            <i class="bi bi-journal-bookmark-fill white"></i>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#top-navbar" aria-controls="top-navbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -46,46 +80,61 @@
             </li>
             <li class="nav-item d-none d-md-block">
               <a class="nav-link" href="#">
-                  <img src="handbag.svg" class="align-text-top" style="filter: invert(100%);" alt="...">
-                  <sup class="cart-items fw-bold" style="color: orange;">0</sup>
+                  <i class="bi bi-handbag-fill white"></i>
+                  <sup class="cart-items fw-bold orange">0</sup>
               </a>
             </li>
           </ul>
           <form class="d-flex">
-            <div class="input-group">
+            <div id="date-picker" class="input-group d-none">
+              <input type="text" class="form-control border-end-0" placeholder="Start date" aria-label="Start date" onFocus="setupDatePicker(this);">
+              <input type="text" class="form-control border-start-0" placeholder="End date" aria-label="End date" onFocus="setupDatePicker(this);">
+              <button type="button" class="btn btn-light border" id="calendar-button" onClick="showSearchBar();">
+                <i class="bi bi-card-text"></i>
+              </button>
+              <button class="btn btn-warning" id="search-button">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+
+            <div id="search-bar" class="input-group">
               <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-button">
-              <span class="input-group-text" id="search-button">
-                  <img src="search.svg" class="img-fluid mx-2" alt="...">
-              </span>
+              <button type="button" class="btn btn-light border" id="calendar-button" onClick="showDatePicker();">
+                <i class="bi bi-calendar-range"></i>
+              </button>
+              <button class="btn btn-warning" id="search-button">
+                <i class="bi bi-search"></i>
+              </button>
             </div>
           </form>
         </div>
       </div>
     </nav>
 
-    <!-- tentativo di barra sul fondo al posto dell' hamburger menu -->
+    <!-- bottom navbar, mobile-only -->
     <div class="container-fluid d-md-none fixed-bottom bg-light py-2">
-      <div class="row text-center">
+      <div class="row text-center fs-5">
         <div class="col">
           <a href="#" class="text-decoration-none">
-              <img src="person.svg" class="img-fluid align-text-top" width="18" alt="...">
+              <i class="bi bi-person black"></i>
           </a>
         </div>
         <div class="col">
-          <a href="#" class="text-underline-none">
-              <img src="house.svg" class="img-fluid align-text-top" width="18" style="border-bottom: 2px solid orange;" alt="...">
+          <a href="#" class="text-decoration-none fw-bolder border-bottom border-3 border-warning">
+              <i class="bi bi-house black"></i>
           </a>
         </div>
         <div class="col">
           <a href="#" class="text-decoration-none">
-              <img src="handbag.svg" class="img-fluid align-text-top" width="18" alt="...">
-              <sup class="cart-items fw-bolder" style="color: orange;">0</sup>
+              <i class="bi bi-handbag black"></i>
+              <sup class="cart-items fw-bolder orange">0</sup>
           </a>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- main -->
   <main class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4  g-4">
       <div class="col">
@@ -94,11 +143,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -113,11 +162,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -132,11 +181,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -151,11 +200,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -170,11 +219,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -189,11 +238,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -208,11 +257,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -227,11 +276,11 @@
           <div class="card-body">
             <h5 class="card-title">Card Title</h5>
             <div class="card-subtitle mb-2 fs-6">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star-fill orange"></span>
+              <span class="bi bi-star"></span>
+              <span class="bi bi-star"></span>
             </div>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
@@ -243,7 +292,7 @@
     </div>
   </main>
 
-  <!-- TODO: fix -->
+  <!-- footer -->
   <footer class="footer d-none d-md-block mt-4">
     <div class="container-fluid py-4 bg-light">
       <div class="row">
