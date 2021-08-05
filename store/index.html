@@ -44,7 +44,6 @@
     .card-body {
       min-height: 256px;
     }
-
   </style>
 </head>
 <body onload="truncateCardsText();">
@@ -56,10 +55,10 @@
         <a class="navbar-brand" href="#">
             <i class="bi bi-journal-bookmark-fill white"></i>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#top-navbar" aria-controls="top-navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="top-navbar">
+        <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item d-none d-md-block">
               <a class="nav-link active" href="#">Home</a>
@@ -75,22 +74,22 @@
             </li>
           </ul>
           <form class="d-flex">
-            <div id="date-picker" class="input-group d-none">
-              <input type="text" class="form-control text-muted" id="range-picker" required />
-              <button type="button" class="btn btn-light border" id="calendar-button" onClick="showSearchBar();">
+            <div id="datePicker" class="input-group d-none">
+              <input type="text" class="form-control text-muted" id="rentalPeriod" aria-label="Rental period" required>
+              <button type="button" class="btn btn-light border" onClick="toggleSearchBar();">
                 <i class="bi bi-card-text"></i>
               </button>
-              <button class="btn btn-warning" id="search-button">
+              <button class="btn btn-warning">
                 <i class="bi bi-search"></i>
               </button>
             </div>
 
-            <div id="search-bar" class="input-group">
-              <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-button">
-              <button type="button" class="btn btn-light border" id="calendar-button" onClick="showDatePicker();">
+            <div id="searchBar" class="input-group">
+              <input type="text" class="form-control tex-muted" id="searchTerms" aria-label="Search terms" placeholder="Search">
+              <button type="button" class="btn btn-light border" onClick="toggleSearchBar();">
                 <i class="bi bi-calendar-range"></i>
               </button>
-              <button class="btn btn-warning" id="search-button">
+              <button class="btn btn-warning">
                 <i class="bi bi-search"></i>
               </button>
             </div>
@@ -406,18 +405,11 @@
       }
     };
 
-    const showSearchBar = () => {
-      const searchBar = document.getElementById("search-bar");
-      const datePicker = document .getElementById("date-picker");
+    const toggleSearchBar = () => {
+      const datePicker = document .getElementById("datePicker");
+      const searchBar = document.getElementById("searchBar");
       datePicker.classList.toggle("d-none");
       searchBar.classList.toggle("d-none");
-    };
-
-    const showDatePicker = () => {
-      const datePicker = document .getElementById("date-picker");
-      const searchBar = document.getElementById("search-bar");
-      searchBar.classList.toggle("d-none");
-      datePicker.classList.toggle("d-none");
     };
 
     const setupDatePicker = () => {
@@ -426,7 +418,7 @@
       tomorrow.setDate(tomorrow.getDate() + 1);
 
       const picker = new Litepicker({
-          element: document.getElementById('range-picker'),
+          element: document.getElementById('rentalPeriod'),
           singleMode: false,
           format: "DD/MM/YYYY",
           minDate: now,
@@ -436,7 +428,7 @@
       picker
     };
 
-    const picker = setupDatePicker();
+    const rentalPeriod = setupDatePicker();
   </script>
 </body>
 </html>
