@@ -28,18 +28,17 @@
         </div>
 
         <div class="form-floating">
-          <input type="email" class="form-control rounded-0 rounded-top" id="signInEmail" placeholder="domain@example.com">
+          <input type="email" class="form-control rounded-0 rounded-top" id="signInEmail" placeholder="domain@example.com" required>
           <label for="signInEmail">Email address</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control rounded-0 rounded-bottom" id="signInPassword" placeholder="Password">
+          <input type="password" class="form-control rounded-0 rounded-bottom" id="signInPassword" placeholder="Password" required>
           <label for="signInPassword">Password</label>
         </div>
 
-        <div class="checkbox p-2 mb-4">
-          <label class="fw-light">
-            <input type="checkbox" value="keepMeSignedIn"> Keep me signed-in
-          </label>
+        <div class="form-check form-check-inline p-2 mb-4">
+          <input class="form-check-input" type="checkbox" value="" id="keepMeSignedIn">
+          <label class="form-check-label" for="keepMeSignedIn"> Keep me signed-in </label>
         </div>
 
         <button class="btn btn-lg btn-warning w-100" type="submit">Sign in</button>
@@ -51,15 +50,15 @@
         <h1 class="h3 mb-4 fw-normal">Nice to meet you!</h1>
 
         <div class="form-floating">
-          <input type="email" class="form-control rounded-0 rounded-top" id="signUpEmail" placeholder="domain@example.com">
+          <input type="email" class="form-control rounded-0 rounded-top" id="signUpEmail" placeholder="domain@example.com" required>
           <label for="signUpEmail">Email address</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control rounded-0" id="signUpPassword" placeholder="Password">
+          <input type="password" class="form-control rounded-0" id="signUpPassword" placeholder="Password" required>
           <label for="signUpPassword">Password</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control rounded-0 rounded-bottom" id="signUpConfirmPassword" placeholder="Confirm password">
+          <input type="password" class="form-control rounded-0 rounded-bottom" id="signUpConfirmPassword" placeholder="Confirm password" required>
           <label for="signUpConfirmPassword">Confirm password</label>
         </div>
 
