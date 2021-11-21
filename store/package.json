@@ -15,7 +15,8 @@
     "eslint-plugin-svelte3": "^3.2.1",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
-    "svelte": "^3.42.6"
+    "svelte": "^3.42.6",
+    "flatpickr": "^4.6.9"
   },
   "type": "module"
 }
