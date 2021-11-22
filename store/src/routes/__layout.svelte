@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { rentalPeriod } from "./stores.js";
+  import { rentalPeriod, cartItems } from "./stores.js";
 
   onMount(() => {
     flatpickr(document.getElementById("rentalPeriod"), {
@@ -11,8 +11,6 @@
         rentalPeriod.set(selectedDates);
       },
     });
-
-    console.log("flatpickr initialized");
   });
 
   const toggleSearchBar = (_event) => {
@@ -45,7 +43,7 @@
         <li class="nav-item d-none d-md-block">
           <a class="nav-link" href="#">
             <i class="bi bi-handbag-fill white" />
-            <sup class="cart-items fw-bold orange">0</sup>
+            <sup class="cart-items fw-bold orange">{$cartItems.length}</sup>
           </a>
         </li>
       </ul>
@@ -115,7 +113,7 @@
     <div class="col">
       <a href="#" class="text-decoration-none">
         <i class="bi bi-handbag black" />
-        <sup class="cart-items fw-bolder orange">0</sup>
+        <sup class="cart-items fw-bolder orange">{$cartItems.length}</sup>
       </a>
     </div>
   </div>
