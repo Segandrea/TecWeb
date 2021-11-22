@@ -6,11 +6,13 @@
     flatpickr(document.getElementById("rentalPeriod"), {
       mode: "range",
       minDate: "today",
-      dateFormat: "d/m/Y",
-      onChange: function(selectedDates, dateStr, instance) {
+      dateFormat: "d-m-Y",
+      onChange: (selectedDates, _dateString, _instance) => {
         rentalPeriod.set(selectedDates);
       },
     });
+
+    console.log("flatpickr initialized");
   });
 
   const toggleSearchBar = (_event) => {
@@ -51,10 +53,10 @@
         <div id="datePicker" class="input-group d-none">
           <input
             id="rentalPeriod"
-            class="form-control"
             type="text"
-            placeholder="Select Date"
+            class="form-control"
             aria-label="Rental period"
+            placeholder="Select dates"
             readonly
             required
           />
@@ -72,9 +74,9 @@
 
         <div id="searchBar" class="input-group">
           <input
-            type="text"
-            class="form-control tex-muted"
             id="searchTerms"
+            type="text"
+            class="form-control"
             aria-label="Search terms"
             placeholder="Search"
           />
@@ -120,3 +122,9 @@
 </div>
 
 <slot />
+
+<style>
+  #rentalPeriod {
+    background-color: #fff;
+  }
+</style>
