@@ -123,16 +123,6 @@
 
 <slot />
 
-<footer class="footer d-none d-md-block mt-4">
-  <div class="container-fluid py-5 bg-light">
-    <div class="row">
-      <div class="col">
-        <h2 class="text-muted">Games Room / Footer</h2>
-      </div>
-    </div>
-  </div>
-</footer>
-
 <style>
   #rentalPeriod {
     background-color: #fff;
