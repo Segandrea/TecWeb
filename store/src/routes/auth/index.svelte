@@ -7,7 +7,7 @@
 
 <main class="w-100 h-100">
   <div class="container h-100 w-100">
-    <div class="row w-100 h-100 d-flex text-center align-items-center m-auto">
+    <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
       <div class="col m-auto">
         <form id="signInForm">
           <i class="bi bi-journal-bookmark-fill" style="font-size: 3.5em;" />
@@ -123,9 +123,13 @@
   </div>
 </main>
 
+<slot />
+
 <style>
   main {
     background-color: #f5f5f5;
+    padding-bottom: 0;
+    padding-top: 0;
   }
 
   form {

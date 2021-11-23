@@ -1,3 +1,13 @@
+main {
+  padding-top: 4.5rem;
+}
+
+@media screen and (max-width: 767px) {
+  main {
+    padding-bottom: 4.5rem;
+  }
+}
+
 .black {
   color: black;
 }
@@ -7,5 +17,9 @@
 }
 
 .orange {
-  color: #ffc107;
+  color: #ffbf00;
+}
+
+.green {
+  color: lightgreen;
 }

@@ -19,107 +19,119 @@
   };
 </script>
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <i class="bi bi-journal-bookmark-fill white" />
-    </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbar"
-      aria-controls="navbar"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon" />
-    </button>
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item d-none d-md-block">
-          <a class="nav-link active" href="#">Home</a>
-        </li>
-        <li class="nav-item d-none d-md-block">
-          <a class="nav-link" href="#">
-            <i class="bi bi-handbag-fill white" />
-            <sup class="fw-bold orange">{$cartItems.length}</sup>
-          </a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <div id="datePicker" class="input-group d-none">
-          <input
-            id="rentalPeriod"
-            type="text"
-            class="form-control"
-            aria-label="Rental period"
-            placeholder="Select dates"
-            readonly
-            required
-          />
-          <button
-            type="button"
-            class="btn btn-light border"
-            on:click={toggleSearchBar}
-          >
-            <i class="bi bi-card-text" />
-          </button>
-          <button class="btn btn-warning">
-            <i class="bi bi-search" />
-          </button>
-        </div>
-
-        <div id="searchBar" class="input-group">
-          <input
-            id="searchTerms"
-            type="text"
-            class="form-control"
-            aria-label="Search terms"
-            placeholder="Search"
-          />
-          <button
-            type="button"
-            class="btn btn-light border"
-            on:click={toggleSearchBar}
-          >
-            <i class="bi bi-calendar-range" />
-          </button>
-          <button class="btn btn-warning">
-            <i class="bi bi-search" />
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</nav>
-
-<!-- bottom navbar, mobile-only -->
-<div class="container-fluid d-md-none fixed-bottom bg-light py-2">
-  <div class="row text-center fs-5">
-    <div class="col">
-      <a href="#" class="text-decoration-none">
-        <i class="bi bi-person black" />
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <i class="bi bi-journal-bookmark-fill white" />
       </a>
-    </div>
-    <div class="col">
-      <a
-        href="#"
-        class="text-decoration-none fw-bolder border-bottom border-2 border-warning"
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbar"
+        aria-controls="navbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
-        <i class="bi bi-house black" />
-      </a>
+        <span class="navbar-toggler-icon" />
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item d-none d-md-block">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item d-none d-md-block">
+            <a class="nav-link" href="#">
+              <i class="bi bi-handbag-fill white" />
+              <sup class="fw-bold orange">{$cartItems.length}</sup>
+            </a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <div id="datePicker" class="input-group d-none">
+            <input
+              id="rentalPeriod"
+              type="text"
+              class="form-control"
+              aria-label="Rental period"
+              placeholder="Select dates"
+              readonly
+              required
+            />
+            <button
+              type="button"
+              class="btn btn-light border"
+              on:click={toggleSearchBar}
+            >
+              <i class="bi bi-card-text" />
+            </button>
+            <button class="btn btn-warning">
+              <i class="bi bi-search" />
+            </button>
+          </div>
+
+          <div id="searchBar" class="input-group">
+            <input
+              id="searchTerms"
+              type="text"
+              class="form-control"
+              aria-label="Search terms"
+              placeholder="Search"
+            />
+            <button
+              type="button"
+              class="btn btn-light border"
+              on:click={toggleSearchBar}
+            >
+              <i class="bi bi-calendar-range" />
+            </button>
+            <button class="btn btn-warning">
+              <i class="bi bi-search" />
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="col">
-      <a href="#" class="text-decoration-none">
-        <i class="bi bi-handbag black" />
-        <sup class="fw-bolder orange">{$cartItems.length}</sup>
-      </a>
+  </nav>
+
+  <!-- bottom navbar, mobile-only -->
+  <div class="container-fluid d-md-none fixed-bottom bg-light py-2">
+    <div class="row text-center fs-5">
+      <div class="col">
+        <a href="#" class="text-decoration-none">
+          <i class="bi bi-person black" />
+        </a>
+      </div>
+      <div class="col">
+        <a
+          href="#"
+          class="text-decoration-none fw-bolder border-bottom border-2 border-warning"
+        >
+          <i class="bi bi-house black" />
+        </a>
+      </div>
+      <div class="col">
+        <a href="#" class="text-decoration-none">
+          <i class="bi bi-handbag black" />
+          <sup class="fw-bolder orange">{$cartItems.length}</sup>
+        </a>
+      </div>
     </div>
   </div>
-</div>
+</header>
 
 <slot />
+
+<footer class="footer d-none d-md-block mt-4">
+  <div class="container-fluid py-5 bg-light">
+    <div class="row">
+      <div class="col">
+        <h2 class="text-muted">Games Room / Footer</h2>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <style>
   #rentalPeriod {
