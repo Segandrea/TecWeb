@@ -1,6 +1,6 @@
 {
   "name": "store",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -19,5 +19,6 @@
     "prettier-plugin-svelte": "^2.4.0",
     "svelte": "^3.42.6"
   },
+  "license": "MIT",
   "type": "module"
 }
