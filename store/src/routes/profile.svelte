@@ -1,253 +1,159 @@
+<script context="module">
+  import faker from "faker";
+
+  export async function load({ page, fetch, session, stuff }) {
+    let orders = new Array(20);
+    orders.fill({
+      id: faker.datatype.uuid(),
+      price: faker.commerce.price(),
+      status: "Returned",
+      issued_at: faker.date.past(),
+      product: {
+        id: faker.datatype.uuid(),
+        name: faker.commerce.productName(),
+        image_url: faker.image.technics(),
+        description: faker.commerce.productDescription(),
+      },
+    });
+
+    return {
+      props: {
+        profile: {
+          id: faker.datatype.uuid(),
+          email: faker.internet.email(),
+          avatar: faker.image.abstract(),
+          username: faker.internet.userName(),
+        },
+        orders,
+      },
+    };
+  }
+</script>
+
+<script>
+  export let profile;
+  export let orders;
+</script>
+
 <svelte:head>
   <title>Profile</title>
 </svelte:head>
 
-<main class="container h-100">
-  <div class="row align-items-start">
-    <!-- user profile -->
-    <div class="col-md-3 text-center">
-      <!-- title -->
-      <div class="row pb-4">
-        <div class="col-md fs-2 text-center">Profile</div>
-      </div>
-      <!-- data -->
-      <div class="row">
-        <div class="col-md">
-          <!-- profile picture -->
-          <img
-            class="rounded-2"
-            width="200px"
-            src="propic.png"
-            alt="user avatar"
+<main class="container">
+  <div class="row row-cols-1">
+    <div class="col col-lg-3 text-center">
+      <h2 class="py-4">Profile</h2>
+
+      <img
+        class="rounded-circle"
+        width="150px"
+        height="150px"
+        src={profile.avatar}
+        alt="user avatar"
+      />
+
+      <form>
+        <input id="avatar" class="form-control my-4" type="file" />
+
+        <!-- email -->
+        <div class="form-floating">
+          <input
+            id="email"
+            type="email"
+            class="form-control border-bottom-0 rounded-0 rounded-top"
+            value={profile.email}
+            placeholder="domain@example.com"
+            required
           />
-          <!-- form containing user informations -->
-          <form>
-            <input id="selectPhoto" class="form-control my-4" type="file" />
-            <div class="form-floating">
-              <input
-                id="email"
-                class="form-control border-bottom-0 rounded-0 rounded-top"
-                type="email"
-                placeholder="example@example.com"
-                value="chiara.giovagnoli5@studio.unibo.it"
-                required
-              />
-              <label for="email">Email address</label>
-            </div>
-
-            <div class="form-floating">
-              <input
-                id="username"
-                class="form-control rounded-0"
-                type="text"
-                placeholder="Username"
-                value="Darkslayer"
-                required
-              />
-              <label for="username">Username</label>
-            </div>
-
-            <div class="form-floating">
-              <input
-                id="password"
-                class="form-control border-top-0 rounded-0 rounded-bottom"
-                type="password"
-                placeholder="Password"
-                value="ciaociao"
-                required
-              />
-              <label for="password">Password</label>
-            </div>
-
-            <button class="btn btn-lg btn-warning mt-4 mb-2 w-100" type="submit"
-              >Save changes</button
-            >
-          </form>
-
-          <!-- button to show history (hidden on desktop) -->
-          <div class="d-md-none mb-3">
-            <a
-              class="link-dark"
-              href="#history"
-              data-bs-toggle="collapse"
-              role="button"
-              aria-expanded="false">Show history</a
-            >
-          </div>
+          <label for="email">Email address</label>
         </div>
-      </div>
-    </div>
 
-    <!-- history desktop -->
-    <div class="col-md d-none d-md-block">
-      <!-- title -->
-      <div class="row pb-4">
-        <div class="col-md fs-2 text-center">History</div>
-      </div>
-      <!-- orders -->
-      <div class="row">
-        <div class="col-md">
-          <ul class="list-group">
-            <!-- Item -->
+        <!-- username -->
+        <div class="form-floating">
+          <input
+            id="username"
+            type="text"
+            value={profile.username}
+            class="form-control rounded-0"
+            placeholder="username"
+            required
+          />
+          <label for="username">Username</label>
+        </div>
+
+        <!-- password -->
+        <div class="form-floating">
+          <input
+            id="password"
+            type="password"
+            class="form-control border-top-0 rounded-0 rounded-bottom"
+            placeholder="Password"
+            required
+          />
+          <label for="password">Password</label>
+        </div>
+
+        <button class="btn btn-lg btn-warning mt-4 mb-2 w-100" type="submit"
+          >Save changes</button
+        >
+      </form>
+    </div>
+    <div class="col col-lg-9">
+      <h2 class="text-center py-4">Your Orders</h2>
+
+      <div class="overflow-auto" style="height: 80vh;">
+        <ul class="list-group">
+          {#each orders as order}
             <li class="list-group-item">
               <div class="row d-flex align-items-center">
-                <!-- Photo -->
-                <div class="col-md-2 mb-2 mt-3 text-center">
+                <div class="col-md-2 my-2 text-center">
                   <a href="#"
                     ><img
-                      src="https://m.media-amazon.com/images/I/81ZOMrH1jbL._AC_SR180,120_QL70_.jpg"
+                      class="img-thumbnail"
+                      src={order.product.image_url}
+                      alt={order.product.name}
                     /></a
                   >
                 </div>
-                <!-- Name/Date -->
-                <div class="col-md-4">
-                  <div class="row">
-                    <div class="col text-center">
-                      <a class="link-dark" href="#"
-                        ><div class="text-truncate">
-                          Monopoly: limited edition, no money.
-                        </div></a
-                      >
-                    </div>
-                  </div>
-                  <div class="row text-muted">
-                    <div class="col text-center">
-                      <small>ordered: 11/11/1991</small>
-                    </div>
-                  </div>
-                </div>
-                <!-- Status -->
-                <div class="col-md-1 mb-2 mt-3 green fw-bold text-center">
-                  Done
-                </div>
-                <!-- Price -->
-                <div class="col-md-2 mb-2 mt-3 fs-4 text-center">
-                  <i class="bi bi-currency-euro">123,50</i>
-                </div>
-                <!-- Write a review -->
-                <div class="col-md-3 mb-2 mt-3 text-center">
-                  <a
-                    data-bs-toggle="collapse"
-                    data-bs-target="#leaveReview-productId"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
-                    href="#"
-                  >
-                    Write a review <i class="bi bi-pen" />
-                  </a>
-                  <div id="leaveReview-productId" class="collapse">
-                    <form>
-                      <!-- TODO: real star system -->
-                      <div id="stars1">
-                        <span class="bi bi-star-fill orange" />
-                        <span class="bi bi-star-fill orange" />
-                        <span class="bi bi-star-fill orange" />
-                        <span class="bi bi-star" />
-                        <span class="bi bi-star" />
-                      </div>
-                      <!-- Review description -->
-                      <textarea
-                        class="form-control"
-                        placeholder="Insert description"
-                      />
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
 
-    <!-- history from mobile -->
-    <div id="history" class="col-md collapse d-md-none">
-      <!-- title -->
-      <div class="row pb-4">
-        <div class="col-md fs-2 text-center">History</div>
-      </div>
-      <!-- orders -->
-      <div class="row">
-        <div class="col-md">
-          <ul class="list-group">
-            <!-- Item -->
-            <li class="list-group-item">
-              <div class="row d-flex align-items-center">
-                <!-- Photo -->
-                <div class="col-md-2 mb-2 mt-3 text-center">
-                  <a href="#"
-                    ><img
-                      src="https://m.media-amazon.com/images/I/81ZOMrH1jbL._AC_SR180,120_QL70_.jpg"
-                    /></a
-                  >
-                </div>
-                <!-- Name/Date -->
-                <div class="col-md-4">
+                <div class="col-md-4 my-2 text-center">
                   <div class="row">
-                    <div class="col text-center">
-                      <a class="link-dark" href="#"
-                        ><div class="text-truncate">
-                          Monopoly: limited edition, no money.
-                        </div></a
-                      >
+                    <div class="col">
+                      <a class="link-dark" href="#">
+                        <div class="text-truncate">
+                          {order.product.description}
+                        </div>
+                      </a>
                     </div>
                   </div>
-                  <div class="row text-muted">
-                    <div class="col text-center">
-                      <small>ordered: 11/11/1991</small>
+
+                  <div class="row">
+                    <div class="col">
+                      <small class="text-muted">{order.issued_at}</small>
                     </div>
                   </div>
                 </div>
-                <!-- Status -->
-                <div class="col-md-1 mb-2 mt-3 green fw-bold text-center">
-                  Done
+
+                <div class="col-md-2 my-2 text-center fw-bold">
+                  {order.status}
                 </div>
-                <!-- Price -->
-                <div class="col-md-2 mb-2 mt-3 fs-4 text-center">
-                  <i class="bi bi-currency-euro">123,50</i>
+
+                <div class="col-md-2 my-2 text-center">
+                  <i class="bi bi-currency-euro">{order.price}</i>
                 </div>
-                <!-- Write a review -->
-                <div class="col-md-3 mb-2 mt-3 text-center">
-                  <a
-                    data-bs-toggle="collapse"
-                    data-bs-target="#leaveReview-productId"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
-                    href="#"
-                  >
-                    Write a review <i class="bi bi-pen" />
+
+                <div class="col-md-2 my-2 text-center">
+                  <a href="#">
+                    Leave a review <i class="bi bi-pen" />
                   </a>
-                  <div id="leaveReview-productId" class="collapse">
-                    <form>
-                      <!-- TODO: real star system -->
-                      <div id="stars1">
-                        <span class="bi bi-star-fill orange" />
-                        <span class="bi bi-star-fill orange" />
-                        <span class="bi bi-star-fill orange" />
-                        <span class="bi bi-star" />
-                        <span class="bi bi-star" />
-                      </div>
-                      <!-- Review description -->
-                      <textarea
-                        class="form-control"
-                        placeholder="Insert description"
-                      />
-                    </form>
-                  </div>
                 </div>
               </div>
             </li>
-          </ul>
-        </div>
+          {/each}
+        </ul>
       </div>
     </div>
   </div>
 </main>
 
 <slot />
-
-<style>
-  #history {
-    padding-bottom: 4.5rem;
-  }
-</style>

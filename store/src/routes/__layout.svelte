@@ -20,7 +20,7 @@
 </script>
 
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <i class="bi bi-journal-bookmark-fill white" />
@@ -94,34 +94,31 @@
       </div>
     </div>
   </nav>
-
-  <!-- bottom navbar, mobile-only -->
-  <div class="container-fluid d-md-none fixed-bottom bg-light py-2">
-    <div class="row text-center fs-5">
-      <div class="col">
-        <a href="#" class="text-decoration-none">
-          <i class="bi bi-person black" />
-        </a>
-      </div>
-      <div class="col">
-        <a
-          href="#"
-          class="text-decoration-none fw-bolder border-bottom border-2 border-warning"
-        >
-          <i class="bi bi-house black" />
-        </a>
-      </div>
-      <div class="col">
-        <a href="#" class="text-decoration-none">
-          <i class="bi bi-handbag black" />
-          <sup class="fw-bolder orange">{$cartItems.length}</sup>
-        </a>
-      </div>
-    </div>
-  </div>
 </header>
 
 <slot />
+
+<!-- bottom navbar, mobile-only -->
+<footer class="d-md-none">
+  <nav class="navbar navbar-expand navbar-light bg-light fixed-bottom">
+    <ul class="navbar-nav w-100 justify-content-evenly">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="bi bi-person black" /></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"
+          ><i class="bi bi-house black" /></a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="bi bi-handbag black" />
+          <sup class="fw-bolder orange">{$cartItems.length}</sup>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</footer>
 
 <style>
   #rentalPeriod {
