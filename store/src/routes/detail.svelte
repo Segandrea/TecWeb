@@ -1,64 +1,50 @@
+<script context="module">
+  import faker from "faker";
+
+  export async function load({ page, fetch, session, stuff }) {
+    let reviews = new Array(20);
+    reviews.fill({
+      id: faker.datatype.uuid(),
+      username: faker.internet.userName(),
+      review: faker.commerce.productAdjective(),
+    });
+
+    return {
+      props: {
+        product: {
+          id: faker.datatype.uuid(),
+          img_url: faker.image.technics(1200, 400),
+          name: faker.commerce.productName(),
+          base_price: faker.datatype.float(),
+          daily_price: faker.datatype.float(),
+          description: faker.commerce.productDescription(),
+        },
+        reviews,
+      },
+    };
+  }
+</script>
+
+<script>
+  export let product;
+  export let reviews;
+</script>
+
 <main class="container">
   <!-- carousel -->
   <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <!-- carousel item -->
-      <div class="carousel-item active">
-        <!-- replace this svg with actual image -->
-        <svg
-          class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-          width="800"
-          height="400"
-          xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-label="Placeholder: First slide"
-          preserveAspectRatio="xMidYMid slice"
-          focusable="false"
-        >
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#777" />
-          <text x="41%" y="50%" fill="#555" dy=".3em" style="font-size:50px"
-            >First slide</text
-          >
-        </svg>
+      <div class="carousel-item text-center active">
+        <img class="img-fluid" src={product.img_url} />
       </div>
-      <div class="carousel-item">
-        <!-- replace this svg with actual image -->
-        <svg
-          class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-          width="800"
-          height="400"
-          xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-label="Placeholder: First slide"
-          preserveAspectRatio="xMidYMid slice"
-          focusable="false"
-        >
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#777" />
-          <text x="41%" y="50%" fill="#555" dy=".3em" style="font-size:50px"
-            >First slide</text
-          >
-        </svg>
+      <!-- carousel item -->
+      <div class="carousel-item text-center">
+        <img class="img-fluid" src={product.img_url} />
       </div>
-      <div class="carousel-item">
-        <!-- replace this svg with actual image -->
-        <svg
-          class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-          width="800"
-          height="400"
-          xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-label="Placeholder: First slide"
-          preserveAspectRatio="xMidYMid slice"
-          focusable="false"
-        >
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#777" />
-          <text x="41%" y="50%" fill="#555" dy=".3em" style="font-size:50px"
-            >First slide</text
-          >
-        </svg>
+      <!-- carousel item -->
+      <div class="carousel-item text-center">
+        <img class="img-fluid" src={product.img_url} />
       </div>
     </div>
 
@@ -109,7 +95,7 @@
   <!-- title, price, stars and cart -->
   <div class="container">
     <!-- title -->
-    <h2 class="text-center text-decoration-underline mt-5">Monopoly</h2>
+    <h2 class="text-center text-decoration-underline mt-5">{product.name}</h2>
     <div class="row row-cols-1 row-cols-md-3 mt-4 g-4">
       <!-- price -->
       <div class="col">
@@ -118,11 +104,13 @@
             <div class="card-title fs-5 fw-bold">Pricing:</div>
             <div class="row">
               <small>
-                base: <i class="bi bi-currency-euro">14,00</i>
+                base: <i class="bi bi-currency-euro">{product.base_price}</i>
               </small>
             </div>
             <div class="row mt-1 fs-4 fw-bold">
-              <i class="bi bi-currency-euro orange">1,00<sub>/day</sub></i>
+              <i class="bi bi-currency-euro orange"
+                >{product.daily_price}<sub>/day</sub></i
+              >
             </div>
           </div>
         </div>
@@ -166,27 +154,7 @@
     <div class="row">
       <h2 class="text-center">Description</h2>
       <p class="lead">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-        ornare erat lacus, vulputate lacinia elit tempus id. Quisque ornare
-        fringilla sollicitudin. Nulla venenatis volutpat odio, vel blandit arcu
-        maximus vitae. Donec consequat id dolor aliquam laoreet. Duis quis eros
-        turpis. Donec laoreet nisl in ante auctor, at tristique leo rhoncus.
-        Aliquam et lectus nisl. Phasellus nec mauris nec justo congue facilisis.
-        Sed et ante ipsum. Phasellus rutrum ex tellus. Morbi a lacus mattis,
-        iaculis dui a, pulvinar erat. Aliquam accumsan, neque nec ultricies
-        mattis, eros magna mollis justo, vel porttitor lacus augue id purus. Sed
-        lacinia non purus vel mollis. Nam malesuada consectetur mi quis
-        venenatis. Duis ex sem, luctus id tellus sit amet, suscipit venenatis
-        nisl. Cras eget sem et purus laoreet egestas. Mauris accumsan erat at
-        dignissim sollicitudin. Quisque imperdiet consequat libero, et semper
-        massa vestibulum at. Nunc fermentum lectus ex, in finibus nisl molestie
-        ut. Nam vehicula rhoncus justo, eget consectetur risus placerat non.
-        Praesent est ex, egestas sit amet sollicitudin ut, tempus ut diam.
-        Maecenas sed lobortis leo. In eget ultrices nisl, auctor hendrerit
-        augue. Donec placerat orci vel eros mattis, in gravida orci maximus.
-        Cras at leo tellus. Duis elementum quam non ante auctor, at ornare magna
-        viverra. Maecenas posuere euismod mi, ac rutrum tellus venenatis in. In
-        hendrerit risus at pellentesque tempor. Maecenas et turpis lacus.
+        {product.description}
       </p>
     </div>
     <hr />
@@ -197,235 +165,29 @@
     <h2 id="reviews">Reviews</h2>
     <!-- three reviews per row -->
     <div class="row row-cols-1 row-cols-md-3">
-      <div class="col">
-        <!-- first review -->
-        <div class="card-body">
-          <h3 class="card-title">Maurice Leblanc</h3>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            ornare erat lacus, vulputate lacinia elit tempus id. Quisque ornare
-            fringilla sollicitudin. Nulla venenatis volutpat odio, vel blandit
-            arcu maximus vitae. Donec consequat id dolor aliquam laoreet. Duis
-            quis eros turpis. Donec laoreet nisl in ante auctor, at tristique
-            leo rhoncus. Aliquam et lectus nisl. Phasellus nec mauris nec justo
-            congue facilisis. Sed et ante ipsum. Phasellus rutrum ex tellus.
-            Morbi a lacus mattis, iaculis dui a, pulvinar erat. Aliquam
-            accumsan, neque nec ultricies mattis, eros magna mollis justo, vel
-            porttitor lacus augue id purus. Sed lacinia non purus vel mollis.
-            Nam malesuada consectetur mi quis venenatis. Duis ex sem, luctus id
-            tellus sit amet, suscipit venenatis nisl. Cras eget sem et purus
-            laoreet egestas. Mauris accumsan erat at dignissim sollicitudin.
-            Quisque imperdiet consequat libero, et semper massa vestibulum at.
-            Nunc fermentum lectus ex, in finibus nisl molestie ut. Nam vehicula
-            rhoncus justo, eget consectetur risus placerat non. Praesent est ex,
-            egestas sit amet sollicitudin ut, tempus ut diam. Maecenas sed
-            lobortis leo. In eget ultrices nisl, auctor hendrerit augue. Donec
-            placerat orci vel eros mattis, in gravida orci maximus. Cras at leo
-            tellus. Duis elementum quam non ante auctor, at ornare magna
-            viverra. Maecenas posuere euismod mi, ac rutrum tellus venenatis in.
-            In hendrerit risus at pellentesque tempor. Maecenas et turpis lacus.
-          </p>
-          <div class="card-subtitle mb-2 fs-6">
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star" />
-            <span class="bi bi-star" />
+      {#each reviews as review}
+        <div class="col">
+          <!-- first review -->
+          <div class="card-body">
+            <h3 class="card-title">{review.username}</h3>
+            <p class="card-text">
+              {review.review}
+            </p>
+            <div class="card-subtitle mb-2 fs-6">
+              <span class="bi bi-star-fill orange" />
+              <span class="bi bi-star-fill orange" />
+              <span class="bi bi-star-fill orange" />
+              <span class="bi bi-star" />
+              <span class="bi bi-star" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col">
-        <!-- second review -->
-        <div class="card-body">
-          <h3 class="card-title">Herlock Sholmes</h3>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            ornare erat lacus, vulputate lacinia elit tempus id. Quisque ornare
-            fringilla sollicitudin. Nulla venenatis volutpat odio, vel blandit
-            arcu maximus vitae. Donec consequat id dolor aliquam laoreet. Duis
-            quis eros turpis. Donec laoreet nisl in ante auctor, at tristique
-            leo rhoncus. Aliquam et lectus nisl. Phasellus nec mauris nec justo
-            congue facilisis. Sed et ante ipsum. Phasellus rutrum ex tellus.
-            Morbi a lacus mattis, iaculis dui a, pulvinar erat. Aliquam
-            accumsan, neque nec ultricies mattis, eros magna mollis justo, vel
-            porttitor lacus augue id purus. Sed lacinia non purus vel mollis.
-            Nam malesuada consectetur mi quis venenatis. Duis ex sem, luctus id
-            tellus sit amet, suscipit venenatis nisl. Cras eget sem et purus
-            laoreet egestas. Mauris accumsan erat at dignissim sollicitudin.
-            Quisque imperdiet consequat libero, et semper massa vestibulum at.
-            Nunc fermentum lectus ex, in finibus nisl molestie ut. Nam vehicula
-            rhoncus justo, eget consectetur risus placerat non. Praesent est ex,
-            egestas sit amet sollicitudin ut, tempus ut diam. Maecenas sed
-            lobortis leo. In eget ultrices nisl, auctor hendrerit augue. Donec
-            placerat orci vel eros mattis, in gravida orci maximus. Cras at leo
-            tellus. Duis elementum quam non ante auctor, at ornare magna
-            viverra. Maecenas posuere euismod mi, ac rutrum tellus venenatis in.
-            In hendrerit risus at pellentesque tempor. Maecenas et turpis lacus.
-          </p>
-          <div class="card-subtitle mb-2 fs-6">
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star" />
-            <span class="bi bi-star" />
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <!-- third review -->
-        <div class="card-body">
-          <h3 class="card-title">Arsène Lupin</h3>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            ornare erat lacus, vulputate lacinia elit tempus id. Quisque ornare
-            fringilla sollicitudin. Nulla venenatis volutpat odio, vel blandit
-            arcu maximus vitae. Donec consequat id dolor aliquam laoreet. Duis
-            quis eros turpis. Donec laoreet nisl in ante auctor, at tristique
-            leo rhoncus. Aliquam et lectus nisl. Phasellus nec mauris nec justo
-            congue facilisis. Sed et ante ipsum. Phasellus rutrum ex tellus.
-            Morbi a lacus mattis, iaculis dui a, pulvinar erat. Aliquam
-            accumsan, neque nec ultricies mattis, eros magna mollis justo, vel
-            porttitor lacus augue id purus. Sed lacinia non purus vel mollis.
-            Nam malesuada consectetur mi quis venenatis. Duis ex sem, luctus id
-            tellus sit amet, suscipit venenatis nisl. Cras eget sem et purus
-            laoreet egestas. Mauris accumsan erat at dignissim sollicitudin.
-            Quisque imperdiet consequat libero, et semper massa vestibulum at.
-            Nunc fermentum lectus ex, in finibus nisl molestie ut. Nam vehicula
-            rhoncus justo, eget consectetur risus placerat non. Praesent est ex,
-            egestas sit amet sollicitudin ut, tempus ut diam. Maecenas sed
-            lobortis leo. In eget ultrices nisl, auctor hendrerit augue. Donec
-            placerat orci vel eros mattis, in gravida orci maximus. Cras at leo
-            tellus. Duis elementum quam non ante auctor, at ornare magna
-            viverra. Maecenas posuere euismod mi, ac rutrum tellus venenatis in.
-            In hendrerit risus at pellentesque tempor. Maecenas et turpis lacus.
-          </p>
-          <div class="card-subtitle mb-2 fs-6">
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star" />
-            <span class="bi bi-star" />
-          </div>
-        </div>
-      </div>
+      {/each}
     </div>
-    <!-- hidden reviews -->
-    <div id="hidden-row" class="row row-cols-1 row-cols-md-3 collapse">
-      <div class="col">
-        <!-- first review -->
-        <div class="card-body">
-          <h3 class="card-title">Monkey Punch</h3>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            ornare erat lacus, vulputate lacinia elit tempus id. Quisque ornare
-            fringilla sollicitudin. Nulla venenatis volutpat odio, vel blandit
-            arcu maximus vitae. Donec consequat id dolor aliquam laoreet. Duis
-            quis eros turpis. Donec laoreet nisl in ante auctor, at tristique
-            leo rhoncus. Aliquam et lectus nisl. Phasellus nec mauris nec justo
-            congue facilisis. Sed et ante ipsum. Phasellus rutrum ex tellus.
-            Morbi a lacus mattis, iaculis dui a, pulvinar erat. Aliquam
-            accumsan, neque nec ultricies mattis, eros magna mollis justo, vel
-            porttitor lacus augue id purus. Sed lacinia non purus vel mollis.
-            Nam malesuada consectetur mi quis venenatis. Duis ex sem, luctus id
-            tellus sit amet, suscipit venenatis nisl. Cras eget sem et purus
-            laoreet egestas. Mauris accumsan erat at dignissim sollicitudin.
-            Quisque imperdiet consequat libero, et semper massa vestibulum at.
-            Nunc fermentum lectus ex, in finibus nisl molestie ut. Nam vehicula
-            rhoncus justo, eget consectetur risus placerat non. Praesent est ex,
-            egestas sit amet sollicitudin ut, tempus ut diam. Maecenas sed
-            lobortis leo. In eget ultrices nisl, auctor hendrerit augue. Donec
-            placerat orci vel eros mattis, in gravida orci maximus. Cras at leo
-            tellus. Duis elementum quam non ante auctor, at ornare magna
-            viverra. Maecenas posuere euismod mi, ac rutrum tellus venenatis in.
-            In hendrerit risus at pellentesque tempor. Maecenas et turpis lacus.
-          </p>
-          <div class="card-subtitle mb-2 fs-6">
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star" />
-            <span class="bi bi-star" />
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <!-- second review -->
-        <div class="card-body">
-          <h3 class="card-title">Koichi Zenigata</h3>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            ornare erat lacus, vulputate lacinia elit tempus id. Quisque ornare
-            fringilla sollicitudin. Nulla venenatis volutpat odio, vel blandit
-            arcu maximus vitae. Donec consequat id dolor aliquam laoreet. Duis
-            quis eros turpis. Donec laoreet nisl in ante auctor, at tristique
-            leo rhoncus. Aliquam et lectus nisl. Phasellus nec mauris nec justo
-            congue facilisis. Sed et ante ipsum. Phasellus rutrum ex tellus.
-            Morbi a lacus mattis, iaculis dui a, pulvinar erat. Aliquam
-            accumsan, neque nec ultricies mattis, eros magna mollis justo, vel
-            porttitor lacus augue id purus. Sed lacinia non purus vel mollis.
-            Nam malesuada consectetur mi quis venenatis. Duis ex sem, luctus id
-            tellus sit amet, suscipit venenatis nisl. Cras eget sem et purus
-            laoreet egestas. Mauris accumsan erat at dignissim sollicitudin.
-            Quisque imperdiet consequat libero, et semper massa vestibulum at.
-            Nunc fermentum lectus ex, in finibus nisl molestie ut. Nam vehicula
-            rhoncus justo, eget consectetur risus placerat non. Praesent est ex,
-            egestas sit amet sollicitudin ut, tempus ut diam. Maecenas sed
-            lobortis leo. In eget ultrices nisl, auctor hendrerit augue. Donec
-            placerat orci vel eros mattis, in gravida orci maximus. Cras at leo
-            tellus. Duis elementum quam non ante auctor, at ornare magna
-            viverra. Maecenas posuere euismod mi, ac rutrum tellus venenatis in.
-            In hendrerit risus at pellentesque tempor. Maecenas et turpis lacus.
-          </p>
-          <div class="card-subtitle mb-2 fs-6">
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star" />
-            <span class="bi bi-star" />
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <!-- third review -->
-        <div class="card-body">
-          <h3 class="card-title">Arsenio Lupin III</h3>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            ornare erat lacus, vulputate lacinia elit tempus id. Quisque ornare
-            fringilla sollicitudin. Nulla venenatis volutpat odio, vel blandit
-            arcu maximus vitae. Donec consequat id dolor aliquam laoreet. Duis
-            quis eros turpis. Donec laoreet nisl in ante auctor, at tristique
-            leo rhoncus. Aliquam et lectus nisl. Phasellus nec mauris nec justo
-            congue facilisis. Sed et ante ipsum. Phasellus rutrum ex tellus.
-            Morbi a lacus mattis, iaculis dui a, pulvinar erat. Aliquam
-            accumsan, neque nec ultricies mattis, eros magna mollis justo, vel
-            porttitor lacus augue id purus. Sed lacinia non purus vel mollis.
-            Nam malesuada consectetur mi quis venenatis. Duis ex sem, luctus id
-            tellus sit amet, suscipit venenatis nisl. Cras eget sem et purus
-            laoreet egestas. Mauris accumsan erat at dignissim sollicitudin.
-            Quisque imperdiet consequat libero, et semper massa vestibulum at.
-            Nunc fermentum lectus ex, in finibus nisl molestie ut. Nam vehicula
-            rhoncus justo, eget consectetur risus placerat non. Praesent est ex,
-            egestas sit amet sollicitudin ut, tempus ut diam. Maecenas sed
-            lobortis leo. In eget ultrices nisl, auctor hendrerit augue. Donec
-            placerat orci vel eros mattis, in gravida orci maximus. Cras at leo
-            tellus. Duis elementum quam non ante auctor, at ornare magna
-            viverra. Maecenas posuere euismod mi, ac rutrum tellus venenatis in.
-            In hendrerit risus at pellentesque tempor. Maecenas et turpis lacus.
-          </p>
-          <div class="card-subtitle mb-2 fs-6">
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star-fill orange" />
-            <span class="bi bi-star" />
-            <span class="bi bi-star" />
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="row">
       <div class="col">
-        <!-- button to toggle hidden reviews, maybe replace with load on scrolling  -->
+        <!-- button to get other reviews-->
         <button
           type="button"
           class="btn btn-warning"
@@ -434,7 +196,7 @@
           aria-expanded="false"
           aria-controls="hidden-row"
         >
-          Toggle more reviews
+          Show more Reviews
         </button>
       </div>
     </div>
