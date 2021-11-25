@@ -1,113 +1,193 @@
+<script>
+  import faker from "faker";
+
+  const products = [
+    {
+      id: faker.datatype.uuid(),
+      name: faker.commerce.productName(),
+      imageUrl: faker.image.technics(),
+      basePrice: faker.datatype.float({ min: 2, max: 5 }),
+      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
+      description: faker.commerce.productDescription(),
+    },
+    {
+      id: faker.datatype.uuid(),
+      name: faker.commerce.productName(),
+      imageUrl: faker.image.technics(),
+      basePrice: faker.datatype.float({ min: 2, max: 5 }),
+      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
+      description: faker.commerce.productDescription(),
+    },
+    {
+      id: faker.datatype.uuid(),
+      name: faker.commerce.productName(),
+      imageUrl: faker.image.technics(),
+      basePrice: faker.datatype.float({ min: 2, max: 5 }),
+      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
+      description: faker.commerce.productDescription(),
+    },
+    {
+      id: faker.datatype.uuid(),
+      name: faker.commerce.productName(),
+      imageUrl: faker.image.technics(),
+      basePrice: faker.datatype.float({ min: 2, max: 5 }),
+      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
+      description: faker.commerce.productDescription(),
+    },
+  ];
+
+  export let cart = {
+    products,
+    rentalPeriod: [faker.datatype.datetime(), faker.datatype.datetime()],
+    days: faker.datatype.number({ min: 1, max: 7, precision: 1 }),
+    discountPrice: faker.datatype.float({ min: 10, max: 100 }),
+    subtotalPrice: faker.datatype.float({ min: 10, max: 100 }),
+    totalPrice: faker.datatype.float({ min: 10, max: 100 }),
+    discountCodes: [
+      {
+        code: faker.vehicle.manufacturer().split(" ")[0].toUpperCase(),
+        discount: faker.datatype.float({ min: 5, max: 25 }).toFixed(0),
+      },
+      {
+        code: faker.vehicle.manufacturer().split(" ")[0].toUpperCase(),
+        discount: faker.datatype.float({ min: 5, max: 25 }).toFixed(0),
+      },
+    ],
+  };
+</script>
+
 <svelte:head>
   <title>Cart</title>
 </svelte:head>
 
 <main class="container">
   <div class="row">
-    <!-- Cart -->
-    <div class="col-md-8 cart border">
-      <div class="row card-title">
-        <div class="row align-items-center">
-          <div class="col fs-2 fw-bold text-start">Cart</div>
+    <div class="col-lg-9">
+      <div class="card-group d-sm-flex flex-sm-nowrap overflow-auto">
+        {#each cart.products as product}
+          <div class="card border-0 p-2">
+            <img
+              src={product.imageUrl}
+              class="card-img-top"
+              alt={product.name}
+            />
+            <div class="card-body bg-light">
+              <h4 class="card-title text-truncate py-2">{product.name}</h4>
+              <div class="card-text d-flex justify-content-between fst-italic">
+                <span>Base</span>
+                <span>
+                  <i class="bi bi-currency-euro black">{product.basePrice}</i>
+                </span>
+              </div>
+              <div
+                class="card-text d-flex justify-content-between fst-italic fw-bold"
+              >
+                <span>Daily</span>
+                <span>
+                  {cart.days} <small>x</small><i
+                    class="bi bi-currency-euro black">{product.dailyPrice}</i
+                  >
+                </span>
+              </div>
+            </div>
+            <div
+              class="card-footer bg-info d-flex justify-content-between fst-italic fw-bold"
+            >
+              <span>Total</span>
+              <span>
+                <i class="bi bi-currency-euro black"
+                  >{(
+                    product.basePrice +
+                    cart.days * product.dailyPrice
+                  ).toFixed(2)}</i
+                >
+              </span>
+            </div>
+          </div>
+        {/each}
+      </div>
+    </div>
+
+    <div class="col-lg-3 d-flex flex-column py-1">
+      <div class="row">
+        <div class="col d-flex align-items-center justify-content-between">
+          <h2>Summary</h2>
+          <span>{cart.products.length} items</span>
+        </div>
+      </div>
+
+      <div class="row flex-grow-1">
+        <div class="col">
+          <div class="input-group">
+            <span class="input-group-text btn btn-info">+</span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Discount code"
+              aria-label="Discount code"
+            />
+          </div>
+          <div class="mt-3 mb-2">
+            <h5>Discount codes</h5>
+          </div>
+          <ul class="list-group">
+            {#each cart.discountCodes as discountCode}
+              <li class="list-group-item fw-bold">
+                <div class="d-flex justify-content-between">
+                  <span class="text-info">{discountCode.code}</span>
+                  <span>{discountCode.discount} %</span>
+                </div>
+              </li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+
+      <div class="row row-cols-1">
+        <div class="col d-flex justify-content-between fst-italic text-muted">
+          <span>Subtotal</span>
+          <span>{cart.subtotalPrice}</span>
+        </div>
+        <div class="col d-flex justify-content-between fst-italic text-muted">
+          <span>Discount</span>
+          <span>{cart.discountPrice}</span>
+        </div>
+        <div class="col d-flex justify-content-between fw-bold fst-italic">
+          <span>Total</span>
+          <span>{cart.totalPrice}</span>
         </div>
       </div>
 
       <div class="row">
-        <div class="col">image</div>
-        <div class="col">name</div>
-        <div class="col">quantity</div>
-        <div class="col">price</div>
+        <div class="col">
+          <hr />
+          <button class="btn btn-warning btn-lg w-100">Checkout</button>
+        </div>
       </div>
     </div>
-    <!-- Cart -->
-
-    <!-- Summary -->
-    <div class="col-md-4 summary border">
-      <div class="row align-items-center">
-        <div class="col text-start fs-4">Summary</div>
-        <div class="col text-end fst-italic">3 items</div>
-      </div>
-      <hr />
-      <div class="row">
-        <div class="col fw-bold text-truncate text-start">
-          Monopoly: limited edition
-        </div>
-        <div class="col text-end">
-          <i class="bi bi-currency-euro black">132.00</i>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col fst-italic">
-          <small>Base</small>
-        </div>
-        <div class="col fst-italic text-end">
-          <small>
-            <i class="bi bi-currency-euro black">15.00</i>
-          </small>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col fst-italic">
-          <small>Daily</small>
-        </div>
-        <div class="col fst-italic text-end">
-          <small>
-            7 <i class="bi bi-x black" />
-            <i class="bi bi-currency-euro black">14.00</i>
-          </small>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col fst-italic">
-          <small>Promo</small>
-        </div>
-        <div class="col fst-italic text-end">
-          <small>
-            <i class="bi bi-dash black" />
-            <i class="bi bi-currency-euro black">15.00</i>
-          </small>
-        </div>
-      </div>
-      <hr />
-      <div class="row fw-bold">
-        <div class="col text-start">Total</div>
-        <div class="col text-end">
-          <i class="bi bi-currency-euro black">137.00</i>
-        </div>
-      </div>
-      <button class="btn btn-warning btn-lg w-100 mt-3 p-2">checkout</button>
-    </div>
-    <!-- Summary -->
   </div>
 </main>
 
 <slot />
 
 <style>
-  .cart {
-    padding: 1rem 2rem;
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
+  .card {
+    /* FIXME */
+    min-width: 25vw;
+    min-height: 60vh;
   }
 
-  @media (max-width: 767px) {
-    .cart {
-      border: none !important;
-      border-radius: unset;
-    }
+  ::-webkit-scrollbar {
+    height: 6px;
   }
 
-  .summary {
-    padding: 1rem 2rem;
-    background-color: #ddd;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 10px rgba(127, 127, 127, 0.4);
+    border-radius: 12px;
   }
 
-  @media (max-width: 767px) {
-    .summary {
-      border: none !important;
-      border-radius: unset;
-    }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(127, 127, 127, 0.9);
+    border-radius: 12px;
   }
 </style>
