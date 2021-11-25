@@ -101,7 +101,7 @@
     <div class="col col-lg-9">
       <h2 class="text-center py-4">Your Orders</h2>
 
-      <div class="overflow-auto" style="height: 80vh;">
+      <div class="overflow-auto" style="max-height: 75vh;">
         <ul class="list-group">
           {#each orders as order}
             <li class="list-group-item">

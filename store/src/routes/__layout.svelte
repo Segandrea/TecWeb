@@ -13,85 +13,80 @@
     });
   });
 
-  const toggleSearchBar = (_event) => {
-    document.getElementById("datePicker").classList.toggle("d-none");
-    document.getElementById("searchBar").classList.toggle("d-none");
+  const toggleSearch = (_event) => {
+    document.getElementById("searchClose").classList.toggle("d-none");
+    document.getElementById("searchOpen").classList.toggle("d-none");
+  };
+
+  const toggleInput = (_event) => {
+    document.getElementById("textInput").classList.toggle("d-none");
+    document.getElementById("dateInput").classList.toggle("d-none");
   };
 </script>
 
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
+  <nav class="navbar navbar-dark bg-dark fixed-top">
+    <div id="searchClose" class="container-fluid">
       <a class="navbar-brand" href="#">
         <i class="bi bi-journal-bookmark-fill white" />
       </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbar"
-        aria-controls="navbar"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon" />
+      <button class="btn btn-outline-light" on:click={toggleSearch}>
+        <i class="bi bi-search" />
       </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item d-none d-md-block">
-            <a class="nav-link active" href="#">Home</a>
-          </li>
-          <li class="nav-item d-none d-md-block">
-            <a class="nav-link" href="#">
-              <i class="bi bi-handbag-fill white" />
-              <sup class="fw-bold orange">{$cartItems.length}</sup>
-            </a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <div id="datePicker" class="input-group d-none">
-            <input
-              id="rentalPeriod"
-              type="text"
-              class="form-control"
-              aria-label="Rental period"
-              placeholder="Select dates"
-              readonly
-              required
-            />
-            <button
-              type="button"
-              class="btn btn-light border"
-              on:click={toggleSearchBar}
-            >
-              <i class="bi bi-card-text" />
-            </button>
-            <button class="btn btn-warning">
-              <i class="bi bi-search" />
-            </button>
-          </div>
+    </div>
 
-          <div id="searchBar" class="input-group">
-            <input
-              id="searchTerms"
-              type="text"
-              class="form-control"
-              aria-label="Search terms"
-              placeholder="Search"
-            />
-            <button
-              type="button"
-              class="btn btn-light border"
-              on:click={toggleSearchBar}
-            >
-              <i class="bi bi-calendar-range" />
-            </button>
-            <button class="btn btn-warning">
-              <i class="bi bi-search" />
-            </button>
-          </div>
-        </form>
-      </div>
+    <div id="searchOpen" class="container-fluid d-none">
+      <button class="btn btn-outline-light" on:click={toggleSearch}>
+        <i class="bi bi-list" />
+      </button>
+
+      <form class="d-flex" style="max-width: 75vw;">
+        <div id="textInput" class="input-group">
+          <input
+            id="searchTerms"
+            type="text"
+            class="form-control"
+            aria-label="Search terms"
+            placeholder="Search"
+          />
+
+          <button
+            type="button"
+            class="btn btn-light border"
+            on:click={toggleInput}
+          >
+            <i class="bi bi-calendar-range" />
+          </button>
+
+          <button class="btn btn-warning">
+            <i class="bi bi-search" />
+          </button>
+        </div>
+
+        <div id="dateInput" class="input-group d-none">
+          <input
+            id="rentalPeriod"
+            type="text"
+            class="form-control"
+            aria-label="Rental period"
+            placeholder="Select dates"
+            readonly
+            required
+          />
+
+          <button
+            type="button"
+            class="btn btn-light border"
+            on:click={toggleInput}
+          >
+            <i class="bi bi-card-text" />
+          </button>
+
+          <button class="btn btn-warning">
+            <i class="bi bi-search" />
+          </button>
+        </div>
+      </form>
     </div>
   </nav>
 </header>
