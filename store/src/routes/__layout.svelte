@@ -13,11 +13,6 @@
     });
   });
 
-  const toggleSearch = (_event) => {
-    document.getElementById("searchClose").classList.toggle("d-none");
-    document.getElementById("searchOpen").classList.toggle("d-none");
-  };
-
   const toggleInput = (_event) => {
     document.getElementById("textInput").classList.toggle("d-none");
     if (!document.getElementById("dateInput").classList.toggle("d-none")) {
@@ -27,20 +22,31 @@
 </script>
 
 <header>
-  <nav class="navbar navbar-dark bg-dark fixed-top">
-    <div id="searchClose" class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <i class="bi bi-journal-bookmark-fill white" />
-      </a>
-      <button class="btn btn-outline-light" on:click={toggleSearch}>
-        <i class="bi bi-search" />
-      </button>
-    </div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <div class="d-flex">
+        <a class="navbar-brand" href="/">
+          <img
+            src="nolonoloplus-light.png"
+            alt="Nolo Nolo Plus Logo"
+            height="24"
+          />
+        </a>
 
-    <div id="searchOpen" class="container-fluid d-none">
-      <button class="btn btn-outline-light" on:click={toggleSearch}>
-        <i class="bi bi-list" />
-      </button>
+        <ul class="navbar-nav d-none d-md-flex">
+          <li class="nav-item">
+            <a class="nav-link" href="/cart">
+              <i class="bi bi-handbag white" />
+              <sup class="fw-bolder orange">{$cartItems.length}</sup>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile"
+              ><i class="bi bi-person white" /></a
+            >
+          </li>
+        </ul>
+      </div>
 
       <form class="d-flex" style="max-width: 75vw;">
         <div id="textInput" class="input-group">
@@ -100,15 +106,13 @@
   <nav class="navbar navbar-expand navbar-light bg-light fixed-bottom">
     <ul class="navbar-nav w-100 justify-content-evenly">
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="bi bi-person black" /></a>
+        <a class="nav-link" href="/profile"><i class="bi bi-person black" /></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#"
-          ><i class="bi bi-house black" /></a
-        >
+        <a class="nav-link" href="/"><i class="bi bi-house black" /></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/cart">
           <i class="bi bi-handbag black" />
           <sup class="fw-bolder orange">{$cartItems.length}</sup>
         </a>
