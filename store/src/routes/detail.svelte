@@ -169,7 +169,7 @@
         <div class="col">
           <!-- first review -->
           <div class="card-body">
-            <h3 class="card-title">{review.username}</h3>
+            <h3 class="card-title text-truncate">{review.username}</h3>
             <p class="card-text">
               {review.review}
             </p>
