@@ -172,7 +172,6 @@
 
 <style>
   .card {
-    /* FIXME */
     min-width: 25vw;
     min-height: 60vh;
   }
