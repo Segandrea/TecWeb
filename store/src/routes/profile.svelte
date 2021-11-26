@@ -157,3 +157,32 @@
 </main>
 
 <slot />
+
+<style>
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 10px rgba(127, 127, 127, 0.4);
+    border-radius: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(127, 127, 127, 0.9);
+    border-radius: 12px;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .overflow-auto::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .overflow-auto {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+</style>
