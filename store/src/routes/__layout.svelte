@@ -20,7 +20,9 @@
 
   const toggleInput = (_event) => {
     document.getElementById("textInput").classList.toggle("d-none");
-    document.getElementById("dateInput").classList.toggle("d-none");
+    if (!document.getElementById("dateInput").classList.toggle("d-none")) {
+      document.getElementById("rentalPeriod")._flatpickr.toggle();
+    }
   };
 </script>
 
