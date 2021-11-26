@@ -101,57 +101,55 @@
     <div class="col col-lg-9">
       <h2 class="text-center py-4">Your Orders</h2>
 
-      <div class="overflow-auto" style="max-height: 75vh;">
-        <ul class="list-group">
-          {#each orders as order}
-            <li class="list-group-item">
-              <div class="row d-flex align-items-center">
-                <div class="col-md-2 my-2 text-center">
-                  <a href="#"
-                    ><img
-                      class="img-thumbnail"
-                      src={order.product.image_url}
-                      alt={order.product.name}
-                    /></a
-                  >
-                </div>
+      <ul class="list-group">
+        {#each orders as order}
+          <li class="list-group-item">
+            <div class="row d-flex align-items-center">
+              <div class="col-md-2 my-2 text-center">
+                <a href="#"
+                  ><img
+                    class="img-thumbnail"
+                    src={order.product.image_url}
+                    alt={order.product.name}
+                  /></a
+                >
+              </div>
 
-                <div class="col-md-4 my-2 text-center">
-                  <div class="row">
-                    <div class="col">
-                      <a class="link-dark" href="#">
-                        <div class="text-truncate">
-                          {order.product.description}
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col">
-                      <small class="text-muted">{order.issued_at}</small>
-                    </div>
+              <div class="col-md-4 my-2 text-center">
+                <div class="row">
+                  <div class="col">
+                    <a class="link-dark" href="#">
+                      <div class="text-truncate">
+                        {order.product.description}
+                      </div>
+                    </a>
                   </div>
                 </div>
 
-                <div class="col-md-2 my-2 text-center fw-bold">
-                  {order.status}
-                </div>
-
-                <div class="col-md-2 my-2 text-center">
-                  <i class="bi bi-currency-euro">{order.price}</i>
-                </div>
-
-                <div class="col-md-2 my-2 text-center">
-                  <a href="#">
-                    Leave a review <i class="bi bi-pen" />
-                  </a>
+                <div class="row">
+                  <div class="col">
+                    <small class="text-muted">{order.issued_at}</small>
+                  </div>
                 </div>
               </div>
-            </li>
-          {/each}
-        </ul>
-      </div>
+
+              <div class="col-md-1 my-2 text-center fw-bold">
+                {order.status}
+              </div>
+
+              <div class="col-md-2 my-2 text-center">
+                <i class="bi bi-currency-euro">{order.price}</i>
+              </div>
+
+              <div class="col-md-3 my-2 text-center">
+                <a href="#">
+                  Leave a review <i class="bi bi-pen" />
+                </a>
+              </div>
+            </div>
+          </li>
+        {/each}
+      </ul>
     </div>
   </div>
 </main>
@@ -173,16 +171,15 @@
     border-radius: 12px;
   }
 
-  @media screen and (max-width: 767px) {
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .overflow-auto::-webkit-scrollbar {
-      display: none;
-    }
+  .list-group {
+    max-height: 75vh;
+    overflow: auto;
+  }
 
-    /* Hide scrollbar for IE, Edge and Firefox */
-    .overflow-auto {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
+  @media screen and (max-width: 767px) {
+    .list-group {
+      max-height: unset;
+      overflow: unset;
     }
   }
 </style>
