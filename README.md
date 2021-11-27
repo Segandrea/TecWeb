@@ -1,3 +1,2 @@
-### Credits
-
-- [LitePicker](https://github.com/wakirin/Litepicker.git)
+Nolo Nolo Plus
+==============
