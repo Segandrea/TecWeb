@@ -84,9 +84,8 @@
               >
                 <span>Daily</span>
                 <span>
-                  {cart.days} <small>x</small> <i
-                    class="bi bi-currency-euro black">{product.dailyPrice}</i
-                  >
+                  {cart.days} <small>x</small>
+                  <i class="bi bi-currency-euro black">{product.dailyPrice}</i>
                 </span>
               </div>
             </div>
