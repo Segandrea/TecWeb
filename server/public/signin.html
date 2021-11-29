@@ -3,16 +3,17 @@
     <title>Sign In</title>
   </head>
   <body>
-    <form action="/store/signin" method="post">
+    <form action="/api/store/signin" method="post">
       <div>
         <label>Email:</label>
-        <input type="text" name="email" />
+        <input type="text" name="email" required />
       </div>
       <div>
         <label>Password:</label>
-        <input type="password" name="password" />
+        <input type="password" name="password" required />
       </div>
       <div>
+        <input type="hidden" name="role" value="customer" />
         <input type="submit" value="Log In" />
       </div>
     </form>
