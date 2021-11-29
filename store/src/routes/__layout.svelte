@@ -27,7 +27,7 @@
       <div class="d-flex">
         <a class="navbar-brand" href="/">
           <img
-            src="nolonoloplus-light.png"
+            src="/nolonoloplus-light.png"
             alt="Nolo Nolo Plus Logo"
             height="24"
           />
