@@ -2,7 +2,7 @@
   "name": "server",
   "version": "0.1.0",
   "scripts": {
-    "server": "node src/app.js",
+    "server": "node app.js",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "fmt": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
   },
