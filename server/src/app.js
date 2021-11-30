@@ -5,10 +5,15 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
+const logger = require("morgan");
+
 const app = express();
 const port = 8000;
 
 // !!! DO NOT CHANGE THE ORDER OF THE FOLLOWING LINES !!!
+
+// setup morgan logger for logging requests and responses
+app.use(logger("dev"));
 
 // setup static folders
 app.use("/store", express.static("../store/build/"));
