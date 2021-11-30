@@ -6,31 +6,47 @@ const router = express.Router();
 // require customer authentication
 function restrict(req, res, next) {
   if (req.user && req.user.role == "customer") {
-    next();
+    return next();
   } else {
-    res.redirect("/signin.html");
+    req.session.returnTo = req.originalUrl;
+    return res.redirect("/store/auth/signin?error=required");
   }
 }
 
-router.get("/ping", (req, res) => {
-  res.sendStatus(200);
-});
+router.post("/signin", function (req, res, next) {
+  passport.authenticate("local", function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
 
-router.post(
-  "/signin",
-  passport.authenticate("local", {
-    successRedirect: "/hello.html",
-    failureRedirect: "/error401.html",
-  })
-);
+    if (!user) {
+      return res.redirect("/store/auth/signin?error=invalid");
+    }
+
+    req.login(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+
+      const returnTo = req.session.returnTo || "/store";
+      delete req.session.returnTo;
+
+      return res.redirect(returnTo);
+    });
+  })(req, res, next);
+});
 
 router.get("/signout", (req, res) => {
   req.logout();
-  res.redirect("/signin.html");
+  res.redirect("/store");
 });
 
 router.get("/secret", restrict, (req, res) => {
   res.json({ user: req.user });
+});
+
+router.get("/ping", (req, res) => {
+  return res.sendStatus(200);
 });
 
 module.exports = router;

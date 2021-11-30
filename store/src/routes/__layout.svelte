@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { path } from "./helpers.js";
+  import { path } from "$lib/helpers.js";
   import { rentalPeriod, cartItems } from "./stores.js";
 
   onMount(() => {
@@ -30,7 +30,7 @@
           <img
             src={path("/nolonoloplus-light.png")}
             alt="Nolo Nolo Plus Logo"
-            height="24"
+            height="32"
           />
         </a>
 

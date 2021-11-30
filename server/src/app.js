@@ -15,7 +15,12 @@ app.use("/store", express.static("../store/build/"));
 
 // setup express session backend
 app.use(
-  session({ secret: "<FIXME>", resave: false, saveUninitialized: false })
+  session({
+    secret: "<FIXME>",
+    resave: false,
+    cookie: { maxAge: 60000 },
+    saveUninitialized: false,
+  })
 );
 
 // setup incoming request body parsers
