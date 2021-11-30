@@ -11,7 +11,7 @@ const port = 8000;
 // !!! DO NOT CHANGE THE ORDER OF THE FOLLOWING LINES !!!
 
 // setup static folders
-app.use(express.static("public"));
+app.use("/store", express.static("../store/build/"));
 
 // setup express session backend
 app.use(

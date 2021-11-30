@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { path } from "./helpers.js";
   import { rentalPeriod, cartItems } from "./stores.js";
 
   onMount(() => {
@@ -25,9 +26,9 @@
   <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <div class="d-flex">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href={path("/")}>
           <img
-            src="/nolonoloplus-light.png"
+            src={path("/nolonoloplus-light.png")}
             alt="Nolo Nolo Plus Logo"
             height="24"
           />
@@ -35,13 +36,13 @@
 
         <ul class="navbar-nav d-none d-md-flex">
           <li class="nav-item">
-            <a class="nav-link" href="/cart">
+            <a class="nav-link" href={path("/cart")}>
               <i class="bi bi-handbag white" />
               <sup class="fw-bolder orange">{$cartItems.length}</sup>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/profile"
+            <a class="nav-link" href={path("/profile")}
               ><i class="bi bi-person white" /></a
             >
           </li>
@@ -106,13 +107,15 @@
   <nav class="navbar navbar-expand navbar-light bg-light fixed-bottom">
     <ul class="navbar-nav w-100 justify-content-evenly">
       <li class="nav-item">
-        <a class="nav-link" href="/profile"><i class="bi bi-person black" /></a>
+        <a class="nav-link" href={path("/profile")}
+          ><i class="bi bi-person black" /></a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/"><i class="bi bi-house black" /></a>
+        <a class="nav-link" href={path("/")}><i class="bi bi-house black" /></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/cart">
+        <a class="nav-link" href={path("/cart")}>
           <i class="bi bi-handbag black" />
           <sup class="fw-bolder orange">{$cartItems.length}</sup>
         </a>

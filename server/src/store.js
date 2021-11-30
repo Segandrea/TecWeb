@@ -13,7 +13,7 @@ function restrict(req, res, next) {
 }
 
 router.get("/ping", (req, res) => {
-  res.status(200);
+  res.sendStatus(200);
 });
 
 router.post(
