@@ -7,6 +7,11 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const logger = require("morgan");
 
+const db = require("./db.js");
+
+// setup MongoDB
+db.connect();
+
 const app = express();
 const port = 8000;
 
@@ -80,6 +85,28 @@ function authUser(req, email, password, done) {
     }
   }
 }
+
+/*
+function verifyCustomer(email, password, callback) {
+  AuthCustomer.findOne({ email }).exec(function (error, user) {
+    if (error) {
+      return callback({ error: true });
+    } else if (!user) {
+      return callback({ error: true });
+    } else {
+      user.comparePassword(password, function (matchError, isMatch) {
+        if (matchError) {
+          return callback({ error: true });
+        } else if (!isMatch) {
+          return callback({ error: true });
+        } else {
+          return callback({ success: true });
+        }
+      });
+    }
+  });
+}
+*/
 
 function serializeUser(user, done) {
   done(null, { id: user.id, role: user.role });

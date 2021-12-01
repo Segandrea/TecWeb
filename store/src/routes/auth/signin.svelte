@@ -9,6 +9,14 @@
   const error = errorKind[urlParams.get("error")];
 </script>
 
+<svelte:head>
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+  </style>
+</svelte:head>
+
 <main class="w-100 h-100">
   <div class="container h-100 w-100">
     <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
@@ -76,7 +84,6 @@
 
 <style>
   main {
-    background-color: #f5f5f5;
     padding: 0 !important;
     margin: 0 !important;
   }

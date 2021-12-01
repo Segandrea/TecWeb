@@ -1,6 +1,12 @@
 <script>
   import { path } from "$lib/helpers.js";
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const errorKind = {
+    invalid: "Invalid credentials",
+  };
+  const error = errorKind[urlParams.get("error")];
+
   function checkValidity() {
     const password = document.querySelector("input[name=password]");
     const confirm = document.querySelector("input[name=confirm]");
@@ -13,6 +19,14 @@
   }
 </script>
 
+<svelte:head>
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+  </style>
+</svelte:head>
+
 <main class="w-100 h-100">
   <div class="container h-100 w-100">
     <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
@@ -23,6 +37,21 @@
         <h1 class="h3 my-4 fw-normal">Nice to meet you!</h1>
 
         <form action="/api/store/signup" method="post">
+          {#if error}
+            <div
+              class="alert alert-warning alert-dismissible fade show mb-4"
+              role="alert"
+            >
+              {error}
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              />
+            </div>
+          {/if}
+
           <div class="form-floating">
             <input
               type="email"
@@ -58,7 +87,6 @@
             <label for="signUpConfirmPassword">Confirm password</label>
           </div>
 
-          <input type="hidden" name="role" value="customer" />
           <button class="btn btn-lg btn-warning w-100 mt-4" type="submit"
             >Sign up</button
           >
@@ -77,7 +105,6 @@
 
 <style>
   main {
-    background-color: #f5f5f5;
     padding: 0 !important;
     margin: 0 !important;
   }

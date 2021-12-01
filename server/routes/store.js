@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const CustomerUser = require("../models/store.js").CustomerUser;
 
 const router = express.Router();
 
@@ -12,6 +13,29 @@ function restrict(req, res, next) {
     return res.redirect("/store/auth/signin?error=required");
   }
 }
+
+router.post("/signup", async (req, res) => {
+  const alreadyRegistered = await CustomerUser.exists({
+    email: req.body.email,
+  });
+
+  if (alreadyRegistered) {
+    return res.redirect("/store/auth/signup?error=invalid");
+  }
+
+  const user = new CustomerUser({
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  user
+    .save()
+    .then(() => res.redirect("/store/auth/signin?error=required"))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 
 router.post("/signin", function (req, res, next) {
   passport.authenticate("local", function (err, user, info) {
