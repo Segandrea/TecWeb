@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const CustomerUser = require("../models/store.js").CustomerUser;
+const User = require("../models/user.js").User;
 
 const router = express.Router();
 
@@ -15,7 +15,8 @@ function restrict(req, res, next) {
 }
 
 router.post("/signup", async (req, res) => {
-  const alreadyRegistered = await CustomerUser.exists({
+  const alreadyRegistered = await User.exists({
+    role: "customer",
     email: req.body.email,
   });
 
@@ -23,7 +24,8 @@ router.post("/signup", async (req, res) => {
     return res.redirect("/store/auth/signup?error=invalid");
   }
 
-  const user = new CustomerUser({
+  const user = new User({
+    role: "customer",
     email: req.body.email,
     password: req.body.password,
   });

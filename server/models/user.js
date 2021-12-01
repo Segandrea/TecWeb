@@ -5,13 +5,17 @@ const bcrypt = require("bcryptjs");
 // TODO: export in global config file
 const saltRounds = 10;
 
-const CustomerUserSchema = new Schema({
-  email: { type: String, required: true, unique: true, index: true },
+const UserSchema = new Schema({
+  role: { type: String, enum: ["customer"], required: true },
+  email: { type: String, required: true },
   password: { type: String, required: true },
 });
 
+// compound index on role and email fields of UserSchema
+UserSchema.index({ role: 1, email: 1 }, { unique: true });
+
 // reference: https://coderrocketfuel.com/article/store-passwords-in-mongodb-with-node-js-mongoose-and-bcrypt
-CustomerUserSchema.pre("save", function (next) {
+UserSchema.pre("save", function (next) {
   const user = this;
 
   if (this.isModified("password") || this.isNew) {
@@ -34,7 +38,7 @@ CustomerUserSchema.pre("save", function (next) {
   }
 });
 
-CustomerUserSchema.methods.comparePassword = function (password, callback) {
+UserSchema.methods.comparePassword = function (password, callback) {
   bcrypt.compare(password, this.password, function (error, isMatch) {
     if (error) {
       return callback(error);
@@ -44,6 +48,6 @@ CustomerUserSchema.methods.comparePassword = function (password, callback) {
   });
 };
 
-const CustomerUser = mongoose.model("CustomerUser", CustomerUserSchema);
+const User = mongoose.model("User", UserSchema);
 
-module.exports = { CustomerUser };
+module.exports = { User };

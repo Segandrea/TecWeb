@@ -8,6 +8,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const logger = require("morgan");
 
 const db = require("./db.js");
+const User = require("./models/user.js").User;
 
 // setup MongoDB
 db.connect();
@@ -45,7 +46,7 @@ app.use(passport.session());
 passport.use(
   new LocalStrategy(
     { usernameField: "email", passReqToCallback: true },
-    authUser
+    authenticateUser
   )
 );
 
@@ -66,81 +67,41 @@ app.listen(port, () => {
 /*
  * passport callbacks
  */
-function authUser(req, email, password, done) {
-  switch (email) {
-    case "admin@email.com": {
-      const user = { id: "adminId", role: "admin" };
-      return done(null, user);
+function authenticateUser(req, email, password, done) {
+  const role = req.body.role;
+
+  User.findOne({ email, role }, (err, user) => {
+    if (err) {
+      console.error(err);
+      return done(err);
     }
-    case "employee@email.com": {
-      const user = { id: "employeeId", role: "employee" };
-      return done(null, user);
-    }
-    case "customer@email.com": {
-      const user = { id: "customerId", role: "customer" };
-      return done(null, user);
-    }
-    default: {
+
+    if (!user) {
       return done(null, false, { message: "invalid credentials" });
     }
-  }
-}
 
-/*
-function verifyCustomer(email, password, callback) {
-  AuthCustomer.findOne({ email }).exec(function (error, user) {
-    if (error) {
-      return callback({ error: true });
-    } else if (!user) {
-      return callback({ error: true });
-    } else {
-      user.comparePassword(password, function (matchError, isMatch) {
-        if (matchError) {
-          return callback({ error: true });
-        } else if (!isMatch) {
-          return callback({ error: true });
-        } else {
-          return callback({ success: true });
-        }
-      });
-    }
+    user.comparePassword(password, function (err, isMatch) {
+      if (err) {
+        console.error(err);
+        return done(null, false, { message: "invalid credentials" });
+      }
+
+      if (!isMatch) {
+        return done(null, false, { message: "invalid credentials" });
+      }
+
+      return done(null, user);
+    });
   });
 }
-*/
 
 function serializeUser(user, done) {
   done(null, { id: user.id, role: user.role });
 }
 
 function deserializeUser(user, done) {
-  // TODO: retrieve the user
-  /*
-  swith (user.role) {
-    case "admin": {
-      Admin.findById(user.id, (err, admin) => {
-          done(err, admin);
-      });
-      break;
-    }
-    case "employee": {
-      Employee.findById(user.id, (err, employee) => {
-          done(err, employee);
-      });
-      break;
-    }
-    case "customer": {
-      Customer.findById(user.id, (err, customer) => {
-          done(err, customer);
-      });
-      break;
-    }
-    default: {
-      let err = ...;
-      done(err);
-      break;
-    }
-  }
-   */
-
-  done(null, user);
+  // TODO: load actual user data: e.g. Customer, Employee, Admin
+  User.findById(user.id, (err, user) => {
+    done(err, user);
+  });
 }
