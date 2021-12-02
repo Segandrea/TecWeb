@@ -71,6 +71,19 @@ router.get("/secret", restrict, (req, res) => {
   res.json({ user: req.user });
 });
 
+router.get("/products", (req, res) => {
+  res.json({
+    products: [{
+      id: "fixmeId",
+      imageUrl: "fixmeImageUrl",
+      name: "fixmeName",
+      description: "fixmeDescription",
+      basePrice: "fixmeBasePrice",
+      dailyPrice: "fixmeDailyPrice",
+    }]
+  })
+});
+
 router.get("/ping", (req, res) => {
   return res.sendStatus(200);
 });

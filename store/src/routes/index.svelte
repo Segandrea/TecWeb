@@ -1,21 +1,9 @@
 <script context="module">
-  import faker from "faker";
-
   export async function load({ page, fetch, session, stuff }) {
-    let products = new Array(20);
-    products.fill({
-      id: faker.datatype.uuid(),
-      img_url: faker.image.technics(),
-      name: faker.commerce.productName(),
-      description: faker.commerce.productDescription(),
-      base_price: faker.datatype.float(),
-      daily_price: faker.datatype.float(),
-    });
+    let products = await fetch("/api/store/products").then((res) => res.json());
 
     return {
-      props: {
-        products,
-      },
+      props: products,
     };
   }
 </script>
@@ -33,7 +21,7 @@
     {#each products as product}
       <div class="col">
         <div class="card">
-          <img src={product.img_url} class="card-img-top" />
+          <img src={product.imageUrl} class="card-img-top" />
           <div class="card-body">
             <h5 class="card-title">{product.name}</h5>
             <div class="card-subtitle mb-2 fs-6">
@@ -54,7 +42,7 @@
                   <th class="text-start orange fw-bold">Daily</th>
                   <th class="text-end orange fw-bold"
                     ><i class="bi bi-currency-euro">
-                      {product.daily_price}</i
+                      {product.dailyPrice}</i
                     ></th
                   >
                 </tr>
@@ -63,7 +51,7 @@
                   <td class="text-end text-muted"
                     ><small
                       ><i class="bi bi-currency-euro">
-                        {product.base_price}</i
+                        {product.basePrice}</i
                       ></small
                     ></td
                   >
