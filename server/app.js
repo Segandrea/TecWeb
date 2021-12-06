@@ -22,6 +22,7 @@ const port = 8000;
 app.use(logger("dev"));
 
 // setup static folders
+app.use("/backoffice", express.static("../backoffice/dist/"));
 app.use("/store", express.static("../store/build/"));
 
 // setup express session backend
