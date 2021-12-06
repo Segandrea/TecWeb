@@ -7,6 +7,8 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const logger = require("morgan");
 
+const config = require("./config.js");
+
 const db = require("./db.js");
 const User = require("./models/user.js").User;
 
@@ -22,13 +24,19 @@ const port = 8000;
 app.use(logger("dev"));
 
 // setup static folders
-app.use("/backoffice", express.static("../backoffice/dist/"));
-app.use("/store", express.static("../store/build/"));
+app.use("/backoffice", express.static(config.backoffice.staticPath));
+app.use("/backoffice/*", (req, res) =>
+  res.sendFile(config.backoffice.fallbackPage)
+);
+
+app.use("/store", express.static(config.store.staticPath));
+
+app.use(express.static("./public"));
 
 // setup express session backend
 app.use(
   session({
-    secret: "<FIXME>",
+    secret: config.session.secret,
     resave: false,
     cookie: { maxAge: 60000 },
     saveUninitialized: false,
