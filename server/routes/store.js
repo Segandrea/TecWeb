@@ -71,16 +71,96 @@ router.get("/secret", restrict, (req, res) => {
   res.json({ user: req.user });
 });
 
+router.get("/products/:productId", (req, res) => {
+  res.json({
+    id: req.param.productId,
+    imageUrl: "fixmeImageUrl",
+    name: "fixmeSpecifiedName",
+    description: "fixmeDescription",
+    basePrice: "fixmeBasePrice",
+    dailyPrice: "fixmeDailyPrice",
+    rating: "fixmeRating",
+  })
+});
+
 router.get("/products", (req, res) => {
   res.json({
     products: [{
-      id: "fixmeId",
+      id: "fixmeProductId",
       imageUrl: "fixmeImageUrl",
       name: "fixmeName",
       description: "fixmeDescription",
       basePrice: "fixmeBasePrice",
       dailyPrice: "fixmeDailyPrice",
+      rating: "fixmeRating",
     }]
+  })
+});
+
+router.get("/reviews", (req, res) => {
+  const productId = req.query.productId;
+  if (productId) {
+    // reviews for productId
+    return res.json({
+      reviews: [{
+        id: "fixmeReviewIdSpecified",
+        productId: "fixmeProductIdSpecified",
+        userId: "fixmeUserId",
+        content: "specifiedText",
+        rating: "fixmeRating",
+      }]
+    })
+  }
+  // return all reviews
+  res.json({
+    reviews: [{
+      id: "fixmeReviewId",
+      productId: "fixmeProductId",
+      userId: "fixmeUserId",
+      content: "fixmeContent",
+      rating: "fixmeRating",
+    }]
+  })
+})
+
+router.get("/discounts", (req, res) => {
+  res.json({
+    discountCodes: [{
+      code: "fixmeCode",
+      discount: "fixmeDiscount",
+    }]
+  })
+});
+
+router.get("/orders", (req, res) => {
+  res.json({
+    orders: [{
+      id: "fixmeId",
+      price: "fixmePrice",
+      status: "fixmeStatus",
+      issuedAt: "fixmeIssuedAt",
+      productId: "fixmeProductId",
+    }]
+  })
+});
+
+router.get("/cart", (req, res) => {
+  res.json({
+    id: "fixmeId",
+    rentalPeriod: "fixmeRentalPeriod",
+    days: "fixmeDays",
+    discountPrice: "fixmeDiscountPrice",
+    subtotalPrice: "fixmeSubtotalPrice",
+    totalPrice: "fixmeTotalPrice",
+  })
+});
+
+router.get("/profile", (req, res) => {
+  res.json({
+    id: "fixmeId",
+    email: "fixmeEmail",
+    avatar: "fixmeAvatar",
+    username: "fixmeUsername",
   })
 });
 

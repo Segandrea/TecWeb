@@ -23,7 +23,12 @@
         <div class="card">
           <img src={product.imageUrl} class="card-img-top" />
           <div class="card-body">
-            <h5 class="card-title">{product.name}</h5>
+            <a
+              href="/store/detail/{product.id}"
+              class="stretched-link text-decoration-none text-reset"
+            >
+              <h5 class="card-title">{product.name}</h5>
+            </a>
             <div class="card-subtitle mb-2 fs-6">
               <span class="bi bi-star-fill orange" />
               <span class="bi bi-star-fill orange" />

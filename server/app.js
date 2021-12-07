@@ -23,6 +23,8 @@ app.use(logger("dev"));
 
 // setup static folders
 app.use("/store", express.static("../store/build/"));
+const path = require("path");
+app.use("/store/*", (req, res) => res.sendFile(path.resolve("../store/build/index.html")));
 
 // setup express session backend
 app.use(

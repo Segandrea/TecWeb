@@ -1,24 +1,16 @@
 <script context="module">
-  import faker from "faker";
-
   export async function load({ page, fetch, session, stuff }) {
-    let reviews = new Array(20);
-    reviews.fill({
-      id: faker.datatype.uuid(),
-      username: faker.internet.userName(),
-      review: faker.commerce.productAdjective(),
-    });
+    let productId = page.params.productId;
+    let product = await fetch(`/api/store/products/${productId}`).then((res) =>
+      res.json()
+    );
+    let reviews = await fetch(`/api/store/reviews?productId=${productId}`)
+      .then((res) => res.json())
+      .then((res) => res.reviews);
 
     return {
       props: {
-        product: {
-          id: faker.datatype.uuid(),
-          img_url: faker.image.technics(1200, 400),
-          name: faker.commerce.productName(),
-          base_price: faker.datatype.float(),
-          daily_price: faker.datatype.float(),
-          description: faker.commerce.productDescription(),
-        },
+        product,
         reviews,
       },
     };
@@ -36,15 +28,15 @@
     <div class="carousel-inner">
       <!-- carousel item -->
       <div class="carousel-item text-center active">
-        <img class="img-fluid" src={product.img_url} />
+        <img class="img-fluid" src={product.imageUrl} />
       </div>
       <!-- carousel item -->
       <div class="carousel-item text-center">
-        <img class="img-fluid" src={product.img_url} />
+        <img class="img-fluid" src={product.imageUrl} />
       </div>
       <!-- carousel item -->
       <div class="carousel-item text-center">
-        <img class="img-fluid" src={product.img_url} />
+        <img class="img-fluid" src={product.imageUrl} />
       </div>
     </div>
 
@@ -104,12 +96,12 @@
             <div class="card-title fs-5 fw-bold">Pricing:</div>
             <div class="row">
               <small>
-                base: <i class="bi bi-currency-euro">{product.base_price}</i>
+                base: <i class="bi bi-currency-euro">{product.basePrice}</i>
               </small>
             </div>
             <div class="row mt-1 fs-4 fw-bold">
               <i class="bi bi-currency-euro orange"
-                >{product.daily_price}<sub>/day</sub></i
+                >{product.dailyPrice}<sub>/day</sub></i
               >
             </div>
           </div>
@@ -169,9 +161,9 @@
         <div class="col">
           <!-- first review -->
           <div class="card-body">
-            <h3 class="card-title text-truncate">{review.username}</h3>
+            <h3 class="card-title text-truncate">{review.userId}</h3>
             <p class="card-text">
-              {review.review}
+              {review.content}
             </p>
             <div class="card-subtitle mb-2 fs-6">
               <span class="bi bi-star-fill orange" />

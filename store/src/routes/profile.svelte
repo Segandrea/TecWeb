@@ -1,30 +1,12 @@
 <script context="module">
-  import faker from "faker";
-
   export async function load({ page, fetch, session, stuff }) {
-    let orders = new Array(20);
-    orders.fill({
-      id: faker.datatype.uuid(),
-      price: faker.commerce.price(),
-      status: "Returned",
-      issued_at: faker.date.past(),
-      product: {
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productName(),
-        image_url: faker.image.technics(),
-        description: faker.commerce.productDescription(),
-      },
-    });
+    let resOrders = await fetch("/api/store/orders").then((res) => res.json());
+    let profile = await fetch("/api/store/profile").then((res) => res.json());
 
     return {
       props: {
-        profile: {
-          id: faker.datatype.uuid(),
-          email: faker.internet.email(),
-          avatar: faker.image.abstract(),
-          username: faker.internet.userName(),
-        },
-        orders,
+        profile,
+        orders: resOrders.orders,
       },
     };
   }
@@ -106,6 +88,8 @@
           <li class="list-group-item">
             <div class="row d-flex align-items-center">
               <div class="col-md-2 my-2 text-center">
+                FIXME
+                <!-- TODO: add a function that connects order.productId with product
                 <a href="#"
                   ><img
                     class="img-thumbnail"
@@ -113,6 +97,7 @@
                     alt={order.product.name}
                   /></a
                 >
+                -->
               </div>
 
               <div class="col-md-4 my-2 text-center">
@@ -120,7 +105,10 @@
                   <div class="col">
                     <a class="link-dark" href="#">
                       <div class="text-truncate">
+                        FIXME
+                        <!-- TODO: add a function that connects order.productId with product
                         {order.product.description}
+                          -->
                       </div>
                     </a>
                   </div>

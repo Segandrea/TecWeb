@@ -1,59 +1,23 @@
+<script context="module">
+  export async function load({ page, fetch, session, stuff }) {
+    let resProd = await fetch("/api/store/products").then((res) => res.json());
+    let resCart = await fetch("/api/store/cart").then((res) => res.json());
+    let resDisc = await fetch("/api/store/discounts").then((res) => res.json());
+    let cart = Object.assign({}, resProd, resCart, resDisc);
+
+    // TODO: need to fix the cart (rentalPeriod is never shown)
+    // NOTE: rentalPeriod is about the whole cart
+    return {
+      props: {
+        cart,
+      },
+    };
+  }
+</script>
+
 <script>
-  import faker from "faker";
-
-  const products = [
-    {
-      id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
-      imageUrl: faker.image.technics(),
-      basePrice: faker.datatype.float({ min: 2, max: 5 }),
-      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
-      description: faker.commerce.productDescription(),
-    },
-    {
-      id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
-      imageUrl: faker.image.technics(),
-      basePrice: faker.datatype.float({ min: 2, max: 5 }),
-      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
-      description: faker.commerce.productDescription(),
-    },
-    {
-      id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
-      imageUrl: faker.image.technics(),
-      basePrice: faker.datatype.float({ min: 2, max: 5 }),
-      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
-      description: faker.commerce.productDescription(),
-    },
-    {
-      id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
-      imageUrl: faker.image.technics(),
-      basePrice: faker.datatype.float({ min: 2, max: 5 }),
-      dailyPrice: faker.datatype.float({ min: 1, max: 5 }),
-      description: faker.commerce.productDescription(),
-    },
-  ];
-
-  export let cart = {
-    products,
-    rentalPeriod: [faker.datatype.datetime(), faker.datatype.datetime()],
-    days: faker.datatype.number({ min: 1, max: 7, precision: 1 }),
-    discountPrice: faker.datatype.float({ min: 10, max: 100 }),
-    subtotalPrice: faker.datatype.float({ min: 10, max: 100 }),
-    totalPrice: faker.datatype.float({ min: 10, max: 100 }),
-    discountCodes: [
-      {
-        code: faker.vehicle.manufacturer().split(" ")[0].toUpperCase(),
-        discount: faker.datatype.float({ min: 5, max: 25 }).toFixed(0),
-      },
-      {
-        code: faker.vehicle.manufacturer().split(" ")[0].toUpperCase(),
-        discount: faker.datatype.float({ min: 5, max: 25 }).toFixed(0),
-      },
-    ],
-  };
+  export let cart;
+  // TODO: export count of items in cart and use it in layout
 </script>
 
 <svelte:head>
@@ -94,12 +58,15 @@
             >
               <span>Total</span>
               <span>
+                FIXME
+                <!-- TODO: uncomment when endpoints return float values
                 <i class="bi bi-currency-euro black"
                   >{(
                     product.basePrice +
                     cart.days * product.dailyPrice
                   ).toFixed(2)}</i
                 >
+                -->
               </span>
             </div>
           </div>
