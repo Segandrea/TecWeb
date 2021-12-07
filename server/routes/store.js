@@ -80,21 +80,23 @@ router.get("/products/:productId", (req, res) => {
     basePrice: "fixmeBasePrice",
     dailyPrice: "fixmeDailyPrice",
     rating: "fixmeRating",
-  })
+  });
 });
 
 router.get("/products", (req, res) => {
   res.json({
-    products: [{
-      id: "fixmeProductId",
-      imageUrl: "fixmeImageUrl",
-      name: "fixmeName",
-      description: "fixmeDescription",
-      basePrice: "fixmeBasePrice",
-      dailyPrice: "fixmeDailyPrice",
-      rating: "fixmeRating",
-    }]
-  })
+    products: [
+      {
+        id: "fixmeProductId",
+        imageUrl: "fixmeImageUrl",
+        name: "fixmeName",
+        description: "fixmeDescription",
+        basePrice: "fixmeBasePrice",
+        dailyPrice: "fixmeDailyPrice",
+        rating: "fixmeRating",
+      },
+    ],
+  });
 });
 
 router.get("/reviews", (req, res) => {
@@ -102,46 +104,54 @@ router.get("/reviews", (req, res) => {
   if (productId) {
     // reviews for productId
     return res.json({
-      reviews: [{
-        id: "fixmeReviewIdSpecified",
-        productId: "fixmeProductIdSpecified",
-        userId: "fixmeUserId",
-        content: "specifiedText",
-        rating: "fixmeRating",
-      }]
-    })
+      reviews: [
+        {
+          id: "fixmeReviewIdSpecified",
+          productId: "fixmeProductIdSpecified",
+          userId: "fixmeUserId",
+          content: "specifiedText",
+          rating: "fixmeRating",
+        },
+      ],
+    });
   }
   // return all reviews
   res.json({
-    reviews: [{
-      id: "fixmeReviewId",
-      productId: "fixmeProductId",
-      userId: "fixmeUserId",
-      content: "fixmeContent",
-      rating: "fixmeRating",
-    }]
-  })
-})
+    reviews: [
+      {
+        id: "fixmeReviewId",
+        productId: "fixmeProductId",
+        userId: "fixmeUserId",
+        content: "fixmeContent",
+        rating: "fixmeRating",
+      },
+    ],
+  });
+});
 
 router.get("/discounts", (req, res) => {
   res.json({
-    discountCodes: [{
-      code: "fixmeCode",
-      discount: "fixmeDiscount",
-    }]
-  })
+    discountCodes: [
+      {
+        code: "fixmeCode",
+        discount: "fixmeDiscount",
+      },
+    ],
+  });
 });
 
 router.get("/orders", (req, res) => {
   res.json({
-    orders: [{
-      id: "fixmeId",
-      price: "fixmePrice",
-      status: "fixmeStatus",
-      issuedAt: "fixmeIssuedAt",
-      productId: "fixmeProductId",
-    }]
-  })
+    orders: [
+      {
+        id: "fixmeId",
+        price: "fixmePrice",
+        status: "fixmeStatus",
+        issuedAt: "fixmeIssuedAt",
+        productId: "fixmeProductId",
+      },
+    ],
+  });
 });
 
 router.get("/cart", (req, res) => {
@@ -152,7 +162,7 @@ router.get("/cart", (req, res) => {
     discountPrice: "fixmeDiscountPrice",
     subtotalPrice: "fixmeSubtotalPrice",
     totalPrice: "fixmeTotalPrice",
-  })
+  });
 });
 
 router.get("/profile", (req, res) => {
@@ -161,7 +171,7 @@ router.get("/profile", (req, res) => {
     email: "fixmeEmail",
     avatar: "fixmeAvatar",
     username: "fixmeUsername",
-  })
+  });
 });
 
 router.get("/ping", (req, res) => {
