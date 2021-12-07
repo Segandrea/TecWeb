@@ -1,16 +1,13 @@
+const config = require("./config.js");
 const mongoose = require("mongoose");
 
-// TODO: export in global config
-const connectionUri = `mongodb://localhost/nolonoloplus`;
-
 function connect() {
-  mongoose.connect(connectionUri, {
+  mongoose.connect(config.mongo.connectionUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
-  const connection = mongoose.connection;
-  connection.on(
+  mongoose.connection.on(
     "error",
     console.error.bind(console, "MongoDB connection error:")
   );

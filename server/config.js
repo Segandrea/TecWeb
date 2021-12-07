@@ -21,4 +21,7 @@ module.exports = {
     staticPath: storeStaticPath,
     fallbackPage: path.resolve(storeStaticPath, "index.html"),
   },
+  mongo: {
+    connectionUri: "mongodb://localhost/nolonoloplus",
+  },
 };
