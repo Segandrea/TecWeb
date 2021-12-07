@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const User = require("../models/user.js").User;
+const Product = require("../models/product.js").Product;
 
 const router = express.Router();
 
@@ -84,19 +85,22 @@ router.get("/products/:productId", (req, res) => {
 });
 
 router.get("/products", (req, res) => {
-  res.json({
-    products: [
-      {
-        id: "fixmeProductId",
-        imageUrl: "fixmeImageUrl",
-        name: "fixmeName",
-        description: "fixmeDescription",
-        basePrice: "fixmeBasePrice",
-        dailyPrice: "fixmeDailyPrice",
-        rating: "fixmeRating",
-      },
-    ],
-  });
+  Product.find({})
+         .lean()
+         .then(products => res.json({ products }))
+         .catch(err => {
+             console.error(err);
+             res.sendStatus(500);
+         })
+});
+
+router.post("/products", (req, res) => {
+  Product.create(req.body)
+         .then(product => res.status(201).json(product))
+         .catch(err => {
+             console.error(err);
+             res.sendStatus(400);
+         })
 });
 
 router.get("/reviews", (req, res) => {
