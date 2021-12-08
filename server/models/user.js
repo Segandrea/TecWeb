@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
 const UserSchema = new Schema({
-  role: { type: String, enum: ["customer"], required: true },
+  role: { type: String, enum: ["employee", "customer"], required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
 });
