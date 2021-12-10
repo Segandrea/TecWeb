@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const User = require("../models/user.js").User;
 const Product = require("../models/product.js").Product;
+const Review = require("../models/review.js").Review;
 
 const router = express.Router();
 
@@ -103,34 +104,35 @@ router.post("/products", (req, res) => {
          })
 });
 
+router.post("/reviews", (req, res) => {
+  Review.create(req.body)
+         .then(review => res.status(201).json(review))
+         .catch(err => {
+             console.error(err);
+             res.sendStatus(400);
+         })
+})
+
 router.get("/reviews", (req, res) => {
   const productId = req.query.productId;
   if (productId) {
     // reviews for productId
-    return res.json({
-      reviews: [
-        {
-          id: "fixmeReviewIdSpecified",
-          productId: "fixmeProductIdSpecified",
-          userId: "fixmeUserId",
-          content: "specifiedText",
-          rating: "fixmeRating",
-        },
-      ],
-    });
+    return  Review.find({ productId: productId})
+                  .lean()
+                  .then(reviews => res.json({ reviews }))
+                  .catch(err => {
+                      console.error(err);
+                      res.sendStatus(500);
+                  })
   }
   // return all reviews
-  res.json({
-    reviews: [
-      {
-        id: "fixmeReviewId",
-        productId: "fixmeProductId",
-        userId: "fixmeUserId",
-        content: "fixmeContent",
-        rating: "fixmeRating",
-      },
-    ],
-  });
+  Review.find({})
+        .lean()
+        .then(reviews => res.json({ reviews }))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        })
 });
 
 router.get("/discounts", (req, res) => {
