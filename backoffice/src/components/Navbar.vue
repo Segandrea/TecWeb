@@ -36,17 +36,20 @@ export default {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav flex-fill">
             <li class="nav-item">
-              <router-link class="nav-link active" aria-current="page" to="/"
+              <router-link class="nav-link" active-class="active" to="/"
                 >Home</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/customers"
+              <router-link
+                class="nav-link"
+                active-class="active"
+                to="/customers"
                 >Customers</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/products"
+              <router-link class="nav-link" active-class="active" to="/products"
                 >Products</router-link
               >
             </li>
