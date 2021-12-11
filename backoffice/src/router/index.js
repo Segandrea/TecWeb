@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Customers from "../views/Customers.vue";
+import Customer from "../views/Customer.vue";
 import Products from "../views/Products.vue";
 import Signin from "../views/Signin.vue";
 import PageNotFound from "../views/PageNotFound.vue";
@@ -18,6 +19,14 @@ const routes = [
     path: "/customers",
     name: "Customers",
     component: Customers,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/customers/:id",
+    name: "Customer",
+    component: Customer,
     meta: {
       restricted: true,
     },
