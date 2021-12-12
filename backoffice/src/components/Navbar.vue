@@ -1,13 +1,13 @@
-<script>
-export default {
-  methods: {
-    async signout() {
-      await fetch("/api/backoffice/signout", { method: "POST" });
-      localStorage.removeItem("user");
-      this.$router.push({ name: "Signin" });
-    },
-  },
-};
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+async function signout() {
+  await fetch("/api/backoffice/signout", { method: "POST" });
+  localStorage.removeItem("user");
+  router.push({ name: "Signin" });
+}
 </script>
 
 <template>

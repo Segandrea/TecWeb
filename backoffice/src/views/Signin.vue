@@ -1,56 +1,63 @@
-<script>
-export default {
-  data() {
-    return {
-      error: undefined,
-      email: undefined,
-      password: undefined,
-    };
-  },
-  methods: {
-    async signin() {
-      const res = await fetch("/api/backoffice/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          role: "employee",
-          email: this.email,
-          password: this.password,
-        }),
-      });
+<!--
+  This starter template is using Vue 3 <script setup> SFCs
+  Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+-->
+<script setup>
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-      if (res.status == 200) {
-        const returnTo = this.$route.params.returnTo || { name: "Home" };
-        localStorage.setItem("user", JSON.stringify({ role: "employee" }));
-        this.$router.push(returnTo);
-      } else {
-        this.error = "Sign-in required";
-        this.password = "";
-        this.email = "";
-        this.$refs.email.focus();
-      }
-    },
-  },
-};
+const router = useRouter();
+const route = useRoute();
+
+const error = ref();
+
+const email = ref();
+const password = ref();
+
+// https://v3.vuejs.org/guide/composition-api-template-refs.html#template-refs
+const emailElement = ref();
+
+async function signin() {
+  const res = await fetch("/api/backoffice/signin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      role: "employee",
+      email: email.value,
+      password: password.value,
+    }),
+  });
+
+  if (res.status == 200) {
+    const returnTo = route.params.returnTo || { name: "Home" };
+    localStorage.setItem("user", JSON.stringify({ role: "employee" }));
+    router.push(returnTo);
+  } else {
+    error.value = "Sign-in required";
+    password.value = "";
+    email.value = "";
+    emailElement.value.focus();
+  }
+}
 </script>
 
 <template>
   <main class="w-100 h-100 container">
     <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
       <div class="col m-auto">
-        <a href="/">
+        <router-link to="/">
           <img
             src="@/assets/nolonoloplus-dark.png"
             alt="Nolo Nolo Plus Logo"
             class="mb-4"
           />
-        </a>
+        </router-link>
 
         <form @submit.prevent="signin">
           <div
             v-if="error"
-            class="alert alert-warning alert-dismissible fade show mb-4"
             role="alert"
+            class="alert alert-warning alert-dismissible fade show mb-4"
           >
             {{ error }}
             <button
@@ -63,9 +70,9 @@ export default {
 
           <div class="form-floating">
             <input
-              v-model="email"
-              ref="email"
+              ref="emailElement"
               type="email"
+              v-model="email"
               class="form-control rounded-0 rounded-top"
               placeholder="domain@example.com"
               autofocus
@@ -75,8 +82,8 @@ export default {
           </div>
           <div class="form-floating">
             <input
-              v-model="password"
               type="password"
+              v-model="password"
               class="form-control rounded-0 rounded-bottom"
               minlength="4"
               placeholder="Password"
