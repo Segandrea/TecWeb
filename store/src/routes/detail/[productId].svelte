@@ -1,9 +1,11 @@
 <script context="module">
   export async function load({ page, fetch, session, stuff }) {
     let productId = page.params.productId;
-    let product = await fetch(`/api/store/products/${productId}`).then((res) =>
-      res.json()
-    );
+    // TODO: param instead of query because it is not restful
+    let product = await fetch(`/api/store/products?productId=${productId}`)
+      .then((res) => res.json())
+      .then((res) => res.product);
+
     let reviews = await fetch(`/api/store/reviews?productId=${productId}`)
       .then((res) => res.json())
       .then((res) => res.reviews);
@@ -20,6 +22,12 @@
 <script>
   export let product;
   export let reviews;
+
+  import { cartItems } from "../stores.js";
+
+  const addToCart = () => {
+    $cartItems = [...$cartItems, product];
+  };
 </script>
 
 <main class="container">
@@ -130,7 +138,11 @@
         <div class="card h-100 text-center">
           <div class="card-body">
             <div class="card-title fs-5 fw-bold">Add to cart</div>
-            <button type="button" class="btn btn-warning btn-lg">
+            <button
+              type="button"
+              class="btn btn-warning btn-lg"
+              on:click={addToCart}
+            >
               <i class="bi-cart3" />
               Rent
             </button>

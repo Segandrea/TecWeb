@@ -1,23 +1,36 @@
 <script context="module">
-  export async function load({ page, fetch, session, stuff }) {
-    let resProd = await fetch("/api/store/products").then((res) => res.json());
-    let resCart = await fetch("/api/store/cart").then((res) => res.json());
-    let resDisc = await fetch("/api/store/discounts").then((res) => res.json());
-    let cart = Object.assign({}, resProd, resCart, resDisc);
+  import { cartItems } from "./stores.js";
 
-    // TODO: need to fix the cart (rentalPeriod is never shown)
-    // NOTE: rentalPeriod is about the whole cart
+  let itemIds;
+  cartItems.subscribe((value) => (itemIds = value));
+
+  export async function load({ page, fetch, session, stuff }) {
+    let cartProducts = [];
+    itemIds.forEach(async (id) =>
+      cartProducts.push(
+        await fetch(`/api/store/products?productId=${id.id}`)
+          .then((res) => res.json())
+          .then((res) => res.product)
+      )
+    );
+
+    // TODO: get only inserted discounts
+    let discounts = await fetch("/api/store/discounts")
+      .then((res) => res.json())
+      .then((res) => res.discount);
+
     return {
       props: {
-        cart,
+        cartProducts,
+        discounts,
       },
     };
   }
 </script>
 
 <script>
-  export let cart;
-  // TODO: export count of items in cart and use it in layout
+  export let cartProducts;
+  export let discounts;
 </script>
 
 <svelte:head>
@@ -28,7 +41,7 @@
   <div class="row">
     <div class="col-lg-9">
       <div class="card-group d-sm-flex flex-sm-nowrap overflow-auto">
-        {#each cart.products as product}
+        {#each cartProducts as product}
           <div class="card border-0 p-2">
             <img
               src={product.imageUrl}
@@ -47,10 +60,12 @@
                 class="card-text d-flex justify-content-between fst-italic fw-bold"
               >
                 <span>Daily</span>
+                <!--
                 <span>
                   {cart.days} <small>x</small>
                   <i class="bi bi-currency-euro black">{product.dailyPrice}</i>
                 </span>
+                -->
               </div>
             </div>
             <div
@@ -78,7 +93,7 @@
       <div class="row">
         <div class="col d-flex align-items-center justify-content-between">
           <h2>Summary</h2>
-          <span>{cart.products.length} items</span>
+          <span>{cartProducts.length} items</span>
         </div>
       </div>
 
@@ -97,7 +112,7 @@
             <h5>Discount codes</h5>
           </div>
           <ul class="list-group">
-            {#each cart.discountCodes as discountCode}
+            {#each discounts as discountCode}
               <li class="list-group-item fw-bold">
                 <div class="d-flex justify-content-between">
                   <span class="text-info">{discountCode.code}</span>
@@ -112,15 +127,21 @@
       <div class="row row-cols-1">
         <div class="col d-flex justify-content-between fst-italic text-muted">
           <span>Subtotal</span>
+          <!--
           <span>{cart.subtotalPrice}</span>
+          -->
         </div>
         <div class="col d-flex justify-content-between fst-italic text-muted">
           <span>Discount</span>
+          <!--
           <span>{cart.discountPrice}</span>
+          -->
         </div>
         <div class="col d-flex justify-content-between fw-bold fst-italic">
           <span>Total</span>
+          <!--
           <span>{cart.totalPrice}</span>
+          -->
         </div>
       </div>
 

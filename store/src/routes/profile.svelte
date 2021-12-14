@@ -1,12 +1,14 @@
 <script context="module">
   export async function load({ page, fetch, session, stuff }) {
-    let resOrders = await fetch("/api/store/orders").then((res) => res.json());
+    let orders = await fetch("/api/store/orders")
+      .then((res) => res.json())
+      .then((res) => res.orders);
     let profile = await fetch("/api/store/profile").then((res) => res.json());
 
     return {
       props: {
         profile,
-        orders: resOrders.orders,
+        orders,
       },
     };
   }

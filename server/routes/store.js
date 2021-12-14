@@ -3,6 +3,10 @@ const passport = require("passport");
 const User = require("../models/user.js").User;
 const Product = require("../models/product.js").Product;
 const Review = require("../models/review.js").Review;
+const Discount = require("../models/discount.js").Discount;
+const Customer = require("../models/customer.js").Customer;
+const Order = require("../models/order.js").Order;
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const router = express.Router();
 
@@ -34,7 +38,14 @@ router.post("/signup", async (req, res) => {
 
   user
     .save()
-    .then(() => res.redirect("/store/auth/signin?error=required"))
+    .then((user) => {
+      // FIXME: handle error
+      Customer.create({
+        userId: user._id,
+        username: req.body.username,
+      });
+      res.redirect("/store/auth/signin?error=required");
+    })
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
@@ -74,110 +85,120 @@ router.get("/secret", restrict, (req, res) => {
 });
 
 router.get("/products/:productId", (req, res) => {
-  res.json({
-    id: req.param.productId,
-    imageUrl: "fixmeImageUrl",
-    name: "fixmeSpecifiedName",
-    description: "fixmeDescription",
-    basePrice: "fixmeBasePrice",
-    dailyPrice: "fixmeDailyPrice",
-    rating: "fixmeRating",
-  });
+  const productId = ObjectId(req.params.productId);
+  Product.findById(productId)
+    .lean()
+    .then((product) => res.json({ product }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
+// TODO: handle product availability
 router.get("/products", (req, res) => {
   Product.find({})
-         .lean()
-         .then(products => res.json({ products }))
-         .catch(err => {
-             console.error(err);
-             res.sendStatus(500);
-         })
+    .lean()
+    .then((products) => res.json({ products }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
-router.post("/products", (req, res) => {
+// TODO: move to backoffice
+router.post("/products", restrict, (req, res) => {
   Product.create(req.body)
-         .then(product => res.status(201).json(product))
-         .catch(err => {
-             console.error(err);
-             res.sendStatus(400);
-         })
+    .then((product) => res.status(201).json(product))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
+    });
 });
 
-router.post("/reviews", (req, res) => {
+router.post("/reviews", restrict, (req, res) => {
   Review.create(req.body)
-         .then(review => res.status(201).json(review))
-         .catch(err => {
-             console.error(err);
-             res.sendStatus(400);
-         })
-})
+    .then((review) => res.status(201).json(review))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
+    });
+});
 
 router.get("/reviews", (req, res) => {
   const productId = req.query.productId;
   if (productId) {
     // reviews for productId
-    return  Review.find({ productId: productId})
-                  .lean()
-                  .then(reviews => res.json({ reviews }))
-                  .catch(err => {
-                      console.error(err);
-                      res.sendStatus(500);
-                  })
+    return Review.find({ productId: productId })
+      .lean()
+      .then((reviews) => res.json({ reviews }))
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
   }
   // return all reviews
   Review.find({})
-        .lean()
-        .then(reviews => res.json({ reviews }))
-        .catch(err => {
-            console.error(err);
-            res.sendStatus(500);
-        })
+    .lean()
+    .then((reviews) => res.json({ reviews }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
 });
 
-router.get("/discounts", (req, res) => {
-  res.json({
-    discountCodes: [
-      {
-        code: "fixmeCode",
-        discount: "fixmeDiscount",
-      },
-    ],
-  });
+router.get("/discounts/:discountId", restrict, (req, res) => {
+  const discountId = ObjectId(req.params.discountId);
+  Discount.findById(discountId)
+    .lean()
+    .then((discount) => res.json({ discount }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
-router.get("/orders", (req, res) => {
-  res.json({
-    orders: [
-      {
-        id: "fixmeId",
-        price: "fixmePrice",
-        status: "fixmeStatus",
-        issuedAt: "fixmeIssuedAt",
-        productId: "fixmeProductId",
-      },
-    ],
-  });
+// TODO: move to backoffice
+router.get("/discounts", restrict, (req, res) => {
+  Discount.find({})
+    .lean()
+    .then((discounts) => res.json({ discounts }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
-router.get("/cart", (req, res) => {
-  res.json({
-    id: "fixmeId",
-    rentalPeriod: "fixmeRentalPeriod",
-    days: "fixmeDays",
-    discountPrice: "fixmeDiscountPrice",
-    subtotalPrice: "fixmeSubtotalPrice",
-    totalPrice: "fixmeTotalPrice",
-  });
+router.get("/orders", restrict, (req, res) => {
+  const user = req.user;
+  Order.find({})
+    .lean()
+    .then((orders) => res.json({ orders }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
-router.get("/profile", (req, res) => {
-  res.json({
-    id: "fixmeId",
-    email: "fixmeEmail",
-    avatar: "fixmeAvatar",
-    username: "fixmeUsername",
-  });
+router.post("/orders", restrict, (req, res) => {
+  // TODO
+});
+
+router.get("/profile", restrict, (req, res) => {
+  const user = req.user;
+  Customer.findOne({ userId: user._id })
+    .lean()
+    .then((customer) =>
+      res.json({
+        email: user.email,
+        username: customer.username,
+        avatar: customer.avatar,
+      })
+    )
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
 });
 
 router.get("/ping", (req, res) => {
