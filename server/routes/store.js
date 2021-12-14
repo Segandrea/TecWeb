@@ -95,9 +95,8 @@ router.get("/products/:productId", (req, res) => {
     });
 });
 
-// TODO: handle product availability
 router.get("/products", (req, res) => {
-  Product.find({})
+  Product.find({ visible: true })
     .lean()
     .then((products) => res.json({ products }))
     .catch((err) => {
@@ -107,7 +106,7 @@ router.get("/products", (req, res) => {
 });
 
 // TODO: move to backoffice
-router.post("/products", restrict, (req, res) => {
+router.post("/products", (req, res) => {
   Product.create(req.body)
     .then((product) => res.status(201).json(product))
     .catch((err) => {
@@ -171,7 +170,7 @@ router.get("/discounts", restrict, (req, res) => {
 
 router.get("/orders", restrict, (req, res) => {
   const user = req.user;
-  Order.find({})
+  Order.find({ userId: user._id })
     .lean()
     .then((orders) => res.json({ orders }))
     .catch((err) => {

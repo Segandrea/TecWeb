@@ -1,5 +1,5 @@
 <script context="module">
-  export async function load({ page, fetch, session, stuff }) {
+  export async function load({ fetch }) {
     let products = await fetch("/api/store/products").then((res) => res.json());
 
     return {
@@ -21,10 +21,10 @@
     {#each products as product}
       <div class="col">
         <div class="card">
-          <img src={product.imageUrl} class="card-img-top" />
+          <img src={product.images[0].url} class="card-img-top" />
           <div class="card-body">
             <a
-              href="/store/detail/{product.id}"
+              href="/store/detail/{product._id}"
               class="stretched-link text-decoration-none text-reset"
             >
               <h5 class="card-title">{product.name}</h5>

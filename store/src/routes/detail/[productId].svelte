@@ -1,8 +1,8 @@
 <script context="module">
-  export async function load({ page, fetch, session, stuff }) {
+  export async function load({ page, fetch }) {
     let productId = page.params.productId;
     // TODO: param instead of query because it is not restful
-    let product = await fetch(`/api/store/products?productId=${productId}`)
+    let product = await fetch(`/api/store/products/${productId}`)
       .then((res) => res.json())
       .then((res) => res.product);
 
@@ -34,17 +34,9 @@
   <!-- carousel -->
   <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <!-- carousel item -->
+      <!-- TODO: handle active class -->
       <div class="carousel-item text-center active">
-        <img class="img-fluid" src={product.imageUrl} />
-      </div>
-      <!-- carousel item -->
-      <div class="carousel-item text-center">
-        <img class="img-fluid" src={product.imageUrl} />
-      </div>
-      <!-- carousel item -->
-      <div class="carousel-item text-center">
-        <img class="img-fluid" src={product.imageUrl} />
+        <img class="img-fluid" src={product.images[0].url} />
       </div>
     </div>
 
@@ -173,7 +165,7 @@
         <div class="col">
           <!-- first review -->
           <div class="card-body">
-            <h3 class="card-title text-truncate">{review.userId}</h3>
+            <h3 class="card-title text-truncate">{review.username}</h3>
             <p class="card-text">
               {review.content}
             </p>

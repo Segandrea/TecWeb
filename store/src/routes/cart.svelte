@@ -1,36 +1,32 @@
-<script context="module">
-  import { cartItems } from "./stores.js";
-
-  let itemIds;
-  cartItems.subscribe((value) => (itemIds = value));
-
-  export async function load({ page, fetch, session, stuff }) {
-    let cartProducts = [];
-    itemIds.forEach(async (id) =>
-      cartProducts.push(
-        await fetch(`/api/store/products?productId=${id.id}`)
-          .then((res) => res.json())
-          .then((res) => res.product)
-      )
-    );
-
-    // TODO: get only inserted discounts
-    let discounts = await fetch("/api/store/discounts")
-      .then((res) => res.json())
-      .then((res) => res.discount);
-
-    return {
-      props: {
-        cartProducts,
-        discounts,
-      },
-    };
-  }
-</script>
-
 <script>
-  export let cartProducts;
-  export let discounts;
+  import { cartItems, rentalPeriod } from "./stores.js";
+
+  export let products = [];
+  export let discounts = [];
+  export let days = 0;
+  export let subtotalPrice = 0;
+  export let totalPrice = 0;
+  // TODO: handle me
+  export let discountPrice = 0;
+
+  function computePrices() {
+    subtotalPrice = products
+      .map((p) => p.basePrice + p.dailyPrice * days)
+      .reduce((a, b) => a + b, 0);
+    totalPrice = subtotalPrice - discountPrice;
+  }
+
+  rentalPeriod.subscribe((value) => {
+    days =
+      value.length == 2
+        ? (value[1].getTime() - value[0].getTime()) / (1000 * 3600 * 24)
+        : 0;
+    computePrices();
+  });
+  cartItems.subscribe((value) => {
+    products = value;
+    computePrices();
+  });
 </script>
 
 <svelte:head>
@@ -41,11 +37,12 @@
   <div class="row">
     <div class="col-lg-9">
       <div class="card-group d-sm-flex flex-sm-nowrap overflow-auto">
-        {#each cartProducts as product}
+        {#each products as product}
           <div class="card border-0 p-2">
             <img
-              src={product.imageUrl}
+              src={product.images[0].url}
               class="card-img-top"
+              width="42"
               alt={product.name}
             />
             <div class="card-body bg-light">
@@ -60,12 +57,10 @@
                 class="card-text d-flex justify-content-between fst-italic fw-bold"
               >
                 <span>Daily</span>
-                <!--
                 <span>
-                  {cart.days} <small>x</small>
+                  {days} <small>x</small>
                   <i class="bi bi-currency-euro black">{product.dailyPrice}</i>
                 </span>
-                -->
               </div>
             </div>
             <div
@@ -73,15 +68,11 @@
             >
               <span>Total</span>
               <span>
-                FIXME
-                <!-- TODO: uncomment when endpoints return float values
                 <i class="bi bi-currency-euro black"
-                  >{(
-                    product.basePrice +
-                    cart.days * product.dailyPrice
-                  ).toFixed(2)}</i
+                  >{(product.basePrice + days * product.dailyPrice).toFixed(
+                    2
+                  )}</i
                 >
-                -->
               </span>
             </div>
           </div>
@@ -93,7 +84,7 @@
       <div class="row">
         <div class="col d-flex align-items-center justify-content-between">
           <h2>Summary</h2>
-          <span>{cartProducts.length} items</span>
+          <span>{products.length} items</span>
         </div>
       </div>
 
@@ -112,11 +103,15 @@
             <h5>Discount codes</h5>
           </div>
           <ul class="list-group">
-            {#each discounts as discountCode}
+            {#each discounts as discount}
               <li class="list-group-item fw-bold">
                 <div class="d-flex justify-content-between">
-                  <span class="text-info">{discountCode.code}</span>
-                  <span>{discountCode.discount} %</span>
+                  <span class="text-info">{discount.code}</span>
+                  <span>
+                    <i class="bi bi-currency-euro black">
+                      {discount.value}
+                    </i>
+                  </span>
                 </div>
               </li>
             {/each}
@@ -127,21 +122,15 @@
       <div class="row row-cols-1">
         <div class="col d-flex justify-content-between fst-italic text-muted">
           <span>Subtotal</span>
-          <!--
-          <span>{cart.subtotalPrice}</span>
-          -->
+          <span>{subtotalPrice}</span>
         </div>
         <div class="col d-flex justify-content-between fst-italic text-muted">
           <span>Discount</span>
-          <!--
-          <span>{cart.discountPrice}</span>
-          -->
+          <span>{discountPrice}</span>
         </div>
         <div class="col d-flex justify-content-between fw-bold fst-italic">
           <span>Total</span>
-          <!--
-          <span>{cart.totalPrice}</span>
-          -->
+          <span>{totalPrice}</span>
         </div>
       </div>
 

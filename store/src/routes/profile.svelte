@@ -118,17 +118,13 @@
 
                 <div class="row">
                   <div class="col">
-                    <small class="text-muted">{order.issued_at}</small>
+                    <small class="text-muted">{order.issuedAt}</small>
                   </div>
                 </div>
               </div>
 
-              <div class="col-md-1 my-2 text-center fw-bold">
-                {order.status}
-              </div>
-
-              <div class="col-md-2 my-2 text-center">
-                <i class="bi bi-currency-euro">{order.price}</i>
+              <div class="col-md-3 my-2 text-center">
+                <i class="bi bi-currency-euro">{order.totalPrice}</i>
               </div>
 
               <div class="col-md-3 my-2 text-center">

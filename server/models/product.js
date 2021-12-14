@@ -6,8 +6,6 @@ const ImageSchema = new Schema({
 });
 
 const ProductSchema = new Schema({
-  // TODO: id will be of type mongoose.ObjectId
-  id: { type: String, required: true },
   name: { type: String, required: true },
   images: [ImageSchema],
   status: {
@@ -15,15 +13,11 @@ const ProductSchema = new Schema({
     enum: ["brand-new", "refurbished", "damaged"],
     required: true,
   },
-  availability: {
-    type: String,
-    enum: ["available", "hidden", "out"],
-    required: true,
-  },
+  visible: { type: Boolean, required: true },
   description: { type: String, required: true },
-  basePrice: { type: Number, min: 0 },
-  dailyPrice: { type: Number, min: 0 },
-  rating: { type: Number, min: 0, max: 5 },
+  basePrice: { type: Number, min: 0, required: true },
+  dailyPrice: { type: Number, min: 0, required: true },
+  rating: { type: Number, min: 0, max: 5, default: 0, required: true },
 });
 
 const Product = mongoose.model("Product", ProductSchema);

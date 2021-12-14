@@ -29,6 +29,8 @@ const OrderSchema = new Schema({
   discounts: [DiscountFreezeSchema],
   issuedAt: { type: Date, required: true },
   returnalDate: { type: Date, required: true },
+  // TODO: make a decision
+  totalPrice: { type: Number, min: 0, required: true },
 });
 
 const Order = mongoose.model("Order", OrderSchema);
