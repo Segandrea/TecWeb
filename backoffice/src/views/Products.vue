@@ -9,6 +9,6 @@ import Navbar from "../components/Navbar.vue";
 <template>
   <Navbar />
   <main class="container w-100 h-100">
-    <h1>Hello, world!</h1>
+    <h1>Products</h1>
   </main>
 </template>

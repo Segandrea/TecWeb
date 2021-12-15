@@ -67,6 +67,7 @@ passport.deserializeUser(deserializeUser);
 passport.serializeUser(serializeUser);
 
 // register store routes
+app.use("/api/backoffice", require("./routes/backoffice"));
 app.use("/api/store", require("./routes/store"));
 
 // start server at the specified port
