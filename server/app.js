@@ -111,8 +111,8 @@ function serializeUser(user, done) {
 }
 
 function deserializeUser(user, done) {
-  // TODO: load actual user data: e.g. Customer, Employee, Admin
-  User.findById(user.id, (err, user) => {
-    done(err, user);
-  });
+  User.findById(user.id)
+    .lean()
+    .then((user) => done(null, user))
+    .catch((err) => done(err));
 }

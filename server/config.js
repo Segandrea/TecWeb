@@ -1,17 +1,18 @@
 const crypto = require("crypto");
 const path = require("path");
 
-const dev = process.env.NODE_ENV === "development";
+const prod = process.env.NODE_ENV === "production";
 
 const projectDir = path.resolve(__dirname, "..");
 const backofficeStaticPath = path.resolve(projectDir, "backoffice", "dist");
 const storeStaticPath = path.resolve(projectDir, "store", "build");
 
 module.exports = {
+  saltRounds: prod ? 128 : 10,
   session: {
-    secret: dev
-      ? "<development-secretToken>"
-      : crypto.randomBytes(16).toString(),
+    secret: prod
+      ? crypto.randomBytes(16).toString()
+      : "<development-secretToken>",
   },
   backoffice: {
     staticPath: backofficeStaticPath,

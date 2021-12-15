@@ -1,14 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
+const config = require("../config.js");
 
-// TODO: export in global config file
-const saltRounds = 10;
+const CustomerSchema = new Schema({
+  username: { type: String, required: true },
+  avatar: { type: String },
+});
 
 const UserSchema = new Schema({
-  role: { type: String, enum: ["employee", "customer"], required: true },
+  role: {
+    type: String,
+    enum: ["admin", "employee", "customer"],
+    required: true,
+  },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  customer: { type: CustomerSchema, required: false },
 });
 
 // compound index on role and email fields of UserSchema
@@ -19,7 +27,7 @@ UserSchema.pre("save", function (next) {
   const user = this;
 
   if (this.isModified("password") || this.isNew) {
-    bcrypt.genSalt(saltRounds, function (saltError, salt) {
+    bcrypt.genSalt(config.saltRounds, function (saltError, salt) {
       if (saltError) {
         return next(saltError);
       } else {

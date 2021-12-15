@@ -1,15 +1,17 @@
 const db = require("../db.js");
 const User = require("../models/user.js").User;
 
-db.connect();
+async function main() {
+  db.connect();
 
-const [role, email, password] = process.argv.slice(2);
-User.create({ role, email, password })
-  .then(() => {
-    console.log("done");
+  const userData = JSON.parse(process.argv[2]);
+  if (userData.role === "customer" && userData.customer) {
+    await User.create(userData);
     process.exit(0);
-  })
-  .catch((err) => {
-    console.error(err);
+  } else {
+    console.error("Missing customer data");
     process.exit(1);
-  });
+  }
+}
+
+main();

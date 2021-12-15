@@ -1,18 +1,19 @@
 const express = require("express");
 const passport = require("passport");
-const User = require("../models/user.js").User;
-const Product = require("../models/product.js").Product;
-const Review = require("../models/review.js").Review;
-const Discount = require("../models/discount.js").Discount;
-const Customer = require("../models/customer.js").Customer;
-const Order = require("../models/order.js").Order;
+
 const ObjectId = require("mongoose").Types.ObjectId;
+
+const User = require("../models/user.js").User;
+const Order = require("../models/order.js").Order;
+const Review = require("../models/review.js").Review;
+const Product = require("../models/product.js").Product;
+const Discount = require("../models/discount.js").Discount;
 
 const router = express.Router();
 
 // require customer authentication
 function restrict(req, res, next) {
-  if (req.user && req.user.role == "customer") {
+  if (req.user && req.user.role === "customer") {
     return next();
   } else {
     req.session.returnTo = req.originalUrl;
@@ -34,16 +35,14 @@ router.post("/signup", async (req, res) => {
     role: "customer",
     email: req.body.email,
     password: req.body.password,
+    customer: {
+      username: req.body.username,
+    },
   });
 
   user
     .save()
     .then((user) => {
-      // FIXME: handle error
-      Customer.create({
-        userId: user._id,
-        username: req.body.username,
-      });
       res.redirect("/store/auth/signin?error=required");
     })
     .catch((err) => {
@@ -185,19 +184,11 @@ router.post("/orders", restrict, (req, res) => {
 
 router.get("/profile", restrict, (req, res) => {
   const user = req.user;
-  Customer.findOne({ userId: user._id })
-    .lean()
-    .then((customer) =>
-      res.json({
-        email: user.email,
-        username: customer.username,
-        avatar: customer.avatar,
-      })
-    )
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+  res.json({
+    email: user.email,
+    avatar: user.customer.avatar,
+    username: user.customer.username,
+  });
 });
 
 router.get("/ping", (req, res) => {
