@@ -14,7 +14,9 @@ const customer = ref({});
 
 fetch(`/api/backoffice/customers/${route.params.id}`).then((res) => {
   if (res.ok) {
-    res.json().then((body) => (customer.value = body));
+    res.json().then((body) => {
+      customer.value = body;
+    });
   } else if (res.status == 401) {
     router.push({ name: "Signin" });
   } else {
@@ -23,8 +25,23 @@ fetch(`/api/backoffice/customers/${route.params.id}`).then((res) => {
   }
 });
 
-function updateCustomer() {
-  console.log(customer.value);
+async function updateCustomer() {
+  const res = await fetch(`/api/backoffice/customers/${customer.value._id}`, {
+    headers: { "Content-Type": "application/json" },
+    method: "PUT",
+    body: JSON.stringify(customer.value),
+  });
+
+  if (res.ok) {
+    res.json().then((body) => {
+      customer.value = body;
+    });
+  } else if (res.status == 401) {
+    router.push({ name: "Signin" });
+  } else {
+    // eslint-disable-next-line
+    console.error(res);
+  }
 }
 </script>
 

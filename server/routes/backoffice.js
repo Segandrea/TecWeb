@@ -40,13 +40,20 @@ router.post("/signout", restrict, (req, res) => {
 });
 
 router.put("/customers/:customerId", restrict, (req, res) => {
-  let data = req.body;
+  let body = req.body;
+
   User.findByIdAndUpdate(
     req.params.customerId,
-    { email: data.email, customer: { username: data.username } },
+    { email: body.email, customer: { username: body.username } },
     { lean: true, returnDocument: "after" }
   )
-    .then((customer) => res.json(customer))
+    .then((user) =>
+      res.json({
+        _id: user._id,
+        email: user.email,
+        username: user.customer.username,
+      })
+    )
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
@@ -78,6 +85,7 @@ router.get("/customers", restrict, (req, res) => {
         email: user.email,
         username: user.customer.username,
       }));
+
       res.json({ customers });
     })
     .catch((err) => {
