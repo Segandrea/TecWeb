@@ -59,17 +59,23 @@
       <h2 class="py-4">Profile</h2>
 
       {#if profile.avatar}
-      <img
-        class="rounded-circle"
-        width="128px"
-        height="128px"
-        src={profile.avatar}
-        alt="avatar"
-      />
+        <img
+          class="rounded-circle"
+          width="128px"
+          height="128px"
+          src={profile.avatar}
+          alt="avatar"
+        />
       {/if}
 
       <form>
-        <input id="avatar" name="avatar" type="file" class="form-control my-4" aria-label="avatar" />
+        <input
+          id="avatar"
+          name="avatar"
+          type="file"
+          class="form-control my-4"
+          aria-label="avatar"
+        />
 
         <div class="form-floating">
           <input

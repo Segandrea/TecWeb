@@ -1,3 +1,20 @@
+<script context="module">
+  import { path, isAuth } from "$lib/utils";
+
+  export async function load({ page }) {
+    if (!isAuth()) {
+      const query = new URLSearchParams({ returnTo: path(page.path) });
+
+      return {
+        status: 302,
+        redirect: path(`/signin?${query}`),
+      };
+    }
+
+    return {};
+  }
+</script>
+
 <script>
   import { cartItems, rentalPeriod } from "./stores.js";
 
@@ -6,6 +23,7 @@
   export let days = 0;
   export let subtotalPrice = 0;
   export let totalPrice = 0;
+
   // TODO: handle me
   export let discountPrice = 0;
 
@@ -23,6 +41,7 @@
         : 0;
     computePrices();
   });
+
   cartItems.subscribe((value) => {
     products = value;
     computePrices();

@@ -1,7 +1,7 @@
 <script context="module">
   export async function load({ page, fetch }) {
     let productId = page.params.productId;
-    // TODO: param instead of query because it is not restful
+
     let product = await fetch(`/api/store/products/${productId}`)
       .then((res) => res.json())
       .then((res) => res.product);
@@ -20,10 +20,10 @@
 </script>
 
 <script>
+  import { cartItems } from "../stores.js";
+
   export let product;
   export let reviews;
-
-  import { cartItems } from "../stores.js";
 
   const addToCart = () => {
     $cartItems = [...$cartItems, product];
@@ -36,7 +36,11 @@
     <div class="carousel-inner">
       <!-- TODO: handle active class -->
       <div class="carousel-item text-center active">
-        <img class="img-fluid" src={product.images[0].url} />
+        <img
+          class="img-fluid"
+          src={product.images[0].url}
+          alt={product.name + " image"}
+        />
       </div>
     </div>
 
