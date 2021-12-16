@@ -42,7 +42,7 @@ router.post("/signout", restrict, (req, res) => {
 router.put("/customers/:customerId", restrict, (req, res) => {
   let data = req.body;
   User.findByIdAndUpdate(
-    req.param.customerId,
+    req.params.customerId,
     { email: data.email, customer: { username: data.username } },
     { lean: true, returnDocument: "after" }
   )
@@ -54,9 +54,15 @@ router.put("/customers/:customerId", restrict, (req, res) => {
 });
 
 router.get("/customers/:customerId", restrict, (req, res) => {
-  User.findById(req.param.customerId)
+  User.findById(req.params.customerId)
     .lean()
-    .then((customer) => res.json(customer))
+    .then((user) =>
+      res.json({
+        _id: user._id,
+        email: user.email,
+        username: user.customer.username,
+      })
+    )
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
@@ -66,7 +72,14 @@ router.get("/customers/:customerId", restrict, (req, res) => {
 router.get("/customers", restrict, (req, res) => {
   User.find({ role: "customer" })
     .lean()
-    .then((customers) => res.json({ customers }))
+    .then((users) => {
+      const customers = users.map((user) => ({
+        _id: user._id,
+        email: user.email,
+        username: user.customer.username,
+      }));
+      res.json({ customers });
+    })
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
