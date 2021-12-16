@@ -4,12 +4,23 @@
 -->
 <script setup>
 import Navbar from "../components/Navbar.vue";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 
-const customers = [
-  // TODO: fetch from server
-  { _id: 1, username: "@pluto", email: "pluto@email.com" },
-  { _id: 2, username: "@pippo", email: "pippo@email.com" },
-];
+const router = useRouter();
+
+const customers = ref([]);
+
+fetch("/api/backoffice/customers").then((res) => {
+  if (res.ok) {
+    res.json().then((body) => (customers.value = body.customers));
+  } else if (res.status == 401) {
+    router.push({ name: "Signin" });
+  } else {
+    // eslint-disable-next-line
+    console.error(res);
+  }
+});
 </script>
 
 <template>
