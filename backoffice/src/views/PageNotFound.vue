@@ -6,7 +6,7 @@
   </main>
 </template>
 
-<style>
+<style scoped>
 section {
   margin: auto auto;
   padding: auto auto;

@@ -3,8 +3,8 @@
   Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 -->
 <script setup>
-import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { ref } from "vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -104,7 +104,7 @@ async function signin() {
   </main>
 </template>
 
-<style>
+<style scoped>
 body {
   background-color: #f5f5f5 !important;
 }

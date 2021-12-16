@@ -4,18 +4,28 @@
 -->
 <script setup>
 import Navbar from "../components/Navbar.vue";
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { ref } from "vue";
 
+const router = useRouter();
 const route = useRoute();
-const id = route.params.id;
 
-const customers = [
-  // TODO: fetch from server
-  { _id: 1, username: "@pluto", email: "pluto@email.com" },
-  { _id: 2, username: "@pippo", email: "pippo@email.com" },
-];
+const customer = ref({});
 
-const customer = customers[id - 1];
+fetch(`/api/backoffice/customers/${route.params.id}`).then((res) => {
+  if (res.ok) {
+    res.json().then((body) => (customer.value = body));
+  } else if (res.status == 401) {
+    router.push({ name: "Signin" });
+  } else {
+    // eslint-disable-next-line
+    console.error(res);
+  }
+});
+
+function updateCustomer() {
+  console.log(customer.value);
+}
 </script>
 
 <template>
@@ -32,32 +42,34 @@ const customer = customers[id - 1];
       </ol>
     </nav>
 
-    <div class="row g-4">
-      <div class="col-md-2">
-        <label for="username" class="form-label">Username</label>
-        <input
-          v-model="customer.username"
-          type="text"
-          class="form-control"
-          id="username"
-          required
-        />
-      </div>
+    <form @submit.prevent="updateCustomer">
+      <div class="row g-4">
+        <div class="col-md-2">
+          <label for="username" class="form-label">Username</label>
+          <input
+            v-model="customer.username"
+            type="text"
+            class="form-control"
+            id="username"
+            required
+          />
+        </div>
 
-      <div class="col-md-4">
-        <label for="email" class="form-label">Email</label>
-        <input
-          v-model="customer.email"
-          type="email"
-          class="form-control"
-          id="email"
-          required
-        />
-      </div>
+        <div class="col-md-4">
+          <label for="email" class="form-label">Email</label>
+          <input
+            v-model="customer.email"
+            type="email"
+            class="form-control"
+            id="email"
+            required
+          />
+        </div>
 
-      <div class="col-12">
-        <button type="submit" class="btn btn-danger">Update</button>
+        <div class="col-12">
+          <button type="submit" class="btn btn-danger">Update</button>
+        </div>
       </div>
-    </div>
+    </form>
   </main>
 </template>

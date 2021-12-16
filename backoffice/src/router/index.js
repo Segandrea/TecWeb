@@ -16,17 +16,17 @@ const routes = [
     },
   },
   {
-    path: "/customers",
-    name: "Customers",
-    component: Customers,
+    path: "/customers/:id",
+    name: "Customer",
+    component: Customer,
     meta: {
       restricted: true,
     },
   },
   {
-    path: "/customers/:id",
-    name: "Customer",
-    component: Customer,
+    path: "/customers",
+    name: "Customers",
+    component: Customers,
     meta: {
       restricted: true,
     },
