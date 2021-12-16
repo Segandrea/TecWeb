@@ -39,6 +39,40 @@ router.post("/signout", restrict, (req, res) => {
   res.sendStatus(200);
 });
 
+router.put("/customers/:customerId", restrict, (req, res) => {
+  let data = req.body;
+  User.findByIdAndUpdate(
+    req.param.customerId,
+    { email: data.email, customer: { username: data.username } },
+    { lean: true, returnDocument: "after" }
+  )
+    .then((customer) => res.json(customer))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/customers/:customerId", restrict, (req, res) => {
+  User.findById(req.param.customerId)
+    .lean()
+    .then((customer) => res.json(customer))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/customers", restrict, (req, res) => {
+  User.find({ role: "customer" })
+    .lean()
+    .then((customers) => res.json({ customers }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 router.post("/products", restrict, (req, res) => {
   Product.create(req.body)
     .then((product) => res.status(201).json(product))
@@ -54,7 +88,7 @@ router.get("/discounts", restrict, (req, res) => {
     .then((discounts) => res.json({ discounts }))
     .catch((err) => {
       console.error(err);
-      res.sendStatus(404);
+      res.sendStatus(500);
     });
 });
 

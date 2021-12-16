@@ -33,15 +33,14 @@ router.post("/signup", async (req, res) => {
     return res.sendStatus(409);
   }
 
-  User
-    .create({
-      role: "customer",
-      email: req.body.email,
-      password: req.body.password,
-      customer: {
-        username: req.body.username,
-      },
-    })
+  User.create({
+    role: "customer",
+    email: req.body.email,
+    password: req.body.password,
+    customer: {
+      username: req.body.username,
+    },
+  })
     .then((user) => {
       req.login(user, (err) => {
         if (err) {
