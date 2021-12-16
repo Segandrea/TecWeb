@@ -11,24 +11,24 @@ const Discount = require("../models/discount.js").Discount;
 
 const router = express.Router();
 
-// require customer authentication
 function restrict(req, res, next) {
   if (req.user && req.user.role === "customer") {
     return next();
   } else {
-    req.session.returnTo = req.originalUrl;
-    return res.redirect("/store/auth/signin?error=required");
+    return res.sendStatus(401);
   }
 }
 
 router.post("/signup", async (req, res) => {
+  // TODO: validate input
+
   const alreadyRegistered = await User.exists({
     role: "customer",
     email: req.body.email,
   });
 
-  if (alreadyRegistered) {
-    return res.redirect("/store/auth/signup?error=invalid");
+  if (alreadyRegistered || req.body.password != req.body.confirm) {
+    return res.sendStatus(400);
   }
 
   const user = new User({
@@ -43,7 +43,18 @@ router.post("/signup", async (req, res) => {
   user
     .save()
     .then((user) => {
-      res.redirect("/store/auth/signin?error=required");
+      req.login(user, (err) => {
+        if (err) {
+          console.error(err);
+          return res.sendStatus(500);
+        }
+
+        return res.json({
+          email: user.email,
+          avatar: user.customer.avatar,
+          username: user.customer.username,
+        });
+      });
     })
     .catch((err) => {
       console.error(err);
@@ -51,36 +62,35 @@ router.post("/signup", async (req, res) => {
     });
 });
 
-router.post("/signin", function (req, res, next) {
-  passport.authenticate("local", function (err, user, info) {
+router.post("/signin", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
     if (err) {
-      return next(err);
+      console.error(err);
+      return res.sendStatus(401);
     }
 
     if (!user) {
-      return res.redirect("/store/auth/signin?error=invalid");
+      return res.sendStatus(401);
     }
 
-    req.login(user, function (err) {
+    req.login(user, (err) => {
       if (err) {
-        return next(err);
+        console.error(err);
+        return res.sendStatus(401);
       }
 
-      const returnTo = req.session.returnTo || "/store";
-      delete req.session.returnTo;
-
-      return res.redirect(returnTo);
+      return res.json({
+        email: user.email,
+        avatar: user.customer.avatar,
+        username: user.customer.username,
+      });
     });
   })(req, res, next);
 });
 
-router.get("/signout", (req, res) => {
+router.post("/signout", restrict, (req, res) => {
   req.logout();
-  res.redirect("/store");
-});
-
-router.get("/secret", restrict, (req, res) => {
-  res.json({ user: req.user });
+  res.sendStatus(200);
 });
 
 router.get("/products/:productId", (req, res) => {
@@ -101,16 +111,6 @@ router.get("/products", (req, res) => {
     .catch((err) => {
       console.error(err);
       res.sendStatus(404);
-    });
-});
-
-// TODO: move to backoffice
-router.post("/products", (req, res) => {
-  Product.create(req.body)
-    .then((product) => res.status(201).json(product))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400);
     });
 });
 
@@ -150,17 +150,6 @@ router.get("/discounts/:discountId", restrict, (req, res) => {
   Discount.findById(discountId)
     .lean()
     .then((discount) => res.json({ discount }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(404);
-    });
-});
-
-// TODO: move to backoffice
-router.get("/discounts", restrict, (req, res) => {
-  Discount.find({})
-    .lean()
-    .then((discounts) => res.json({ discounts }))
     .catch((err) => {
       console.error(err);
       res.sendStatus(404);

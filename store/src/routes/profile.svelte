@@ -15,8 +15,21 @@
 </script>
 
 <script>
+  import { goto } from "$app/navigation";
+  import { path } from "$lib/helpers";
+
   export let profile;
   export let orders;
+
+  async function signout() {
+    const res = await fetch("/api/store/signout", {
+      method: "POST",
+    });
+
+    if (res.ok) {
+      goto(path("/"));
+    }
+  }
 </script>
 
 <svelte:head>
@@ -81,6 +94,12 @@
           >Save changes</button
         >
       </form>
+      <p>
+        Or
+        <button type="button" class="btn btn-link" on:click={signout}
+          >Sign out</button
+        >
+      </p>
     </div>
     <div class="col col-lg-9">
       <h2 class="text-center py-4">Your Orders</h2>

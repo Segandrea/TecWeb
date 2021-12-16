@@ -1,12 +1,39 @@
 <script>
-  import { path } from "$lib/helpers.js";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+  import { path } from "$lib/helpers";
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const errorKind = {
-    required: "Sign in required",
-    invalid: "Invalid credentials",
-  };
-  const error = errorKind[urlParams.get("error")];
+  let error;
+  let email;
+  let password;
+
+  let emailInput;
+
+  async function signin() {
+    const res = await fetch("/api/store/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        role: "customer",
+        email,
+        password,
+      }),
+    });
+
+    if (res.ok) {
+      const returnTo = $page.query.get("returnTo") || path("/");
+      const user = await res.json();
+
+      sessionStorage.setItem("customer", JSON.stringify(user));
+      goto(returnTo);
+    } else {
+      error = "Sign-in required";
+      email = "";
+      password = "";
+
+      emailInput.focus();
+    }
+  }
 </script>
 
 <svelte:head>
@@ -17,65 +44,68 @@
   </style>
 </svelte:head>
 
-<main class="w-100 h-100">
-  <div class="container h-100 w-100">
-    <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
-      <div class="col m-auto">
-        <a href={path("/")}>
-          <img src={path("/nolonoloplus-dark.png")} alt="Nolo Nolo Plus Logo" />
-        </a>
-        <h1 class="h3 my-4 fw-normal">Welcome back!</h1>
+<main class="w-100 h-100 container">
+  <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
+    <div class="col m-auto">
+      <a href={path("/")}>
+        <img src={path("/nolonoloplus-dark.png")} alt="Nolo Nolo Plus Logo" />
+      </a>
+      <h1 class="my-4 fw-normal">Welcome back!</h1>
 
-        <form action="/api/store/signin" method="post">
-          {#if error}
-            <div
-              class="alert alert-warning alert-dismissible fade show mb-4"
-              role="alert"
-            >
-              {error}
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              />
-            </div>
-          {/if}
-
-          <div class="form-floating">
-            <input
-              type="email"
-              name="email"
-              class="form-control rounded-0 rounded-top"
-              placeholder="domain@example.com"
-              required
-            />
-            <label for="signInEmail">Email address</label>
-          </div>
-          <div class="form-floating">
-            <input
-              type="password"
-              name="password"
-              minlength="4"
-              class="form-control rounded-0 rounded-bottom"
-              placeholder="Password"
-              required
-            />
-            <label for="signInPassword">Password</label>
-          </div>
-
-          <input type="hidden" name="role" value="customer" />
-          <button class="btn btn-lg btn-warning w-100 mt-4" type="submit"
-            >Sign in</button
+      <form on:submit|preventDefault={signin}>
+        {#if error}
+          <div
+            class="alert alert-warning alert-dismissible fade show mb-4"
+            role="alert"
           >
-          <p class="mt-2">
-            Don't have an account yet? <a
-              href={path("/auth/signup")}
-              class="link-dark">Sign up</a
-            >
-          </p>
-        </form>
-      </div>
+            {error}
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              data-bs-dismiss="alert"
+            />
+          </div>
+        {/if}
+
+        <div class="form-floating">
+          <input
+            id="email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="email@example.com"
+            class="form-control rounded-0 rounded-top"
+            required
+            bind:value={email}
+            bind:this={emailInput}
+          />
+          <label for="email">Email</label>
+        </div>
+        <div class="form-floating">
+          <input
+            id="password"
+            type="password"
+            name="password"
+            autocomplete="current-password"
+            placeholder="Password"
+            class="form-control rounded-0 rounded-bottom"
+            minlength="4"
+            required
+            bind:value={password}
+          />
+          <label for="password">Password</label>
+        </div>
+
+        <button class="btn btn-lg btn-warning w-100 mt-4" type="submit"
+          >Sign in</button
+        >
+        <p class="mt-2">
+          Don't have an account yet? <a href={path("/signup")} class="link-dark"
+            >Sign up</a
+          >
+        </p>
+      </form>
     </div>
   </div>
 </main>
@@ -83,11 +113,6 @@
 <slot />
 
 <style>
-  main {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
   form {
     max-width: 330px;
     margin: auto;
