@@ -18,10 +18,9 @@ const emailElement = ref();
 
 async function signin() {
   const res = await fetch("/api/backoffice/signin", {
-    method: "POST",
     headers: { "Content-Type": "application/json" },
+    method: "POST",
     body: JSON.stringify({
-      role: "employee",
       email: email.value,
       password: password.value,
     }),

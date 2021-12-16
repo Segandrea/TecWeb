@@ -11,10 +11,9 @@
 
   async function signin() {
     const res = await fetch("/api/store/signin", {
-      method: "POST",
       headers: { "Content-Type": "application/json" },
+      method: "POST",
       body: JSON.stringify({
-        role: "customer",
         email,
         password,
       }),

@@ -14,10 +14,9 @@
 
   async function signup() {
     const res = await fetch("/api/store/signup", {
-      method: "POST",
       headers: { "Content-Type": "application/json" },
+      method: "POST",
       body: JSON.stringify({
-        role: "customer",
         email,
         username,
         password,
@@ -32,7 +31,8 @@
       sessionStorage.setItem("customer", JSON.stringify(user));
       goto(returnTo);
     } else {
-      error = "Invalid credentials";
+      error =
+        res.status == 409 ? "User already registered" : "Invalid credentials";
       email = "";
       username = "";
       password = "";

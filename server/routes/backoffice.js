@@ -13,7 +13,7 @@ function restrict(req, res, next) {
 }
 
 router.post("/signin", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
+  passport.authenticate("local", (err, user) => {
     if (err) {
       console.error(err);
       return res.sendStatus(401);
@@ -26,12 +26,10 @@ router.post("/signin", (req, res, next) => {
     req.login(user, (err) => {
       if (err) {
         console.error(err);
-        return res.sendStatus(401);
+        return res.sendStatus(500);
       }
 
-      return res.json({
-        email: user.email,
-      });
+      return res.json({ _id: user._id });
     });
   })(req, res, next);
 });

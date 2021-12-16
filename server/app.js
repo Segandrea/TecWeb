@@ -79,7 +79,12 @@ app.listen(port, () => {
  * passport callbacks
  */
 function authenticateUser(req, email, password, done) {
-  const role = req.body.role;
+  const path = req.baseUrl + req.path;
+  const role = {
+    "/api/admindashboard/signin": "admin",
+    "/api/backoffice/signin": "employee",
+    "/api/store/signin": "customer",
+  }[path];
 
   User.findOne({ email, role }, (err, user) => {
     if (err) {
@@ -88,17 +93,17 @@ function authenticateUser(req, email, password, done) {
     }
 
     if (!user) {
-      return done(null, false, { message: "invalid credentials" });
+      return done(null, false);
     }
 
-    user.comparePassword(password, function (err, isMatch) {
+    user.comparePassword(password, function (err, isEqual) {
       if (err) {
         console.error(err);
-        return done(null, false, { message: "invalid credentials" });
+        return done(null, false);
       }
 
-      if (!isMatch) {
-        return done(null, false, { message: "invalid credentials" });
+      if (!isEqual) {
+        return done(null, false);
       }
 
       return done(null, user);
@@ -107,12 +112,11 @@ function authenticateUser(req, email, password, done) {
 }
 
 function serializeUser(user, done) {
-  done(null, { id: user.id, role: user.role });
+  done(null, { _id: user._id });
 }
 
 function deserializeUser(user, done) {
-  User.findById(user.id)
-    .lean()
+  User.findById(user._id)
     .then((user) => done(null, user))
     .catch((err) => done(err));
 }

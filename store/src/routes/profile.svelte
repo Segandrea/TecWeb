@@ -1,22 +1,38 @@
 <script context="module">
-  export async function load({ page, fetch, session, stuff }) {
-    let orders = await fetch("/api/store/orders")
-      .then((res) => res.json())
-      .then((res) => res.orders);
-    let profile = await fetch("/api/store/profile").then((res) => res.json());
+  import { path, isAuth } from "$lib/helpers";
+
+  export async function load({ page, fetch }) {
+    if (isAuth()) {
+      const responses = await Promise.all([
+        fetch("/api/store/profile"),
+        fetch("/api/store/orders"),
+      ]);
+
+      if (responses.every((res) => res.ok)) {
+        const [profile, orders] = await Promise.all(
+          responses.map((res) => res.json())
+        );
+
+        return {
+          props: {
+            profile: profile,
+            ...orders,
+          },
+        };
+      }
+    }
+
+    const query = new URLSearchParams({ returnTo: path(page.path) });
 
     return {
-      props: {
-        profile,
-        orders,
-      },
+      status: 302,
+      redirect: path(`/signin?${query}`),
     };
   }
 </script>
 
 <script>
   import { goto } from "$app/navigation";
-  import { path } from "$lib/helpers";
 
   export let profile;
   export let orders;
@@ -27,6 +43,7 @@
     });
 
     if (res.ok) {
+      sessionStorage.removeItem("customer");
       goto(path("/"));
     }
   }
