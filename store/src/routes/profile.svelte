@@ -1,5 +1,5 @@
 <script context="module">
-  import { path, isAuth } from "$lib/helpers";
+  import { path, isAuth } from "$lib/utils";
 
   export async function load({ page, fetch }) {
     if (isAuth()) {

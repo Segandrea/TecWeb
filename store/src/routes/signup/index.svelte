@@ -1,7 +1,7 @@
 <script>
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { path } from "$lib/helpers";
+  import { path } from "$lib/utils";
 
   let error;
   let email;
