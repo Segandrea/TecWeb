@@ -10,7 +10,6 @@ const router = useRouter();
 const route = useRoute();
 
 const error = ref();
-
 const email = ref();
 const password = ref();
 
@@ -28,14 +27,17 @@ async function signin() {
     }),
   });
 
-  if (res.status == 200) {
+  if (res.ok) {
     const returnTo = route.params.returnTo || { name: "Home" };
-    localStorage.setItem("user", JSON.stringify({ role: "employee" }));
+    const user = await res.json();
+
+    sessionStorage.setItem("employee", JSON.stringify(user));
     router.push(returnTo);
   } else {
     error.value = "Sign-in required";
-    password.value = "";
     email.value = "";
+    password.value = "";
+
     emailElement.value.focus();
   }
 }
@@ -46,12 +48,9 @@ async function signin() {
     <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
       <div class="col m-auto">
         <router-link to="/">
-          <img
-            src="@/assets/nolonoloplus-dark.png"
-            alt="Nolo Nolo Plus Logo"
-            class="mb-4"
-          />
+          <img src="@/assets/nolonoloplus-dark.png" alt="Nolo Nolo Plus Logo" />
         </router-link>
+        <h1 class="my-4 fw-normal">Backoffice</h1>
 
         <form @submit.prevent="signin">
           <div
@@ -63,33 +62,38 @@ async function signin() {
             <button
               type="button"
               class="btn-close"
-              data-bs-dismiss="alert"
               aria-label="Close"
+              data-bs-dismiss="alert"
             ></button>
           </div>
 
           <div class="form-floating">
             <input
-              ref="emailElement"
+              id="email"
               type="email"
-              v-model="email"
+              name="email"
+              autocomplete="email"
+              placeholder="email@example.com"
               class="form-control rounded-0 rounded-top"
-              placeholder="domain@example.com"
-              autofocus
               required
+              v-model="email"
+              ref="emailElement"
             />
-            <label for="signInEmail">Email address</label>
+            <label for="email">Email</label>
           </div>
           <div class="form-floating">
             <input
+              id="password"
               type="password"
-              v-model="password"
+              name="password"
+              autocomplete="current-password"
+              placeholder="Password"
               class="form-control rounded-0 rounded-bottom"
               minlength="4"
-              placeholder="Password"
               required
+              v-model="password"
             />
-            <label for="signInPassword">Password</label>
+            <label for="password">Password</label>
           </div>
 
           <button class="btn btn-lg btn-info w-100 mt-4" type="submit">
@@ -104,11 +108,6 @@ async function signin() {
 <style>
 body {
   background-color: #f5f5f5 !important;
-}
-
-main {
-  margin: auto auto !important;
-  padding: 0;
 }
 
 form {

@@ -62,9 +62,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const user = localStorage.getItem("user") || "{}";
+  const user = sessionStorage.getItem("employee");
 
-  if (to.meta.restricted && JSON.parse(user).role != "employee") {
+  if (to.meta.restricted && !user) {
     next({ name: "Signin", params: { returnTo: to.fullPath } });
   } else {
     next();
