@@ -39,7 +39,7 @@ app.use(
   session({
     secret: config.session.secret,
     resave: false,
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 7200000 },
     saveUninitialized: false,
   })
 );
