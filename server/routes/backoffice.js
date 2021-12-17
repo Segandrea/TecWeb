@@ -1,6 +1,9 @@
 const express = require("express");
 const passport = require("passport");
 const User = require("../models/user.js").User;
+const Product = require("../models/product.js").Product;
+const Discount = require("../models/discount.js").Discount;
+const Review = require("../models/review.js").Review;
 
 const router = express.Router();
 
@@ -103,10 +106,110 @@ router.post("/products", restrict, (req, res) => {
     });
 });
 
+router.put("/products/:productId", restrict, (req, res) => {
+  let productUpdates = req.body;
+  Product.findByIdAndUpdate(
+    req.params.productId,
+    {
+      name: productUpdates.name,
+      images: productUpdates.images,
+      status: productUpdates.status,
+      visibile: productUpdates.visible,
+      description: productUpdates.description,
+      basePrice: productUpdates.basePrice,
+      dailyPrice: productUpdates.dailyPrice,
+      rating: productUpdates.rating,
+    },
+    { lean: true, returnDocument: "after" }
+  )
+    .then((product) => res.json(product))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/products/:productId", restrict, (req, res) => {
+  Product.findById(req.params.productId)
+    .lean()
+    .then((product) => res.json(product))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/products", restrict, (req, res) => {
+  Product.find({})
+    .lean()
+    .then((products) => res.json({ products }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+//router.post("/discounts", restrict, (req, res) => {
+router.post("/discounts", (req, res) => {
+  Discount.create(req.body)
+    .then((discount) => res.status(201).json(discount))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
+    });
+});
+
+router.put("/discounts/:discountId", restrict, (req, res) => {
+  let discountUpdates = req.body;
+  Discount.findByIdAndUpdate(
+    req.params.discountId,
+    {
+      code: discountUpdates.code,
+      value: discountUpdates.value,
+    },
+    { lean: true, returnDocument: "after" }
+  )
+    .then((discount) => res.json(discount))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/discounts/:discountId", restrict, (req, res) => {
+  Discount.findById(req.params.discountId)
+    .lean()
+    .then((discount) => res.json(discount))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 router.get("/discounts", restrict, (req, res) => {
   Discount.find({})
     .lean()
     .then((discounts) => res.json({ discounts }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/reviews/:reviewId", restrict, (req, res) => {
+  Review.findById(req.params.reviewId)
+    .lean()
+    .then((review) => res.json(review))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/reviews", restrict, (req, res) => {
+  Review.find({})
+    .lean()
+    .then((reviews) => res.json({ reviews }))
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
