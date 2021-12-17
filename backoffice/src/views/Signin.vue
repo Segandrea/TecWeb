@@ -4,41 +4,54 @@
 -->
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+
+import { postJSON, onStatus } from "../http";
 
 const router = useRouter();
 const route = useRoute();
 
-const error = ref();
-const email = ref();
-const password = ref();
+const alert = ref();
+const alertClass = computed(() => {
+  const error = alert.value.status === "error";
+  return {
+    alert: true,
+    "alert-danger": error,
+    "alert-success": !error,
+  };
+});
+
+function setAlert(status, message) {
+  alert.value = { status, message };
+  setTimeout(() => {
+    alert.value = undefined;
+  }, 5000);
+}
 
 // https://v3.vuejs.org/guide/composition-api-template-refs.html#template-refs
-const emailElement = ref();
+const emailInput = ref();
 
-async function signin() {
-  const res = await fetch("/api/backoffice/signin", {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify({
-      email: email.value,
-      password: password.value,
-    }),
-  });
+const employee = ref({});
 
-  if (res.ok) {
-    const returnTo = route.params.returnTo || { name: "Home" };
-    const user = await res.json();
-
-    sessionStorage.setItem("employee", JSON.stringify(user));
-    router.push(returnTo);
-  } else {
-    error.value = "Sign-in required";
-    email.value = "";
-    password.value = "";
-
-    emailElement.value.focus();
-  }
+function signin() {
+  postJSON("/api/backoffice/signin", employee.value)
+    .then((body) => {
+      const returnTo = route.params.returnTo || { name: "Home" };
+      sessionStorage.setItem("employee", JSON.stringify(body));
+      router.push(returnTo);
+    })
+    .catch(
+      onStatus(401, () => {
+        setAlert("error", "Signin required");
+        employee.value = {};
+        emailInput.value.focus();
+      })
+    )
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      setAlert("error", "Something went wrong!");
+    });
 }
 </script>
 
@@ -51,21 +64,11 @@ async function signin() {
         </router-link>
         <h1 class="my-4 fw-normal">Backoffice</h1>
 
-        <form @submit.prevent="signin">
-          <div
-            v-if="error"
-            role="alert"
-            class="alert alert-warning alert-dismissible fade show mb-4"
-          >
-            {{ error }}
-            <button
-              type="button"
-              class="btn-close"
-              aria-label="Close"
-              data-bs-dismiss="alert"
-            ></button>
-          </div>
+        <div v-if="alert" :class="alertClass" role="alert">
+          {{ alert.message }}
+        </div>
 
+        <form @submit.prevent="signin">
           <div class="form-floating">
             <input
               id="email"
@@ -75,8 +78,8 @@ async function signin() {
               placeholder="email@example.com"
               class="form-control rounded-0 rounded-top"
               required
-              v-model="email"
-              ref="emailElement"
+              v-model="employee.email"
+              ref="emailInput"
             />
             <label for="email">Email</label>
           </div>
@@ -90,7 +93,7 @@ async function signin() {
               class="form-control rounded-0 rounded-bottom"
               minlength="4"
               required
-              v-model="password"
+              v-model="employee.password"
             />
             <label for="password">Password</label>
           </div>

@@ -3,11 +3,16 @@
   Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 -->
 <script setup>
-import Navbar from "../components/Navbar.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { ref, computed } from "vue";
 
+import { postJSON, onStatus, redirectOnStatus } from "../http";
+import { signinRoute } from "../utils";
+
+import Navbar from "../components/Navbar.vue";
+
 const router = useRouter();
+const route = useRoute();
 
 const alert = ref();
 const alertClass = computed(() => {
@@ -19,8 +24,6 @@ const alertClass = computed(() => {
   };
 });
 
-const imageInput = ref();
-
 function setAlert(status, message) {
   alert.value = { status, message };
   setTimeout(() => {
@@ -28,31 +31,28 @@ function setAlert(status, message) {
   }, 5000);
 }
 
+const imageInput = ref();
+
 const product = ref({
+  visible: false,
   status: "brand-new",
   basePrice: 0,
   dailyPrice: 0,
   rating: 0,
 });
 
-async function createProduct() {
-  const res = await fetch(`/api/backoffice/products`, {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify(product.value),
-  });
-
-  if (res.ok) {
-    res.json().then((body) => {
-      router.replace({ name: "UpdateProduct", params: { id: body._id } });
+function createProduct() {
+  postJSON("/api/backoffice/products", product.value)
+    .then((body) =>
+      router.replace({ name: "UpdateProduct", params: { id: body._id } })
+    )
+    .catch(onStatus(400, () => setAlert("error", "Invalid data supplied")))
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      setAlert("error", "Something went wrong!");
     });
-  } else if (res.status == 401) {
-    router.push({ name: "Signin" });
-  } else {
-    // eslint-disable-next-line
-    console.error(res);
-    setAlert("error", "Something went wrong!");
-  }
 }
 </script>
 

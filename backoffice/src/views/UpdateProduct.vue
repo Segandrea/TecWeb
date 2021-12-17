@@ -3,9 +3,13 @@
   Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 -->
 <script setup>
-import Navbar from "../components/Navbar.vue";
 import { useRouter, useRoute } from "vue-router";
 import { ref, computed } from "vue";
+
+import { getJSON, putJSON, redirectOnStatus } from "../http";
+import { signinRoute } from "../utils";
+
+import Navbar from "../components/Navbar.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -20,8 +24,6 @@ const alertClass = computed(() => {
   };
 });
 
-const imageInput = ref();
-
 function setAlert(status, message) {
   alert.value = { status, message };
   setTimeout(() => {
@@ -29,41 +31,32 @@ function setAlert(status, message) {
   }, 5000);
 }
 
+const imageInput = ref();
+
 const productId = route.params.id;
 const product = ref({});
 
-fetch(`/api/backoffice/products/${productId}`).then((res) => {
-  if (res.ok) {
-    res.json().then((body) => {
-      product.value = body;
-    });
-  } else if (res.status == 401) {
-    router.push({ name: "Signin" });
-  } else {
+getJSON(`/api/backoffice/products/${productId}`)
+  .then((body) => (product.value = body))
+  .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+  .catch((err) => {
     // eslint-disable-next-line
-    console.error(res);
-  }
-});
-
-async function updateProduct() {
-  const res = await fetch(`/api/backoffice/products/${productId}`, {
-    headers: { "Content-Type": "application/json" },
-    method: "PUT",
-    body: JSON.stringify(product.value),
+    console.error(err);
+    setAlert("error", "Something went wrong!");
   });
 
-  if (res.ok) {
-    res.json().then((body) => {
+function updateProduct() {
+  putJSON(`/api/backoffice/products/${productId}`, product.value)
+    .then((body) => {
       product.value = body;
       setAlert("ok", "Success");
+    })
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      setAlert("error", "Something went wrong!");
     });
-  } else if (res.status == 401) {
-    router.push({ name: "Signin" });
-  } else {
-    // eslint-disable-next-line
-    console.error(res);
-    setAlert("error", "Something went wrong!");
-  }
 }
 </script>
 

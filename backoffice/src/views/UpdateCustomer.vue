@@ -3,9 +3,13 @@
   Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 -->
 <script setup>
-import Navbar from "../components/Navbar.vue";
 import { useRouter, useRoute } from "vue-router";
 import { ref, computed } from "vue";
+
+import { getJSON, putJSON, redirectOnStatus } from "../http";
+import { signinRoute } from "../utils";
+
+import Navbar from "../components/Navbar.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -30,38 +34,27 @@ function setAlert(status, message) {
 const customerId = route.params.id;
 const customer = ref({});
 
-fetch(`/api/backoffice/customers/${customerId}`).then((res) => {
-  if (res.ok) {
-    res.json().then((body) => {
-      customer.value = body;
-    });
-  } else if (res.status == 401) {
-    router.push({ name: "Signin" });
-  } else {
+getJSON(`/api/backoffice/customers/${customerId}`)
+  .then((body) => (customer.value = body))
+  .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+  .catch((err) => {
     // eslint-disable-next-line
-    console.error(res);
-  }
-});
-
-async function updateCustomer() {
-  const res = await fetch(`/api/backoffice/customers/${customerId}`, {
-    headers: { "Content-Type": "application/json" },
-    method: "PUT",
-    body: JSON.stringify(customer.value),
+    console.error(err);
+    setAlert("error", "Something went wrong!");
   });
 
-  if (res.ok) {
-    res.json().then((body) => {
+function updateCustomer() {
+  putJSON(`/api/backoffice/customers/${customerId}`, customer.value)
+    .then((body) => {
       customer.value = body;
       setAlert("ok", "Success");
+    })
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      setAlert("error", "Something went wrong!");
     });
-  } else if (res.status == 401) {
-    router.push({ name: "Signin" });
-  } else {
-    // eslint-disable-next-line
-    console.error(res);
-    setAlert("error", "Something went wrong!");
-  }
 }
 </script>
 

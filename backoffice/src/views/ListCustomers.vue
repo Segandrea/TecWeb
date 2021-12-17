@@ -3,24 +3,44 @@
   Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 -->
 <script setup>
+import { useRouter, useRoute } from "vue-router";
+import { ref, computed } from "vue";
+
+import { getJSON, redirectOnStatus } from "../http";
+import { signinRoute } from "../utils";
+
 import Navbar from "../components/Navbar.vue";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
 
 const router = useRouter();
+const route = useRoute();
+
+const alert = ref();
+const alertClass = computed(() => {
+  const error = alert.value.status === "error";
+  return {
+    alert: true,
+    "alert-danger": error,
+    "alert-success": !error,
+  };
+});
+
+function setAlert(status, message) {
+  alert.value = { status, message };
+  setTimeout(() => {
+    alert.value = undefined;
+  }, 5000);
+}
 
 const customers = ref([]);
 
-fetch("/api/backoffice/customers").then((res) => {
-  if (res.ok) {
-    res.json().then((body) => (customers.value = body.customers));
-  } else if (res.status == 401) {
-    router.push({ name: "Signin" });
-  } else {
+getJSON("/api/backoffice/customers")
+  .then((body) => (customers.value = body.customers))
+  .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+  .catch((err) => {
     // eslint-disable-next-line
-    console.error(res);
-  }
-});
+    console.error(err);
+    setAlert("error", "Something went wrong!");
+  });
 </script>
 
 <template>
@@ -31,6 +51,10 @@ fetch("/api/backoffice/customers").then((res) => {
         <li class="breadcrumb-item active" aria-current="page">Customers</li>
       </ol>
     </nav>
+
+    <div v-if="alert" :class="alertClass" role="alert">
+      {{ alert.message }}
+    </div>
 
     <table class="table table-hover">
       <thead>
