@@ -47,16 +47,16 @@ const routes = [
   },
   {
     path: "/products",
-    name: "CreateProduct",
-    component: CreateProduct,
+    name: "ListProducts",
+    component: ListProducts,
     meta: {
       restricted: true,
     },
   },
   {
     path: "/products",
-    name: "ListProducts",
-    component: ListProducts,
+    name: "CreateProduct",
+    component: CreateProduct,
     meta: {
       restricted: true,
     },
