@@ -1,9 +1,10 @@
 const express = require("express");
 const passport = require("passport");
-const User = require("../models/user.js").User;
-const Product = require("../models/product.js").Product;
-const Discount = require("../models/discount.js").Discount;
-const Review = require("../models/review.js").Review;
+
+const User = require("../models/user").User;
+const Review = require("../models/review").Review;
+const Product = require("../models/product").Product;
+const Discount = require("../models/discount").Discount;
 
 const router = express.Router();
 
@@ -97,28 +98,20 @@ router.get("/customers", restrict, (req, res) => {
     });
 });
 
-router.post("/products", restrict, (req, res) => {
-  Product.create(req.body)
-    .then((product) => res.status(201).json(product))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400);
-    });
-});
-
 router.put("/products/:productId", restrict, (req, res) => {
-  let productUpdates = req.body;
+  let body = req.body;
+
   Product.findByIdAndUpdate(
     req.params.productId,
     {
-      name: productUpdates.name,
-      images: productUpdates.images,
-      status: productUpdates.status,
-      visibile: productUpdates.visible,
-      description: productUpdates.description,
-      basePrice: productUpdates.basePrice,
-      dailyPrice: productUpdates.dailyPrice,
-      rating: productUpdates.rating,
+      name: body.name,
+      images: body.images,
+      status: body.status,
+      visible: body.visible,
+      description: body.description,
+      basePrice: body.basePrice,
+      dailyPrice: body.dailyPrice,
+      rating: body.rating,
     },
     { lean: true, returnDocument: "after" }
   )
@@ -149,10 +142,9 @@ router.get("/products", restrict, (req, res) => {
     });
 });
 
-//router.post("/discounts", restrict, (req, res) => {
-router.post("/discounts", (req, res) => {
-  Discount.create(req.body)
-    .then((discount) => res.status(201).json(discount))
+router.post("/products", restrict, (req, res) => {
+  Product.create(req.body)
+    .then((product) => res.status(201).json(product))
     .catch((err) => {
       console.error(err);
       res.sendStatus(400);
@@ -160,12 +152,13 @@ router.post("/discounts", (req, res) => {
 });
 
 router.put("/discounts/:discountId", restrict, (req, res) => {
-  let discountUpdates = req.body;
+  let body = req.body;
+
   Discount.findByIdAndUpdate(
     req.params.discountId,
     {
-      code: discountUpdates.code,
-      value: discountUpdates.value,
+      code: body.code,
+      value: body.value,
     },
     { lean: true, returnDocument: "after" }
   )
@@ -193,6 +186,15 @@ router.get("/discounts", restrict, (req, res) => {
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
+    });
+});
+
+router.post("/discounts", restrict, (req, res) => {
+  Discount.create(req.body)
+    .then((discount) => res.status(201).json(discount))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
     });
 });
 

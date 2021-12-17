@@ -46,7 +46,7 @@ async function signin() {
   <main class="w-100 h-100 container">
     <div class="row d-flex text-center align-items-center m-auto w-100 h-100">
       <div class="col m-auto">
-        <router-link to="/">
+        <router-link :to="{ name: 'Home' }">
           <img src="@/assets/nolonoloplus-dark.png" alt="Nolo Nolo Plus Logo" />
         </router-link>
         <h1 class="my-4 fw-normal">Backoffice</h1>

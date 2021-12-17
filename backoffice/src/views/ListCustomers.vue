@@ -44,7 +44,7 @@ fetch("/api/backoffice/customers").then((res) => {
         <tr v-for="customer in customers" :key="customer._id">
           <th scope="row">
             <router-link
-              :to="{ name: 'Customer', params: { id: customer._id } }"
+              :to="{ name: 'UpdateCustomer', params: { id: customer._id } }"
             >
               {{ customer._id }}
             </router-link>

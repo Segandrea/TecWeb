@@ -15,7 +15,7 @@ const alertClass = computed(() => {
   const error = alert.value.status === "error";
   return {
     alert: true,
-    "alert-error": error,
+    "alert-danger": error,
     "alert-success": !error,
   };
 });
@@ -27,9 +27,10 @@ function setAlert(status, message) {
   }, 5000);
 }
 
+const customerId = route.params.id;
 const customer = ref({});
 
-fetch(`/api/backoffice/customers/${route.params.id}`).then((res) => {
+fetch(`/api/backoffice/customers/${customerId}`).then((res) => {
   if (res.ok) {
     res.json().then((body) => {
       customer.value = body;
@@ -43,7 +44,7 @@ fetch(`/api/backoffice/customers/${route.params.id}`).then((res) => {
 });
 
 async function updateCustomer() {
-  const res = await fetch(`/api/backoffice/customers/${customer.value._id}`, {
+  const res = await fetch(`/api/backoffice/customers/${customerId}`, {
     headers: { "Content-Type": "application/json" },
     method: "PUT",
     body: JSON.stringify(customer.value),
@@ -70,7 +71,7 @@ async function updateCustomer() {
     <nav class="mb-4" aria-label="breadcrumb">
       <ol class="breadcrumb fw-bold">
         <li class="breadcrumb-item">
-          <router-link :to="{ name: 'Customers' }">Customers</router-link>
+          <router-link :to="{ name: 'ListCustomers' }">Customers</router-link>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
           {{ customer._id }}

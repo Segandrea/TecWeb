@@ -14,7 +14,7 @@ async function signout() {
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <router-link to="/" class="navbar-brand">
+        <router-link :to="{ name: 'Home' }" class="navbar-brand">
           <img
             src="@/assets/nolonoloplus-light.png"
             width="30"
@@ -36,20 +36,26 @@ async function signout() {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav flex-fill">
             <li class="nav-item">
-              <router-link class="nav-link" active-class="active" to="/"
+              <router-link
+                :to="{ name: 'Home' }"
+                class="nav-link"
+                active-class="active"
                 >Home</router-link
               >
             </li>
             <li class="nav-item">
               <router-link
+                :to="{ name: 'ListCustomers' }"
                 class="nav-link"
                 active-class="active"
-                to="/customers"
                 >Customers</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" active-class="active" to="/products"
+              <router-link
+                :to="{ name: 'ListProducts' }"
+                class="nav-link"
+                active-class="active"
                 >Products</router-link
               >
             </li>

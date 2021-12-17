@@ -1,8 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+
 import Home from "../views/Home.vue";
-import Customers from "../views/Customers.vue";
-import Customer from "../views/Customer.vue";
-import Products from "../views/Products.vue";
+
+import UpdateCustomer from "../views/UpdateCustomer.vue";
+import ListCustomers from "../views/ListCustomers.vue";
+
+import UpdateProduct from "../views/UpdateProduct.vue";
+import CreateProduct from "../views/CreateProduct.vue";
+import ListProducts from "../views/ListProducts.vue";
+
 import Signin from "../views/Signin.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
@@ -17,24 +23,40 @@ const routes = [
   },
   {
     path: "/customers/:id",
-    name: "Customer",
-    component: Customer,
+    name: "UpdateCustomer",
+    component: UpdateCustomer,
     meta: {
       restricted: true,
     },
   },
   {
     path: "/customers",
-    name: "Customers",
-    component: Customers,
+    name: "ListCustomers",
+    component: ListCustomers,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/products/:id",
+    name: "UpdateProduct",
+    component: UpdateProduct,
     meta: {
       restricted: true,
     },
   },
   {
     path: "/products",
-    name: "Products",
-    component: Products,
+    name: "CreateProduct",
+    component: CreateProduct,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/products",
+    name: "ListProducts",
+    component: ListProducts,
     meta: {
       restricted: true,
     },
