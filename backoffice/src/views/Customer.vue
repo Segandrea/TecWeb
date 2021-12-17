@@ -5,10 +5,27 @@
 <script setup>
 import Navbar from "../components/Navbar.vue";
 import { useRouter, useRoute } from "vue-router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const router = useRouter();
 const route = useRoute();
+
+const alert = ref();
+const alertClass = computed(() => {
+  const error = alert.value.status === "error";
+  return {
+    alert: true,
+    "alert-error": error,
+    "alert-success": !error,
+  };
+});
+
+function setAlert(status, message) {
+  alert.value = { status, message };
+  setTimeout(() => {
+    alert.value = undefined;
+  }, 5000);
+}
 
 const customer = ref({});
 
@@ -35,12 +52,14 @@ async function updateCustomer() {
   if (res.ok) {
     res.json().then((body) => {
       customer.value = body;
+      setAlert("ok", "Success");
     });
   } else if (res.status == 401) {
     router.push({ name: "Signin" });
   } else {
     // eslint-disable-next-line
     console.error(res);
+    setAlert("error", "Something went wrong!");
   }
 }
 </script>
@@ -58,6 +77,10 @@ async function updateCustomer() {
         </li>
       </ol>
     </nav>
+
+    <div v-if="alert" :class="alertClass" role="alert">
+      {{ alert.message }}
+    </div>
 
     <form @submit.prevent="updateCustomer">
       <div class="row g-4">
