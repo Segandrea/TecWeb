@@ -1,7 +1,3 @@
-<!--
-  This starter template is using Vue 3 <script setup> SFCs
-  Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
--->
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
@@ -16,10 +12,10 @@ const router = useRouter();
 const route = useRoute();
 
 const alert = ref();
-const products = ref([]);
+const discounts = ref([]);
 
-getJSON("/api/backoffice/products")
-  .then((body) => (products.value = body.products))
+getJSON("/api/backoffice/discounts")
+  .then((body) => (discounts.value = body.discounts))
   .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
   .catch((err) => {
     // eslint-disable-next-line
@@ -33,9 +29,9 @@ getJSON("/api/backoffice/products")
   <main class="container w-100 h-100 py-4">
     <nav class="mb-4" aria-label="breadcrumb">
       <ol class="breadcrumb fw-bold">
-        <li class="breadcrumb-item active" aria-current="page">Products</li>
+        <li class="breadcrumb-item active" aria-current="page">Discounts</li>
         <li class="breadcrumb-item">
-          <router-link :to="{ name: 'CreateProduct' }">
+          <router-link :to="{ name: 'CreateDiscount' }">
             <small><i class="bi bi-plus-circle"></i></small>
           </router-link>
         </li>
@@ -48,29 +44,21 @@ getJSON("/api/backoffice/products")
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">name</th>
-          <th scope="col">status</th>
-          <th scope="col">visible</th>
-          <th scope="col">base price</th>
-          <th scope="col">daily price</th>
-          <th scope="col">rating</th>
+          <th scope="col">code</th>
+          <th scope="col">value</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in products" :key="product._id">
+        <tr v-for="discount in discounts" :key="discount._id">
           <th scope="row">
             <router-link
-              :to="{ name: 'UpdateProduct', params: { id: product._id } }"
+              :to="{ name: 'UpdateDiscount', params: { id: discount._id } }"
             >
-              {{ product._id }}
+              {{ discount._id }}
             </router-link>
           </th>
-          <td>{{ product.name }}</td>
-          <td>{{ product.status }}</td>
-          <td>{{ product.visible }}</td>
-          <td>€ {{ product.basePrice }}</td>
-          <td>€ {{ product.dailyPrice }}</td>
-          <td>{{ product.rating }}</td>
+          <td>{{ discount.code }}</td>
+          <td>€ {{ discount.value }}</td>
         </tr>
       </tbody>
     </table>
