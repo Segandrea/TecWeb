@@ -17,7 +17,7 @@ const ProductSchema = new Schema({
   description: { type: String, required: true },
   basePrice: { type: Number, min: 0, required: true },
   dailyPrice: { type: Number, min: 0, required: true },
-  rating: { type: Number, min: 0, max: 5, default: 0, required: true },
+  rating: { type: Number, min: 0, max: 5 },
 });
 
 const Product = mongoose.model("Product", ProductSchema);

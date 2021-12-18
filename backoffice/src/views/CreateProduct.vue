@@ -7,7 +7,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
 import { postJSON, onStatus, redirectOnStatus } from "../http";
-import { signinRoute } from "../utils";
+import { signinRoute, toUploads } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
 import Alert from "../components/Alert.vue";
@@ -17,6 +17,7 @@ const route = useRoute();
 
 const alert = ref();
 const imageInput = ref();
+
 const product = ref({
   visible: false,
   status: "brand-new",
@@ -26,7 +27,18 @@ const product = ref({
 });
 
 function createProduct() {
-  postJSON("/api/backoffice/products", product.value)
+  toUploads(imageInput.value.files)
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something wrong with image files!");
+    })
+    .then((uploads) =>
+      postJSON("/api/backoffice/products", {
+        ...product.value,
+        uploads,
+      })
+    )
     .then((body) =>
       router.replace({ name: "UpdateProduct", params: { id: body._id } })
     )
@@ -97,18 +109,20 @@ function createProduct() {
             v-model="product.description"
             class="form-control"
             id="productDescription"
+            rows="5"
             required
-            rows="3"
           ></textarea>
         </div>
 
         <div class="col-md-4">
           <label for="productImage" class="form-label">Image</label>
           <input
-            ref="imageInput"
-            class="form-control"
-            type="file"
             id="productImage"
+            ref="imageInput"
+            type="file"
+            class="form-control"
+            accept=".png,.jpg,.jpeg"
+            multiple
           />
         </div>
 

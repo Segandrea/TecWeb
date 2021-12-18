@@ -3,17 +3,32 @@ const passport = require("passport");
 
 const User = require("../models/user").User;
 const Review = require("../models/review").Review;
+const Upload = require("../models/upload").Upload;
 const Product = require("../models/product").Product;
 const Discount = require("../models/discount").Discount;
 
 const router = express.Router();
 
+const ROLES = ["admin", "employee"];
+
 function restrict(req, res, next) {
-  if (req.user && req.user.role === "employee") {
+  if (req.user && ROLES.includes(req.user.role)) {
     return next();
   } else {
     return res.sendStatus(401);
   }
+}
+
+function upload(uploads) {
+  if (uploads && uploads.length > 0) {
+    return Upload.create(uploads).then((uploads) => uploads.map(toImage));
+  } else {
+    return Promise.resolve([]);
+  }
+}
+
+function toImage(upload) {
+  return { url: `/media/images/${upload._id}` };
 }
 
 router.post("/signin", (req, res, next) => {
@@ -44,7 +59,7 @@ router.post("/signout", restrict, (req, res) => {
 });
 
 router.put("/customers/:customerId", restrict, (req, res) => {
-  let body = req.body;
+  const body = req.body;
 
   User.findByIdAndUpdate(
     req.params.customerId,
@@ -99,23 +114,24 @@ router.get("/customers", restrict, (req, res) => {
 });
 
 router.put("/products/:productId", restrict, (req, res) => {
-  let body = req.body;
+  const productId = req.params.productId;
+  const body = req.body;
 
-  Product.findByIdAndUpdate(
-    req.params.productId,
-    {
-      name: body.name,
-      images: body.images,
-      status: body.status,
-      visible: body.visible,
-      description: body.description,
-      basePrice: body.basePrice,
-      dailyPrice: body.dailyPrice,
-      rating: body.rating,
-    },
-    { lean: true, returnDocument: "after" }
-  )
-    .then((product) => res.json(product))
+  upload(body.uploads)
+    .then((images) => {
+      delete body.uploads;
+
+      if (body.images) {
+        body.images.push(...images);
+      } else {
+        body.images = images;
+      }
+
+      Product.findByIdAndUpdate(productId, body, {
+        returnDocument: "after",
+        lean: true,
+      }).then((product) => res.json(product));
+    })
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
@@ -143,16 +159,23 @@ router.get("/products", restrict, (req, res) => {
 });
 
 router.post("/products", restrict, (req, res) => {
-  Product.create(req.body)
-    .then((product) => res.status(201).json(product))
+  upload(req.body.uploads)
+    .then((images) => {
+      delete req.body.uploads;
+      req.body.images = images;
+
+      return Product.create(req.body).then((product) =>
+        res.status(201).json(product)
+      );
+    })
     .catch((err) => {
       console.error(err);
-      res.sendStatus(400);
+      res.sendStatus(500);
     });
 });
 
 router.put("/discounts/:discountId", restrict, (req, res) => {
-  let body = req.body;
+  const body = req.body;
 
   Discount.findByIdAndUpdate(
     req.params.discountId,
