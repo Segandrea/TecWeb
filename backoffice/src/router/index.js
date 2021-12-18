@@ -12,6 +12,9 @@ import ListProducts from "../views/ListProducts.vue";
 import Signin from "../views/Signin.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
+import ListReviews from "../views/ListReviews.vue";
+import DetailReview from "../views/DetailReview.vue";
+
 const routes = [
   {
     path: "/",
@@ -67,6 +70,22 @@ const routes = [
     component: Signin,
     meta: {
       restricted: false,
+    },
+  },
+  {
+    path: "/reviews/:id",
+    name: "DetailReview",
+    component: DetailReview,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/reviews",
+    name: "ListReviews",
+    component: ListReviews,
+    meta: {
+      restricted: true,
     },
   },
   {
