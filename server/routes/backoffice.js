@@ -5,6 +5,7 @@ const User = require("../models/user").User;
 const Review = require("../models/review").Review;
 const Product = require("../models/product").Product;
 const Discount = require("../models/discount").Discount;
+const Order = require("../models/order").Order;
 
 const router = express.Router();
 
@@ -212,6 +213,35 @@ router.get("/reviews", restrict, (req, res) => {
   Review.find({})
     .lean()
     .then((reviews) => res.json({ reviews }))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/orders", restrict, (req, res) => {
+  Order.create(req.body)
+    .then((order) => res.status(201).json(order))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
+    });
+});
+
+router.get("/orders/:orderId", restrict, (req, res) => {
+  Order.findById(req.params.orderId)
+    .lean()
+    .then((order) => res.json(order))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/orders", restrict, (req, res) => {
+  Order.find({})
+    .lean()
+    .then((orders) => res.json({ orders }))
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
