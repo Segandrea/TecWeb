@@ -21,7 +21,11 @@
     {#each products as product}
       <div class="col">
         <div class="card">
-          <img src={product.images[0].url} class="card-img-top" />
+          <img
+            src={product.images[0].url}
+            class="card-img-top"
+            alt={product.name + " image"}
+          />
           <div class="card-body">
             <a
               href="/store/detail/{product._id}"

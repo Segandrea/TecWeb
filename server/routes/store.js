@@ -1,11 +1,11 @@
 const express = require("express");
 const passport = require("passport");
 
-const User = require("../models/user.js").User;
-const Order = require("../models/order.js").Order;
-const Review = require("../models/review.js").Review;
-const Product = require("../models/product.js").Product;
-const Discount = require("../models/discount.js").Discount;
+const User = require("../models/user").User;
+const Order = require("../models/order").Order;
+const Review = require("../models/review").Review;
+const Product = require("../models/product").Product;
+const Discount = require("../models/discount").Discount;
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
-  import { path } from "$lib/helpers.js";
-  import { rentalPeriod, cartItems } from "./stores.js";
+  import { path } from "$lib/utils";
+  import { rentalPeriod, cartItems } from "./stores";
 
   onMount(() => {
     flatpickr(document.getElementById("rentalPeriod"), {

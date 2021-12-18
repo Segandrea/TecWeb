@@ -7,10 +7,10 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const logger = require("morgan");
 
-const config = require("./config.js");
+const config = require("./config");
 
-const db = require("./db.js");
-const User = require("./models/user.js").User;
+const db = require("./db");
+const User = require("./models/user").User;
 
 // setup MongoDB
 db.connect();
@@ -72,7 +72,7 @@ app.use("/api/store", require("./routes/store"));
 
 // start server at the specified port
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port} (${config.env})`);
 });
 
 /*
