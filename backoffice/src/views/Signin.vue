@@ -4,29 +4,16 @@
 -->
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 import { postJSON, onStatus } from "../http";
+
+import Alert from "../components/Alert.vue";
 
 const router = useRouter();
 const route = useRoute();
 
 const alert = ref();
-const alertClass = computed(() => {
-  const error = alert.value.status === "error";
-  return {
-    alert: true,
-    "alert-danger": error,
-    "alert-success": !error,
-  };
-});
-
-function setAlert(status, message) {
-  alert.value = { status, message };
-  setTimeout(() => {
-    alert.value = undefined;
-  }, 5000);
-}
 
 // https://v3.vuejs.org/guide/composition-api-template-refs.html#template-refs
 const emailInput = ref();
@@ -42,15 +29,15 @@ function signin() {
     })
     .catch(
       onStatus(401, () => {
-        setAlert("error", "Signin required");
         employee.value = {};
         emailInput.value.focus();
+        alert.value.error("Signin required");
       })
     )
     .catch((err) => {
       // eslint-disable-next-line
       console.error(err);
-      setAlert("error", "Something went wrong!");
+      alert.value.error("Something went wrong!");
     });
 }
 </script>
@@ -64,11 +51,9 @@ function signin() {
         </router-link>
         <h1 class="my-4 fw-normal">Backoffice</h1>
 
-        <div v-if="alert" :class="alertClass" role="alert">
-          {{ alert.message }}
-        </div>
-
         <form @submit.prevent="signin">
+          <Alert ref="alert" />
+
           <div class="form-floating">
             <input
               id="email"

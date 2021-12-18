@@ -4,33 +4,18 @@
 -->
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 import { getJSON, redirectOnStatus } from "../http";
 import { signinRoute } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
+import Alert from "../components/Alert.vue";
 
 const router = useRouter();
 const route = useRoute();
 
 const alert = ref();
-const alertClass = computed(() => {
-  const error = alert.value.status === "error";
-  return {
-    alert: true,
-    "alert-danger": error,
-    "alert-success": !error,
-  };
-});
-
-function setAlert(status, message) {
-  alert.value = { status, message };
-  setTimeout(() => {
-    alert.value = undefined;
-  }, 5000);
-}
-
 const customers = ref([]);
 
 getJSON("/api/backoffice/customers")
@@ -39,7 +24,7 @@ getJSON("/api/backoffice/customers")
   .catch((err) => {
     // eslint-disable-next-line
     console.error(err);
-    setAlert("error", "Something went wrong!");
+    alert.value.error("Something went wrong!");
   });
 </script>
 
@@ -52,9 +37,7 @@ getJSON("/api/backoffice/customers")
       </ol>
     </nav>
 
-    <div v-if="alert" :class="alertClass" role="alert">
-      {{ alert.message }}
-    </div>
+    <Alert ref="alert" />
 
     <table class="table table-hover">
       <thead>
