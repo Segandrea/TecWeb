@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "svelte-star-rating": "^1.3.0"
+  }
+}
