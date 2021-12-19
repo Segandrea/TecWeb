@@ -2,7 +2,9 @@
   import { path, isAuth } from "$lib/utils";
 
   export async function load({ fetch }) {
-    let products = await fetch("/api/store/products").then((res) => res.json());
+    const products = await fetch("/api/store/products").then((res) =>
+      res.json()
+    );
 
     return {
       props: products,
@@ -11,6 +13,7 @@
 </script>
 
 <script>
+  import { addToCart } from "$lib/stores";
   import StarRating from "svelte-star-rating";
 
   export let products;
@@ -55,7 +58,18 @@
             </div>
             <p class="card-text text-clamp">{product.description}</p>
             <div class="text-end mt-4 mb-2">
-              <button class="btn btn-warning rounded-pill">Add to cart</button>
+              {#if isAuth()}
+                <button
+                  class="btn btn-warning rounded-pill"
+                  on:click={() => addToCart(product)}>Add to cart</button
+                >
+              {:else}
+                <a
+                  href={path("/signin")}
+                  class="btn btn-warning rounded-pill"
+                  role="button">Add to cart</a
+                >
+              {/if}
             </div>
           </div>
           <div class="card-footer">

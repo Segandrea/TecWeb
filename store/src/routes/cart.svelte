@@ -16,7 +16,7 @@
 </script>
 
 <script>
-  import { cartItems, rentalPeriod } from "./stores.js";
+  import { cart, rentalPeriod } from "$lib/stores";
 
   export let products = [];
   export let discounts = [];
@@ -42,8 +42,8 @@
     computePrices();
   });
 
-  cartItems.subscribe((value) => {
-    products = value;
+  cart.subscribe((cart) => {
+    products = Object.values(cart);
     computePrices();
   });
 </script>

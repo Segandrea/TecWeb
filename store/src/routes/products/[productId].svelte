@@ -20,14 +20,10 @@
 </script>
 
 <script>
-  import { cartItems } from "../stores.js";
+  import { addToCart } from "$lib/stores";
 
   export let product;
   export let reviews;
-
-  const addToCart = () => {
-    $cartItems = [...$cartItems, product];
-  };
 </script>
 
 <main class="container">
@@ -137,7 +133,7 @@
             <button
               type="button"
               class="btn btn-warning btn-lg"
-              on:click={addToCart}
+              on:click={() => addToCart(product)}
             >
               <i class="bi-cart3" />
               Rent

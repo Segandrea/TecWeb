@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { path } from "$lib/utils";
-  import { rentalPeriod, cartItems } from "./stores";
+  import { rentalPeriod, cartItems } from "$lib/stores";
 
   onMount(() => {
     flatpickr(document.getElementById("rentalPeriod"), {
@@ -38,7 +38,7 @@
           <li class="nav-item">
             <a class="nav-link" href={path("/cart")}>
               <i class="bi bi-handbag white" />
-              <sup class="fw-bolder orange">{$cartItems.length}</sup>
+              <sup class="fw-bolder orange">{$cartItems}</sup>
             </a>
           </li>
           <li class="nav-item">
@@ -117,7 +117,7 @@
       <li class="nav-item">
         <a class="nav-link" href={path("/cart")}>
           <i class="bi bi-handbag black" />
-          <sup class="fw-bolder orange">{$cartItems.length}</sup>
+          <sup class="fw-bolder orange">{$cartItems}</sup>
         </a>
       </li>
     </ul>
