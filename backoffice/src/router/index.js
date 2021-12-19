@@ -5,6 +5,10 @@ import Home from "../views/Home.vue";
 import UpdateCustomer from "../views/UpdateCustomer.vue";
 import ListCustomers from "../views/ListCustomers.vue";
 
+import UpdateDiscount from "../views/UpdateDiscount.vue";
+import CreateDiscount from "../views/CreateDiscount.vue";
+import ListDiscounts from "../views/ListDiscounts.vue";
+
 import UpdateProduct from "../views/UpdateProduct.vue";
 import CreateProduct from "../views/CreateProduct.vue";
 import ListProducts from "../views/ListProducts.vue";
@@ -33,6 +37,30 @@ const routes = [
     path: "/customers",
     name: "ListCustomers",
     component: ListCustomers,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/discounts/:id",
+    name: "UpdateDiscount",
+    component: UpdateDiscount,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/discounts",
+    name: "ListDiscounts",
+    component: ListDiscounts,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/discounts",
+    name: "CreateDiscount",
+    component: CreateDiscount,
     meta: {
       restricted: true,
     },
