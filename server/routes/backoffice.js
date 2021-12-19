@@ -149,47 +149,15 @@ router.post("/products", restrict, (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
     });
 });
 
-router.put("/discounts/:discountId", restrict, (req, res) => {
-  const body = req.body;
+router.put("/discounts/:id", restrict, utils.byIdAndUpdate(Discount));
 
-  Discount.findByIdAndUpdate(
-    req.params.discountId,
-    {
-      code: body.code,
-      value: body.value,
-    },
-    { lean: true, returnDocument: "after" }
-  )
-    .then((discount) => res.json(discount))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/discounts/:id", restrict, utils.byId(Discount));
 
-router.get("/discounts/:discountId", restrict, (req, res) => {
-  Discount.findById(req.params.discountId)
-    .lean()
-    .then((discount) => res.json(discount))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
-
-router.get("/discounts", restrict, (req, res) => {
-  Discount.find({})
-    .lean()
-    .then((discounts) => res.json({ discounts }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/discounts", restrict, utils.listAll(Discount, "discounts"));
 
 router.post("/discounts", restrict, (req, res) => {
   Discount.create(req.body)
@@ -200,26 +168,11 @@ router.post("/discounts", restrict, (req, res) => {
     });
 });
 
-router.get("/reviews/:reviewId", restrict, (req, res) => {
-  Review.findById(req.params.reviewId)
-    .lean()
-    .then((review) => res.json(review))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/reviews/:id", restrict, utils.byId(Review));
 
-router.get("/reviews", restrict, (req, res) => {
-  Review.find({})
-    .lean()
-    .then((reviews) => res.json({ reviews }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/reviews", restrict, utils.listAll(Review, "reviews"));
 
+//TODO: think about me
 router.post("/orders", restrict, (req, res) => {
   Order.create(req.body)
     .then((order) => res.status(201).json(order))
@@ -229,25 +182,9 @@ router.post("/orders", restrict, (req, res) => {
     });
 });
 
-router.get("/orders/:orderId", restrict, (req, res) => {
-  Order.findById(req.params.orderId)
-    .lean()
-    .then((order) => res.json(order))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/orders/:id", restrict, utils.byId(Order));
 
-router.get("/orders", restrict, (req, res) => {
-  Order.find({})
-    .lean()
-    .then((orders) => res.json({ orders }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/orders", restrict, utils.listAll(Order, "orders"));
 
 router.get("/ping", (req, res) => {
   res.sendStatus(200);
