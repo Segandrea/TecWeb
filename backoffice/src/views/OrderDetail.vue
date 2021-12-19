@@ -14,7 +14,12 @@ const route = useRoute();
 const alert = ref();
 
 const orderId = route.params.id;
-const order = ref({});
+const order = ref({
+  products: [],
+  discounts: [],
+  issuedAt: "",
+  returnalDate: "",
+});
 
 getJSON(`/api/backoffice/orders/${orderId}`)
   .then((body) => (order.value = body))
