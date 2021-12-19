@@ -59,25 +59,31 @@ function updateDiscount() {
     <form @submit.prevent="updateDiscount">
       <div class="row g-4">
         <div class="col-md-2">
-          <label for="code" class="form-label">Code</label>
+          <label for="discountCode" class="form-label">Code</label>
           <input
             v-model="discount.code"
             type="text"
             class="form-control"
-            id="code"
+            id="discountCode"
             required
           />
         </div>
 
         <div class="col-md-4">
-          <label for="value" class="form-label">Value</label>
-          <input
-            v-model="discount.value"
-            type="value"
-            class="form-control"
-            id="value"
-            required
-          />
+          <label for="discountValue" class="form-label">Value</label>
+          <div class="input-group">
+            <span class="input-group-text">€</span>
+            <input
+              v-model="discount.value"
+              type="number"
+              class="form-control"
+              id="discountValue"
+              value="0"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
         </div>
 
         <div class="col-12">

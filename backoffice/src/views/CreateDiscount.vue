@@ -46,7 +46,7 @@ function createDiscount() {
     <form @submit.prevent="createDiscount">
       <div class="row g-4">
         <div class="col-md-4">
-          <label for="code" class="form-label">Code</label>
+          <label for="discountCode" class="form-label">Code</label>
           <input
             v-model="discount.code"
             class="form-control"
