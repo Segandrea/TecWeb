@@ -105,9 +105,3 @@ getJSON(`/api/backoffice/orders/${orderId}`)
     </table>
   </main>
 </template>
-
-<style scoped>
-.carousel {
-  height: 256px;
-}
-</style>
