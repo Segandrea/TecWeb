@@ -2,18 +2,21 @@
   export async function load({ page, fetch }) {
     const orderId = page.params.id;
 
-    const order = await fetch(`/api/store/orders/${orderId}`)
-      .then((res) => res.json());
+    const order = await fetch(`/api/store/orders/${orderId}`).then((res) =>
+      res.json()
+    );
 
     return {
       props: {
         order,
-      }
-    }
+      },
+    };
   }
 </script>
 
 <script>
+  import { formatDate } from "$lib/utils";
+
   export let order;
 </script>
 
@@ -23,69 +26,69 @@
   <div class="card-group text-center">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">
-          Order date
-        </h5>
+        <h5 class="card-title">Order date</h5>
         <div class="card-text">
-          {order.issuedAt.split("T")[0]}
+          {formatDate(order.issuedAt)}
         </div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">
-          Return date
-        </h5>
+        <h5 class="card-title">Return date</h5>
         <div class="card-text">
-          {order.returnalDate.split("T")[0]}
+          {formatDate(order.returnalDate)}
         </div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">
-          Total
-        </h5>
+        <h5 class="card-title">Total</h5>
         <div class="card-text">
-          € {order.totalPrice}
+          € {order.totalPrice.toFixed(2)}
         </div>
       </div>
     </div>
   </div>
 
-  <h3 class="text-center mt-5">Discounts</h3>
-  <div class="table-responsive">
-    <table class="table text-center">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col">Code</th>
-          <th scope="col">Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each order.discounts as discount}
+  {#if order.discounts && order.discounts.length > 0}
+    <h3 class="text-center mt-5">Discounts</h3>
+    <div class="table-responsive">
+      <table class="table text-center">
+        <thead class="table-dark">
           <tr>
-            <td>{discount.code}</td>
-            <td>€ {discount.value}</td>
+            <th scope="col">Code</th>
+            <th scope="col">Value</th>
           </tr>
-        {/each}
-      </tbody>
-    <table>
-  </div>
+        </thead>
+        <tbody>
+          {#each order.discounts as discount}
+            <tr>
+              <td>{discount.code}</td>
+              <td>€ {discount.value.toFixed(2)}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  {/if}
 
   <h3 class="text-center mt-5">Products</h3>
   <div class="row row-cols-1 row-cols-md-3 g-1">
     {#each order.products as product}
       <div class="col">
         <div class="card">
-          <img src={product.image} class="card-img-top">
+          <img
+            src={product.image}
+            class="card-img-top"
+            alt={product.name + " image"}
+          />
           <div class="card-body">
             <div class="card-title fw-bold text-center">{product.name}</div>
             <ul>
-              <li>Base:€ {product.basePrice}</li>
-              <li>Daily:€ {product.dailyPrice}</li>
+              <li>Base: € {product.basePrice.toFixed(2)}</li>
+              <li>Daily: € {product.dailyPrice.toFixed(2)}</li>
               <li>Dispatched: {product.initialStatus}</li>
               <li>Returned: {product.returnalStatus}</li>
             </ul>
@@ -94,5 +97,4 @@
       </div>
     {/each}
   </div>
-
 </main>

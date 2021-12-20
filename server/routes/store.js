@@ -119,18 +119,18 @@ router.put(
 );
 
 router.get(
-  "/orders",
-  restrict,
-  utils.listAll(Order, "orders", undefined, (req) => ({ userId: req.user._id }))
-);
-
-router.get(
   "/orders/:id",
   restrict,
   utils.oneByQuery(Order, undefined, (req) => ({
     _id: req.params.id,
     userId: req.user._id,
   }))
+);
+
+router.get(
+  "/orders",
+  restrict,
+  utils.listAll(Order, "orders", undefined, (req) => ({ userId: req.user._id }))
 );
 
 router.post("/orders", restrict, (req, res) => {
