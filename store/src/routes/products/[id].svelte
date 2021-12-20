@@ -22,7 +22,7 @@
 
 <script>
   import StarRating from "svelte-star-rating";
-  import { addToCart } from "$lib/stores";
+  import { cart, addToCart } from "$lib/stores";
   import { path } from "$lib/utils";
 
   export let productId;
@@ -98,8 +98,9 @@
           >
             <button
               type="button"
-              class="btn btn-warning btn-lg"
+              class="btn btn-warning rounded-3"
               on:click={() => addToCart(product)}
+              disabled={product._id in $cart}
             >
               Add to cart
             </button>

@@ -61,9 +61,9 @@
               {#if isAuth()}
                 <button
                   type="button"
-                  class="btn btn-warning rounded-pill"
+                  class="btn btn-warning rounded-3"
                   on:click={() => addToCart(product)}
-                  disabled={$cart.hasOwnProperty(product._id)}
+                  disabled={product._id in $cart}
                 >
                   Add to cart</button
                 >
