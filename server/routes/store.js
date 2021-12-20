@@ -92,8 +92,31 @@ router.get("/profile", restrict, (req, res) => {
     _id: user._id,
     email: user.email,
     username: user.customer.username,
+    billingAddress: user.customer.billingAddress || "",
   });
 });
+
+router.put(
+  "/profile",
+  restrict,
+  utils.byIdAndUpdate(
+    User,
+    (user) => ({
+      _id: user._id,
+      email: user.email,
+      username: user.customer.username,
+      billingAddress: user.customer.billingAddress || "",
+    }),
+    (req) => ({
+      email: req.body.email,
+      customer: {
+        username: req.body.username,
+        billingAddress: req.body.billingAddress,
+      },
+    }),
+    (req) => req.user._id
+  )
+);
 
 router.get(
   "/orders",
@@ -102,7 +125,12 @@ router.get(
 );
 
 router.post("/orders", restrict, (req, res) => {
-  // TODO
+  Order.create(req.body)
+    .then((order) => res.status(201).json(order))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
+    });
 });
 
 // TODO: change conventions

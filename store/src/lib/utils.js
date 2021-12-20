@@ -7,3 +7,7 @@ export function path(location) {
 export function isAuth() {
   return !!sessionStorage.getItem("customer");
 }
+
+export function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString();
+}
