@@ -7,7 +7,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
 import { getJSON, putJSON, redirectOnStatus } from "../http";
-import { signinRoute } from "../utils";
+import { signinRoute, toUploads } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
 import Alert from "../components/Alert.vue";
@@ -31,9 +31,30 @@ getJSON(`/api/backoffice/products/${productId}`)
   });
 
 function updateProduct() {
-  putJSON(`/api/backoffice/products/${productId}`, product.value)
+  toUploads(imageInput.value.files)
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something wrong with image files!");
+    })
+    .then((uploads) =>
+      putJSON(`/api/backoffice/products/${productId}`, {
+        ...product.value,
+        uploads,
+      })
+    )
     .then((body) => {
       product.value = body;
+
+      // clear the HTML input element
+      imageInput.value.value = null;
+
+      // set the focus on last item of the carousel
+      if (carouselItems.length > 0) {
+        carouselItems.forEach((item) => item.classList.remove("active"));
+        carouselItems.at(-1).classList.add("active");
+      }
+
       alert.value.info("Success");
     })
     .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
@@ -42,6 +63,23 @@ function updateProduct() {
       console.error(err);
       alert.value.error("Something went wrong!");
     });
+}
+
+const carouselItems = [];
+
+function setCarouselItem(element) {
+  if (element) {
+    carouselItems.push(element);
+  }
+}
+
+function removeImage(index) {
+  product.value.images.splice(index, 1);
+  carouselItems.splice(index, 1);
+
+  if (carouselItems.length > 0) {
+    carouselItems[0].classList.add("active");
+  }
 }
 </script>
 
@@ -60,6 +98,54 @@ function updateProduct() {
     </nav>
 
     <Alert ref="alert" />
+
+    <div v-if="product.images && product.images.length > 0" class="row">
+      <div class="col">
+        <div
+          id="carouselControls"
+          class="carousel carousel-dark slide my-2"
+          data-bs-touch="false"
+          data-bs-interval="false"
+        >
+          <div class="carousel-inner h-100 text-center">
+            <div
+              v-for="(image, index) in product.images"
+              :key="image._id"
+              class="carousel-item h-100"
+              :class="{ active: 0 === index }"
+              :ref="setCarouselItem"
+            >
+              <img
+                :src="image.url"
+                class="d-block mx-auto h-75"
+                :alt="`${product.name} image ${index}`"
+              />
+              <button class="btn btn-link" @click="removeImage(index)">
+                remove image
+              </button>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselControls"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselControls"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <form @submit.prevent="updateProduct">
       <div class="row g-4">
@@ -107,18 +193,20 @@ function updateProduct() {
             v-model="product.description"
             class="form-control"
             id="productDescription"
+            rows="5"
             required
-            rows="3"
           ></textarea>
         </div>
 
         <div class="col-md-4">
           <label for="productImage" class="form-label">Image</label>
           <input
-            ref="imageInput"
-            class="form-control"
-            type="file"
             id="productImage"
+            ref="imageInput"
+            type="file"
+            class="form-control"
+            accept=".png,.jpg,.jpeg"
+            multiple
           />
         </div>
 
@@ -163,3 +251,9 @@ function updateProduct() {
     </form>
   </main>
 </template>
+
+<style scoped>
+.carousel {
+  height: 256px;
+}
+</style>

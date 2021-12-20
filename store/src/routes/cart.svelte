@@ -3,11 +3,11 @@
 
   export async function load({ page }) {
     if (!isAuth()) {
-      const query = new URLSearchParams({ returnTo: path(page.path) });
+      const returnTo = new URLSearchParams({ returnTo: path(page.path) });
 
       return {
         status: 302,
-        redirect: path(`/signin?${query}`),
+        redirect: path(`/signin?${returnTo}`),
       };
     }
 
@@ -16,36 +16,62 @@
 </script>
 
 <script>
-  import { cartItems, rentalPeriod } from "./stores.js";
+  import {
+    cart,
+    cartItems,
+    removeFromCart,
+    discounts,
+    discountItems,
+    addDiscount,
+    removeDiscount,
+    rentalPeriod,
+  } from "$lib/stores";
+  import { datediff } from "$lib/utils";
 
-  export let products = [];
-  export let discounts = [];
-  export let days = 0;
-  export let subtotalPrice = 0;
-  export let totalPrice = 0;
+  let discountCode;
 
-  // TODO: handle me
-  export let discountPrice = 0;
+  let subtotalPrice = 0;
+  let discountPrice = 0;
+  let totalPrice = 0;
+  let days = 0;
 
-  function computePrices() {
+  rentalPeriod.subscribe((range) => {
+    days = range.length == 2 ? datediff(range[0], range[1]) : 0;
+    computePrices(days, $cartItems, $discountItems);
+  });
+
+  cart.subscribe((cart) => {
+    computePrices(days, Object.values(cart), $discountItems);
+  });
+
+  discounts.subscribe((discounts) => {
+    computePrices(days, $cartItems, Object.values(discounts));
+  });
+
+  function computePrices(days, products, discounts) {
     subtotalPrice = products
-      .map((p) => p.basePrice + p.dailyPrice * days)
-      .reduce((a, b) => a + b, 0);
-    totalPrice = subtotalPrice - discountPrice;
+      .map((product) => product.basePrice + product.dailyPrice * days)
+      .reduce((acc, val) => acc + val, 0);
+
+    discountPrice = discounts
+      .map((discount) => discount.value)
+      .reduce((acc, val) => acc + val, 0);
+
+    totalPrice = Math.max(subtotalPrice - discountPrice, 0);
   }
 
-  rentalPeriod.subscribe((value) => {
-    days =
-      value.length == 2
-        ? (value[1].getTime() - value[0].getTime()) / (1000 * 3600 * 24)
-        : 0;
-    computePrices();
-  });
+  async function fetchDiscount() {
+    const res = await fetch(`/api/store/discounts/${discountCode}`);
 
-  cartItems.subscribe((value) => {
-    products = value;
-    computePrices();
-  });
+    if (res.ok) {
+      res
+        .json()
+        .then(addDiscount)
+        .then(() => {
+          discountCode = "";
+        });
+    }
+  }
 </script>
 
 <svelte:head>
@@ -53,82 +79,44 @@
 </svelte:head>
 
 <main class="container">
-  <div class="row">
-    <div class="col-lg-9">
-      <div class="card-group d-sm-flex flex-sm-nowrap overflow-auto">
-        {#each products as product}
-          <div class="card border-0 p-2">
-            <img
-              src={product.images[0].url}
-              class="card-img-top"
-              width="42"
-              alt={product.name}
-            />
-            <div class="card-body bg-light">
-              <h4 class="card-title text-truncate py-2">{product.name}</h4>
-              <div class="card-text d-flex justify-content-between fst-italic">
-                <span>Base</span>
-                <span>
-                  <i class="bi bi-currency-euro black">{product.basePrice}</i>
-                </span>
-              </div>
-              <div
-                class="card-text d-flex justify-content-between fst-italic fw-bold"
-              >
-                <span>Daily</span>
-                <span>
-                  {days} <small>x</small>
-                  <i class="bi bi-currency-euro black">{product.dailyPrice}</i>
-                </span>
-              </div>
-            </div>
-            <div
-              class="card-footer bg-info d-flex justify-content-between fst-italic fw-bold"
-            >
-              <span>Total</span>
-              <span>
-                <i class="bi bi-currency-euro black"
-                  >{(product.basePrice + days * product.dailyPrice).toFixed(
-                    2
-                  )}</i
-                >
-              </span>
-            </div>
-          </div>
-        {/each}
-      </div>
-    </div>
-
-    <div class="col-lg-3 d-flex flex-column py-1">
+  <div class="row g-4">
+    <div class="col-lg-3">
       <div class="row">
         <div class="col d-flex align-items-center justify-content-between">
           <h2>Summary</h2>
-          <span>{products.length} items</span>
+          <span>{$cartItems.length} items</span>
         </div>
       </div>
 
-      <div class="row flex-grow-1">
+      <div class="row" style="min-height: 28vh;">
         <div class="col">
           <div class="input-group">
-            <span class="input-group-text btn btn-info">+</span>
+            <span class="input-group-text btn btn-info" on:click={fetchDiscount}
+              >+</span
+            >
             <input
+              bind:value={discountCode}
               type="text"
               class="form-control"
               placeholder="Discount code"
               aria-label="Discount code"
             />
           </div>
-          <div class="mt-3 mb-2">
-            <h5>Discount codes</h5>
-          </div>
-          <ul class="list-group">
-            {#each discounts as discount}
+          <h5 class="my-2">Discount codes</h5>
+          <ul class="list-group mb-2">
+            {#each $discountItems as discount}
               <li class="list-group-item fw-bold">
                 <div class="d-flex justify-content-between">
-                  <span class="text-info">{discount.code}</span>
+                  <div>
+                    <i
+                      class="bi bi-x-circle text-danger me-2"
+                      on:click={() => removeDiscount(discount)}
+                    />
+                    <span class="text-info">{discount.code}</span>
+                  </div>
                   <span>
                     <i class="bi bi-currency-euro black">
-                      {discount.value}
+                      {discount.value.toFixed(2)}
                     </i>
                   </span>
                 </div>
@@ -141,15 +129,24 @@
       <div class="row row-cols-1">
         <div class="col d-flex justify-content-between fst-italic text-muted">
           <span>Subtotal</span>
-          <span>{subtotalPrice}</span>
+          <span
+            ><i class="bi bi-currency-euro black">{subtotalPrice.toFixed(2)}</i
+            ></span
+          >
         </div>
         <div class="col d-flex justify-content-between fst-italic text-muted">
           <span>Discount</span>
-          <span>{discountPrice}</span>
+          <span
+            ><i class="bi bi-currency-euro black">{discountPrice.toFixed(2)}</i
+            ></span
+          >
         </div>
         <div class="col d-flex justify-content-between fw-bold fst-italic">
           <span>Total</span>
-          <span>{totalPrice}</span>
+          <span
+            ><i class="bi bi-currency-euro black">{totalPrice.toFixed(2)}</i
+            ></span
+          >
         </div>
       </div>
 
@@ -160,28 +157,89 @@
         </div>
       </div>
     </div>
+
+    <div class="col-lg-9">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        {#each $cartItems as product}
+          <div class="col">
+            <div class="card h-100">
+              <a href={path(`/products/${product._id}`)}
+                ><img
+                  src={product.images[0].url}
+                  class="card-img-top"
+                  height="200"
+                  alt={product.name + " image"}
+                /></a
+              >
+              <div class="card-body">
+                <h5 class="card-title text-truncate">
+                  <a href={path(`/products/${product._id}`)} class="link-dark"
+                    >{product.name}</a
+                  >
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted text-truncate">
+                  {product.status}
+                </h6>
+                <div
+                  class="d-flex justify-content-between orange fw-bolder fst-italic"
+                >
+                  <div>Daily</div>
+                  <div>
+                    <i class="bi bi-currency-euro"
+                      >{product.dailyPrice.toFixed(2)}</i
+                    >
+                  </div>
+                </div>
+                <div
+                  class="d-flex justify-content-between text-muted fs-6 fst-italic"
+                >
+                  <div><small>Base</small></div>
+                  <div>
+                    <small
+                      ><i class="bi bi-currency-euro"
+                        >{product.basePrice.toFixed(2)}</i
+                      ></small
+                    >
+                  </div>
+                </div>
+                <div
+                  class="d-flex justify-content-between text-muted fs-6 fst-italic"
+                >
+                  <div><small>Days</small></div>
+                  <div>
+                    <small>{days}</small>
+                  </div>
+                </div>
+                <div class="text-end mt-4 mb-2">
+                  <button
+                    type="button"
+                    class="btn btn-warning rounded-3"
+                    on:click={() => removeFromCart(product)}
+                  >
+                    Remove</button
+                  >
+                </div>
+              </div>
+              <div class="card-footer">
+                <div
+                  class="d-flex justify-content-between fw-bolder fst-italic"
+                >
+                  <div>Total</div>
+                  <div>
+                    <i class="bi bi-currency-euro"
+                      >{(product.basePrice + days * product.dailyPrice).toFixed(
+                        2
+                      )}</i
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/each}
+      </div>
+    </div>
   </div>
 </main>
 
 <slot />
-
-<style>
-  .card {
-    min-width: 25vw;
-    min-height: 60vh;
-  }
-
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 10px rgba(127, 127, 127, 0.4);
-    border-radius: 12px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgba(127, 127, 127, 0.9);
-    border-radius: 12px;
-  }
-</style>

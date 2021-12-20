@@ -5,7 +5,7 @@ const config = require("../config.js");
 
 const CustomerSchema = new Schema({
   username: { type: String, required: true },
-  avatar: { type: String },
+  billingAddress: { type: String, required: false },
 });
 
 const UserSchema = new Schema({
@@ -26,7 +26,7 @@ UserSchema.index({ role: 1, email: 1 }, { unique: true });
 UserSchema.pre("save", function (next) {
   const user = this;
 
-  if (this.isModified("password") || this.isNew) {
+  if (user.isModified("password") || user.isNew) {
     bcrypt.genSalt(config.saltRounds, function (saltError, salt) {
       if (saltError) {
         return next(saltError);
@@ -46,12 +46,15 @@ UserSchema.pre("save", function (next) {
   }
 });
 
-UserSchema.methods.comparePassword = function (password, callback) {
-  bcrypt.compare(password, this.password, function (error, isMatch) {
-    if (error) {
-      return callback(error);
+UserSchema.methods.comparePassword = function (plaintextPassword, callback) {
+  const user = this;
+
+  // remember that user.password is hashed!!!
+  bcrypt.compare(plaintextPassword, user.password, function (err, isEqual) {
+    if (err) {
+      return callback(err);
     } else {
-      return callback(null, isMatch);
+      return callback(null, isEqual);
     }
   });
 };

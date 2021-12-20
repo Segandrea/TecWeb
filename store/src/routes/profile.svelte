@@ -1,5 +1,5 @@
 <script context="module">
-  import { path, isAuth } from "$lib/utils";
+  import { path, isAuth, formatDate } from "$lib/utils";
 
   export async function load({ page, fetch }) {
     if (isAuth()) {
@@ -15,7 +15,7 @@
 
         return {
           props: {
-            profile: profile,
+            profile,
             ...orders,
           },
         };
@@ -23,7 +23,6 @@
     }
 
     const query = new URLSearchParams({ returnTo: path(page.path) });
-
     return {
       status: 302,
       redirect: path(`/signin?${query}`),
@@ -33,6 +32,7 @@
 
 <script>
   import { goto } from "$app/navigation";
+  import { clearCart, clearDiscounts } from "$lib/stores";
 
   export let profile;
   export let orders;
@@ -44,8 +44,20 @@
 
     if (res.ok) {
       sessionStorage.removeItem("customer");
+      clearDiscounts();
+      clearCart();
       goto(path("/"));
     }
+  }
+
+  function updateProfile() {
+    fetch("/api/store/profile", {
+      headers: { "Content-Type": "application/json" },
+      method: "PUT",
+      body: JSON.stringify(profile),
+    })
+      .then((res) => res.json())
+      .then((body) => (profile = body));
   }
 </script>
 
@@ -58,32 +70,14 @@
     <div class="col col-lg-3 text-center">
       <h2 class="py-4">Profile</h2>
 
-      {#if profile.avatar}
-        <img
-          class="rounded-circle"
-          width="128px"
-          height="128px"
-          src={profile.avatar}
-          alt="avatar"
-        />
-      {/if}
-
-      <form>
-        <input
-          id="avatar"
-          name="avatar"
-          type="file"
-          class="form-control my-4"
-          aria-label="avatar"
-        />
-
+      <form on:submit|preventDefault={updateProfile}>
         <div class="form-floating">
           <input
             id="email"
             name="email"
             type="email"
+            bind:value={profile.email}
             class="form-control border-bottom-0 rounded-0 rounded-top"
-            value={profile.email}
             placeholder="domain@example.com"
             required
           />
@@ -95,8 +89,8 @@
             id="username"
             name="username"
             type="text"
-            class="form-control border-top-0 rounded-0 rounded-bottom"
-            value={profile.username}
+            bind:value={profile.username}
+            class="form-control rounded-0"
             placeholder="username"
             minlength="4"
             required
@@ -104,69 +98,59 @@
           <label for="username">Username</label>
         </div>
 
+        <div class="form-floating">
+          <input
+            id="billingAddress"
+            name="billingAddress"
+            type="text"
+            bind:value={profile.billingAddress}
+            class="form-control border-top-0 rounded-0 rounded-bottom"
+            placeholder="billing address"
+            required
+          />
+          <label for="billingAddress">Billing Address</label>
+        </div>
+
         <button class="btn btn-lg btn-warning my-2 w-100" type="submit"
           >Save changes</button
         >
       </form>
-      <p>
-        Or
+      <div class="d-flex align-items-center justify-content-center">
+        <span>Or</span>
         <button type="button" class="btn btn-link" on:click={signout}
           >Sign out</button
         >
-      </p>
+      </div>
     </div>
-    <div class="col col-lg-9">
-      <h2 class="text-center py-4">Your Orders</h2>
+    <div class="col col-lg-9 text-center">
+      <h2 class="py-4">Your Orders</h2>
 
       <ul class="list-group">
         {#each orders as order}
-          <li class="list-group-item">
-            <div class="row d-flex align-items-center">
-              <div class="col-md-2 my-2 text-center">
-                FIXME
-                <!-- TODO: add a function that connects order.productId with product
-                <a href="#"
-                  ><img
-                    class="img-thumbnail"
-                    src={order.product.image_url}
-                    alt={order.product.name}
-                  /></a
+          <div class="list-group-item">
+            <div class="row row-cols-1 row-cols-lg-4 g-3">
+              <div class="col text-truncate">
+                <h6>Order No.</h6>
+                <a href={path(`/orders/${order._id}`)}
+                  ><small>{order._id}</small></a
                 >
-                -->
               </div>
-
-              <div class="col-md-4 my-2 text-center">
-                <div class="row">
-                  <div class="col">
-                    <a class="link-dark" href="#">
-                      <div class="text-truncate">
-                        FIXME
-                        <!-- TODO: add a function that connects order.productId with product
-                        {order.product.description}
-                          -->
-                      </div>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <small class="text-muted">{order.issuedAt}</small>
-                  </div>
-                </div>
+              <div class="col">
+                <h6>Start Date</h6>
+                <small class="text-muted">{formatDate(order.issuedAt)}</small>
               </div>
-
-              <div class="col-md-3 my-2 text-center">
-                <i class="bi bi-currency-euro">{order.totalPrice}</i>
+              <div class="col">
+                <h6>End Date</h6>
+                <small class="text-muted"
+                  >{formatDate(order.returnalDate)}</small
+                >
               </div>
-
-              <div class="col-md-3 my-2 text-center">
-                <a href="#">
-                  Leave a review <i class="bi bi-pen" />
-                </a>
+              <div class="col">
+                <h6>Total</h6>
+                <i class="bi bi-currency-euro">{order.totalPrice.toFixed(2)}</i>
               </div>
             </div>
-          </li>
+          </div>
         {/each}
       </ul>
     </div>
@@ -193,9 +177,10 @@
   .list-group {
     max-height: 75vh;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 575px) {
     .list-group {
       max-height: unset;
       overflow: unset;

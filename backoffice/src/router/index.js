@@ -5,9 +5,16 @@ import Home from "../views/Home.vue";
 import UpdateCustomer from "../views/UpdateCustomer.vue";
 import ListCustomers from "../views/ListCustomers.vue";
 
+import UpdateDiscount from "../views/UpdateDiscount.vue";
+import CreateDiscount from "../views/CreateDiscount.vue";
+import ListDiscounts from "../views/ListDiscounts.vue";
+
 import UpdateProduct from "../views/UpdateProduct.vue";
 import CreateProduct from "../views/CreateProduct.vue";
 import ListProducts from "../views/ListProducts.vue";
+
+import ListOrders from "../views/ListOrders.vue";
+import OrderDetail from "../views/OrderDetail.vue";
 
 import Signin from "../views/Signin.vue";
 import PageNotFound from "../views/PageNotFound.vue";
@@ -41,6 +48,30 @@ const routes = [
     },
   },
   {
+    path: "/discounts/:id",
+    name: "UpdateDiscount",
+    component: UpdateDiscount,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/discounts",
+    name: "ListDiscounts",
+    component: ListDiscounts,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/discounts",
+    name: "CreateDiscount",
+    component: CreateDiscount,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
     path: "/products/:id",
     name: "UpdateProduct",
     component: UpdateProduct,
@@ -60,6 +91,22 @@ const routes = [
     path: "/products",
     name: "CreateProduct",
     component: CreateProduct,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/orders",
+    name: "ListOrders",
+    component: ListOrders,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/orders/:id",
+    name: "OrderDetail",
+    component: OrderDetail,
     meta: {
       restricted: true,
     },

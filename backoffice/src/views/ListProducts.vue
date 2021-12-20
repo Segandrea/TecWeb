@@ -68,8 +68,8 @@ getJSON("/api/backoffice/products")
           <td>{{ product.name }}</td>
           <td>{{ product.status }}</td>
           <td>{{ product.visible }}</td>
-          <td>{{ product.basePrice }}</td>
-          <td>{{ product.dailyPrice }}</td>
+          <td>€ {{ product.basePrice }}</td>
+          <td>€ {{ product.dailyPrice }}</td>
           <td>{{ product.rating }}</td>
         </tr>
       </tbody>

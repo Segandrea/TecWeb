@@ -1,6 +1,8 @@
 const express = require("express");
 const passport = require("passport");
 
+const utils = require("./utils");
+
 const User = require("../models/user").User;
 const Order = require("../models/order").Order;
 const Review = require("../models/review").Review;
@@ -89,46 +91,67 @@ router.get("/profile", restrict, (req, res) => {
   res.json({
     _id: user._id,
     email: user.email,
-    avatar: user.customer.avatar,
     username: user.customer.username,
+    billingAddress: user.customer.billingAddress || "",
   });
 });
 
-router.get("/orders", restrict, (req, res) => {
-  const user = req.user;
-  Order.find({ userId: user._id })
-    .lean()
-    .then((orders) => res.json({ orders }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.put(
+  "/profile",
+  restrict,
+  utils.byIdAndUpdate(
+    User,
+    (user) => ({
+      _id: user._id,
+      email: user.email,
+      username: user.customer.username,
+      billingAddress: user.customer.billingAddress || "",
+    }),
+    (req) => ({
+      email: req.body.email,
+      customer: {
+        username: req.body.username,
+        billingAddress: req.body.billingAddress,
+      },
+    }),
+    (req) => req.user._id
+  )
+);
+
+router.get(
+  "/orders/:id",
+  restrict,
+  utils.oneByQuery(Order, undefined, (req) => ({
+    _id: req.params.id,
+    userId: req.user._id,
+  }))
+);
+
+router.get(
+  "/orders",
+  restrict,
+  utils.listAll(Order, "orders", undefined, (req) => ({ userId: req.user._id }))
+);
 
 router.post("/orders", restrict, (req, res) => {
-  // TODO
-});
-
-router.get("/products/:productId", (req, res) => {
-  const productId = req.params.productId;
-  Product.findById(productId)
-    .lean()
-    .then((product) => res.json({ product }))
+  Order.create(req.body)
+    .then((order) => res.status(201).json(order))
     .catch((err) => {
       console.error(err);
-      res.sendStatus(404);
+      res.sendStatus(400);
     });
 });
 
-router.get("/products", (req, res) => {
-  Product.find({ visible: true })
-    .lean()
-    .then((products) => res.json({ products }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(404);
-    });
-});
+// TODO: change conventions
+router.get(
+  "/products/:id",
+  utils.byId(Product, (product) => ({ product }))
+);
+
+router.get(
+  "/products",
+  utils.listAll(Product, "products", undefined, () => ({ visible: true }))
+);
 
 router.post("/reviews", restrict, (req, res) => {
   Review.create(req.body)
@@ -139,38 +162,13 @@ router.post("/reviews", restrict, (req, res) => {
     });
 });
 
-router.get("/reviews", (req, res) => {
-  const productId = req.query.productId;
-  if (productId) {
-    // reviews for productId
-    return Review.find({ productId: productId })
-      .lean()
-      .then((reviews) => res.json({ reviews }))
-      .catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
-      });
-  }
-  // return all reviews
-  Review.find({})
-    .lean()
-    .then((reviews) => res.json({ reviews }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/reviews", utils.listAll(Review, "reviews"));
 
-router.get("/discounts/:discountId", restrict, (req, res) => {
-  const discountId = req.params.discountId;
-  Discount.findById(discountId)
-    .lean()
-    .then((discount) => res.json({ discount }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(404);
-    });
-});
+router.get(
+  "/discounts/:code",
+  restrict,
+  utils.oneByQuery(Discount, undefined, (req) => ({ code: req.params.code }))
+);
 
 router.get("/ping", (req, res) => {
   return res.sendStatus(200);

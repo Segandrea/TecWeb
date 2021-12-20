@@ -46,7 +46,7 @@ app.use(
 
 // setup incoming request body parsers
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "1mb" }));
 
 // setup passport for authentication
 app.use(passport.initialize());
@@ -69,6 +69,7 @@ passport.serializeUser(serializeUser);
 // register store routes
 app.use("/api/backoffice", require("./routes/backoffice"));
 app.use("/api/store", require("./routes/store"));
+app.use("/media", require("./routes/media"));
 
 // start server at the specified port
 app.listen(port, () => {

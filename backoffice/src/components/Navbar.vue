@@ -59,6 +59,22 @@ async function signout() {
                 >Products</router-link
               >
             </li>
+            <li class="nav-item">
+              <router-link
+                :to="{ name: 'ListDiscounts' }"
+                class="nav-link"
+                active-class="active"
+                >Discounts</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
+                :to="{ name: 'ListOrders' }"
+                class="nav-link"
+                active-class="active"
+                >Orders</router-link
+              >
+            </li>
           </ul>
           <form @submit.prevent="signout">
             <button class="btn btn-outline-warning" type="submit">
