@@ -5,7 +5,6 @@ const config = require("../config.js");
 
 const CustomerSchema = new Schema({
   username: { type: String, required: true },
-  avatar: { type: String },
 });
 
 const UserSchema = new Schema({

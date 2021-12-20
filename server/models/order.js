@@ -20,11 +20,12 @@ const ProductFreezeSchema = new Schema({
 });
 
 const DiscountFreezeSchema = new Schema({
-  discount: { type: Number, min: 0, required: true },
+  code: { type: String, required: true },
+  value: { type: Number, min: 0, required: true },
 });
 
 const OrderSchema = new Schema({
-  userId: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
+  userId: { type: mongoose.ObjectId, required: true, ref: "User" },
   products: [ProductFreezeSchema],
   discounts: [DiscountFreezeSchema],
   issuedAt: { type: Date, required: true },
