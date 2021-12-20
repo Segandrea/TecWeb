@@ -14,7 +14,7 @@
 
 <script>
   import StarRating from "svelte-star-rating";
-  import { addToCart } from "$lib/stores";
+  import { cart, addToCart } from "$lib/stores";
 
   export let products;
 </script>
@@ -60,8 +60,12 @@
             <div class="text-end mt-4 mb-2">
               {#if isAuth()}
                 <button
+                  type="button"
                   class="btn btn-warning rounded-pill"
-                  on:click={() => addToCart(product)}>Add to cart</button
+                  on:click={() => addToCart(product)}
+                  disabled={$cart.hasOwnProperty(product._id)}
+                >
+                  Add to cart</button
                 >
               {:else}
                 <a

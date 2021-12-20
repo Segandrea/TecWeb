@@ -3,23 +3,28 @@
   import { path } from "$lib/utils";
   import { rentalPeriod, cartItems } from "$lib/stores";
 
+  let rangeInput;
+
   onMount(() => {
-    flatpickr(document.getElementById("rentalPeriod"), {
+    flatpickr(rangeInput, {
       mode: "range",
       minDate: "today",
       dateFormat: "d-m-Y",
-      onChange: (selectedDates, _dateString, _instance) => {
+      defaultDate: [today(1), today(2)],
+      onChange: (selectedDates) => {
         rentalPeriod.set(selectedDates);
       },
+      clickOpens: false,
     });
+
+    document.addEventListener("scroll", () => rangeInput._flatpickr.close());
   });
 
-  const toggleInput = (_event) => {
-    document.getElementById("textInput").classList.toggle("d-none");
-    if (!document.getElementById("dateInput").classList.toggle("d-none")) {
-      document.getElementById("rentalPeriod")._flatpickr.toggle();
-    }
-  };
+  function today(additionalDays = 0) {
+    const today = new Date();
+    today.setDate(today.getDate() + additionalDays);
+    return today;
+  }
 </script>
 
 <header>
@@ -49,53 +54,27 @@
         </ul>
       </div>
 
-      <form class="d-flex" style="max-width: 75vw;">
-        <div id="textInput" class="input-group">
+      <div>
+        <div class="input-group">
           <input
-            id="searchTerms"
+            id="rangeInput"
+            bind:this={rangeInput}
             type="text"
-            class="form-control"
-            aria-label="Search terms"
-            placeholder="Search"
-          />
-
-          <button
-            type="button"
-            class="btn btn-light border"
-            on:click={toggleInput}
-          >
-            <i class="bi bi-calendar-range" />
-          </button>
-
-          <button class="btn btn-warning">
-            <i class="bi bi-search" />
-          </button>
-        </div>
-
-        <div id="dateInput" class="input-group d-none">
-          <input
-            id="rentalPeriod"
-            type="text"
-            class="form-control"
+            class="form-control px-1 px-sm-2"
             aria-label="Rental period"
+            aria-describedby="calendarRange"
             placeholder="Select dates"
+            on:click={() => rangeInput._flatpickr.toggle()}
             readonly
             required
           />
-
-          <button
-            type="button"
-            class="btn btn-light border"
-            on:click={toggleInput}
+          <span
+            id="calendarRange"
+            class="input-group-text bg-warning border-warning"
+            ><i class="bi bi-calendar-range" /></span
           >
-            <i class="bi bi-card-text" />
-          </button>
-
-          <button class="btn btn-warning">
-            <i class="bi bi-search" />
-          </button>
         </div>
-      </form>
+      </div>
     </div>
   </nav>
 </header>
@@ -125,7 +104,7 @@
 </footer>
 
 <style>
-  #rentalPeriod {
+  #rangeInput {
     background-color: #fff;
   }
 </style>
