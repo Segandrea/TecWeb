@@ -1,6 +1,8 @@
 const express = require("express");
 const passport = require("passport");
 
+const utils = require("./utils");
+
 const User = require("../models/user").User;
 const Review = require("../models/review").Review;
 const Upload = require("../models/upload").Upload;
@@ -59,60 +61,52 @@ router.post("/signout", restrict, (req, res) => {
   res.sendStatus(200);
 });
 
-router.put("/customers/:customerId", restrict, (req, res) => {
-  const body = req.body;
-
-  User.findByIdAndUpdate(
-    req.params.customerId,
-    { email: body.email, customer: { username: body.username } },
-    { lean: true, returnDocument: "after" }
-  )
-    .then((user) =>
-      res.json({
-        _id: user._id,
-        email: user.email,
-        username: user.customer.username,
-      })
-    )
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
-
-router.get("/customers/:customerId", restrict, (req, res) => {
-  User.findById(req.params.customerId)
-    .lean()
-    .then((user) =>
-      res.json({
-        _id: user._id,
-        email: user.email,
-        username: user.customer.username,
-      })
-    )
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
-
-router.get("/customers", restrict, (req, res) => {
-  User.find({ role: "customer" })
-    .lean()
-    .then((users) => {
-      const customers = users.map((user) => ({
-        _id: user._id,
-        email: user.email,
-        username: user.customer.username,
-      }));
-
-      res.json({ customers });
+router.put(
+  "/customers/:id",
+  restrict,
+  utils.oneByQueryAndUpdate(
+    User,
+    (user) => ({
+      _id: user._id,
+      email: user.email,
+      username: user.customer.username,
+    }),
+    (req) => ({ _id: req.params.id || null, role: "customer" }),
+    (req) => ({
+      email: req.body.email,
+      customer: { username: req.body.username },
     })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+  )
+);
+
+router.get(
+  "/customers/:id",
+  restrict,
+  utils.oneByQuery(
+    User,
+    (user) => ({
+      _id: user._id,
+      email: user.email,
+      username: user.customer.username,
+    }),
+    (req) => ({ _id: req.params.id || null, role: "customer" })
+  )
+);
+
+router.get(
+  "/customers",
+  restrict,
+  utils.listAll(
+    User,
+    "customers",
+    (user) => ({
+      _id: user._id,
+      email: user.email,
+      username: user.customer.username,
+    }),
+    (req) => ({ ...req.query, role: "customer" })
+  )
+);
 
 router.put("/products/:productId", restrict, (req, res) => {
   const productId = req.params.productId;
@@ -139,25 +133,9 @@ router.put("/products/:productId", restrict, (req, res) => {
     });
 });
 
-router.get("/products/:productId", restrict, (req, res) => {
-  Product.findById(req.params.productId)
-    .lean()
-    .then((product) => res.json(product))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/products/:id", restrict, utils.byId(Product));
 
-router.get("/products", restrict, (req, res) => {
-  Product.find({})
-    .lean()
-    .then((products) => res.json({ products }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/products", restrict, utils.listAll(Product, "products"));
 
 router.post("/products", restrict, (req, res) => {
   upload(req.body.uploads)
@@ -171,47 +149,15 @@ router.post("/products", restrict, (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
     });
 });
 
-router.put("/discounts/:discountId", restrict, (req, res) => {
-  const body = req.body;
+router.put("/discounts/:id", restrict, utils.byIdAndUpdate(Discount));
 
-  Discount.findByIdAndUpdate(
-    req.params.discountId,
-    {
-      code: body.code,
-      value: body.value,
-    },
-    { lean: true, returnDocument: "after" }
-  )
-    .then((discount) => res.json(discount))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/discounts/:id", restrict, utils.byId(Discount));
 
-router.get("/discounts/:discountId", restrict, (req, res) => {
-  Discount.findById(req.params.discountId)
-    .lean()
-    .then((discount) => res.json(discount))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
-
-router.get("/discounts", restrict, (req, res) => {
-  Discount.find({})
-    .lean()
-    .then((discounts) => res.json({ discounts }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/discounts", restrict, utils.listAll(Discount, "discounts"));
 
 router.post("/discounts", restrict, (req, res) => {
   Discount.create(req.body)
@@ -222,26 +168,11 @@ router.post("/discounts", restrict, (req, res) => {
     });
 });
 
-router.get("/reviews/:reviewId", restrict, (req, res) => {
-  Review.findById(req.params.reviewId)
-    .lean()
-    .then((review) => res.json(review))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/reviews/:id", restrict, utils.byId(Review));
 
-router.get("/reviews", restrict, (req, res) => {
-  Review.find({})
-    .lean()
-    .then((reviews) => res.json({ reviews }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/reviews", restrict, utils.listAll(Review, "reviews"));
 
+//TODO: think about me
 router.post("/orders", restrict, (req, res) => {
   Order.create(req.body)
     .then((order) => res.status(201).json(order))
@@ -251,25 +182,9 @@ router.post("/orders", restrict, (req, res) => {
     });
 });
 
-router.get("/orders/:orderId", restrict, (req, res) => {
-  Order.findById(req.params.orderId)
-    .lean()
-    .then((order) => res.json(order))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/orders/:id", restrict, utils.byId(Order));
 
-router.get("/orders", restrict, (req, res) => {
-  Order.find({})
-    .lean()
-    .then((orders) => res.json({ orders }))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+router.get("/orders", restrict, utils.listAll(Order, "orders"));
 
 router.get("/ping", (req, res) => {
   res.sendStatus(200);
