@@ -95,16 +95,26 @@ router.get("/profile", restrict, (req, res) => {
   });
 });
 
-router.get("/orders", restrict, utils.listAll(Order, "orders", undefined, (req) => ({ userId: req.user._id })));
+router.get(
+  "/orders",
+  restrict,
+  utils.listAll(Order, "orders", undefined, (req) => ({ userId: req.user._id }))
+);
 
 router.post("/orders", restrict, (req, res) => {
   // TODO
 });
 
 // TODO: change conventions
-router.get("/products/:id", utils.byId(Product, (product) => ({product})));
+router.get(
+  "/products/:id",
+  utils.byId(Product, (product) => ({ product }))
+);
 
-router.get("/products", utils.listAll(Product, "products", undefined, () => ({ visible: true })));
+router.get(
+  "/products",
+  utils.listAll(Product, "products", undefined, () => ({ visible: true }))
+);
 
 router.post("/reviews", restrict, (req, res) => {
   Review.create(req.body)
