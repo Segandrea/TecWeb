@@ -13,8 +13,8 @@
 </script>
 
 <script>
-  import { addToCart } from "$lib/stores";
   import StarRating from "svelte-star-rating";
+  import { addToCart } from "$lib/stores";
 
   export let products;
 </script>
