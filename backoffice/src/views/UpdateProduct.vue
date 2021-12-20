@@ -118,7 +118,7 @@ function removeImage(index) {
               <img
                 :src="image.url"
                 class="d-block mx-auto h-75"
-                :alt="`${product.name} image`"
+                :alt="`${product.name} image ${index}`"
               />
               <button class="btn btn-link" @click="removeImage(index)">
                 remove image
