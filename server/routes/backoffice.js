@@ -51,7 +51,7 @@ router.post("/signin", (req, res, next) => {
         return res.sendStatus(500);
       }
 
-      return res.json({ _id: user._id });
+      return res.json({ _id: user._id, role: user.role });
     });
   })(req, res, next);
 });
@@ -69,12 +69,18 @@ router.put(
     (user) => ({
       _id: user._id,
       email: user.email,
+      blocked: user.blocked,
       username: user.customer.username,
+      billingAddress: user.customer.billingAddress,
     }),
     (req) => ({ _id: req.params.id || null, role: "customer" }),
     (req) => ({
       email: req.body.email,
-      customer: { username: req.body.username },
+      blocked: req.body.blocked,
+      customer: {
+        username: req.body.username,
+        billingAddress: req.body.billingAddress,
+      },
     })
   )
 );
@@ -87,7 +93,9 @@ router.get(
     (user) => ({
       _id: user._id,
       email: user.email,
+      blocked: user.blocked,
       username: user.customer.username,
+      billingAddress: user.customer.billingAddress,
     }),
     (req) => ({ _id: req.params.id || null, role: "customer" })
   )
@@ -102,7 +110,9 @@ router.get(
     (user) => ({
       _id: user._id,
       email: user.email,
+      blocked: user.blocked,
       username: user.customer.username,
+      billingAddress: user.customer.billingAddress,
     }),
     (req) => ({ ...req.query, role: "customer" })
   )

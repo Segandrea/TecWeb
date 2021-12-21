@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     required: true,
   },
   email: { type: String, required: true },
-  blocked: { type: Boolean, required: true, default: false },
+  blocked: { type: Boolean, required: true, default: "false" },
   password: { type: String, required: true },
   customer: { type: CustomerSchema, required: false },
 });

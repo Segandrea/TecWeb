@@ -20,8 +20,6 @@ function restrict(req, res, next) {
 }
 
 router.post("/signup", async (req, res) => {
-  // TODO: validate req.body
-
   if (req.body.password != req.body.confirm) {
     return res.sendStatus(400);
   }
@@ -50,7 +48,7 @@ router.post("/signup", async (req, res) => {
           return res.sendStatus(500);
         }
 
-        return res.json({ _id: user._id });
+        return res.json({ _id: user._id, role: user.role });
       });
     })
     .catch((err) => {
@@ -76,7 +74,7 @@ router.post("/signin", (req, res, next) => {
         return res.sendStatus(500);
       }
 
-      return res.json({ _id: user._id });
+      return res.json({ _id: user._id, role: user.role });
     });
   })(req, res, next);
 });

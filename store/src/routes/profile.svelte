@@ -43,7 +43,7 @@
     });
 
     if (res.ok) {
-      sessionStorage.removeItem("customer");
+      sessionStorage.removeItem("user");
       clearDiscounts();
       clearCart();
       goto(path("/"));
@@ -105,7 +105,6 @@
             type="text"
             bind:value={profile.billingAddress}
             class="form-control border-top-0 rounded-0 rounded-bottom"
-            placeholder="billing address"
             required
           />
           <label for="billingAddress">Billing Address</label>
