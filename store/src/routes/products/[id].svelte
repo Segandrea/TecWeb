@@ -1,4 +1,6 @@
 <script context="module">
+  import { path } from "$lib/utils";
+
   export async function load({ page, fetch }) {
     const productId = page.params.id;
 
@@ -12,7 +14,7 @@
 
     return {
       props: {
-        productId,
+        returnTo: new URLSearchParams({ returnTo: path(page.path) }),
         product,
         reviews,
       },
@@ -23,9 +25,9 @@
 <script>
   import StarRating from "svelte-star-rating";
   import { cart, addToCart } from "$lib/stores";
-  import { path } from "$lib/utils";
+  import { isAuth } from "$lib/utils";
 
-  export let productId;
+  export let returnTo;
   export let product;
   export let reviews;
 </script>
@@ -83,7 +85,8 @@
               />
             </div>
             <div class="d-flex justify-content-center text-center">
-              <a href={path(`/products/${productId}/reviews`)}>leave a review</a
+              <a href={path(`/products/${product._id}/reviews`)}
+                >leave a review</a
               >
             </div>
           </div>
@@ -96,14 +99,22 @@
           <div
             class="card-body d-flex align-items-center justify-content-center"
           >
-            <button
-              type="button"
-              class="btn btn-warning rounded-3"
-              on:click={() => addToCart(product)}
-              disabled={product._id in $cart}
-            >
-              Add to cart
-            </button>
+            {#if isAuth()}
+              <button
+                type="button"
+                class="btn btn-warning rounded-3"
+                on:click={() => addToCart(product)}
+                disabled={product._id in $cart}
+              >
+                Add to cart</button
+              >
+            {:else}
+              <a
+                href={path(`/signin?${returnTo}`)}
+                class="btn btn-warning rounded-3"
+                role="button">Add to cart</a
+              >
+            {/if}
           </div>
         </div>
       </div>

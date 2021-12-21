@@ -70,7 +70,7 @@
               {:else}
                 <a
                   href={path("/signin")}
-                  class="btn btn-warning rounded-pill"
+                  class="btn btn-warning rounded-3"
                   role="button">Add to cart</a
                 >
               {/if}
