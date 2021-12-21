@@ -2,37 +2,30 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ProductFreezeSchema = new Schema({
+  productId: { type: mongoose.ObjectId, required: false, ref: "Product" },
   name: { type: String, required: true },
-  // TODO: Image will be an actual image
-  image: { type: String, required: true },
   basePrice: { type: Number, min: 0, required: true },
   dailyPrice: { type: Number, min: 0, required: true },
-  initialStatus: {
-    type: String,
-    enum: ["brand-new", "refurbished", "damaged"],
-    required: true,
-  },
-  returnalStatus: {
-    type: String,
-    enum: ["brand-new", "refurbished", "damaged"],
-    required: true,
-  },
+  discountPrice: { type: Number, min: 0, required: false },
 });
 
-const DiscountFreezeSchema = new Schema({
+const CouponFreezeSchema = new Schema({
   code: { type: String, required: true },
   value: { type: Number, min: 0, required: true },
 });
 
 const OrderSchema = new Schema({
-  userId: { type: mongoose.ObjectId, required: true, ref: "User" },
+  customerId: { type: mongoose.ObjectId, required: true, ref: "User" },
+  employeeId: { type: mongoose.ObjectId, required: false, ref: "User" },
+  state: { type: String, enum: ["open", "closed"], required: true },
   products: [ProductFreezeSchema],
-  discounts: [DiscountFreezeSchema],
-  issuedAt: { type: Date, required: true },
-  returnalDate: { type: Date, required: true },
-  // TODO: make a decision
-  totalPrice: { type: Number, min: 0, required: true },
+  coupons: [CouponFreezeSchema],
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+  penalty: { type: Number, min: 0, required: false},
 });
+
+// TODO: subtotal, discount (products.discounts + coupons), total (+ penalties) virtual getters
 
 const Order = mongoose.model("Order", OrderSchema);
 
