@@ -5,7 +5,8 @@ export function path(location) {
 }
 
 export function isAuth() {
-  return !!sessionStorage.getItem("customer");
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  return user.role === "customer";
 }
 
 export function formatDate(dateString) {

@@ -5,7 +5,7 @@ const router = useRouter();
 
 async function signout() {
   await fetch("/api/backoffice/signout", { method: "POST" });
-  sessionStorage.removeItem("employee");
+  sessionStorage.removeItem("user");
   router.push({ name: "Signin" });
 }
 </script>
