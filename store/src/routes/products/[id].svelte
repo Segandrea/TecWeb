@@ -68,63 +68,57 @@
     </button>
   </div>
 
-  <div class="row">
-    <h2 class="text-center text-decoration-underline mt-5">{product.name}</h2>
-    <div class="row row-cols-1 row-cols-md-3 mt-4 g-4">
-      <!-- stars and reviews -->
-      <div class="col">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <div class="card-title fs-5 fw-bold">Rating</div>
-            <div class="mt-2 d-flex justify-content-center text-center">
-              <StarRating
-                rating={product.rating}
-                config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
-              />
-            </div>
-            <div class="d-flex justify-content-center text-center">
-              <a href={path(`/products/${productId}/reviews`)}>leave a review</a
-              >
-            </div>
+  <h2 class="text-center text-decoration-underline mt-5">{product.name}</h2>
+  <div class="row row-cols-1 row-cols-md-3 mt-4 g-4">
+    <!-- stars and reviews -->
+    <div class="col">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <div class="card-title fs-5 fw-bold">Rating</div>
+          <div class="mt-2 d-flex justify-content-center text-center">
+            <StarRating
+              rating={product.rating}
+              config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
+            />
+          </div>
+          <div class="d-flex justify-content-center text-center">
+            <a href={path(`/products/${productId}/reviews`)}>leave a review</a>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- add to cart -->
-      <div class="col">
-        <div class="card h-100 text-center">
-          <div
-            class="card-body d-flex align-items-center justify-content-center"
+    <!-- add to cart -->
+    <div class="col">
+      <div class="card h-100 text-center">
+        <div class="card-body d-flex align-items-center justify-content-center">
+          <button
+            type="button"
+            class="btn btn-warning btn-lg"
+            on:click={() => addToCart(product)}
           >
-            <button
-              type="button"
-              class="btn btn-warning btn-lg"
-              on:click={() => addToCart(product)}
-            >
-              Add to cart
-            </button>
-          </div>
+            Add to cart
+          </button>
         </div>
       </div>
+    </div>
 
-      <!-- pricing -->
-      <div class="col">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <div class="card-title fs-5 fw-bold">Pricing</div>
-            <div class="text-center">
-              <span class="orange fw-bolder fs-4">
-                <i class="bi bi-currency-euro"
-                  >{product.dailyPrice.toFixed(2)}</i
-                ><small><sub>/daily</sub></small>
-              </span>
-            </div>
-            <div class="text-center">
-              <small class="text-muted fw-bold">
-                <i class="bi bi-currency-euro">{product.basePrice.toFixed(2)}</i
-                ><sub>/base</sub>
-              </small>
-            </div>
+    <!-- pricing -->
+    <div class="col">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <div class="card-title fs-5 fw-bold">Pricing</div>
+          <div class="text-center">
+            <span class="orange fw-bolder fs-4">
+              <i class="bi bi-currency-euro">{product.dailyPrice.toFixed(2)}</i
+              ><small><sub>/daily</sub></small>
+            </span>
+          </div>
+          <div class="text-center">
+            <small class="text-muted fw-bold">
+              <i class="bi bi-currency-euro">{product.basePrice.toFixed(2)}</i
+              ><sub>/base</sub>
+            </small>
           </div>
         </div>
       </div>
@@ -139,30 +133,29 @@
   </div>
 
   {#if reviews && reviews.length > 0}
-    <div class="row g-4 text-center">
-      <h2>Reviews</h2>
-      <div class="row row-cols-1 row-cols-md-3">
-        {#each reviews as review}
-          <div class="col">
+    <h2 class="text-center mt-5 mb-2">Reviews</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 text-center">
+      {#each reviews as review}
+        <div class="col">
+          <div class="card border-light">
             <div class="card-body">
               <h3 class="card-title text-truncate">{review.username}</h3>
               <p class="card-text">
                 {review.content}
-              </p>
-              <div class="card-subtitle mb-2 fs-6">
                 <StarRating
                   rating={review.rating}
                   config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
+                  style={"margin-top:1rem; margin-bottom:0.6rem; justify-content:center;"}
                 />
-              </div>
+              </p>
             </div>
           </div>
-        {/each}
-      </div>
+        </div>
+      {/each}
+    </div>
 
-      <div class="row mt-4 d-md-none">
-        <a href="#carouselControls">Back to top</a>
-      </div>
+    <div class="row mt-4 d-md-none text-center">
+      <a href="#carouselControls">Back to top</a>
     </div>
   {/if}
 </main>
