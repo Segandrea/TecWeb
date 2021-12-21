@@ -13,11 +13,11 @@ const route = useRoute();
 
 const alert = ref();
 
-const discountId = route.params.id;
-const discount = ref({});
+const couponId = route.params.id;
+const coupon = ref({});
 
-getJSON(`/api/backoffice/discounts/${discountId}`)
-  .then((body) => (discount.value = body))
+getJSON(`/api/backoffice/coupons/${couponId}`)
+  .then((body) => (coupon.value = body))
   .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
   .catch((err) => {
     // eslint-disable-next-line
@@ -25,10 +25,10 @@ getJSON(`/api/backoffice/discounts/${discountId}`)
     alert.value.error("Something went wrong!");
   });
 
-function updateDiscount() {
-  putJSON(`/api/backoffice/discounts/${discountId}`, discount.value)
+function updateCoupon() {
+  putJSON(`/api/backoffice/coupons/${couponId}`, coupon.value)
     .then((body) => {
-      discount.value = body;
+      coupon.value = body;
       alert.value.info("Success");
     })
     .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
@@ -46,38 +46,38 @@ function updateDiscount() {
     <nav class="mb-4" aria-label="breadcrumb">
       <ol class="breadcrumb fw-bold">
         <li class="breadcrumb-item">
-          <router-link :to="{ name: 'ListDiscounts' }">Discounts</router-link>
+          <router-link :to="{ name: 'ListCoupons' }">Coupons</router-link>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-          {{ discount._id }}
+          {{ coupon._id }}
         </li>
       </ol>
     </nav>
 
     <Alert ref="alert" />
 
-    <form @submit.prevent="updateDiscount">
+    <form @submit.prevent="updateCoupon">
       <div class="row g-4">
         <div class="col-md-2">
-          <label for="discountCode" class="form-label">Code</label>
+          <label for="couponCode" class="form-label">Code</label>
           <input
-            v-model="discount.code"
+            v-model="coupon.code"
             type="text"
             class="form-control"
-            id="discountCode"
+            id="couponCode"
             required
           />
         </div>
 
         <div class="col-md-4">
-          <label for="discountValue" class="form-label">Value</label>
+          <label for="couponValue" class="form-label">Value</label>
           <div class="input-group">
             <span class="input-group-text">€</span>
             <input
-              v-model="discount.value"
+              v-model="coupon.value"
               type="number"
               class="form-control"
-              id="discountValue"
+              id="couponValue"
               value="0"
               step="0.01"
               min="0"

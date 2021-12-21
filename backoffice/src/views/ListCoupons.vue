@@ -12,10 +12,10 @@ const router = useRouter();
 const route = useRoute();
 
 const alert = ref();
-const discounts = ref([]);
+const coupons = ref([]);
 
-getJSON("/api/backoffice/discounts")
-  .then((body) => (discounts.value = body.discounts))
+getJSON("/api/backoffice/coupons")
+  .then((body) => (coupons.value = body.coupons))
   .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
   .catch((err) => {
     // eslint-disable-next-line
@@ -29,9 +29,9 @@ getJSON("/api/backoffice/discounts")
   <main class="container w-100 h-100 py-4">
     <nav class="mb-4" aria-label="breadcrumb">
       <ol class="breadcrumb fw-bold">
-        <li class="breadcrumb-item active" aria-current="page">Discounts</li>
+        <li class="breadcrumb-item active" aria-current="page">Coupons</li>
         <li class="breadcrumb-item">
-          <router-link :to="{ name: 'CreateDiscount' }">
+          <router-link :to="{ name: 'CreateCoupon' }">
             <small><i class="bi bi-plus-circle"></i></small>
           </router-link>
         </li>
@@ -49,16 +49,16 @@ getJSON("/api/backoffice/discounts")
         </tr>
       </thead>
       <tbody>
-        <tr v-for="discount in discounts" :key="discount._id">
+        <tr v-for="coupon in coupons" :key="coupon._id">
           <th scope="row">
             <router-link
-              :to="{ name: 'UpdateDiscount', params: { id: discount._id } }"
+              :to="{ name: 'UpdateCoupon', params: { id: coupon._id } }"
             >
-              {{ discount._id }}
+              {{ coupon._id }}
             </router-link>
           </th>
-          <td>{{ discount.code }}</td>
-          <td>€ {{ discount.value }}</td>
+          <td>{{ coupon.code }}</td>
+          <td>€ {{ coupon.value }}</td>
         </tr>
       </tbody>
     </table>

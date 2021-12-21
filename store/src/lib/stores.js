@@ -31,28 +31,28 @@ export function clearCart() {
 export const cartItems = derived(cart, ($cart) => Object.values($cart));
 
 /**
- * Discounts
+ * Coupons
  */
-export const discounts = writable({});
+export const coupons = writable({});
 
-export function addDiscount(discount) {
-  discounts.update((discounts) => ({ ...discounts, [discount._id]: discount }));
+export function addCoupon(coupon) {
+  coupons.update((coupons) => ({ ...coupons, [coupon._id]: coupon }));
 }
 
-export function removeDiscount(discount) {
-  discounts.update((discounts) => {
-    delete discounts[discount._id];
-    return discounts;
+export function removeCoupon(coupon) {
+  coupons.update((coupons) => {
+    delete coupons[coupon._id];
+    return coupons;
   });
 }
 
-export function clearDiscounts() {
-  discounts.set({});
+export function clearCoupons() {
+  coupons.set({});
 }
 
 /**
- * Discount Items
+ * Coupon Items
  */
-export const discountItems = derived(discounts, ($discounts) =>
-  Object.values($discounts)
+export const couponItems = derived(coupons, ($coupons) =>
+  Object.values($coupons)
 );
