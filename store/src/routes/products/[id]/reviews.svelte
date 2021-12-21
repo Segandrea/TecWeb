@@ -30,7 +30,7 @@
 
   let review;
   let content;
-  let rating = 0;
+  let rating = 2.5;
 
   function createReview() {
     review = {
@@ -50,8 +50,6 @@
   }
 </script>
 
-<!-- TODO: discuss about page layout -->
-<!-- TODO: discuss about photo and description -->
 <!-- TODO: login problems (500 if not auth) -->
 <!-- TODO: add alert about result or send back to detail -->
 <!-- TODO: check that user bought the reviewed product (?) -->
@@ -96,13 +94,6 @@
 
   <h2 class="text-center text-decoration-underline mt-5">{product.name}</h2>
 
-  <div class="row mt-4">
-    <h2 class="text-center">Description</h2>
-    <p class="lead">
-      {product.description}
-    </p>
-  </div>
-
   <form class="mt-4" on:submit|preventDefault={createReview}>
     <div class="row justify-content-center text-center">
       <div class="col-auto">
@@ -129,7 +120,7 @@
     </div>
     <div class="row justify-content-center text-center">
       <div class="col-md-10">
-        <label for="content" class="fs-5 mt-3 mb-2">Description</label>
+        <label for="content" class="fs-5 mt-3 mb-2">Write your review</label>
         <textarea
           class="form-control mb-3"
           id="content"
@@ -144,7 +135,7 @@
     <div class="row justify-content-center">
       <div class="col-auto">
         <button class="btn btn-lg btn-warning my-2 w-100" type="submit"
-          >Leave A Review</button
+          >Submit</button
         >
       </div>
     </div>
