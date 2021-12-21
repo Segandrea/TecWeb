@@ -58,7 +58,7 @@ function updateCoupon() {
 
     <form @submit.prevent="updateCoupon">
       <div class="row g-4">
-        <div class="col-md-2">
+        <div class="col-md-4">
           <label for="couponCode" class="form-label">Code</label>
           <input
             v-model="coupon.code"
