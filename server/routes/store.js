@@ -164,7 +164,11 @@ router.post("/reviews", restrict, (req, res) => {
 
 router.get("/reviews", utils.listAll(Review, "reviews"));
 
-router.get("/discounts/:id", restrict, utils.byId(Discount));
+router.get(
+  "/discounts/:code",
+  restrict,
+  utils.oneByQuery(Discount, undefined, (req) => ({ code: req.params.code }))
+);
 
 router.get("/ping", (req, res) => {
   return res.sendStatus(200);

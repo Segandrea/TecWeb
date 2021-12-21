@@ -11,3 +11,7 @@ export function isAuth() {
 export function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString();
 }
+
+export function datediff(start, end) {
+  return Math.round((end - start) / (1000 * 60 * 60 * 24));
+}

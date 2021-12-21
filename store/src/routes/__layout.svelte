@@ -6,7 +6,7 @@
   let rangeInput;
 
   onMount(() => {
-    flatpickr(rangeInput, {
+    const pickr = flatpickr(rangeInput, {
       mode: "range",
       minDate: "today",
       dateFormat: "d-m-Y",
@@ -14,10 +14,13 @@
       onChange: (selectedDates) => {
         rentalPeriod.set(selectedDates);
       },
+      onReady: (selectedDates) => {
+        rentalPeriod.set(selectedDates);
+      },
       clickOpens: false,
     });
 
-    document.addEventListener("scroll", () => rangeInput._flatpickr.close());
+    document.addEventListener("scroll", () => pickr.close());
   });
 
   function today(additionalDays = 0) {
@@ -43,7 +46,7 @@
           <li class="nav-item">
             <a class="nav-link" href={path("/cart")}>
               <i class="bi bi-handbag white" />
-              <sup class="fw-bolder orange">{$cartItems}</sup>
+              <sup class="fw-bolder orange">{$cartItems.length}</sup>
             </a>
           </li>
           <li class="nav-item">
@@ -96,7 +99,7 @@
       <li class="nav-item">
         <a class="nav-link" href={path("/cart")}>
           <i class="bi bi-handbag black" />
-          <sup class="fw-bolder orange">{$cartItems}</sup>
+          <sup class="fw-bolder orange">{$cartItems.length}</sup>
         </a>
       </li>
     </ul>

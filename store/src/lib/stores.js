@@ -28,4 +28,31 @@ export function clearCart() {
 /**
  * Cart Items
  */
-export const cartItems = derived(cart, ($cart) => Object.keys($cart).length);
+export const cartItems = derived(cart, ($cart) => Object.values($cart));
+
+/**
+ * Discounts
+ */
+export const discounts = writable({});
+
+export function addDiscount(discount) {
+  discounts.update((discounts) => ({ ...discounts, [discount._id]: discount }));
+}
+
+export function removeDiscount(discount) {
+  discounts.update((discounts) => {
+    delete discounts[discount._id];
+    return discounts;
+  });
+}
+
+export function clearDiscounts() {
+  discounts.set({});
+}
+
+/**
+ * Discount Items
+ */
+export const discountItems = derived(discounts, ($discounts) =>
+  Object.values($discounts)
+);

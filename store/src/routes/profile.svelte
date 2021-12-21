@@ -32,7 +32,7 @@
 
 <script>
   import { goto } from "$app/navigation";
-  import { clearCart } from "$lib/stores";
+  import { clearCart, clearDiscounts } from "$lib/stores";
 
   export let profile;
   export let orders;
@@ -44,6 +44,7 @@
 
     if (res.ok) {
       sessionStorage.removeItem("customer");
+      clearDiscounts();
       clearCart();
       goto(path("/"));
     }
