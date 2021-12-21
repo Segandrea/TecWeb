@@ -20,55 +20,55 @@
     cart,
     cartItems,
     removeFromCart,
-    discounts,
-    discountItems,
-    addDiscount,
-    removeDiscount,
+    coupons,
+    couponItems,
+    addCoupon,
+    removeCoupon,
     rentalPeriod,
   } from "$lib/stores";
   import { datediff } from "$lib/utils";
 
-  let discountCode;
+  let couponCode;
 
   let subtotalPrice = 0;
-  let discountPrice = 0;
+  let couponPrice = 0;
   let totalPrice = 0;
   let days = 0;
 
   rentalPeriod.subscribe((range) => {
     days = range.length == 2 ? datediff(range[0], range[1]) : 0;
-    computePrices(days, $cartItems, $discountItems);
+    computePrices(days, $cartItems, $couponItems);
   });
 
   cart.subscribe((cart) => {
-    computePrices(days, Object.values(cart), $discountItems);
+    computePrices(days, Object.values(cart), $couponItems);
   });
 
-  discounts.subscribe((discounts) => {
-    computePrices(days, $cartItems, Object.values(discounts));
+  coupons.subscribe((coupons) => {
+    computePrices(days, $cartItems, Object.values(coupons));
   });
 
-  function computePrices(days, products, discounts) {
+  function computePrices(days, products, coupons) {
     subtotalPrice = products
       .map((product) => product.basePrice + product.dailyPrice * days)
       .reduce((acc, val) => acc + val, 0);
 
-    discountPrice = discounts
-      .map((discount) => discount.value)
+    couponPrice = coupons
+      .map((coupon) => coupon.value)
       .reduce((acc, val) => acc + val, 0);
 
-    totalPrice = Math.max(subtotalPrice - discountPrice, 0);
+    totalPrice = Math.max(subtotalPrice - couponPrice, 0);
   }
 
-  async function fetchDiscount() {
-    const res = await fetch(`/api/store/discounts/${discountCode}`);
+  async function fetchCoupon() {
+    const res = await fetch(`/api/store/coupons/${couponCode}`);
 
     if (res.ok) {
       res
         .json()
-        .then(addDiscount)
+        .then(addCoupon)
         .then(() => {
-          discountCode = "";
+          couponCode = "";
         });
     }
   }
@@ -91,32 +91,32 @@
       <div class="row" style="min-height: 28vh;">
         <div class="col">
           <div class="input-group">
-            <span class="input-group-text btn btn-info" on:click={fetchDiscount}
+            <span class="input-group-text btn btn-info" on:click={fetchCoupon}
               >+</span
             >
             <input
-              bind:value={discountCode}
+              bind:value={couponCode}
               type="text"
               class="form-control"
-              placeholder="Discount code"
-              aria-label="Discount code"
+              placeholder="Coupon code"
+              aria-label="Coupon code"
             />
           </div>
-          <h5 class="my-2">Discount codes</h5>
+          <h5 class="my-2">Coupon codes</h5>
           <ul class="list-group mb-2">
-            {#each $discountItems as discount}
+            {#each $couponItems as coupon}
               <li class="list-group-item fw-bold">
                 <div class="d-flex justify-content-between">
                   <div>
                     <i
                       class="bi bi-x-circle text-danger me-2"
-                      on:click={() => removeDiscount(discount)}
+                      on:click={() => removeCoupon(coupon)}
                     />
-                    <span class="text-info">{discount.code}</span>
+                    <span class="text-info">{coupon.code}</span>
                   </div>
                   <span>
                     <i class="bi bi-currency-euro black">
-                      {discount.value.toFixed(2)}
+                      {coupon.value.toFixed(2)}
                     </i>
                   </span>
                 </div>
@@ -135,9 +135,9 @@
           >
         </div>
         <div class="col d-flex justify-content-between fst-italic text-muted">
-          <span>Discount</span>
+          <span>Coupon</span>
           <span
-            ><i class="bi bi-currency-euro black">{discountPrice.toFixed(2)}</i
+            ><i class="bi bi-currency-euro black">{couponPrice.toFixed(2)}</i
             ></span
           >
         </div>

@@ -7,7 +7,7 @@ const User = require("../models/user").User;
 const Order = require("../models/order").Order;
 const Review = require("../models/review").Review;
 const Product = require("../models/product").Product;
-const Discount = require("../models/discount").Discount;
+const Coupon = require("../models/coupon").Coupon;
 
 const router = express.Router();
 
@@ -165,9 +165,9 @@ router.post("/reviews", restrict, (req, res) => {
 router.get("/reviews", utils.listAll(Review, "reviews"));
 
 router.get(
-  "/discounts/:code",
+  "/coupons/:code",
   restrict,
-  utils.oneByQuery(Discount, undefined, (req) => ({ code: req.params.code }))
+  utils.oneByQuery(Coupon, undefined, (req) => ({ code: req.params.code }))
 );
 
 router.get("/ping", (req, res) => {

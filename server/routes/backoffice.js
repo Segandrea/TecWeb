@@ -7,7 +7,7 @@ const User = require("../models/user").User;
 const Review = require("../models/review").Review;
 const Upload = require("../models/upload").Upload;
 const Product = require("../models/product").Product;
-const Discount = require("../models/discount").Discount;
+const Coupon = require("../models/coupon").Coupon;
 const Order = require("../models/order").Order;
 
 const router = express.Router();
@@ -153,15 +153,15 @@ router.post("/products", restrict, (req, res) => {
     });
 });
 
-router.put("/discounts/:id", restrict, utils.byIdAndUpdate(Discount));
+router.put("/coupons/:id", restrict, utils.byIdAndUpdate(Coupon));
 
-router.get("/discounts/:id", restrict, utils.byId(Discount));
+router.get("/coupons/:id", restrict, utils.byId(Coupon));
 
-router.get("/discounts", restrict, utils.listAll(Discount, "discounts"));
+router.get("/coupons", restrict, utils.listAll(Coupon, "coupons"));
 
-router.post("/discounts", restrict, (req, res) => {
-  Discount.create(req.body)
-    .then((discount) => res.status(201).json(discount))
+router.post("/coupons", restrict, (req, res) => {
+  Coupon.create(req.body)
+    .then((coupon) => res.status(201).json(coupon))
     .catch((err) => {
       console.error(err);
       res.sendStatus(400);
