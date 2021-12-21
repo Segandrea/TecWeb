@@ -70,73 +70,67 @@
     </button>
   </div>
 
-  <div class="row">
-    <h2 class="text-center text-decoration-underline mt-5">{product.name}</h2>
-    <div class="row row-cols-1 row-cols-md-3 mt-4 g-4">
-      <!-- stars and reviews -->
-      <div class="col">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <div class="card-title fs-5 fw-bold">Rating</div>
-            <div class="mt-2 d-flex justify-content-center text-center">
-              <StarRating
-                rating={product.rating}
-                config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
-              />
-            </div>
-            <div class="d-flex justify-content-center text-center">
-              <a href={path(`/products/${product._id}/reviews`)}
-                >leave a review</a
-              >
-            </div>
+  <h2 class="text-center text-decoration-underline mt-5">{product.name}</h2>
+  <div class="row row-cols-1 row-cols-md-3 mt-4 g-4">
+    <!-- stars and reviews -->
+    <div class="col">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <div class="card-title fs-5 fw-bold">Rating</div>
+          <div class="mt-2 d-flex justify-content-center text-center">
+            <StarRating
+              rating={product.rating}
+              config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
+            />
+          </div>
+          <div class="d-flex justify-content-center text-center">
+            <a href={path(`/products/${product._id}/reviews`)}>leave a review</a
+            >
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- add to cart -->
-      <div class="col">
-        <div class="card h-100 text-center">
-          <div
-            class="card-body d-flex align-items-center justify-content-center"
-          >
-            {#if isAuth()}
-              <button
-                type="button"
-                class="btn btn-warning rounded-3"
-                on:click={() => addToCart(product)}
-                disabled={product._id in $cart}
-              >
-                Add to cart</button
-              >
-            {:else}
-              <a
-                href={path(`/signin?${returnTo}`)}
-                class="btn btn-warning rounded-3"
-                role="button">Add to cart</a
-              >
-            {/if}
-          </div>
+    <!-- add to cart -->
+    <div class="col">
+      <div class="card h-100 text-center">
+        <div class="card-body d-flex align-items-center justify-content-center">
+          {#if isAuth()}
+            <button
+              type="button"
+              class="btn btn-warning rounded-3"
+              on:click={() => addToCart(product)}
+              disabled={product._id in $cart}
+            >
+              Add to cart</button
+            >
+          {:else}
+            <a
+              href={path(`/signin?${returnTo}`)}
+              class="btn btn-warning rounded-3"
+              role="button">Add to cart</a
+            >
+          {/if}
         </div>
       </div>
+    </div>
 
-      <!-- pricing -->
-      <div class="col">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <div class="card-title fs-5 fw-bold">Pricing</div>
-            <div class="text-center">
-              <span class="orange fw-bolder fs-4">
-                <i class="bi bi-currency-euro"
-                  >{product.dailyPrice.toFixed(2)}</i
-                ><small><sub>/daily</sub></small>
-              </span>
-            </div>
-            <div class="text-center">
-              <small class="text-muted fw-bold">
-                <i class="bi bi-currency-euro">{product.basePrice.toFixed(2)}</i
-                ><sub>/base</sub>
-              </small>
-            </div>
+    <!-- pricing -->
+    <div class="col">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <div class="card-title fs-5 fw-bold">Pricing</div>
+          <div class="text-center">
+            <span class="orange fw-bolder fs-4">
+              <i class="bi bi-currency-euro">{product.dailyPrice.toFixed(2)}</i
+              ><small><sub>/daily</sub></small>
+            </span>
+          </div>
+          <div class="text-center">
+            <small class="text-muted fw-bold">
+              <i class="bi bi-currency-euro">{product.basePrice.toFixed(2)}</i
+              ><sub>/base</sub>
+            </small>
           </div>
         </div>
       </div>
@@ -161,7 +155,9 @@
               <p class="card-text">
                 {review.content}
               </p>
-              <div class="card-subtitle mb-2 fs-6">
+              <div
+                class="card-subtitle d-flex justify-content-center mb-2 fs-6"
+              >
                 <StarRating
                   rating={review.rating}
                   config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
