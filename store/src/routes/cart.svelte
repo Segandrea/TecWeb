@@ -90,18 +90,21 @@
 
       <div class="row" style="min-height: 28vh;">
         <div class="col">
-          <div class="input-group">
-            <span class="input-group-text btn btn-info" on:click={fetchDiscount}
-              >+</span
-            >
-            <input
-              bind:value={discountCode}
-              type="text"
-              class="form-control"
-              placeholder="Discount code"
-              aria-label="Discount code"
-            />
-          </div>
+          <form on:submit|preventDefault={fetchDiscount}>
+            <div class="input-group">
+              <button class="btn btn-info" type="button" id="addDiscount"
+                >+</button
+              >
+              <input
+                bind:value={discountCode}
+                type="text"
+                class="form-control"
+                placeholder="Discount code"
+                aria-label="Enter discount code"
+                aria-describedby="addDiscount"
+              />
+            </div>
+          </form>
           <h5 class="my-2">Discount codes</h5>
           <ul class="list-group mb-2">
             {#each $discountItems as discount}
