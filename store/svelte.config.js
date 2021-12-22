@@ -15,11 +15,11 @@ const config = {
       assets: "build",
       fallback: "index.html",
     }),
-  },
-  vite: {
-    build: {
-      minify: false,
-    },
+    vite: () => ({
+      build: {
+        minify: false,
+      },
+    }),
   },
 };
 

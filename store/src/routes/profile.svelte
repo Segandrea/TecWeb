@@ -127,7 +127,7 @@
       <ul class="list-group">
         {#each orders as order}
           <div class="list-group-item">
-            <div class="row row-cols-1 row-cols-lg-4 g-3">
+            <div class="row row-cols-1 row-cols-lg-5 g-2">
               <div class="col text-truncate">
                 <h6>Order No.</h6>
                 <a href={path(`/orders/${order._id}`)}

@@ -92,7 +92,7 @@
         <div class="col">
           <form on:submit|preventDefault={fetchCoupon}>
             <div class="input-group">
-              <button class="btn btn-info" type="button" id="addCoupon"
+              <button class="btn btn-info" type="submit" id="addCoupon"
                 >+</button
               >
               <input
