@@ -32,7 +32,7 @@
 
 <script>
   import { goto } from "$app/navigation";
-  import { clearCart, clearDiscounts } from "$lib/stores";
+  import { clearCart, clearCoupons } from "$lib/stores";
 
   export let profile;
   export let orders;
@@ -43,8 +43,8 @@
     });
 
     if (res.ok) {
-      sessionStorage.removeItem("customer");
-      clearDiscounts();
+      sessionStorage.removeItem("user");
+      clearCoupons();
       clearCart();
       goto(path("/"));
     }
@@ -105,7 +105,6 @@
             type="text"
             bind:value={profile.billingAddress}
             class="form-control border-top-0 rounded-0 rounded-bottom"
-            placeholder="billing address"
             required
           />
           <label for="billingAddress">Billing Address</label>

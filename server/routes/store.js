@@ -7,7 +7,7 @@ const User = require("../models/user").User;
 const Order = require("../models/order").Order;
 const Review = require("../models/review").Review;
 const Product = require("../models/product").Product;
-const Discount = require("../models/discount").Discount;
+const Coupon = require("../models/coupon").Coupon;
 
 const router = express.Router();
 
@@ -20,8 +20,6 @@ function restrict(req, res, next) {
 }
 
 router.post("/signup", async (req, res) => {
-  // TODO: validate req.body
-
   if (req.body.password != req.body.confirm) {
     return res.sendStatus(400);
   }
@@ -50,7 +48,7 @@ router.post("/signup", async (req, res) => {
           return res.sendStatus(500);
         }
 
-        return res.json({ _id: user._id });
+        return res.json({ _id: user._id, role: user.role });
       });
     })
     .catch((err) => {
@@ -76,7 +74,7 @@ router.post("/signin", (req, res, next) => {
         return res.sendStatus(500);
       }
 
-      return res.json({ _id: user._id });
+      return res.json({ _id: user._id, role: user.role });
     });
   })(req, res, next);
 });
@@ -165,9 +163,9 @@ router.post("/reviews", restrict, (req, res) => {
 router.get("/reviews", utils.listAll(Review, "reviews"));
 
 router.get(
-  "/discounts/:code",
+  "/coupons/:code",
   restrict,
-  utils.oneByQuery(Discount, undefined, (req) => ({ code: req.params.code }))
+  utils.oneByQuery(Coupon, undefined, (req) => ({ code: req.params.code }))
 );
 
 router.get("/ping", (req, res) => {

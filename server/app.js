@@ -93,7 +93,7 @@ function authenticateUser(req, email, password, done) {
       return done(err);
     }
 
-    if (!user) {
+    if (!user || user.blocked) {
       return done(null, false);
     }
 

@@ -66,8 +66,8 @@ function updateCustomer() {
           <label for="username" class="form-label">Username</label>
           <input
             v-model="customer.username"
-            type="text"
             class="form-control"
+            type="text"
             id="username"
             required
           />
@@ -77,11 +77,32 @@ function updateCustomer() {
           <label for="email" class="form-label">Email</label>
           <input
             v-model="customer.email"
-            type="email"
             class="form-control"
+            type="email"
             id="email"
             required
           />
+        </div>
+
+        <div class="col-md-4">
+          <label for="billingAddress" class="form-label">Billing Address</label>
+          <input
+            v-model="customer.billingAddress"
+            class="form-control"
+            type="text"
+            id="billingAddress"
+          />
+        </div>
+
+        <div class="d-flex col-md-2 align-items-end">
+          <div class="form-check form-switch pb-1">
+            <input
+              v-model="customer.blocked"
+              class="form-check-input"
+              type="checkbox"
+              id="blocked"
+            /><label class="form-check-label" for="blocked">Blocked</label>
+          </div>
         </div>
 
         <div class="col-12">

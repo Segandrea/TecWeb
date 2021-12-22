@@ -23,7 +23,7 @@
       const returnTo = $page.query.get("returnTo") || path("/");
       const user = await res.json();
 
-      sessionStorage.setItem("customer", JSON.stringify(user));
+      sessionStorage.setItem("user", JSON.stringify(user));
       goto(returnTo);
     } else {
       error = "Sign-in required";

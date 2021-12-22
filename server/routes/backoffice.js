@@ -7,7 +7,7 @@ const User = require("../models/user").User;
 const Review = require("../models/review").Review;
 const Upload = require("../models/upload").Upload;
 const Product = require("../models/product").Product;
-const Discount = require("../models/discount").Discount;
+const Coupon = require("../models/coupon").Coupon;
 const Order = require("../models/order").Order;
 
 const router = express.Router();
@@ -51,7 +51,7 @@ router.post("/signin", (req, res, next) => {
         return res.sendStatus(500);
       }
 
-      return res.json({ _id: user._id });
+      return res.json({ _id: user._id, role: user.role });
     });
   })(req, res, next);
 });
@@ -69,12 +69,18 @@ router.put(
     (user) => ({
       _id: user._id,
       email: user.email,
+      blocked: user.blocked,
       username: user.customer.username,
+      billingAddress: user.customer.billingAddress,
     }),
     (req) => ({ _id: req.params.id || null, role: "customer" }),
     (req) => ({
       email: req.body.email,
-      customer: { username: req.body.username },
+      blocked: req.body.blocked,
+      customer: {
+        username: req.body.username,
+        billingAddress: req.body.billingAddress,
+      },
     })
   )
 );
@@ -87,7 +93,9 @@ router.get(
     (user) => ({
       _id: user._id,
       email: user.email,
+      blocked: user.blocked,
       username: user.customer.username,
+      billingAddress: user.customer.billingAddress,
     }),
     (req) => ({ _id: req.params.id || null, role: "customer" })
   )
@@ -102,7 +110,9 @@ router.get(
     (user) => ({
       _id: user._id,
       email: user.email,
+      blocked: user.blocked,
       username: user.customer.username,
+      billingAddress: user.customer.billingAddress,
     }),
     (req) => ({ ...req.query, role: "customer" })
   )
@@ -153,15 +163,15 @@ router.post("/products", restrict, (req, res) => {
     });
 });
 
-router.put("/discounts/:id", restrict, utils.byIdAndUpdate(Discount));
+router.put("/coupons/:id", restrict, utils.byIdAndUpdate(Coupon));
 
-router.get("/discounts/:id", restrict, utils.byId(Discount));
+router.get("/coupons/:id", restrict, utils.byId(Coupon));
 
-router.get("/discounts", restrict, utils.listAll(Discount, "discounts"));
+router.get("/coupons", restrict, utils.listAll(Coupon, "coupons"));
 
-router.post("/discounts", restrict, (req, res) => {
-  Discount.create(req.body)
-    .then((discount) => res.status(201).json(discount))
+router.post("/coupons", restrict, (req, res) => {
+  Coupon.create(req.body)
+    .then((coupon) => res.status(201).json(coupon))
     .catch((err) => {
       console.error(err);
       res.sendStatus(400);
