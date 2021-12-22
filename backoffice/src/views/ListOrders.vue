@@ -3,7 +3,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
 import { getJSON, redirectOnStatus } from "../http";
-import { signinRoute } from "../utils";
+import { signinRoute, formatDate } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
 import Alert from "../components/Alert.vue";
@@ -39,11 +39,11 @@ getJSON("/api/backoffice/orders")
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">user</th>
-          <th scope="col">products</th>
-          <th scope="col">discounts</th>
-          <th scope="col">issued</th>
-          <th scope="col">returnal</th>
+          <th scope="col">customer</th>
+          <th scope="col">state</th>
+          <th scope="col">start date</th>
+          <th scope="col">end date</th>
+          <th scope="col">days</th>
           <th scope="col">total</th>
         </tr>
       </thead>
@@ -51,17 +51,23 @@ getJSON("/api/backoffice/orders")
         <tr v-for="order in orders" :key="order._id">
           <th scope="row">
             <router-link
-              :to="{ name: 'OrderDetail', params: { id: order._id } }"
+              :to="{ name: 'UpdateOrder', params: { id: order._id } }"
             >
               {{ order._id }}
             </router-link>
           </th>
-          <td>{{ order.userId }}</td>
-          <td>{{ order.products.length }}</td>
-          <td>{{ order.discounts.length }}</td>
-          <td>{{ order.issuedAt.split("T")[0] }}</td>
-          <td>{{ order.returnalDate.split("T")[0] }}</td>
-          <td>€ {{ order.totalPrice }}</td>
+          <td>
+            <router-link
+              :to="{ name: 'UpdateCustomer', params: { id: order.customerId } }"
+            >
+              {{ order.customerId }}
+            </router-link>
+          </td>
+          <td>{{ order.state }}</td>
+          <td>{{ formatDate(order.startDate) }}</td>
+          <td>{{ formatDate(order.endDate) }}</td>
+          <td>{{ order.days }}</td>
+          <td>€ {{ order.totalPrice.toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>

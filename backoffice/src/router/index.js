@@ -14,7 +14,7 @@ import CreateProduct from "../views/CreateProduct.vue";
 import ListProducts from "../views/ListProducts.vue";
 
 import ListOrders from "../views/ListOrders.vue";
-import OrderDetail from "../views/OrderDetail.vue";
+import UpdateOrder from "../views/UpdateOrder.vue";
 
 import Signin from "../views/Signin.vue";
 import PageNotFound from "../views/PageNotFound.vue";
@@ -102,8 +102,8 @@ const routes = [
   },
   {
     path: "/orders/:id",
-    name: "OrderDetail",
-    component: OrderDetail,
+    name: "UpdateOrder",
+    component: UpdateOrder,
     meta: {
       restricted: true,
     },

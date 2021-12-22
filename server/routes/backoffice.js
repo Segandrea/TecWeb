@@ -182,15 +182,7 @@ router.get("/reviews/:id", restrict, utils.byId(Review));
 
 router.get("/reviews", restrict, utils.listAll(Review, "reviews"));
 
-//TODO: think about me
-router.post("/orders", restrict, (req, res) => {
-  Order.create(req.body)
-    .then((order) => res.status(201).json(order))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400);
-    });
-});
+router.put("/orders/:id", restrict, utils.byIdAndUpdate(Order));
 
 router.get("/orders/:id", restrict, utils.byId(Order));
 

@@ -58,7 +58,7 @@ getJSON("/api/backoffice/coupons")
             </router-link>
           </th>
           <td>{{ coupon.code }}</td>
-          <td>€ {{ coupon.value }}</td>
+          <td>€ {{ coupon.value.toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>

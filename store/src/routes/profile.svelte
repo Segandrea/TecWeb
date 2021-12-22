@@ -135,14 +135,16 @@
                 >
               </div>
               <div class="col">
+                <h6>State</h6>
+                <small class="text-muted">{order.state}</small>
+              </div>
+              <div class="col">
                 <h6>Start Date</h6>
-                <small class="text-muted">{formatDate(order.issuedAt)}</small>
+                <small class="text-muted">{formatDate(order.startDate)}</small>
               </div>
               <div class="col">
                 <h6>End Date</h6>
-                <small class="text-muted"
-                  >{formatDate(order.returnalDate)}</small
-                >
+                <small class="text-muted">{formatDate(order.endDate)}</small>
               </div>
               <div class="col">
                 <h6>Total</h6>

@@ -21,20 +21,22 @@ function byId(model, serialize, extractId) {
   return (req, res) => {
     const id = _extractId(req);
 
-    return model
-      .findById(id)
-      .lean()
-      .then((entity) => {
-        if (entity) {
-          return res.json(_serialize(entity));
-        } else {
-          return res.sendStatus(404);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-      });
+    return (
+      model
+        .findById(id)
+        // .lean()
+        .then((entity) => {
+          if (entity) {
+            return res.json(_serialize(entity));
+          } else {
+            return res.sendStatus(404);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(500);
+        })
+    );
   };
 }
 
@@ -45,20 +47,22 @@ function oneByQuery(model, serialize, extractQuery) {
   return (req, res) => {
     const query = _extractQuery(req);
 
-    return model
-      .findOne(query)
-      .lean()
-      .then((entity) => {
-        if (entity) {
-          return res.json(_serialize(entity));
-        } else {
-          return res.sendStatus(404);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-      });
+    return (
+      model
+        .findOne(query)
+        // .lean()
+        .then((entity) => {
+          if (entity) {
+            return res.json(_serialize(entity));
+          } else {
+            return res.sendStatus(404);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(500);
+        })
+    );
   };
 }
 
@@ -94,14 +98,16 @@ function listAll(model, namespace, serialize, extractQuery) {
   return (req, res) => {
     const query = _extractQuery(req);
 
-    return model
-      .find(query)
-      .lean()
-      .then((entities) => res.json({ [namespace]: entities.map(_serialize) }))
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-      });
+    return (
+      model
+        .find(query)
+        // .lean()
+        .then((entities) => res.json({ [namespace]: entities.map(_serialize) }))
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(500);
+        })
+    );
   };
 }
 
@@ -115,7 +121,8 @@ function byIdAndUpdate(model, serialize, extractBody, extractId) {
     const body = _extractBody(req);
 
     return model
-      .findByIdAndUpdate(id, body, { returnDocument: "after", lean: true })
+      // .findByIdAndUpdate(id, body, { returnDocument: "after", lean: true })
+      .findByIdAndUpdate(id, body, { returnDocument: "after" })
       .then((entity) => {
         if (entity) {
           return res.json(_serialize(entity));
