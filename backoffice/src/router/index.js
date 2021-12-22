@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Home from "../views/Home.vue";
-
 import UpdateCustomer from "../views/UpdateCustomer.vue";
 import ListCustomers from "../views/ListCustomers.vue";
 
@@ -22,10 +20,10 @@ import PageNotFound from "../views/PageNotFound.vue";
 const routes = [
   {
     path: "/",
+    redirect: { name: "ListCustomers" },
     name: "Home",
-    component: Home,
     meta: {
-      restricted: true,
+      restricted: false,
     },
   },
   {

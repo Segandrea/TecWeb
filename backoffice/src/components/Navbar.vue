@@ -37,14 +37,6 @@ async function signout() {
           <ul class="navbar-nav flex-fill">
             <li class="nav-item">
               <router-link
-                :to="{ name: 'Home' }"
-                class="nav-link"
-                active-class="active"
-                >Home</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link
                 :to="{ name: 'ListCustomers' }"
                 class="nav-link"
                 active-class="active"
