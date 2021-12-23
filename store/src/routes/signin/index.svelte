@@ -3,36 +3,33 @@
 
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
+
+  import { postJSON, onStatus } from "$lib/http";
   import { path } from "$lib/utils";
 
   let alert;
-  let email;
-  let password;
-
   let emailInput;
 
-  async function signin() {
-    const res = await fetch("/api/store/signin", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+  let customer = {};
 
-    if (res.ok) {
-      const returnTo = $page.query.get("returnTo") || path("/");
-      const user = await res.json();
-
-      sessionStorage.setItem("user", JSON.stringify(user));
-      goto(returnTo);
-    } else {
-      email = "";
-      password = "";
-      emailInput.focus();
-      alert.error("Sign-in required");
-    }
+  function signin() {
+    postJSON("/api/store/signin", customer)
+      .then((body) => {
+        const returnTo = $page.query.get("returnTo") || path("/");
+        sessionStorage.setItem("user", JSON.stringify(body));
+        goto(returnTo);
+      })
+      .catch(
+        onStatus(401, () => {
+          customer = {};
+          emailInput.focus();
+          alert.error("Signin required");
+        })
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong!");
+      });
   }
 </script>
 
@@ -65,7 +62,7 @@
             placeholder="email@example.com"
             class="form-control rounded-0 rounded-top"
             required
-            bind:value={email}
+            bind:value={customer.email}
             bind:this={emailInput}
           />
           <label for="email">Email</label>
@@ -80,7 +77,7 @@
             class="form-control rounded-0 rounded-bottom"
             minlength="4"
             required
-            bind:value={password}
+            bind:value={customer.password}
           />
           <label for="password">Password</label>
         </div>
