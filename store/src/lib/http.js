@@ -1,5 +1,7 @@
-function send(method, url, { headers, body, fetchImpl } = {}) {
-  const _fetch = typeof fetchImpl !== "undefined" ? fetchImpl : fetch;
+const DEFAULT_FETCH = fetch;
+
+function send(method, url, { headers, body, fetch } = {}) {
+  const _fetch = typeof fetch !== "undefined" ? fetch : DEFAULT_FETCH;
 
   return _fetch(url, {
     headers,
@@ -16,31 +18,32 @@ function send(method, url, { headers, body, fetchImpl } = {}) {
 
 const JSON_CONTENT = { "Content-Type": "application/json" };
 
-export function postJSON(url, object, { parse, fetchImpl } = {}) {
+export function postJSON(url, object, { parse, fetch } = {}) {
   const _parse = typeof parse !== "undefined" ? parse : true;
   const promise = send("POST", url, {
     headers: JSON_CONTENT,
     body: JSON.stringify(object),
-    fetchImpl,
+    fetch,
   });
 
   return _parse ? promise.then((res) => res.json()) : promise;
 }
 
-export function putJSON(url, object, { parse, fetchImpl } = {}) {
+export function putJSON(url, object, { parse, fetch } = {}) {
   const _parse = typeof parse !== "undefined" ? parse : true;
   const promise = send("PUT", url, {
     headers: JSON_CONTENT,
     body: JSON.stringify(object),
-    fetchImpl,
+    fetch,
   });
 
   return _parse ? promise.then((res) => res.json()) : promise;
 }
 
-export function getJSON(url, { parse, fetchImpl } = {}) {
+export function getJSON(url, { parse, fetch } = {}) {
   const _parse = typeof parse !== "undefined" ? parse : true;
-  const promise = send("GET", url, { fetchImpl });
+  const promise = send("GET", url, { fetch });
+
   return _parse ? promise.then((res) => res.json()) : promise;
 }
 

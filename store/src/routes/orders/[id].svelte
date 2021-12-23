@@ -6,7 +6,7 @@
     const orderId = page.params.id;
 
     if (isAuth()) {
-      return await getJSON(`/api/store/orders/${orderId}`, { fetchImpl: fetch })
+      return await getJSON(`/api/store/orders/${orderId}`, { fetch })
         .then((order) => {
           return {
             props: { order },

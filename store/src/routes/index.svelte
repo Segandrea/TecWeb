@@ -3,7 +3,7 @@
 
   export async function load({ fetch }) {
     const products = await getJSON("/api/store/products", {
-      fetchImpl: fetch,
+      fetch,
     }).catch((err) => {
       console.log(err);
       return { products: [] };
