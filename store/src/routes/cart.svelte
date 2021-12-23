@@ -1,21 +1,28 @@
 <script context="module">
   import { path, isAuth } from "$lib/utils";
 
-  export async function load({ page }) {
-    if (!isAuth()) {
-      const returnTo = new URLSearchParams({ returnTo: path(page.path) });
-
-      return {
-        status: 302,
-        redirect: path(`/signin?${returnTo}`),
-      };
-    }
-
-    return {};
+  export function load({ page }) {
+    return isAuth()
+      ? {}
+      : {
+          status: 302,
+          redirect: path("/signin", {
+            returnTo: path(page.path),
+            required: true,
+          }),
+        };
   }
 </script>
 
 <script>
+  import Alert from "$lib/components/Alert.svelte";
+
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+
+  import { datediff } from "$lib/utils";
+  import { getJSON, onStatus, redirectOnStatus } from "$lib/http";
+
   import {
     cart,
     cartItems,
@@ -26,8 +33,8 @@
     removeCoupon,
     rentalPeriod,
   } from "$lib/stores";
-  import { datediff } from "$lib/utils";
 
+  let alert;
   let couponCode;
 
   let subtotalPrice = 0;
@@ -60,17 +67,24 @@
     totalPrice = Math.max(subtotalPrice - couponPrice, 0);
   }
 
-  async function fetchCoupon() {
-    const res = await fetch(`/api/store/coupons/${couponCode}`);
-
-    if (res.ok) {
-      res
-        .json()
-        .then(addCoupon)
-        .then(() => {
-          couponCode = "";
-        });
-    }
+  function fetchCoupon() {
+    getJSON(`/api/store/coupons/${couponCode}`)
+      .then(addCoupon)
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch(
+        onStatus(404, () => alert.error(`Unknown coupon code: ${couponCode}`))
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      })
+      .finally(() => (couponCode = ""));
   }
 </script>
 
@@ -78,7 +92,9 @@
   <title>Cart</title>
 </svelte:head>
 
-<main class="container">
+<main class="container w-100 h-100">
+  <Alert bind:this={alert} />
+
   <div class="row g-4">
     <div class="col-lg-3">
       <div class="row">

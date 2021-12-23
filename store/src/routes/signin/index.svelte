@@ -4,6 +4,8 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
 
+  import { onMount } from "svelte";
+
   import { postJSON, onStatus } from "$lib/http";
   import { path } from "$lib/utils";
 
@@ -11,6 +13,13 @@
   let emailInput;
 
   let customer = {};
+
+  onMount(() => {
+    if ($page.query.has("required")) {
+      $page.query.delete("requied");
+      alert.error("Signin required");
+    }
+  });
 
   function signin() {
     postJSON("/api/store/signin", customer)

@@ -18,29 +18,28 @@ const JSON_CONTENT = { "Content-Type": "application/json" };
 
 export function postJSON(url, object, { parse, fetchImpl } = {}) {
   const _parse = typeof parse !== "undefined" ? parse : true;
-
   const promise = send("POST", url, {
     headers: JSON_CONTENT,
     body: JSON.stringify(object),
     fetchImpl,
   });
+
   return _parse ? promise.then((res) => res.json()) : promise;
 }
 
 export function putJSON(url, object, { parse, fetchImpl } = {}) {
   const _parse = typeof parse !== "undefined" ? parse : true;
-
   const promise = send("PUT", url, {
     headers: JSON_CONTENT,
     body: JSON.stringify(object),
     fetchImpl,
   });
+
   return _parse ? promise.then((res) => res.json()) : promise;
 }
 
 export function getJSON(url, { parse, fetchImpl } = {}) {
   const _parse = typeof parse !== "undefined" ? parse : true;
-
   const promise = send("GET", url, { fetchImpl });
   return _parse ? promise.then((res) => res.json()) : promise;
 }
