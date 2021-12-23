@@ -7,21 +7,17 @@
 
     if (isAuth()) {
       return await getJSON(`/api/store/orders/${orderId}`, { fetch })
-        .then((order) => {
-          return {
-            props: { order },
-          };
-        })
+        .then((order) => ({
+          props: { order },
+        }))
         .catch(
-          onStatus(401, () => {
-            return {
-              status: 302,
-              redirect: path("/signin", {
-                returnTo: path(page.path),
-                required: true,
-              }),
-            };
-          })
+          onStatus(401, () => ({
+            status: 302,
+            redirect: path("/signin", {
+              returnTo: path(page.path),
+              required: true,
+            }),
+          }))
         )
         .catch(([err, req]) => {
           console.error(err);

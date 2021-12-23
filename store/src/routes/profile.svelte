@@ -1,31 +1,39 @@
 <script context="module">
+  import { getJSON, onStatus } from "$lib/http";
   import { path, isAuth } from "$lib/utils";
 
-  // TODO: update store endpoints to return orders inside profile response
   export async function load({ page, fetch }) {
     if (isAuth()) {
-      const responses = await Promise.all([
-        fetch("/api/store/profile"),
-        fetch("/api/store/orders"),
-      ]);
-
-      if (responses.every((res) => res.ok)) {
-        const [profile, orders] = await Promise.all(
-          responses.map((res) => res.json())
-        );
-
-        return {
-          props: {
-            profile,
-            ...orders,
-          },
-        };
-      }
+      return await getJSON("/api/store/profile", { fetch })
+        .then((profile) =>
+          getJSON("/api/store/orders", { fetch }).then(({ orders }) => ({
+            props: { profile, orders },
+          }))
+        )
+        .catch(
+          onStatus(401, () => ({
+            status: 302,
+            redirect: path("/signin", {
+              returnTo: path(page.path),
+              required: true,
+            }),
+          }))
+        )
+        .catch(([err, req]) => {
+          console.error(err);
+          return {
+            status: req ? req.status : 500,
+            error: "Unable to reach the server",
+          };
+        });
     }
 
     return {
       status: 302,
-      redirect: path("/signin", { returnTo: path(page.path), required: true }),
+      redirect: path("/signin", {
+        returnTo: path(page.path),
+        required: true,
+      }),
     };
   }
 </script>
@@ -36,7 +44,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
 
-  import { postJSON, putJSON, onStatus, redirectOnStatus } from "$lib/http";
+  import { postJSON, putJSON, redirectOnStatus } from "$lib/http";
   import { clearCart, clearCoupons } from "$lib/stores";
   import { formatDate } from "$lib/utils";
 
@@ -47,13 +55,13 @@
 
   function signout() {
     postJSON("/api/store/signout", {}, { parse: false })
+      .catch(onStatus(401, () => {}))
       .then(() => {
         sessionStorage.removeItem("user");
         clearCoupons();
         clearCart();
         goto(path("/"));
       })
-      .catch(onStatus(401, () => {}))
       .catch((err) => {
         console.error(err);
         alert.error("Something went wrong");

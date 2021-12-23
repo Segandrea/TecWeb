@@ -140,7 +140,12 @@ router.get("/products/:id", handler.byId(Product));
 
 router.get(
   "/products",
-  handler.listAll(Product, "products", { filter: (req) => ({ ...JSON.parse(req.query.filter || "{}"), visible: true }) })
+  handler.listAll(Product, "products", {
+    filter: (req) => ({
+      ...JSON.parse(req.query.filter || "{}"),
+      visible: true,
+    }),
+  })
 );
 
 router.post("/reviews", restrict, handler.create(Review));

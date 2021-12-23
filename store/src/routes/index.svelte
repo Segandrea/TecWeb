@@ -1,13 +1,11 @@
 <script context="module">
   import { getJSON } from "$lib/http";
 
-  export async function load({ fetch }) {
-    return await getJSON("/api/store/products", { fetch })
-      .then((products) => {
-        return {
-          props: products,
-        };
-      })
+  export function load({ fetch }) {
+    return getJSON("/api/store/products", { fetch })
+      .then((products) => ({
+        props: products,
+      }))
       .catch(([err, req]) => {
         console.error(err);
         return {
