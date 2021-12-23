@@ -1,15 +1,43 @@
 <script context="module">
+  import { getJSON, onStatus } from "$lib/http";
+  import { path, isAuth } from "$lib/utils";
+
   export async function load({ page, fetch }) {
     const orderId = page.params.id;
 
-    const order = await fetch(`/api/store/orders/${orderId}`).then((res) =>
-      res.json()
-    );
+    if (isAuth()) {
+      return await getJSON(`/api/store/orders/${orderId}`, { fetchImpl: fetch })
+        .then((order) => {
+          return {
+            props: { order },
+          };
+        })
+        .catch(
+          onStatus(401, () => {
+            return {
+              status: 302,
+              redirect: path("/signin", {
+                returnTo: path(page.path),
+                required: true,
+              }),
+            };
+          })
+        )
+        .catch(([err, req]) => {
+          console.error(err);
+          return {
+            status: req ? req.status : 500,
+            error: "Unable to reach the server",
+          };
+        });
+    }
 
     return {
-      props: {
-        order,
-      },
+      status: 302,
+      redirect: path("/signin", {
+        returnTo: path(page.path),
+        required: true,
+      }),
     };
   }
 </script>
