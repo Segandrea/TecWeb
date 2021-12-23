@@ -6,14 +6,13 @@
     const productId = page.params.id;
 
     return getJSON("/api/store/profile", { fetch })
-      .then((profile) => {
-        const username = profile.username;
-        return getJSON(`/api/store/products/${productId}`, { fetch }).then(
+      .then((profile) =>
+        getJSON(`/api/store/products/${productId}`, { fetch }).then(
           (product) => ({
-            props: { productId, product, username },
+            props: { productId, product, username: profile.username },
           })
-        );
-      })
+        )
+      )
       .catch(
         onStatus(401, () => ({
           status: 302,
