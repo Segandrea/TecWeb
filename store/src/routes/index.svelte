@@ -2,16 +2,19 @@
   import { getJSON } from "$lib/http";
 
   export async function load({ fetch }) {
-    const products = await getJSON("/api/store/products", {
-      fetch,
-    }).catch((err) => {
-      console.log(err);
-      return { products: [] };
-    });
-
-    return {
-      props: products,
-    };
+    return await getJSON("/api/store/products", { fetch })
+      .then((products) => {
+        return {
+          props: products,
+        };
+      })
+      .catch(([err, req]) => {
+        console.error(err);
+        return {
+          status: req ? req.status : 500,
+          error: "Unable to reach the server",
+        };
+      });
   }
 </script>
 
