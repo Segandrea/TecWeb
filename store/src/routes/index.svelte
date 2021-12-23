@@ -1,10 +1,13 @@
 <script context="module">
-  import { path, isAuth } from "$lib/utils";
+  import { getJSON } from "$lib/http";
 
   export async function load({ fetch }) {
-    const products = await fetch("/api/store/products").then((res) =>
-      res.json()
-    );
+    const products = await getJSON("/api/store/products", {
+      fetchImpl: fetch,
+    }).catch((err) => {
+      console.log(err);
+      return { products: [] };
+    });
 
     return {
       props: products,
@@ -14,7 +17,9 @@
 
 <script>
   import StarRating from "svelte-star-rating";
+
   import { cart, addToCart } from "$lib/stores";
+  import { path, isAuth } from "$lib/utils";
 
   export let products;
 </script>
