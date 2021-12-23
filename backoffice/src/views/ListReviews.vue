@@ -33,7 +33,12 @@ getJSON("/api/backoffice/reviews")
   <main class="container w-100 h-100 py-4">
     <nav class="mb-4" aria-label="breadcrumb">
       <ol class="breadcrumb fw-bold">
-        <li class="breadcrumb-item active" aria-current="page">Customers</li>
+        <li class="breadcrumb-item active" aria-current="page">Reviews</li>
+        <li class="breadcrumb-item">
+          <router-link :to="{ name: 'DetailReview'}">
+            <small><i class="bi bi-plus-circle"></i></small>
+          </router-link>
+        </li>
       </ol>
     </nav>
 
