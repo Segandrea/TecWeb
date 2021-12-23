@@ -120,20 +120,22 @@ function byIdAndUpdate(model, serialize, extractBody, extractId) {
     const id = _extractId(req);
     const body = _extractBody(req);
 
-    return model
-      // .findByIdAndUpdate(id, body, { returnDocument: "after", lean: true })
-      .findByIdAndUpdate(id, body, { returnDocument: "after" })
-      .then((entity) => {
-        if (entity) {
-          return res.json(_serialize(entity));
-        } else {
-          return res.sendStatus(404);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-      });
+    return (
+      model
+        // .findByIdAndUpdate(id, body, { returnDocument: "after", lean: true })
+        .findByIdAndUpdate(id, body, { returnDocument: "after" })
+        .then((entity) => {
+          if (entity) {
+            return res.json(_serialize(entity));
+          } else {
+            return res.sendStatus(404);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(500);
+        })
+    );
   };
 }
 

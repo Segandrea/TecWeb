@@ -27,13 +27,6 @@
           alert.error("Invalid credentials");
         })
       )
-      .catch(
-        onStatus(409, () => {
-          customer = {};
-          emailInput.focus();
-          alert.error("Already registered");
-        })
-      )
       .catch((err) => {
         console.error(err);
         alert.error("Something went wrong!");

@@ -30,7 +30,7 @@ router.post("/signup", async (req, res) => {
   });
 
   if (alreadyRegistered) {
-    return res.sendStatus(409);
+    return res.sendStatus(400);
   }
 
   User.create({
