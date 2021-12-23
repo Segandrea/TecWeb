@@ -1,13 +1,13 @@
 const express = require("express");
 const passport = require("passport");
 
-const utils = require("./utils");
+const handler = require("./handler");
 
 const User = require("../models/user").User;
 const Order = require("../models/order").Order;
+const Coupon = require("../models/coupon").Coupon;
 const Review = require("../models/review").Review;
 const Product = require("../models/product").Product;
-const Coupon = require("../models/coupon").Coupon;
 
 const router = express.Router();
 
@@ -97,79 +97,59 @@ router.get("/profile", restrict, (req, res) => {
 router.put(
   "/profile",
   restrict,
-  utils.byIdAndUpdate(
-    User,
-    (user) => ({
-      _id: user._id,
-      email: user.email,
-      username: user.customer.username,
-      billingAddress: user.customer.billingAddress || "",
-    }),
-    (req) => ({
+  handler.byIdAndUpdate(User, {
+    id: (req) => req.user._id,
+    body: (req) => ({
       email: req.body.email,
       customer: {
         username: req.body.username,
         billingAddress: req.body.billingAddress,
       },
     }),
-    (req) => req.user._id
-  )
+    serialize: (user) => ({
+      _id: user._id,
+      email: user.email,
+      username: user.customer.username,
+      billingAddress: user.customer.billingAddress || "",
+    }),
+  })
 );
 
 router.get(
   "/orders/:id",
   restrict,
-  utils.oneByQuery(Order, undefined, (req) => ({
-    _id: req.params.id,
-    userId: req.user._id,
-  }))
+  handler.oneByFilter(Order, {
+    filter: (req) => ({
+      _id: req.params.id,
+      userId: req.user._id,
+    }),
+  })
 );
 
 router.get(
   "/orders",
   restrict,
-  utils.listAll(Order, "orders", undefined, (req) => ({ userId: req.user._id }))
+  handler.listAll(Order, "orders", {
+    filter: (req) => ({ userId: req.user._id }),
+  })
 );
 
-router.post("/orders", restrict, (req, res) => {
-  Order.create(req.body)
-    .then((order) => res.status(201).json(order))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400);
-    });
-});
+router.post("/orders", restrict, handler.create(Order));
 
-// TODO: change conventions
-router.get(
-  "/products/:id",
-  utils.byId(Product, (product) => ({ product }))
-);
+router.get("/products/:id", handler.byId(Product));
 
 router.get(
   "/products",
-  utils.listAll(Product, "products", undefined, () => ({ visible: true }))
+  handler.listAll(Product, "products", { filter: () => ({ visible: true }) })
 );
 
-router.post("/reviews", restrict, (req, res) => {
-  Review.create(req.body)
-    .then((review) => res.status(201).json(review))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400);
-    });
-});
-
-router.get("/reviews", utils.listAll(Review, "reviews"));
+router.post("/reviews", restrict, handler.create(Review));
+router.get("/reviews", handler.listAll(Review, "reviews"));
 
 router.get(
   "/coupons/:code",
   restrict,
-  utils.oneByQuery(Coupon, undefined, (req) => ({ code: req.params.code }))
+  handler.oneByFilter(Coupon, { filter: (req) => ({ code: req.params.code }) })
 );
-
-router.get("/ping", (req, res) => {
-  return res.sendStatus(200);
-});
 
 module.exports = router;

@@ -6,9 +6,9 @@
       .then((res) => res.json())
       .then((res) => res.username);
 
-    const product = await fetch(`/api/store/products/${productId}`)
-      .then((res) => res.json())
-      .then((res) => res.product); // TODO: remove me (update store API)
+    const product = await fetch(`/api/store/products/${productId}`).then(
+      (res) => res.json()
+    );
 
     return {
       props: {

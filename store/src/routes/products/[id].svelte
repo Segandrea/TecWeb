@@ -4,11 +4,14 @@
   export async function load({ page, fetch }) {
     const productId = page.params.id;
 
-    const product = await fetch(`/api/store/products/${productId}`)
-      .then((res) => res.json())
-      .then((res) => res.product); // TODO: remove me (update store API)
+    const product = await fetch(`/api/store/products/${productId}`).then(
+      (res) => res.json()
+    );
 
-    const reviews = await fetch(`/api/store/reviews?productId=${productId}`)
+    const filter = new URLSearchParams({
+      filter: JSON.stringify({ productId }),
+    });
+    const reviews = await fetch(`/api/store/reviews?${filter}`)
       .then((res) => res.json())
       .then((body) => body.reviews);
 
