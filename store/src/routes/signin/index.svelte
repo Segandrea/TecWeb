@@ -1,9 +1,11 @@
 <script>
+  import Alert from "$lib/components/Alert.svelte";
+
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { path } from "$lib/utils";
 
-  let error;
+  let alert;
   let email;
   let password;
 
@@ -26,11 +28,10 @@
       sessionStorage.setItem("user", JSON.stringify(user));
       goto(returnTo);
     } else {
-      error = "Sign-in required";
       email = "";
       password = "";
-
       emailInput.focus();
+      alert.error("Sign-in required");
     }
   }
 </script>
@@ -49,23 +50,11 @@
       <a href={path("/")}>
         <img src={path("/nolonoloplus-dark.png")} alt="Nolo Nolo Plus Logo" />
       </a>
+
       <h1 class="my-4 fw-normal">Welcome back!</h1>
 
       <form on:submit|preventDefault={signin}>
-        {#if error}
-          <div
-            class="alert alert-warning alert-dismissible fade show mb-4"
-            role="alert"
-          >
-            {error}
-            <button
-              type="button"
-              class="btn-close"
-              aria-label="Close"
-              data-bs-dismiss="alert"
-            />
-          </div>
-        {/if}
+        <Alert bind:this={alert} />
 
         <div class="form-floating">
           <input
