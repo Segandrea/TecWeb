@@ -31,9 +31,9 @@ const ProductSchema = new Schema({
 ProductSchema.pre("save", function (next) {
   if (this.isModified("reviews") || this.isNew) {
     const reviews = this.reviews || [];
-    this.rating =
-      reviews.reduce((acc, r) => acc + r.rating, 0) /
-      Math.max(reviews.length, 1);
+    const len = Math.max(reviews.length, 1);
+
+    this.rating = reviews.reduce((acc, review) => acc + review.rating, 0) / len;
   }
 
   return next();

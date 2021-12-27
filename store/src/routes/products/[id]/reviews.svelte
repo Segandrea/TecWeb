@@ -5,14 +5,10 @@
   export function load({ page, fetch }) {
     const productId = page.params.id;
 
-    return getJSON("/api/store/profile", { fetch })
-      .then((profile) =>
-        getJSON(`/api/store/products/${productId}`, { fetch }).then(
-          (product) => ({
-            props: { productId, product },
-          })
-        )
-      )
+    return getJSON(`/api/store/products/${productId}`, { fetch })
+      .then((product) => ({
+        props: { product },
+      }))
       .catch(
         onStatus(401, () => ({
           status: 302,
@@ -41,15 +37,14 @@
 
   import { postJSON, redirectOnStatus } from "$lib/http";
 
-  export let productId;
   export let product;
 
   let alert;
-  let submitted = false;
   let review = { content: "", rating: 2.5 };
+  let submitted = false;
 
   function createReview() {
-    postJSON(`/api/store/products/${productId}/reviews`, review)
+    postJSON(`/api/store/products/${product._id}/reviews`, review)
       .then((body) => {
         product = body;
         submitted = true;

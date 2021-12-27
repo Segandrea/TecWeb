@@ -6,8 +6,7 @@
     const productId = page.params.id;
 
     return getJSON(`/api/store/products/${productId}`, { fetch })
-      .then((product) => ({ props: { product }})
-      )
+      .then((product) => ({ props: { product } }))
       .catch(
         onStatus(401, () => ({
           status: 302,
