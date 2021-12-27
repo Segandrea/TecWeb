@@ -178,85 +178,95 @@
     </div>
 
     <div class="col-lg-9">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-        {#each $cartItems as product}
-          <div class="col">
-            <div class="card h-100">
-              <a href={path(`/products/${product._id}`)}
-                ><img
-                  src={product.images[0].url}
-                  class="card-img-top"
-                  height="200"
-                  alt={product.name + " image"}
-                /></a
-              >
-              <div class="card-body">
-                <h5 class="card-title text-truncate">
-                  <a href={path(`/products/${product._id}`)} class="link-dark"
-                    >{product.name}</a
-                  >
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted text-truncate">
-                  {product.status}
-                </h6>
-                <div
-                  class="d-flex justify-content-between orange fw-bolder fst-italic"
+      {#if $cartItems.length > 0}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+          {#each $cartItems as product}
+            <div class="col">
+              <div class="card h-100">
+                <a href={path(`/products/${product._id}`)}
+                  ><img
+                    src={product.images[0].url}
+                    class="card-img-top"
+                    height="200"
+                    alt={product.name + " image"}
+                  /></a
                 >
-                  <div>Daily</div>
-                  <div>
-                    <i class="bi bi-currency-euro"
-                      >{product.dailyPrice.toFixed(2)}</i
+                <div class="card-body">
+                  <h5 class="card-title text-truncate">
+                    <a href={path(`/products/${product._id}`)} class="link-dark"
+                      >{product.name}</a
+                    >
+                  </h5>
+                  <h6 class="card-subtitle mb-2 text-muted text-truncate">
+                    {product.status}
+                  </h6>
+                  <div
+                    class="d-flex justify-content-between orange fw-bolder fst-italic"
+                  >
+                    <div>Daily</div>
+                    <div>
+                      <i class="bi bi-currency-euro"
+                        >{product.dailyPrice.toFixed(2)}</i
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between text-muted fs-6 fst-italic"
+                  >
+                    <div><small>Base</small></div>
+                    <div>
+                      <small
+                        ><i class="bi bi-currency-euro"
+                          >{product.basePrice.toFixed(2)}</i
+                        ></small
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between text-muted fs-6 fst-italic"
+                  >
+                    <div><small>Days</small></div>
+                    <div>
+                      <small>{days}</small>
+                    </div>
+                  </div>
+                  <div class="text-end mt-4 mb-2">
+                    <button
+                      type="button"
+                      class="btn btn-warning rounded-3"
+                      on:click={() => removeFromCart(product)}
+                    >
+                      Remove</button
                     >
                   </div>
                 </div>
-                <div
-                  class="d-flex justify-content-between text-muted fs-6 fst-italic"
-                >
-                  <div><small>Base</small></div>
-                  <div>
-                    <small
-                      ><i class="bi bi-currency-euro"
-                        >{product.basePrice.toFixed(2)}</i
-                      ></small
-                    >
-                  </div>
-                </div>
-                <div
-                  class="d-flex justify-content-between text-muted fs-6 fst-italic"
-                >
-                  <div><small>Days</small></div>
-                  <div>
-                    <small>{days}</small>
-                  </div>
-                </div>
-                <div class="text-end mt-4 mb-2">
-                  <button
-                    type="button"
-                    class="btn btn-warning rounded-3"
-                    on:click={() => removeFromCart(product)}
+                <div class="card-footer">
+                  <div
+                    class="d-flex justify-content-between fw-bolder fst-italic"
                   >
-                    Remove</button
-                  >
-                </div>
-              </div>
-              <div class="card-footer">
-                <div
-                  class="d-flex justify-content-between fw-bolder fst-italic"
-                >
-                  <div>Total</div>
-                  <div>
-                    <i class="bi bi-currency-euro"
-                      >{(product.basePrice + days * product.dailyPrice).toFixed(
-                        2
-                      )}</i
-                    >
+                    <div>Total</div>
+                    <div>
+                      <i class="bi bi-currency-euro"
+                        >{(
+                          product.basePrice +
+                          days * product.dailyPrice
+                        ).toFixed(2)}</i
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          {/each}
+        </div>
+      {:else}
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Your cart is empty</h5>
+            <a class="card-link" href={path("/")}>Back to shop</a>
           </div>
-        {/each}
-      </div>
+        </div>
+      {/if}
     </div>
   </div>
 </main>
