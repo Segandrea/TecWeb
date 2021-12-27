@@ -157,9 +157,9 @@
       <h2>Reviews</h2>
       <div class="row row-cols-1 row-cols-md-3">
         {#each product.reviews as review}
-          <div class="col">
+          <div class="col text-truncate">
             <div class="card-body">
-              <h3 class="card-title text-truncate">{review.username}</h3>
+              <h3 class="card-title">{review.username}</h3>
               <p class="card-text">
                 {review.content}
               </p>

@@ -154,36 +154,48 @@
     <div class="col col-lg-9 text-center">
       <h2 class="py-4">Your Orders</h2>
 
-      <ul class="list-group">
-        {#each orders as order}
-          <div class="list-group-item">
-            <div class="row row-cols-1 row-cols-lg-5 g-2">
-              <div class="col text-truncate">
-                <h6>Order No.</h6>
-                <a href={path(`/orders/${order._id}`)}
-                  ><small>{order._id}</small></a
-                >
-              </div>
-              <div class="col">
-                <h6>State</h6>
-                <small class="text-muted">{order.state}</small>
-              </div>
-              <div class="col">
-                <h6>Start Date</h6>
-                <small class="text-muted">{formatDate(order.startDate)}</small>
-              </div>
-              <div class="col">
-                <h6>End Date</h6>
-                <small class="text-muted">{formatDate(order.endDate)}</small>
-              </div>
-              <div class="col">
-                <h6>Total</h6>
-                <i class="bi bi-currency-euro">{order.totalPrice.toFixed(2)}</i>
+      {#if orders && orders.length > 0}
+        <ul class="list-group">
+          {#each orders as order}
+            <div class="list-group-item">
+              <div class="row row-cols-1 row-cols-lg-5 g-2">
+                <div class="col text-truncate">
+                  <h6>Order No.</h6>
+                  <a href={path(`/orders/${order._id}`)}
+                    ><small>{order._id}</small></a
+                  >
+                </div>
+                <div class="col">
+                  <h6>State</h6>
+                  <small class="text-muted">{order.state}</small>
+                </div>
+                <div class="col">
+                  <h6>Start Date</h6>
+                  <small class="text-muted">{formatDate(order.startDate)}</small
+                  >
+                </div>
+                <div class="col">
+                  <h6>End Date</h6>
+                  <small class="text-muted">{formatDate(order.endDate)}</small>
+                </div>
+                <div class="col">
+                  <h6>Total</h6>
+                  <i class="bi bi-currency-euro"
+                    >{order.totalPrice.toFixed(2)}</i
+                  >
+                </div>
               </div>
             </div>
+          {/each}
+        </ul>
+      {:else}
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">You don't have any orders yet 😅</h5>
+            <a class="card-link" href={path("/")}>Back to shopping</a>
           </div>
-        {/each}
-      </ul>
+        </div>
+      {/if}
     </div>
   </div>
 </main>

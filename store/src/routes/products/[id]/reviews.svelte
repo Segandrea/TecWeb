@@ -145,16 +145,23 @@
         />
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-auto">
-        <button
-          class="btn btn-lg btn-warning my-2 w-100"
-          type="submit"
-          class:disabled={submitted}>Submit</button
-        >
+    {#if !submitted}
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <button
+            class="btn btn-lg btn-warning my-2 w-100"
+            type="submit"
+            class:disabled={submitted}>Submit</button
+          >
+        </div>
       </div>
-    </div>
+    {/if}
   </form>
+  {#if submitted}
+  <div class="text-center">
+    <a class="card-link" href={path("/")}>Back to shopping</a>
+  </div>
+  {/if}
 </main>
 
 <slot />

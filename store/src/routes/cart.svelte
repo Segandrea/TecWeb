@@ -260,10 +260,10 @@
           {/each}
         </div>
       {:else}
-        <div class="card h-100">
+        <div class="card h-100 text-center">
           <div class="card-body">
-            <h5 class="card-title">Your cart is empty</h5>
-            <a class="card-link" href={path("/")}>Back to shop</a>
+            <h5 class="card-title">There are no games in your cart yet 😅</h5>
+            <a class="card-link" href={path("/")}>Back to shopping</a>
           </div>
         </div>
       {/if}
