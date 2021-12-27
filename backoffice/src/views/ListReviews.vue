@@ -35,7 +35,7 @@ getJSON("/api/backoffice/reviews")
       <ol class="breadcrumb fw-bold">
         <li class="breadcrumb-item active" aria-current="page">Reviews</li>
         <li class="breadcrumb-item">
-          <router-link :to="{ name: 'DetailReview'}">
+          <router-link :to="{ name: 'DetailReview' }">
             <small><i class="bi bi-plus-circle"></i></small>
           </router-link>
         </li>

@@ -39,73 +39,78 @@ getJSON(`/api/backoffice/reviews/${reviewId}`)
       </ol>
     </nav>
 
-    <Alert ref="alert"/>
+    <Alert ref="alert" />
 
-      <div class="container">
-          <div class="col">
-              <div class="row">
-                <div class="col-sm-6 col-md-8">
-                  <table class="table table-borderless">
-                  <thead>
-                    <tr>
-                    <th scope="col">Description</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                      <td>{{ review.content}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-sm-2 col-md-4">
-                    <div class="row">
-                    <table class="table table-borderless">
-                  <thead>
-                    <tr>
+    <div class="container">
+      <div class="col">
+        <div class="row">
+          <div class="col-sm-6 col-md-8">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ review.content }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-2 col-md-4">
+            <div class="row">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
                     <th scope="col">ProductId</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                      <router-link :to="{ name: 'UpdateProduct', params:{id:review.productId} }">
-                    <td>{{review.productId}}</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <router-link
+                      :to="{
+                        name: 'UpdateProduct',
+                        params: { id: review.productId },
+                      }"
+                    >
+                      <td>{{ review.productId }}</td>
                     </router-link>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                    <div class="row">
-                      <table class="table table-borderless">
-                  <thead>
-                    <tr>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
                     <th scope="col">Rating</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                      <td>{{ review.rating}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                  <div class="row">
-                    <table class="table table-borderless">
-                  <thead>
-                    <tr>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ review.rating }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
                     <th scope="col">User</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                      <td>{{ review.username}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ review.username }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
