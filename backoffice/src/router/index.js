@@ -1,20 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Home from "../views/Home.vue";
-
 import UpdateCustomer from "../views/UpdateCustomer.vue";
 import ListCustomers from "../views/ListCustomers.vue";
 
-import UpdateDiscount from "../views/UpdateDiscount.vue";
-import CreateDiscount from "../views/CreateDiscount.vue";
-import ListDiscounts from "../views/ListDiscounts.vue";
+import UpdateCoupon from "../views/UpdateCoupon.vue";
+import CreateCoupon from "../views/CreateCoupon.vue";
+import ListCoupons from "../views/ListCoupons.vue";
 
 import UpdateProduct from "../views/UpdateProduct.vue";
 import CreateProduct from "../views/CreateProduct.vue";
 import ListProducts from "../views/ListProducts.vue";
 
 import ListOrders from "../views/ListOrders.vue";
-import OrderDetail from "../views/OrderDetail.vue";
+import UpdateOrder from "../views/UpdateOrder.vue";
 
 import Signin from "../views/Signin.vue";
 import PageNotFound from "../views/PageNotFound.vue";
@@ -22,10 +20,10 @@ import PageNotFound from "../views/PageNotFound.vue";
 const routes = [
   {
     path: "/",
+    redirect: { name: "ListCustomers" },
     name: "Home",
-    component: Home,
     meta: {
-      restricted: true,
+      restricted: false,
     },
   },
   {
@@ -45,25 +43,25 @@ const routes = [
     },
   },
   {
-    path: "/discounts/:id",
-    name: "UpdateDiscount",
-    component: UpdateDiscount,
+    path: "/coupons/:id",
+    name: "UpdateCoupon",
+    component: UpdateCoupon,
     meta: {
       restricted: true,
     },
   },
   {
-    path: "/discounts",
-    name: "ListDiscounts",
-    component: ListDiscounts,
+    path: "/coupons",
+    name: "ListCoupons",
+    component: ListCoupons,
     meta: {
       restricted: true,
     },
   },
   {
-    path: "/discounts",
-    name: "CreateDiscount",
-    component: CreateDiscount,
+    path: "/coupons",
+    name: "CreateCoupon",
+    component: CreateCoupon,
     meta: {
       restricted: true,
     },
@@ -102,8 +100,8 @@ const routes = [
   },
   {
     path: "/orders/:id",
-    name: "OrderDetail",
-    component: OrderDetail,
+    name: "UpdateOrder",
+    component: UpdateOrder,
     meta: {
       restricted: true,
     },
@@ -131,9 +129,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const user = sessionStorage.getItem("employee");
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
-  if (to.meta.restricted && !user) {
+  if (to.meta.restricted && user.role !== "employee") {
     next({ name: "Signin", params: { returnTo: to.fullPath } });
   } else {
     next();

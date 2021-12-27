@@ -1,49 +1,40 @@
 <script>
+  import Alert from "$lib/components/Alert.svelte";
+
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
+
+  import { postJSON, onStatus } from "$lib/http";
   import { path } from "$lib/utils";
 
-  let error;
-  let email;
-  let username;
-  let password;
-  let confirm;
-
+  let alert;
   let emailInput;
   let confirmInput;
 
-  async function signup() {
-    const res = await fetch("/api/store/signup", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        username,
-        password,
-        confirm,
-      }),
-    });
+  let customer = {};
 
-    if (res.ok) {
-      const returnTo = $page.query.get("returnTo") || path("/");
-      const user = await res.json();
-
-      sessionStorage.setItem("customer", JSON.stringify(user));
-      goto(returnTo);
-    } else {
-      error =
-        res.status == 409 ? "User already registered" : "Invalid credentials";
-      email = "";
-      username = "";
-      password = "";
-      confirm = "";
-
-      emailInput.focus();
-    }
+  function signup() {
+    postJSON("/api/store/signup", customer)
+      .then((body) => {
+        const returnTo = $page.query.get("returnTo") || path("/");
+        sessionStorage.setItem("user", JSON.stringify(body));
+        goto(returnTo);
+      })
+      .catch(
+        onStatus(400, () => {
+          customer = {};
+          emailInput.focus();
+          alert.error("Invalid credentials");
+        })
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong!");
+      });
   }
 
   function checkValidity() {
-    if (confirm === password) {
+    if (customer.password && customer.password === customer.confirm) {
       confirmInput.setCustomValidity("");
     } else {
       confirmInput.setCustomValidity("Passwords do not match");
@@ -68,20 +59,7 @@
       <h1 class="my-4 fw-normal">Nice to meet you!</h1>
 
       <form on:submit|preventDefault={signup}>
-        {#if error}
-          <div
-            class="alert alert-warning alert-dismissible fade show mb-4"
-            role="alert"
-          >
-            {error}
-            <button
-              type="button"
-              class="btn-close"
-              aria-label="Close"
-              data-bs-dismiss="alert"
-            />
-          </div>
-        {/if}
+        <Alert bind:this={alert} />
 
         <div class="form-floating">
           <input
@@ -92,7 +70,7 @@
             placeholder="email@example.com"
             class="form-control rounded-0 rounded-top"
             required
-            bind:value={email}
+            bind:value={customer.email}
             bind:this={emailInput}
           />
           <label for="email">Email</label>
@@ -107,7 +85,7 @@
             class="form-control rounded-0"
             minlength="4"
             required
-            bind:value={username}
+            bind:value={customer.username}
           />
           <label for="username">Username</label>
         </div>
@@ -121,7 +99,7 @@
             class="form-control rounded-0"
             minlength="4"
             required
-            bind:value={password}
+            bind:value={customer.password}
             on:change={checkValidity}
           />
           <label for="password">Password</label>
@@ -136,7 +114,7 @@
             class="form-control rounded-0 rounded-bottom"
             minlength="4"
             required
-            bind:value={confirm}
+            bind:value={customer.confirm}
             bind:this={confirmInput}
             on:change={checkValidity}
           />

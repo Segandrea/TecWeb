@@ -5,7 +5,7 @@ const router = useRouter();
 
 async function signout() {
   await fetch("/api/backoffice/signout", { method: "POST" });
-  sessionStorage.removeItem("employee");
+  sessionStorage.removeItem("user");
   router.push({ name: "Signin" });
 }
 </script>
@@ -37,14 +37,6 @@ async function signout() {
           <ul class="navbar-nav flex-fill">
             <li class="nav-item">
               <router-link
-                :to="{ name: 'Home' }"
-                class="nav-link"
-                active-class="active"
-                >Home</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link
                 :to="{ name: 'ListCustomers' }"
                 class="nav-link"
                 active-class="active"
@@ -61,10 +53,10 @@ async function signout() {
             </li>
             <li class="nav-item">
               <router-link
-                :to="{ name: 'ListDiscounts' }"
+                :to="{ name: 'ListCoupons' }"
                 class="nav-link"
                 active-class="active"
-                >Discounts</router-link
+                >Coupons</router-link
               >
             </li>
             <li class="nav-item">

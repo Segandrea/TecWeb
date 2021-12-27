@@ -45,6 +45,7 @@ getJSON("/api/backoffice/customers")
           <th scope="col">#</th>
           <th scope="col">username</th>
           <th scope="col">email</th>
+          <th scope="col">blocked</th>
         </tr>
       </thead>
       <tbody>
@@ -58,6 +59,7 @@ getJSON("/api/backoffice/customers")
           </th>
           <td>{{ customer.username }}</td>
           <td>{{ customer.email }}</td>
+          <td>{{ customer.blocked }}</td>
         </tr>
       </tbody>
     </table>

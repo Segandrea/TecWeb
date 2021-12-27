@@ -1,59 +1,80 @@
 <script context="module">
-  export async function load({ page, fetch }) {
+  import { getJSON, onStatus } from "$lib/http";
+  import { path } from "$lib/utils";
+
+  export function load({ page, fetch }) {
     const productId = page.params.id;
 
-    const username = await fetch("/api/store/profile")
-      .then((res) => res.json())
-      .then((res) => res.username);
-
-    const product = await fetch(`/api/store/products/${productId}`)
-      .then((res) => res.json())
-      .then((res) => res.product); // TODO: remove me (update store API)
-
-    return {
-      props: {
-        product,
-        productId,
-        username,
-      },
-    };
+    return getJSON("/api/store/profile", { fetch })
+      .then((profile) =>
+        getJSON(`/api/store/products/${productId}`, { fetch }).then(
+          (product) => ({
+            props: { productId, product, username: profile.username },
+          })
+        )
+      )
+      .catch(
+        onStatus(401, () => ({
+          status: 302,
+          redirect: path("/signin", {
+            returnTo: path(page.path),
+            required: true,
+          }),
+        }))
+      )
+      .catch(([err, req]) => {
+        console.error(err);
+        return {
+          status: req ? req.status : 500,
+          error: "Unable to reach the server",
+        };
+      });
   }
 </script>
 
 <script>
   import StarRating from "svelte-star-rating";
+  import Alert from "$lib/components/Alert.svelte";
 
-  export let product;
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+
+  import { postJSON, redirectOnStatus } from "$lib/http";
+
   export let productId;
+  export let product;
   export let username;
 
-  let review;
-  let content;
-  let rating = 2.5;
+  let alert;
+  let submitted = false;
+  let review = { productId, username, rating: 2.5 };
 
   function createReview() {
-    review = {
-      productId,
-      username,
-      content,
-      rating,
-    };
-
-    fetch("/api/store/reviews/", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(review),
-    })
-      .then((res) => res.json())
-      .then((body) => (review = body));
+    postJSON("/api/store/reviews", review)
+      .then((body) => {
+        review = body;
+        submitted = true;
+        alert.info("Thanks for your feedback");
+      })
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
   }
 </script>
 
-<!-- TODO: login problems (500 if not auth) -->
 <!-- TODO: add alert about result or send back to detail -->
 <!-- TODO: check that user bought the reviewed product (?) -->
-<!-- TODO: check that user didn't make other reviews for product (?) -->
 <main class="container">
+  <Alert bind:this={alert} />
+
   <div
     id="carouselControls"
     class="carousel carousel-dark slide my-2"
@@ -98,7 +119,7 @@
       <div class="col-auto">
         <label for="rating" class="fs-5">Rating</label>
         <StarRating
-          {rating}
+          rating={review.rating}
           config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
           style={"justify-content: center;"}
         />
@@ -107,7 +128,7 @@
           name="rating"
           type="range"
           class="form-range"
-          bind:value={rating}
+          bind:value={review.rating}
           min="0"
           max="5"
           step="0.1"
@@ -123,7 +144,7 @@
           class="form-control mb-3"
           id="content"
           name="content"
-          bind:value={content}
+          bind:value={review.content}
           rows="6"
           placeholder="How was your order?"
           required
@@ -132,8 +153,10 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-auto">
-        <button class="btn btn-lg btn-warning my-2 w-100" type="submit"
-          >Submit</button
+        <button
+          class="btn btn-lg btn-warning my-2 w-100"
+          type="submit"
+          class:disabled={submitted}>Submit</button
         >
       </div>
     </div>

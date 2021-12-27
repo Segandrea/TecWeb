@@ -1,13 +1,13 @@
 const express = require("express");
 const passport = require("passport");
 
-const utils = require("./utils");
+const handler = require("./handler");
 
 const User = require("../models/user").User;
 const Review = require("../models/review").Review;
 const Upload = require("../models/upload").Upload;
 const Product = require("../models/product").Product;
-const Discount = require("../models/discount").Discount;
+const Coupon = require("../models/coupon").Coupon;
 const Order = require("../models/order").Order;
 
 const router = express.Router();
@@ -20,18 +20,6 @@ function restrict(req, res, next) {
   } else {
     return res.sendStatus(401);
   }
-}
-
-function upload(uploads) {
-  if (uploads && uploads.length > 0) {
-    return Upload.create(uploads).then((uploads) => uploads.map(toImage));
-  } else {
-    return Promise.resolve([]);
-  }
-}
-
-function toImage(upload) {
-  return { url: `/media/images/${upload._id}` };
 }
 
 router.post("/signin", (req, res, next) => {
@@ -51,7 +39,7 @@ router.post("/signin", (req, res, next) => {
         return res.sendStatus(500);
       }
 
-      return res.json({ _id: user._id });
+      return res.json({ _id: user._id, role: user.role });
     });
   })(req, res, next);
 });
@@ -64,52 +52,83 @@ router.post("/signout", restrict, (req, res) => {
 router.put(
   "/customers/:id",
   restrict,
-  utils.oneByQueryAndUpdate(
-    User,
-    (user) => ({
-      _id: user._id,
-      email: user.email,
-      username: user.customer.username,
-    }),
-    (req) => ({ _id: req.params.id || null, role: "customer" }),
-    (req) => ({
-      email: req.body.email,
-      customer: { username: req.body.username },
-    })
-  )
+  handler.oneByFilterAndUpdate(User, {
+    filter: filterCustomer,
+    body: deserializeCustomer,
+    serialize: serializeCustomer,
+  })
 );
 
 router.get(
   "/customers/:id",
   restrict,
-  utils.oneByQuery(
-    User,
-    (user) => ({
-      _id: user._id,
-      email: user.email,
-      username: user.customer.username,
-    }),
-    (req) => ({ _id: req.params.id || null, role: "customer" })
-  )
+  handler.oneByFilter(User, {
+    filter: filterCustomer,
+    serialize: serializeCustomer,
+  })
 );
 
 router.get(
   "/customers",
   restrict,
-  utils.listAll(
-    User,
-    "customers",
-    (user) => ({
-      _id: user._id,
-      email: user.email,
-      username: user.customer.username,
-    }),
-    (req) => ({ ...req.query, role: "customer" })
-  )
+  handler.listAll(User, "customers", {
+    filter: (req) => {
+      const filter = JSON.parse(req.query.filter || "{}");
+      return { ...filter, role: "customer" };
+    },
+    serialize: serializeCustomer,
+  })
 );
 
-router.put("/products/:productId", restrict, (req, res) => {
-  const productId = req.params.productId;
+router.put("/products/:id", restrict, updateProduct);
+router.get("/products/:id", restrict, handler.byId(Product));
+router.get("/products", restrict, handler.listAll(Product, "products"));
+router.post("/products", restrict, createProduct);
+
+router.put("/coupons/:id", restrict, handler.byIdAndUpdate(Coupon));
+router.get("/coupons/:id", restrict, handler.byId(Coupon));
+router.get("/coupons", restrict, handler.listAll(Coupon, "coupons"));
+router.post("/coupons", restrict, handler.create(Coupon));
+
+router.get("/reviews/:id", restrict, handler.byId(Review));
+router.get("/reviews", restrict, handler.listAll(Review, "reviews"));
+
+router.put("/orders/:id", restrict, handler.byIdAndUpdate(Order));
+router.get("/orders/:id", restrict, handler.byId(Order));
+router.get("/orders", restrict, handler.listAll(Order, "orders"));
+
+module.exports = router;
+
+/**
+ * utils
+ */
+function filterCustomer(req) {
+  return { _id: req.params.id || null, role: "customer" };
+}
+
+function deserializeCustomer(req) {
+  return {
+    email: req.body.email,
+    blocked: req.body.blocked,
+    customer: {
+      username: req.body.username,
+      billingAddress: req.body.billingAddress,
+    },
+  };
+}
+
+function serializeCustomer(user) {
+  return {
+    _id: user._id,
+    email: user.email,
+    blocked: user.blocked,
+    username: user.customer.username,
+    billingAddress: user.customer.billingAddress,
+  };
+}
+
+function updateProduct(req, res) {
+  const productId = req.params.id;
   const body = req.body;
 
   upload(body.uploads)
@@ -122,22 +141,17 @@ router.put("/products/:productId", restrict, (req, res) => {
         body.images = images;
       }
 
-      Product.findByIdAndUpdate(productId, body, {
+      return Product.findByIdAndUpdate(productId, body, {
         returnDocument: "after",
-        lean: true,
       }).then((product) => res.json(product));
     })
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
     });
-});
+}
 
-router.get("/products/:id", restrict, utils.byId(Product));
-
-router.get("/products", restrict, utils.listAll(Product, "products"));
-
-router.post("/products", restrict, (req, res) => {
+function createProduct(req, res) {
   upload(req.body.uploads)
     .then((images) => {
       delete req.body.uploads;
@@ -151,43 +165,16 @@ router.post("/products", restrict, (req, res) => {
       console.error(err);
       res.sendStatus(400);
     });
-});
+}
 
-router.put("/discounts/:id", restrict, utils.byIdAndUpdate(Discount));
+function upload(uploads) {
+  if (uploads && uploads.length > 0) {
+    return Upload.create(uploads).then((uploads) => uploads.map(toImage));
+  } else {
+    return Promise.resolve([]);
+  }
+}
 
-router.get("/discounts/:id", restrict, utils.byId(Discount));
-
-router.get("/discounts", restrict, utils.listAll(Discount, "discounts"));
-
-router.post("/discounts", restrict, (req, res) => {
-  Discount.create(req.body)
-    .then((discount) => res.status(201).json(discount))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400);
-    });
-});
-
-router.get("/reviews/:id", restrict, utils.byId(Review));
-
-router.get("/reviews", restrict, utils.listAll(Review, "reviews"));
-
-//TODO: think about me
-router.post("/orders", restrict, (req, res) => {
-  Order.create(req.body)
-    .then((order) => res.status(201).json(order))
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400);
-    });
-});
-
-router.get("/orders/:id", restrict, utils.byId(Order));
-
-router.get("/orders", restrict, utils.listAll(Order, "orders"));
-
-router.get("/ping", (req, res) => {
-  res.sendStatus(200);
-});
-
-module.exports = router;
+function toImage(upload) {
+  return { url: `/media/images/${upload._id}` };
+}

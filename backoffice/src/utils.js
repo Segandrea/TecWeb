@@ -26,3 +26,7 @@ export function toUploads(files) {
 
   return Promise.all(uploads);
 }
+
+export function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString();
+}

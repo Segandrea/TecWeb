@@ -24,7 +24,7 @@ function signin() {
   postJSON("/api/backoffice/signin", employee.value)
     .then((body) => {
       const returnTo = route.params.returnTo || { name: "Home" };
-      sessionStorage.setItem("employee", JSON.stringify(body));
+      sessionStorage.setItem("user", JSON.stringify(body));
       router.push(returnTo);
     })
     .catch(

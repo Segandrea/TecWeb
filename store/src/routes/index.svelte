@@ -1,20 +1,26 @@
 <script context="module">
-  import { path, isAuth } from "$lib/utils";
+  import { getJSON } from "$lib/http";
 
-  export async function load({ fetch }) {
-    const products = await fetch("/api/store/products").then((res) =>
-      res.json()
-    );
-
-    return {
-      props: products,
-    };
+  export function load({ fetch }) {
+    return getJSON("/api/store/products", { fetch })
+      .then((products) => ({
+        props: products,
+      }))
+      .catch(([err, req]) => {
+        console.error(err);
+        return {
+          status: req ? req.status : 500,
+          error: "Unable to reach the server",
+        };
+      });
   }
 </script>
 
 <script>
   import StarRating from "svelte-star-rating";
+
   import { cart, addToCart } from "$lib/stores";
+  import { path, isAuth } from "$lib/utils";
 
   export let products;
 </script>

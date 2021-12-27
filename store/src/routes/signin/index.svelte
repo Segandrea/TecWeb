@@ -1,37 +1,44 @@
 <script>
+  import Alert from "$lib/components/Alert.svelte";
+
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
+
+  import { onMount } from "svelte";
+
+  import { postJSON, onStatus } from "$lib/http";
   import { path } from "$lib/utils";
 
-  let error;
-  let email;
-  let password;
-
+  let alert;
   let emailInput;
 
-  async function signin() {
-    const res = await fetch("/api/store/signin", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+  let customer = {};
 
-    if (res.ok) {
-      const returnTo = $page.query.get("returnTo") || path("/");
-      const user = await res.json();
-
-      sessionStorage.setItem("customer", JSON.stringify(user));
-      goto(returnTo);
-    } else {
-      error = "Sign-in required";
-      email = "";
-      password = "";
-
-      emailInput.focus();
+  onMount(() => {
+    if ($page.query.has("required")) {
+      $page.query.delete("requied");
+      alert.error("Signin required");
     }
+  });
+
+  function signin() {
+    postJSON("/api/store/signin", customer)
+      .then((body) => {
+        const returnTo = $page.query.get("returnTo") || path("/");
+        sessionStorage.setItem("user", JSON.stringify(body));
+        goto(returnTo);
+      })
+      .catch(
+        onStatus(401, () => {
+          customer = {};
+          emailInput.focus();
+          alert.error("Signin required");
+        })
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong!");
+      });
   }
 </script>
 
@@ -49,23 +56,11 @@
       <a href={path("/")}>
         <img src={path("/nolonoloplus-dark.png")} alt="Nolo Nolo Plus Logo" />
       </a>
+
       <h1 class="my-4 fw-normal">Welcome back!</h1>
 
       <form on:submit|preventDefault={signin}>
-        {#if error}
-          <div
-            class="alert alert-warning alert-dismissible fade show mb-4"
-            role="alert"
-          >
-            {error}
-            <button
-              type="button"
-              class="btn-close"
-              aria-label="Close"
-              data-bs-dismiss="alert"
-            />
-          </div>
-        {/if}
+        <Alert bind:this={alert} />
 
         <div class="form-floating">
           <input
@@ -76,7 +71,7 @@
             placeholder="email@example.com"
             class="form-control rounded-0 rounded-top"
             required
-            bind:value={email}
+            bind:value={customer.email}
             bind:this={emailInput}
           />
           <label for="email">Email</label>
@@ -91,7 +86,7 @@
             class="form-control rounded-0 rounded-bottom"
             minlength="4"
             required
-            bind:value={password}
+            bind:value={customer.password}
           />
           <label for="password">Password</label>
         </div>

@@ -1,33 +1,46 @@
 <script context="module">
+  import { getJSON, onStatus } from "$lib/http";
   import { path } from "$lib/utils";
 
-  export async function load({ page, fetch }) {
+  export function load({ page, fetch }) {
     const productId = page.params.id;
 
-    const product = await fetch(`/api/store/products/${productId}`)
-      .then((res) => res.json())
-      .then((res) => res.product); // TODO: remove me (update store API)
-
-    const reviews = await fetch(`/api/store/reviews?productId=${productId}`)
-      .then((res) => res.json())
-      .then((body) => body.reviews);
-
-    return {
-      props: {
-        returnTo: new URLSearchParams({ returnTo: path(page.path) }),
-        product,
-        reviews,
-      },
-    };
+    return getJSON(`/api/store/products/${productId}`, { fetch })
+      .then((product) =>
+        getJSON(`/api/store/reviews`, {
+          fetch,
+          query: {
+            filter: JSON.stringify({ productId }),
+          },
+        }).then(({ reviews }) => ({ props: { product, reviews } }))
+      )
+      .catch(
+        onStatus(401, () => ({
+          status: 302,
+          redirect: path("/signin", {
+            returnTo: path(page.path),
+            required: true,
+          }),
+        }))
+      )
+      .catch(([err, req]) => {
+        console.error(err);
+        return {
+          status: req ? req.status : 500,
+          error: "Unable to reach the server",
+        };
+      });
   }
 </script>
 
 <script>
   import StarRating from "svelte-star-rating";
+
   import { cart, addToCart } from "$lib/stores";
   import { isAuth } from "$lib/utils";
 
-  export let returnTo;
+  import { page } from "$app/stores";
+
   export let product;
   export let reviews;
 </script>
@@ -106,7 +119,10 @@
             >
           {:else}
             <a
-              href={path(`/signin?${returnTo}`)}
+              href={path("/signin", {
+                returnTo: path($page.path),
+                required: true,
+              })}
               class="btn btn-warning rounded-3"
               role="button">Add to cart</a
             >

@@ -1,63 +1,91 @@
 <script context="module">
-  import { path, isAuth, formatDate } from "$lib/utils";
+  import { getJSON, onStatus } from "$lib/http";
+  import { path, isAuth } from "$lib/utils";
 
   export async function load({ page, fetch }) {
     if (isAuth()) {
-      const responses = await Promise.all([
-        fetch("/api/store/profile"),
-        fetch("/api/store/orders"),
-      ]);
-
-      if (responses.every((res) => res.ok)) {
-        const [profile, orders] = await Promise.all(
-          responses.map((res) => res.json())
-        );
-
-        return {
-          props: {
-            profile,
-            ...orders,
-          },
-        };
-      }
+      return await getJSON("/api/store/profile", { fetch })
+        .then((profile) =>
+          getJSON("/api/store/orders", { fetch }).then(({ orders }) => ({
+            props: { profile, orders },
+          }))
+        )
+        .catch(
+          onStatus(401, () => ({
+            status: 302,
+            redirect: path("/signin", {
+              returnTo: path(page.path),
+              required: true,
+            }),
+          }))
+        )
+        .catch(([err, req]) => {
+          console.error(err);
+          return {
+            status: req ? req.status : 500,
+            error: "Unable to reach the server",
+          };
+        });
     }
 
-    const query = new URLSearchParams({ returnTo: path(page.path) });
     return {
       status: 302,
-      redirect: path(`/signin?${query}`),
+      redirect: path("/signin", {
+        returnTo: path(page.path),
+        required: true,
+      }),
     };
   }
 </script>
 
 <script>
+  import Alert from "$lib/components/Alert.svelte";
+
   import { goto } from "$app/navigation";
-  import { clearCart, clearDiscounts } from "$lib/stores";
+  import { page } from "$app/stores";
+
+  import { postJSON, putJSON, redirectOnStatus } from "$lib/http";
+  import { clearCart, clearCoupons } from "$lib/stores";
+  import { formatDate } from "$lib/utils";
+
+  let alert;
 
   export let profile;
   export let orders;
 
-  async function signout() {
-    const res = await fetch("/api/store/signout", {
-      method: "POST",
-    });
-
-    if (res.ok) {
-      sessionStorage.removeItem("customer");
-      clearDiscounts();
-      clearCart();
-      goto(path("/"));
-    }
+  function signout() {
+    postJSON("/api/store/signout", {}, { parse: false })
+      .catch(onStatus(401, () => {}))
+      .then(() => {
+        sessionStorage.removeItem("user");
+        clearCoupons();
+        clearCart();
+        goto(path("/"));
+      })
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
   }
 
   function updateProfile() {
-    fetch("/api/store/profile", {
-      headers: { "Content-Type": "application/json" },
-      method: "PUT",
-      body: JSON.stringify(profile),
-    })
-      .then((res) => res.json())
-      .then((body) => (profile = body));
+    putJSON("/api/store/profile", profile)
+      .then((body) => {
+        profile = body;
+        alert.info("Profile updated successfully");
+      })
+      .catch(onStatus(400, () => alert.error("Invalid profile data")))
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
   }
 </script>
 
@@ -66,6 +94,8 @@
 </svelte:head>
 
 <main class="container">
+  <Alert bind:this={alert} />
+
   <div class="row row-cols-1">
     <div class="col col-lg-3 text-center">
       <h2 class="py-4">Profile</h2>
@@ -105,7 +135,6 @@
             type="text"
             bind:value={profile.billingAddress}
             class="form-control border-top-0 rounded-0 rounded-bottom"
-            placeholder="billing address"
             required
           />
           <label for="billingAddress">Billing Address</label>
@@ -128,7 +157,7 @@
       <ul class="list-group">
         {#each orders as order}
           <div class="list-group-item">
-            <div class="row row-cols-1 row-cols-lg-4 g-3">
+            <div class="row row-cols-1 row-cols-lg-5 g-2">
               <div class="col text-truncate">
                 <h6>Order No.</h6>
                 <a href={path(`/orders/${order._id}`)}
@@ -136,14 +165,16 @@
                 >
               </div>
               <div class="col">
+                <h6>State</h6>
+                <small class="text-muted">{order.state}</small>
+              </div>
+              <div class="col">
                 <h6>Start Date</h6>
-                <small class="text-muted">{formatDate(order.issuedAt)}</small>
+                <small class="text-muted">{formatDate(order.startDate)}</small>
               </div>
               <div class="col">
                 <h6>End Date</h6>
-                <small class="text-muted"
-                  >{formatDate(order.returnalDate)}</small
-                >
+                <small class="text-muted">{formatDate(order.endDate)}</small>
               </div>
               <div class="col">
                 <h6>Total</h6>

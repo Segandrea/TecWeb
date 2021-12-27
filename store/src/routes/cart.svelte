@@ -1,76 +1,90 @@
 <script context="module">
   import { path, isAuth } from "$lib/utils";
 
-  export async function load({ page }) {
-    if (!isAuth()) {
-      const returnTo = new URLSearchParams({ returnTo: path(page.path) });
-
-      return {
-        status: 302,
-        redirect: path(`/signin?${returnTo}`),
-      };
-    }
-
-    return {};
+  export function load({ page }) {
+    return isAuth()
+      ? {}
+      : {
+          status: 302,
+          redirect: path("/signin", {
+            returnTo: path(page.path),
+            required: true,
+          }),
+        };
   }
 </script>
 
 <script>
+  import Alert from "$lib/components/Alert.svelte";
+
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+
+  import { datediff } from "$lib/utils";
+  import { getJSON, onStatus, redirectOnStatus } from "$lib/http";
+
   import {
     cart,
     cartItems,
     removeFromCart,
-    discounts,
-    discountItems,
-    addDiscount,
-    removeDiscount,
+    coupons,
+    couponItems,
+    addCoupon,
+    removeCoupon,
     rentalPeriod,
   } from "$lib/stores";
-  import { datediff } from "$lib/utils";
 
-  let discountCode;
+  let alert;
+  let couponCode;
 
   let subtotalPrice = 0;
-  let discountPrice = 0;
+  let couponPrice = 0;
   let totalPrice = 0;
   let days = 0;
 
   rentalPeriod.subscribe((range) => {
     days = range.length == 2 ? datediff(range[0], range[1]) : 0;
-    computePrices(days, $cartItems, $discountItems);
+    computePrices(days, $cartItems, $couponItems);
   });
 
   cart.subscribe((cart) => {
-    computePrices(days, Object.values(cart), $discountItems);
+    computePrices(days, Object.values(cart), $couponItems);
   });
 
-  discounts.subscribe((discounts) => {
-    computePrices(days, $cartItems, Object.values(discounts));
+  coupons.subscribe((coupons) => {
+    computePrices(days, $cartItems, Object.values(coupons));
   });
 
-  function computePrices(days, products, discounts) {
+  function computePrices(days, products, coupons) {
     subtotalPrice = products
       .map((product) => product.basePrice + product.dailyPrice * days)
       .reduce((acc, val) => acc + val, 0);
 
-    discountPrice = discounts
-      .map((discount) => discount.value)
+    couponPrice = coupons
+      .map((coupon) => coupon.value)
       .reduce((acc, val) => acc + val, 0);
 
-    totalPrice = Math.max(subtotalPrice - discountPrice, 0);
+    totalPrice = Math.max(subtotalPrice - couponPrice, 0);
   }
 
-  async function fetchDiscount() {
-    const res = await fetch(`/api/store/discounts/${discountCode}`);
-
-    if (res.ok) {
-      res
-        .json()
-        .then(addDiscount)
-        .then(() => {
-          discountCode = "";
-        });
-    }
+  function fetchCoupon() {
+    getJSON(`/api/store/coupons/${couponCode}`)
+      .then(addCoupon)
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch(
+        onStatus(404, () => alert.error(`Unknown coupon code: ${couponCode}`))
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      })
+      .finally(() => (couponCode = ""));
   }
 </script>
 
@@ -78,7 +92,9 @@
   <title>Cart</title>
 </svelte:head>
 
-<main class="container">
+<main class="container w-100 h-100">
+  <Alert bind:this={alert} />
+
   <div class="row g-4">
     <div class="col-lg-3">
       <div class="row">
@@ -90,33 +106,36 @@
 
       <div class="row" style="min-height: 28vh;">
         <div class="col">
-          <div class="input-group">
-            <span class="input-group-text btn btn-info" on:click={fetchDiscount}
-              >+</span
-            >
-            <input
-              bind:value={discountCode}
-              type="text"
-              class="form-control"
-              placeholder="Discount code"
-              aria-label="Discount code"
-            />
-          </div>
-          <h5 class="my-2">Discount codes</h5>
+          <form on:submit|preventDefault={fetchCoupon}>
+            <div class="input-group">
+              <button class="btn btn-info" type="submit" id="addCoupon"
+                >+</button
+              >
+              <input
+                bind:value={couponCode}
+                type="text"
+                class="form-control"
+                placeholder="Coupon code"
+                aria-label="Enter coupon code"
+                aria-describedby="addCoupon"
+              />
+            </div>
+          </form>
+          <h5 class="my-2">Coupon codes</h5>
           <ul class="list-group mb-2">
-            {#each $discountItems as discount}
+            {#each $couponItems as coupon}
               <li class="list-group-item fw-bold">
                 <div class="d-flex justify-content-between">
                   <div>
                     <i
                       class="bi bi-x-circle text-danger me-2"
-                      on:click={() => removeDiscount(discount)}
+                      on:click={() => removeCoupon(coupon)}
                     />
-                    <span class="text-info">{discount.code}</span>
+                    <span class="text-info">{coupon.code}</span>
                   </div>
                   <span>
                     <i class="bi bi-currency-euro black">
-                      {discount.value.toFixed(2)}
+                      {coupon.value.toFixed(2)}
                     </i>
                   </span>
                 </div>
@@ -135,9 +154,9 @@
           >
         </div>
         <div class="col d-flex justify-content-between fst-italic text-muted">
-          <span>Discount</span>
+          <span>Coupon</span>
           <span
-            ><i class="bi bi-currency-euro black">{discountPrice.toFixed(2)}</i
+            ><i class="bi bi-currency-euro black">{couponPrice.toFixed(2)}</i
             ></span
           >
         </div>

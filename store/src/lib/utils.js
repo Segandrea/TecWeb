@@ -1,11 +1,14 @@
 import { base } from "$app/paths";
 
-export function path(location) {
-  return location.startsWith("/") ? base + location : location;
+export function path(location, query = {}) {
+  const _query = new URLSearchParams(query).toString();
+  const _location = location.startsWith("/") ? base + location : location;
+  return _query ? `${_location}?${_query}` : _location;
 }
 
 export function isAuth() {
-  return !!sessionStorage.getItem("customer");
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  return user.role === "customer";
 }
 
 export function formatDate(dateString) {

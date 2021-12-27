@@ -1,7 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  import { path } from "$lib/utils";
+
   import { rentalPeriod, cartItems } from "$lib/stores";
+  import { path } from "$lib/utils";
 
   let rangeInput;
 
