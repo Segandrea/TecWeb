@@ -5,6 +5,12 @@ const ImageSchema = new Schema({
   url: { type: String, required: true },
 });
 
+const ReviewSchema = new Schema({
+  username: { type: String, required: true },
+  content: { type: String, required: true },
+  rating: { type: Number, min: 0, max: 5, required: true },
+});
+
 const ProductSchema = new Schema({
   name: { type: String, required: true },
   images: [ImageSchema],
@@ -18,9 +24,20 @@ const ProductSchema = new Schema({
   basePrice: { type: Number, min: 0, required: true },
   dailyPrice: { type: Number, min: 0, required: true },
   discountPrice: { type: Number, min: 0, default: 0, required: true },
+  reviews: [ReviewSchema],
+  rating: { type: Number, min: 0, max: 5, required: true },
 });
 
-// TODO: rating virtual getter
+ProductSchema.pre("save", function (next) {
+  if (this.isModified("reviews") || this.isNew) {
+    const reviews = this.reviews || [];
+    this.rating =
+      reviews.reduce((acc, r) => acc + r.rating, 0) /
+      Math.max(reviews.length, 1);
+  }
+
+  return next();
+});
 
 const Product = mongoose.model("Product", ProductSchema);
 

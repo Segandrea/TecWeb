@@ -4,11 +4,10 @@ const passport = require("passport");
 const handler = require("./handler");
 
 const User = require("../models/user").User;
-const Review = require("../models/review").Review;
+const Order = require("../models/order").Order;
+const Coupon = require("../models/coupon").Coupon;
 const Upload = require("../models/upload").Upload;
 const Product = require("../models/product").Product;
-const Coupon = require("../models/coupon").Coupon;
-const Order = require("../models/order").Order;
 
 const router = express.Router();
 
@@ -89,9 +88,6 @@ router.put("/coupons/:id", restrict, handler.byIdAndUpdate(Coupon));
 router.get("/coupons/:id", restrict, handler.byId(Coupon));
 router.get("/coupons", restrict, handler.listAll(Coupon, "coupons"));
 router.post("/coupons", restrict, handler.create(Coupon));
-
-router.get("/reviews/:id", restrict, handler.byId(Review));
-router.get("/reviews", restrict, handler.listAll(Review, "reviews"));
 
 router.put("/orders/:id", restrict, handler.byIdAndUpdate(Order));
 router.get("/orders/:id", restrict, handler.byId(Order));

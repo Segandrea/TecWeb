@@ -6,7 +6,6 @@ const handler = require("./handler");
 const User = require("../models/user").User;
 const Order = require("../models/order").Order;
 const Coupon = require("../models/coupon").Coupon;
-const Review = require("../models/review").Review;
 const Product = require("../models/product").Product;
 
 const router = express.Router();
@@ -136,8 +135,8 @@ router.get(
 
 router.post("/orders", restrict, handler.create(Order));
 
+router.post("/products/:id/reviews", restrict, createReview);
 router.get("/products/:id", handler.byId(Product));
-
 router.get(
   "/products",
   handler.listAll(Product, "products", {
@@ -148,9 +147,6 @@ router.get(
   })
 );
 
-router.post("/reviews", restrict, handler.create(Review));
-router.get("/reviews", handler.listAll(Review, "reviews"));
-
 router.get(
   "/coupons/:code",
   restrict,
@@ -158,3 +154,32 @@ router.get(
 );
 
 module.exports = router;
+
+/**
+ *
+ */
+function createReview(req, res) {
+  const productId = req.params.id;
+  const username = req.user.customer.username;
+  const { content, rating } = req.body;
+
+  Product.findById(productId)
+    .then((product) => {
+      if (product) {
+        product.reviews.push({ username, content, rating });
+        return product
+          .save()
+          .then((product) => res.json(product))
+          .catch((err) => {
+            console.log(err);
+            return res.sendStatus(500);
+          });
+      } else {
+        return res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+}

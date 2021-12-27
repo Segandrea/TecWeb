@@ -9,7 +9,7 @@
       .then((profile) =>
         getJSON(`/api/store/products/${productId}`, { fetch }).then(
           (product) => ({
-            props: { productId, product, username: profile.username },
+            props: { productId, product },
           })
         )
       )
@@ -43,16 +43,15 @@
 
   export let productId;
   export let product;
-  export let username;
 
   let alert;
   let submitted = false;
-  let review = { productId, username, rating: 2.5 };
+  let review = { content: "", rating: 2.5 };
 
   function createReview() {
-    postJSON("/api/store/reviews", review)
+    postJSON(`/api/store/products/${productId}/reviews`, review)
       .then((body) => {
-        review = body;
+        product = body;
         submitted = true;
         alert.info("Thanks for your feedback");
       })
