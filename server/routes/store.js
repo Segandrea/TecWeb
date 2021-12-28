@@ -120,20 +120,20 @@ router.get(
   handler.oneByFilter(Order, {
     filter: (req) => ({
       _id: req.params.id,
-      userId: req.user._id,
+      customerId: req.user._id,
     }),
+    serialize: serializeOrder,
   })
 );
-
 router.get(
   "/orders",
   restrict,
   handler.listAll(Order, "orders", {
-    filter: (req) => ({ userId: req.user._id }),
+    filter: (req) => ({ customerId: req.user._id }),
+    serialize: serializeOrder,
   })
 );
-
-router.post("/orders", restrict, handler.create(Order));
+router.post("/orders", restrict, createOrder);
 
 router.post("/products/:id/reviews", restrict, createReview);
 router.get("/products/:id", handler.byId(Product));
@@ -182,4 +182,45 @@ function createReview(req, res) {
       console.log(err);
       res.sendStatus(500);
     });
+}
+
+async function createOrder(req, res) {
+  const user = req.user;
+  let { products, coupons, startDate, endDate } = req.body;
+
+  products = await Product.find({ _id: { $in: products } });
+  console.log(products);
+  products = products.map((p) => ({
+    productId: p._id,
+    name: p.name,
+    imageUrl: p.images[0].url,
+    basePrice: p.basePrice,
+    dailyPrice: p.dailyPrice,
+    discountPrice: p.discountPrice,
+  }));
+  console.log(products);
+
+  coupons = await Coupon.find({ _id: { $in: coupons } });
+  console.log(coupons);
+  coupons = coupons.map(({ code, value }) => ({ code, value }));
+  console.log(coupons);
+
+  return Order.create({
+    customerId: user._id,
+    state: "open",
+    startDate,
+    endDate,
+    products,
+    coupons,
+  })
+    .then((order) => res.status(201).json(serializeOrder(order)))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
+    });
+}
+
+function serializeOrder(order) {
+  delete order.employeeId;
+  return order;
 }

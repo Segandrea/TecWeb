@@ -1,8 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const User = require("./user").User;
+const Product = require("./product").Product;
+
 const ProductFreezeSchema = new Schema({
-  productId: { type: mongoose.ObjectId, required: true, ref: "Product" },
+  productId: {
+    type: mongoose.ObjectId,
+    required: true,
+    ref: "Product",
+    validate: {
+      validator: (id) => Product.findById(id).then((p) => !!p),
+      message: (props) => `Invalid product: ${props.value}`,
+    },
+  },
   name: { type: String, required: true },
   imageUrl: { type: String, required: true },
   basePrice: { type: Number, min: 0, required: true },
@@ -17,8 +28,24 @@ const CouponFreezeSchema = new Schema({
 
 const OrderSchema = new Schema(
   {
-    customerId: { type: mongoose.ObjectId, required: true, ref: "User" },
-    employeeId: { type: mongoose.ObjectId, required: false, ref: "User" },
+    customerId: {
+      type: mongoose.ObjectId,
+      required: true,
+      ref: "User",
+      validate: {
+        validator: (id) => User.findById(id).then((u) => !!u),
+        message: () => "Invalid customer",
+      },
+    },
+    employeeId: {
+      type: mongoose.ObjectId,
+      required: false,
+      ref: "User",
+      validate: {
+        validator: (id) => User.findById(id).then((u) => !!u),
+        message: () => "Invalid employee",
+      },
+    },
     state: { type: String, enum: ["open", "closed"], required: true },
     endDate: { type: Date, required: true },
     startDate: { type: Date, required: true },

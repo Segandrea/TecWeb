@@ -21,7 +21,7 @@
   import { page } from "$app/stores";
 
   import { datediff } from "$lib/utils";
-  import { getJSON, onStatus, redirectOnStatus } from "$lib/http";
+  import { getJSON, postJSON, onStatus, redirectOnStatus } from "$lib/http";
 
   import {
     cart,
@@ -85,6 +85,27 @@
         alert.error("Something went wrong");
       })
       .finally(() => (couponCode = ""));
+  }
+
+  function createOrder() {
+    postJSON("/api/store/orders", {
+      products: $cartItems.map((p) => p._id),
+      coupons: $couponItems.map((c) => c._id),
+      startDate: $rentalPeriod[0],
+      endDate: $rentalPeriod[1],
+    })
+      .then(() => alert.info("Success"))
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
   }
 </script>
 
@@ -172,7 +193,11 @@
       <div class="row">
         <div class="col">
           <hr />
-          <button class="btn btn-warning btn-lg w-100">Checkout</button>
+          <form on:submit|preventDefault={createOrder}>
+            <button type="submit" class="btn btn-warning btn-lg w-100"
+              >Checkout</button
+            >
+          </form>
         </div>
       </div>
     </div>

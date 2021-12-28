@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 function defaultSerialize(entity /*, req */) {
   return entity;
 }
@@ -68,7 +70,8 @@ function byIdAndUpdate(model, { id, select, body, serialize } = {}) {
 }
 
 function oneByFilter(model, { filter, select, serialize } = {}) {
-  const _filter = filter || defaultFilter;
+  // https://mongoosejs.com/docs/api.html#mongoose_Mongoose-sanitizeFilter
+  const _filter = mongoose.sanitizeFilter(filter || defaultFilter);
   const _select = select || defaultSelect;
   const _serialize = serialize || defaultSerialize;
 
@@ -90,7 +93,8 @@ function oneByFilter(model, { filter, select, serialize } = {}) {
 }
 
 function oneByFilterAndUpdate(model, { filter, select, body, serialize } = {}) {
-  const _filter = filter || defaultFilter;
+  // https://mongoosejs.com/docs/api.html#mongoose_Mongoose-sanitizeFilter
+  const _filter = mongoose.sanitizeFilter(filter || defaultFilter);
   const _select = select || defaultSelect;
   const _body = body || defaultBody;
   const _serialize = serialize || defaultSerialize;
@@ -116,7 +120,8 @@ function oneByFilterAndUpdate(model, { filter, select, body, serialize } = {}) {
 }
 
 function listAll(model, namespace, { filter, select, serialize } = {}) {
-  const _filter = filter || defaultFilter;
+  // https://mongoosejs.com/docs/api.html#mongoose_Mongoose-sanitizeFilter
+  const _filter = mongoose.sanitizeFilter(filter || defaultFilter);
   const _select = select || defaultSelect;
   const _serialize = serialize || defaultSerialize;
 

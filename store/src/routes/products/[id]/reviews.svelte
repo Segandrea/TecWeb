@@ -158,9 +158,9 @@
     {/if}
   </form>
   {#if submitted}
-  <div class="text-center">
-    <a class="card-link" href={path("/")}>Back to shopping</a>
-  </div>
+    <div class="text-center">
+      <a class="card-link" href={path("/")}>Back to shopping</a>
+    </div>
   {/if}
 </main>
 
