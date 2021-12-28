@@ -44,35 +44,37 @@ getJSON("/api/backoffice/products")
 
     <Alert ref="alert" />
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">name</th>
-          <th scope="col">status</th>
-          <th scope="col">visible</th>
-          <th scope="col">base price</th>
-          <th scope="col">daily price</th>
-          <th scope="col">rating</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product._id">
-          <th scope="row">
-            <router-link
-              :to="{ name: 'UpdateProduct', params: { id: product._id } }"
-            >
-              {{ product._id }}
-            </router-link>
-          </th>
-          <td>{{ product.name }}</td>
-          <td>{{ product.status }}</td>
-          <td>{{ product.visible }}</td>
-          <td>€ {{ product.basePrice.toFixed(2) }}</td>
-          <td>€ {{ product.dailyPrice.toFixed(2) }}</td>
-          <td>{{ product.rating }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">name</th>
+            <th scope="col">status</th>
+            <th scope="col">visible</th>
+            <th scope="col">base price</th>
+            <th scope="col">daily price</th>
+            <th scope="col">rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in products" :key="product._id">
+            <th scope="row">
+              <router-link
+                :to="{ name: 'UpdateProduct', params: { id: product._id } }"
+              >
+                {{ product._id }}
+              </router-link>
+            </th>
+            <td>{{ product.name }}</td>
+            <td>{{ product.status }}</td>
+            <td>{{ product.visible }}</td>
+            <td>€ {{ product.basePrice.toFixed(2) }}</td>
+            <td>€ {{ product.dailyPrice.toFixed(2) }}</td>
+            <td>{{ product.rating }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </template>

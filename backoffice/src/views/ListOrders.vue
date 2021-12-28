@@ -35,41 +35,46 @@ getJSON("/api/backoffice/orders")
 
     <Alert ref="alert" />
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">customer</th>
-          <th scope="col">state</th>
-          <th scope="col">start date</th>
-          <th scope="col">end date</th>
-          <th scope="col">days</th>
-          <th scope="col">total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="order in orders" :key="order._id">
-          <th scope="row">
-            <router-link
-              :to="{ name: 'UpdateOrder', params: { id: order._id } }"
-            >
-              {{ order._id }}
-            </router-link>
-          </th>
-          <td>
-            <router-link
-              :to="{ name: 'UpdateCustomer', params: { id: order.customerId } }"
-            >
-              {{ order.customerId }}
-            </router-link>
-          </td>
-          <td>{{ order.state }}</td>
-          <td>{{ formatDate(order.startDate) }}</td>
-          <td>{{ formatDate(order.endDate) }}</td>
-          <td>{{ order.days }}</td>
-          <td>€ {{ order.totalPrice.toFixed(2) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">customer</th>
+            <th scope="col">state</th>
+            <th scope="col">start date</th>
+            <th scope="col">end date</th>
+            <th scope="col">days</th>
+            <th scope="col">total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="order in orders" :key="order._id">
+            <th scope="row">
+              <router-link
+                :to="{ name: 'UpdateOrder', params: { id: order._id } }"
+              >
+                {{ order._id }}
+              </router-link>
+            </th>
+            <td>
+              <router-link
+                :to="{
+                  name: 'UpdateCustomer',
+                  params: { id: order.customerId },
+                }"
+              >
+                {{ order.customerId }}
+              </router-link>
+            </td>
+            <td>{{ order.state }}</td>
+            <td>{{ formatDate(order.startDate) }}</td>
+            <td>{{ formatDate(order.endDate) }}</td>
+            <td>{{ order.days }}</td>
+            <td>€ {{ order.totalPrice.toFixed(2) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </template>

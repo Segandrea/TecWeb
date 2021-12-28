@@ -39,29 +39,31 @@ getJSON("/api/backoffice/customers")
 
     <Alert ref="alert" />
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">username</th>
-          <th scope="col">email</th>
-          <th scope="col">blocked</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="customer in customers" :key="customer._id">
-          <th scope="row">
-            <router-link
-              :to="{ name: 'UpdateCustomer', params: { id: customer._id } }"
-            >
-              {{ customer._id }}
-            </router-link>
-          </th>
-          <td>{{ customer.username }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.blocked }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">username</th>
+            <th scope="col">email</th>
+            <th scope="col">blocked</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="customer in customers" :key="customer._id">
+            <th scope="row">
+              <router-link
+                :to="{ name: 'UpdateCustomer', params: { id: customer._id } }"
+              >
+                {{ customer._id }}
+              </router-link>
+            </th>
+            <td>{{ customer.username }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.blocked }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </template>
