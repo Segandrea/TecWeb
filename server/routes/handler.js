@@ -119,7 +119,7 @@ function oneByFilterAndUpdate(model, { filter, select, body, serialize } = {}) {
   };
 }
 
-function listAll(model, namespace, { filter, select, serialize } = {}) {
+function listAll(model, namespace, { filter, select, sort, serialize } = {}) {
   // https://mongoosejs.com/docs/api.html#mongoose_Mongoose-sanitizeFilter
   const _filter = mongoose.sanitizeFilter(filter || defaultFilter);
   const _select = select || defaultSelect;
@@ -127,7 +127,7 @@ function listAll(model, namespace, { filter, select, serialize } = {}) {
 
   return (req, res) => {
     return model
-      .find(_filter(req), _select(req))
+      .find(_filter(req), _select(req), { sort })
       .then((entities) =>
         res.json({ [namespace]: entities.map((e) => _serialize(e, req)) })
       )

@@ -89,9 +89,13 @@ router.get("/coupons/:id", restrict, handler.byId(Coupon));
 router.get("/coupons", restrict, handler.listAll(Coupon, "coupons"));
 router.post("/coupons", restrict, handler.create(Coupon));
 
-router.put("/orders/:id", restrict, handler.byIdAndUpdate(Order));
+router.put("/orders/:id", restrict, updateOrder);
 router.get("/orders/:id", restrict, handler.byId(Order));
-router.get("/orders", restrict, handler.listAll(Order, "orders"));
+router.get(
+  "/orders",
+  restrict,
+  handler.listAll(Order, "orders", { sort: { startDate: -1, state: -1 } })
+);
 
 module.exports = router;
 
@@ -173,4 +177,36 @@ function upload(uploads) {
 
 function toImage(upload) {
   return { url: `/media/images/${upload._id}` };
+}
+
+function updateOrder(req, res) {
+  const id = req.params.id;
+  const user = req.user;
+  const body = req.body;
+
+  Order.findById(id)
+    .then((order) => {
+      if (!order) {
+        return res.sendStatus(404);
+      }
+
+      if (order.state !== "open") {
+        return res.sendStatus(409);
+      }
+
+      order.startDate = body.startDate || order.startDate;
+      order.endDate = body.endDate || order.endDate;
+
+      if (body.state === "closed") {
+        order.penaltyPrice = body.penaltyPrice || 0;
+        order.employeeId = user._id;
+        order.state = "closed";
+      }
+
+      return order.save().then((order) => res.json(order));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
 }

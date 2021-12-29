@@ -131,6 +131,7 @@ router.get(
   handler.listAll(Order, "orders", {
     filter: (req) => ({ customerId: req.user._id }),
     serialize: serializeOrder,
+    sort: { startDate: -1, state: -1 },
   })
 );
 router.post("/orders", restrict, createOrder);
