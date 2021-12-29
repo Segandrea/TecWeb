@@ -31,38 +31,45 @@ getJSON(`/api/backoffice/products/${productId}`)
   });
 
 function updateProduct() {
-  toUploads(imageInput.value.files)
-    .catch((err) => {
-      // eslint-disable-next-line
-      console.error(err);
-      alert.value.error("Something wrong with image files!");
-    })
-    .then((uploads) =>
-      putJSON(`/api/backoffice/products/${productId}`, {
-        ...product.value,
-        uploads,
+  if (
+    !product.value.visible ||
+    (product.value.images || []).length + imageInput.value.files.length > 0
+  ) {
+    toUploads(imageInput.value.files)
+      .catch((err) => {
+        // eslint-disable-next-line
+        console.error(err);
+        alert.value.error("Something wrong with image files!");
       })
-    )
-    .then((body) => {
-      product.value = body;
+      .then((uploads) =>
+        putJSON(`/api/backoffice/products/${productId}`, {
+          ...product.value,
+          uploads,
+        })
+      )
+      .then((body) => {
+        product.value = body;
 
-      // clear the HTML input element
-      imageInput.value.value = null;
+        // clear the HTML input element
+        imageInput.value.value = null;
 
-      // set the focus on last item of the carousel
-      if (carouselItems.length > 0) {
-        carouselItems.forEach((item) => item.classList.remove("active"));
-        carouselItems.at(-1).classList.add("active");
-      }
+        // set the focus on last item of the carousel
+        if (carouselItems.length > 0) {
+          carouselItems.forEach((item) => item.classList.remove("active"));
+          carouselItems.at(-1).classList.add("active");
+        }
 
-      alert.value.info("Success");
-    })
-    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
-    .catch((err) => {
-      // eslint-disable-next-line
-      console.error(err);
-      alert.value.error("Something went wrong!");
-    });
+        alert.value.info("Success");
+      })
+      .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+      .catch((err) => {
+        // eslint-disable-next-line
+        console.error(err);
+        alert.value.error("Something went wrong!");
+      });
+  } else {
+    alert.value.error("Visible products must have at least an image");
+  }
 }
 
 const carouselItems = [];
@@ -249,6 +256,26 @@ function removeImage(index) {
         </div>
       </div>
     </form>
+
+    <h3 class="mt-4 text-center">Review list</h3>
+    <div class="table-responsive">
+      <table class="table table-hover mb-4">
+        <thead>
+          <tr>
+            <th scope="col">username</th>
+            <th scope="col">content</th>
+            <th scope="col">rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="review in product.reviews" :key="review._id">
+            <td>{{ review.username }}</td>
+            <td>{{ review.content }}</td>
+            <td>{{ review.rating }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </template>
 

@@ -21,7 +21,7 @@
   import { page } from "$app/stores";
 
   import { datediff } from "$lib/utils";
-  import { getJSON, onStatus, redirectOnStatus } from "$lib/http";
+  import { getJSON, postJSON, onStatus, redirectOnStatus } from "$lib/http";
 
   import {
     cart,
@@ -85,6 +85,27 @@
         alert.error("Something went wrong");
       })
       .finally(() => (couponCode = ""));
+  }
+
+  function createOrder() {
+    postJSON("/api/store/orders", {
+      products: $cartItems.map((p) => p._id),
+      coupons: $couponItems.map((c) => c._id),
+      startDate: $rentalPeriod[0],
+      endDate: $rentalPeriod[1],
+    })
+      .then(() => alert.info("Success"))
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
   }
 </script>
 
@@ -172,91 +193,105 @@
       <div class="row">
         <div class="col">
           <hr />
-          <button class="btn btn-warning btn-lg w-100">Checkout</button>
+          <form on:submit|preventDefault={createOrder}>
+            <button type="submit" class="btn btn-warning btn-lg w-100"
+              >Checkout</button
+            >
+          </form>
         </div>
       </div>
     </div>
 
     <div class="col-lg-9">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-        {#each $cartItems as product}
-          <div class="col">
-            <div class="card h-100">
-              <a href={path(`/products/${product._id}`)}
-                ><img
-                  src={product.images[0].url}
-                  class="card-img-top"
-                  height="200"
-                  alt={product.name + " image"}
-                /></a
-              >
-              <div class="card-body">
-                <h5 class="card-title text-truncate">
-                  <a href={path(`/products/${product._id}`)} class="link-dark"
-                    >{product.name}</a
-                  >
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted text-truncate">
-                  {product.status}
-                </h6>
-                <div
-                  class="d-flex justify-content-between orange fw-bolder fst-italic"
+      {#if $cartItems.length > 0}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+          {#each $cartItems as product}
+            <div class="col">
+              <div class="card h-100">
+                <a href={path(`/products/${product._id}`)}
+                  ><img
+                    src={product.images[0].url}
+                    class="card-img-top"
+                    height="200"
+                    alt={product.name + " image"}
+                  /></a
                 >
-                  <div>Daily</div>
-                  <div>
-                    <i class="bi bi-currency-euro"
-                      >{product.dailyPrice.toFixed(2)}</i
+                <div class="card-body">
+                  <h5 class="card-title text-truncate">
+                    <a href={path(`/products/${product._id}`)} class="link-dark"
+                      >{product.name}</a
+                    >
+                  </h5>
+                  <h6 class="card-subtitle mb-2 text-muted text-truncate">
+                    {product.status}
+                  </h6>
+                  <div
+                    class="d-flex justify-content-between orange fw-bolder fst-italic"
+                  >
+                    <div>Daily</div>
+                    <div>
+                      <i class="bi bi-currency-euro"
+                        >{product.dailyPrice.toFixed(2)}</i
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between text-muted fs-6 fst-italic"
+                  >
+                    <div><small>Base</small></div>
+                    <div>
+                      <small
+                        ><i class="bi bi-currency-euro"
+                          >{product.basePrice.toFixed(2)}</i
+                        ></small
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between text-muted fs-6 fst-italic"
+                  >
+                    <div><small>Days</small></div>
+                    <div>
+                      <small>{days}</small>
+                    </div>
+                  </div>
+                  <div class="text-end mt-4 mb-2">
+                    <button
+                      type="button"
+                      class="btn btn-warning rounded-3"
+                      on:click={() => removeFromCart(product)}
+                    >
+                      Remove</button
                     >
                   </div>
                 </div>
-                <div
-                  class="d-flex justify-content-between text-muted fs-6 fst-italic"
-                >
-                  <div><small>Base</small></div>
-                  <div>
-                    <small
-                      ><i class="bi bi-currency-euro"
-                        >{product.basePrice.toFixed(2)}</i
-                      ></small
-                    >
-                  </div>
-                </div>
-                <div
-                  class="d-flex justify-content-between text-muted fs-6 fst-italic"
-                >
-                  <div><small>Days</small></div>
-                  <div>
-                    <small>{days}</small>
-                  </div>
-                </div>
-                <div class="text-end mt-4 mb-2">
-                  <button
-                    type="button"
-                    class="btn btn-warning rounded-3"
-                    on:click={() => removeFromCart(product)}
+                <div class="card-footer">
+                  <div
+                    class="d-flex justify-content-between fw-bolder fst-italic"
                   >
-                    Remove</button
-                  >
-                </div>
-              </div>
-              <div class="card-footer">
-                <div
-                  class="d-flex justify-content-between fw-bolder fst-italic"
-                >
-                  <div>Total</div>
-                  <div>
-                    <i class="bi bi-currency-euro"
-                      >{(product.basePrice + days * product.dailyPrice).toFixed(
-                        2
-                      )}</i
-                    >
+                    <div>Total</div>
+                    <div>
+                      <i class="bi bi-currency-euro"
+                        >{(
+                          product.basePrice +
+                          days * product.dailyPrice
+                        ).toFixed(2)}</i
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          {/each}
+        </div>
+      {:else}
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <h5 class="card-title">There are no games in your cart yet 😅</h5>
+            <a class="card-link" href={path("/")}>Back to shopping</a>
           </div>
-        {/each}
-      </div>
+        </div>
+      {/if}
     </div>
   </div>
 </main>

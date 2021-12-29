@@ -40,27 +40,29 @@ getJSON("/api/backoffice/coupons")
 
     <Alert ref="alert" />
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">code</th>
-          <th scope="col">value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="coupon in coupons" :key="coupon._id">
-          <th scope="row">
-            <router-link
-              :to="{ name: 'UpdateCoupon', params: { id: coupon._id } }"
-            >
-              {{ coupon._id }}
-            </router-link>
-          </th>
-          <td>{{ coupon.code }}</td>
-          <td>€ {{ coupon.value.toFixed(2) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">code</th>
+            <th scope="col">value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="coupon in coupons" :key="coupon._id">
+            <th scope="row">
+              <router-link
+                :to="{ name: 'UpdateCoupon', params: { id: coupon._id } }"
+              >
+                {{ coupon._id }}
+              </router-link>
+            </th>
+            <td>{{ coupon.code }}</td>
+            <td>€ {{ coupon.value.toFixed(2) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </template>

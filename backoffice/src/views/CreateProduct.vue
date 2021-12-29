@@ -27,28 +27,32 @@ const product = ref({
 });
 
 function createProduct() {
-  toUploads(imageInput.value.files)
-    .catch((err) => {
-      // eslint-disable-next-line
-      console.error(err);
-      alert.value.error("Something wrong with image files!");
-    })
-    .then((uploads) =>
-      postJSON("/api/backoffice/products", {
-        ...product.value,
-        uploads,
+  if (!product.value.visible || imageInput.value.files.length > 0) {
+    toUploads(imageInput.value.files)
+      .catch((err) => {
+        // eslint-disable-next-line
+        console.error(err);
+        alert.value.error("Something wrong with image files!");
       })
-    )
-    .then((body) =>
-      router.replace({ name: "UpdateProduct", params: { id: body._id } })
-    )
-    .catch(onStatus(400, () => alert.value.error("Invalid data supplied")))
-    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
-    .catch((err) => {
-      // eslint-disable-next-line
-      console.error(err);
-      alert.value.error("Something went wrong!");
-    });
+      .then((uploads) =>
+        postJSON("/api/backoffice/products", {
+          ...product.value,
+          uploads,
+        })
+      )
+      .then((body) =>
+        router.replace({ name: "UpdateProduct", params: { id: body._id } })
+      )
+      .catch(onStatus(400, () => alert.value.error("Invalid data supplied")))
+      .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+      .catch((err) => {
+        // eslint-disable-next-line
+        console.error(err);
+        alert.value.error("Something went wrong!");
+      });
+  } else {
+    alert.value.error("Visible products must have at least an image");
+  }
 }
 </script>
 

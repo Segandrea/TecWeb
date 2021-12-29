@@ -6,14 +6,7 @@
     const productId = page.params.id;
 
     return getJSON(`/api/store/products/${productId}`, { fetch })
-      .then((product) =>
-        getJSON(`/api/store/reviews`, {
-          fetch,
-          query: {
-            filter: JSON.stringify({ productId }),
-          },
-        }).then(({ reviews }) => ({ props: { product, reviews } }))
-      )
+      .then((product) => ({ props: { product } }))
       .catch(
         onStatus(401, () => ({
           status: 302,
@@ -42,7 +35,6 @@
   import { page } from "$app/stores";
 
   export let product;
-  export let reviews;
 </script>
 
 <main class="container">
@@ -160,14 +152,14 @@
     </p>
   </div>
 
-  {#if reviews && reviews.length > 0}
+  {#if product.reviews && product.reviews.length > 0}
     <div class="row g-4 text-center">
       <h2>Reviews</h2>
       <div class="row row-cols-1 row-cols-md-3">
-        {#each reviews as review}
-          <div class="col">
+        {#each product.reviews as review}
+          <div class="col text-truncate">
             <div class="card-body">
-              <h3 class="card-title text-truncate">{review.username}</h3>
+              <h3 class="card-title">{review.username}</h3>
               <p class="card-text">
                 {review.content}
               </p>

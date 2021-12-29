@@ -5,14 +5,10 @@
   export function load({ page, fetch }) {
     const productId = page.params.id;
 
-    return getJSON("/api/store/profile", { fetch })
-      .then((profile) =>
-        getJSON(`/api/store/products/${productId}`, { fetch }).then(
-          (product) => ({
-            props: { productId, product, username: profile.username },
-          })
-        )
-      )
+    return getJSON(`/api/store/products/${productId}`, { fetch })
+      .then((product) => ({
+        props: { product },
+      }))
       .catch(
         onStatus(401, () => ({
           status: 302,
@@ -41,18 +37,16 @@
 
   import { postJSON, redirectOnStatus } from "$lib/http";
 
-  export let productId;
   export let product;
-  export let username;
 
   let alert;
+  let review = { content: "", rating: 2.5 };
   let submitted = false;
-  let review = { productId, username, rating: 2.5 };
 
   function createReview() {
-    postJSON("/api/store/reviews", review)
+    postJSON(`/api/store/products/${product._id}/reviews`, review)
       .then((body) => {
-        review = body;
+        product = body;
         submitted = true;
         alert.info("Thanks for your feedback");
       })
@@ -151,16 +145,23 @@
         />
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-auto">
-        <button
-          class="btn btn-lg btn-warning my-2 w-100"
-          type="submit"
-          class:disabled={submitted}>Submit</button
-        >
+    {#if !submitted}
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <button
+            class="btn btn-lg btn-warning my-2 w-100"
+            type="submit"
+            class:disabled={submitted}>Submit</button
+          >
+        </div>
       </div>
-    </div>
+    {/if}
   </form>
+  {#if submitted}
+    <div class="text-center">
+      <a class="card-link" href={path("/")}>Back to shopping</a>
+    </div>
+  {/if}
 </main>
 
 <slot />

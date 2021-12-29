@@ -70,11 +70,13 @@ function updateOrder() {
         },
         penaltyPrice: body.penaltyPrice,
       };
+
+      alert.value.info("Success");
     })
     .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
     .catch((err) => {
       // eslint-disable-next-line
-    console.error(err);
+      console.error(err);
       alert.value.error("Something went wrong!");
     });
 }
@@ -164,100 +166,114 @@ function updateOrder() {
       </div>
     </form>
 
-    <table class="table table-hover mb-5">
-      <thead>
-        <tr>
-          <th scope="col">customer</th>
-          <th scope="col">state</th>
-          <th scope="col">start date</th>
-          <th scope="col">end date</th>
-          <th scope="col">days</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">
-            <router-link
-              v-if="order.customerId"
-              :to="{ name: 'UpdateCustomer', params: { id: order.customerId } }"
-            >
-              {{ order.customerId }}
-            </router-link>
-          </th>
-          <td>{{ order.state }}</td>
-          <td>{{ formatDate(order.startDate) }}</td>
-          <td>{{ formatDate(order.endDate) }}</td>
-          <td>{{ order.days }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover mb-5">
+        <thead>
+          <tr>
+            <th scope="col">customer</th>
+            <th scope="col">state</th>
+            <th scope="col">start date</th>
+            <th scope="col">end date</th>
+            <th scope="col">days</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <router-link
+                v-if="order.customerId"
+                :to="{
+                  name: 'UpdateCustomer',
+                  params: { id: order.customerId },
+                }"
+              >
+                {{ order.customerId }}
+              </router-link>
+            </th>
+            <td>{{ order.state }}</td>
+            <td>{{ formatDate(order.startDate) }}</td>
+            <td>{{ formatDate(order.endDate) }}</td>
+            <td>{{ order.days }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3 class="w-100 text-center">Pricing</h3>
-    <table class="table table-hover mb-5">
-      <thead>
-        <tr>
-          <th scope="col">subtotal</th>
-          <th scope="col">discounts</th>
-          <th scope="col">coupons</th>
-          <th scope="col" v-if="order.state === 'closed'">penalty</th>
-          <th scope="col">total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>€ {{ order.subtotalPrice.toFixed(2) }}</td>
-          <td>€ {{ order.discountsPrice.toFixed(2) }}</td>
-          <td>€ {{ order.couponsPrice.toFixed(2) }}</td>
-          <td v-if="order.state === 'closed'">
-            € {{ order.penaltyPrice.toFixed(2) }}
-          </td>
-          <td>€ {{ order.totalPrice.toFixed(2) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover mb-5">
+        <thead>
+          <tr>
+            <th scope="col">subtotal</th>
+            <th scope="col">discounts</th>
+            <th scope="col">coupons</th>
+            <th scope="col" v-if="order.state === 'closed'">penalty</th>
+            <th scope="col">total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>€ {{ order.subtotalPrice.toFixed(2) }}</td>
+            <td>€ {{ order.discountsPrice.toFixed(2) }}</td>
+            <td>€ {{ order.couponsPrice.toFixed(2) }}</td>
+            <td v-if="order.state === 'closed'">
+              € {{ order.penaltyPrice.toFixed(2) }}
+            </td>
+            <td>€ {{ order.totalPrice.toFixed(2) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3 class="w-100 text-center">Products</h3>
-    <table class="table table-hover mb-5">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">name</th>
-          <th scope="col">base price</th>
-          <th scope="col">daily price</th>
-          <th scope="col">discount price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in order.products" :key="product.productId">
-          <th scope="row">
-            <router-link
-              :to="{ name: 'UpdateProduct', params: { id: product.productId } }"
-            >
-              {{ product.productId }}
-            </router-link>
-          </th>
-          <td>{{ product.name }}</td>
-          <td>€ {{ product.basePrice.toFixed(2) }}</td>
-          <td>€ {{ product.dailyPrice.toFixed(2) }}</td>
-          <td>€ {{ product.discountPrice.toFixed(2) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover mb-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">name</th>
+            <th scope="col">base price</th>
+            <th scope="col">daily price</th>
+            <th scope="col">discount price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in order.products" :key="product.productId">
+            <th scope="row">
+              <router-link
+                :to="{
+                  name: 'UpdateProduct',
+                  params: { id: product.productId },
+                }"
+              >
+                {{ product.productId }}
+              </router-link>
+            </th>
+            <td>{{ product.name }}</td>
+            <td>€ {{ product.basePrice.toFixed(2) }}</td>
+            <td>€ {{ product.dailyPrice.toFixed(2) }}</td>
+            <td>€ {{ product.discountPrice.toFixed(2) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3 class="w-100 text-center">Coupons</h3>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">code</th>
-          <th scope="col">value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="coupon in order.coupons" :key="coupon.code">
-          <th scope="row">{{ coupon.code }}</th>
-          <td>€ {{ coupon.value.toFixed(2) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">code</th>
+            <th scope="col">value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="coupon in order.coupons" :key="coupon.code">
+            <th scope="row">{{ coupon.code }}</th>
+            <td>€ {{ coupon.value.toFixed(2) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </template>
