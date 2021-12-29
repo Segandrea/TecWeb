@@ -257,25 +257,27 @@ function removeImage(index) {
       </div>
     </form>
 
-    <h3 class="mt-4 text-center">Review list</h3>
-    <div class="table-responsive">
-      <table class="table table-hover mb-4">
-        <thead>
-          <tr>
-            <th scope="col">username</th>
-            <th scope="col">content</th>
-            <th scope="col">rating</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="review in product.reviews" :key="review._id">
-            <td>{{ review.username }}</td>
-            <td>{{ review.content }}</td>
-            <td>{{ review.rating }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <template v-if="product.reviews && product.reviews.length > 0">
+      <h3 class="mt-4 text-center">Review list</h3>
+      <div class="table-responsive">
+        <table class="table table-hover mb-4">
+          <thead>
+            <tr>
+              <th scope="col">username</th>
+              <th scope="col">content</th>
+              <th scope="col">rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="review in product.reviews" :key="review._id">
+              <td>{{ review.username }}</td>
+              <td>{{ review.content }}</td>
+              <td>{{ review.rating }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </template>
   </main>
 </template>
 
