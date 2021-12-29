@@ -70,11 +70,13 @@ function updateOrder() {
         },
         penaltyPrice: body.penaltyPrice,
       };
+
+      alert.value.info("Success");
     })
     .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
     .catch((err) => {
       // eslint-disable-next-line
-    console.error(err);
+      console.error(err);
       alert.value.error("Something went wrong!");
     });
 }
