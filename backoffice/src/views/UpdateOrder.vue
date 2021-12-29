@@ -258,22 +258,24 @@ function updateOrder() {
       </table>
     </div>
 
-    <h3 class="w-100 text-center">Coupons</h3>
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">code</th>
-            <th scope="col">value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="coupon in order.coupons" :key="coupon.code">
-            <th scope="row">{{ coupon.code }}</th>
-            <td>€ {{ coupon.value.toFixed(2) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <template v-if="order.coupons && order.coupons.length > 0">
+      <h3 class="w-100 text-center">Coupons</h3>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">code</th>
+              <th scope="col">value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="coupon in order.coupons" :key="coupon.code">
+              <th scope="row">{{ coupon.code }}</th>
+              <td>€ {{ coupon.value.toFixed(2) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </template>
   </main>
 </template>
