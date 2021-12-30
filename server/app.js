@@ -71,7 +71,8 @@ passport.deserializeUser(deserializeUser);
 // session user serializer
 passport.serializeUser(serializeUser);
 
-// register store routes
+// register routes
+app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/backoffice", require("./routes/backoffice"));
 app.use("/api/store", require("./routes/store"));
 app.use("/media", require("./routes/media"));
