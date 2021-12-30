@@ -24,6 +24,11 @@ const port = 8000;
 app.use(logger("dev"));
 
 // setup static folders
+app.use("/dashboard", express.static(config.dashboard.staticPath));
+app.use("/dashboard/*", (req, res) =>
+  res.sendFile(config.dashboard.fallbackPage)
+);
+
 app.use("/backoffice", express.static(config.backoffice.staticPath));
 app.use("/backoffice/*", (req, res) =>
   res.sendFile(config.backoffice.fallbackPage)
