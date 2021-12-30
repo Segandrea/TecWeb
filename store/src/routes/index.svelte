@@ -19,10 +19,28 @@
 <script>
   import StarRating from "svelte-star-rating";
 
-  import { cart, addToCart } from "$lib/stores";
+  import { rentalPeriod, cart, addToCart } from "$lib/stores";
   import { path, isAuth } from "$lib/utils";
+  import { onDestroy } from "svelte";
 
   export let products;
+
+  const unsubscribe = rentalPeriod.subscribe((range) => {
+    if (range && range.length === 2) {
+      const query = new URLSearchParams({
+        params: JSON.stringify({ rentalPeriod: range }),
+      });
+
+      getJSON(`/api/store/products?${query}`)
+        .then((body) => (products = body.products))
+        .catch((err) => {
+          console.error(err);
+          alert.error("Something went wrong");
+        });
+    }
+  });
+
+  onDestroy(unsubscribe);
 </script>
 
 <svelte:head>
@@ -98,20 +116,29 @@
             >
               <div><small>Base</small></div>
               <div>
-                <small
-                  >{#if product.discountPrice && product.discountPrice > 0}<i
-                      class="bi bi-currency-euro text-success"
-                      >{product.basePrice > product.discountPrice
-                        ? (product.basePrice - product.discountPrice).toFixed(2)
-                        : 0}</i
+                {#if product.discountPrice && product.discountPrice > 0}
+                  <span
+                    class="badge rounded-pill bg-danger text-decoration-line-through"
+                  >
+                    <i class="bi bi-currency-euro"
+                      >{product.basePrice.toFixed(2)}</i
                     >
-                    <i
-                      class="bi bi-currency-euro text-decoration-line-through text-danger"
+                  </span>
+
+                  <small>
+                    <i class="bi bi-currency-euro"
+                      >{Math.max(
+                        product.basePrice - product.discountPrice,
+                        0
+                      ).toFixed(2)}</i
+                    >
+                  </small>
+                {:else}<small
+                    ><i class="bi bi-currency-euro"
                       >{product.basePrice.toFixed(2)}</i
-                    >{:else}<i class="bi bi-currency-euro"
-                      >{product.basePrice.toFixed(2)}</i
-                    >{/if}</small
-                >
+                    ></small
+                  >
+                {/if}
               </div>
             </div>
           </div>

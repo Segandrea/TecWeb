@@ -1,5 +1,5 @@
-const db = require("../db.js");
-const User = require("../models/user.js").User;
+const db = require("../db");
+const User = require("../models/user").User;
 
 async function main() {
   db.connect();

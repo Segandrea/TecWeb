@@ -138,15 +138,7 @@ router.post("/orders", restrict, createOrder);
 
 router.post("/products/:id/reviews", restrict, createReview);
 router.get("/products/:id", handler.byId(Product));
-router.get(
-  "/products",
-  handler.listAll(Product, "products", {
-    filter: (req) => ({
-      ...JSON.parse(req.query.filter || "{}"),
-      visible: true,
-    }),
-  })
-);
+router.get("/products", listProducts);
 
 router.get(
   "/coupons/:code",
@@ -189,22 +181,21 @@ async function createOrder(req, res) {
   const user = req.user;
   let { products, coupons, startDate, endDate } = req.body;
 
-  products = await Product.find({ _id: { $in: products } });
-  console.log(products);
-  products = products.map((p) => ({
-    productId: p._id,
-    name: p.name,
-    imageUrl: p.images[0].url,
-    basePrice: p.basePrice,
-    dailyPrice: p.dailyPrice,
-    discountPrice: p.discountPrice,
-  }));
-  console.log(products);
+  products = await Product.find({ _id: { $in: products } }).then((products) =>
+    products.map((product) => ({
+      productId: product._id,
+      name: product.name,
+      imageUrl: product.images[0].url,
+      basePrice: product.basePrice,
+      dailyPrice: product.dailyPrice,
+      discountPrice: product.discountPrice,
+    }))
+  );
 
-  coupons = await Coupon.find({ _id: { $in: coupons } });
-  console.log(coupons);
-  coupons = coupons.map(({ code, value }) => ({ code, value }));
-  console.log(coupons);
+  // FIXME: delete used coupons
+  coupons = await Coupon.find({ _id: { $in: coupons } }, "-_id").then(
+    (coupons) => coupons
+  );
 
   return Order.create({
     customerId: user._id,
@@ -224,4 +215,50 @@ async function createOrder(req, res) {
 function serializeOrder(order) {
   delete order.employeeId;
   return order;
+}
+
+function listProducts(req, res) {
+  const params = JSON.parse(req.query.params || "{}");
+
+  if (req.user && params.rentalPeriod && params.rentalPeriod.length === 2) {
+    const [start, end] = params.rentalPeriod.map((s) => new Date(s));
+
+    return rentedProducts(start, end)
+      .then((products) =>
+        Product.find({
+          visible: true,
+          _id: { $nin: products },
+        }).then((products) => res.json({ products }))
+      )
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(500);
+      });
+  }
+
+  return handler.listAll(Product, "products", {
+    filter: (req) => ({
+      ...JSON.parse(req.query.filter || "{}"),
+      visible: true,
+    }),
+  })(req, res);
+}
+
+function rentedProducts(start, end) {
+  return Order.find(
+    {
+      state: "open",
+      startDate: { $lte: end },
+      endDate: { $gte: start },
+    },
+    "-_id products.productId"
+  )
+    .lean()
+    .then(
+      (orders) =>
+        orders //                                 [{ "products": [{ "productId": "..." }] }, ]
+          .map((order) => order.products) //      [[{ "productId": "..." }], ]
+          .flat() //                              [{ "productId": "..." }, ]
+          .map((product) => product.productId) // ["...", ]
+    );
 }

@@ -56,3 +56,8 @@ export function clearCoupons() {
 export const couponItems = derived(coupons, ($coupons) =>
   Object.values($coupons)
 );
+
+/**
+ * Subscriptions
+ */
+rentalPeriod.subscribe(() => clearCart());

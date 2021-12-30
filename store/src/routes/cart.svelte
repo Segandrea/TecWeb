@@ -43,7 +43,7 @@
   let days = 0;
 
   rentalPeriod.subscribe((range) => {
-    days = range.length == 2 ? datediff(range[0], range[1]) : 0;
+    days = range.length === 2 ? datediff(range[0], range[1]) : 0;
     computePrices(days, $cartItems, $couponItems);
   });
 
@@ -57,7 +57,11 @@
 
   function computePrices(days, products, coupons) {
     subtotalPrice = products
-      .map((product) => product.basePrice + product.dailyPrice * days)
+      .map(
+        (product) =>
+          Math.max(product.basePrice - product.discountPrice, 0) +
+          product.dailyPrice * days
+      )
       .reduce((acc, val) => acc + val, 0);
 
     couponPrice = coupons
@@ -230,32 +234,43 @@
                   >
                     <div>Daily</div>
                     <div>
+                      <span>{days} x </span>
                       <i class="bi bi-currency-euro"
                         >{product.dailyPrice.toFixed(2)}</i
                       >
                     </div>
                   </div>
                   <div
-                    class="d-flex justify-content-between text-muted fs-6 fst-italic"
+                    class="d-flex justify-content-between text-muted fs-6 fst-italic py-1"
                   >
                     <div><small>Base</small></div>
                     <div>
-                      <small
-                        ><i class="bi bi-currency-euro"
-                          >{product.basePrice.toFixed(2)}</i
-                        ></small
-                      >
+                      {#if product.discountPrice && product.discountPrice > 0}
+                        <span
+                          class="badge rounded-pill bg-danger text-decoration-line-through"
+                        >
+                          <i class="bi bi-currency-euro"
+                            >{product.basePrice.toFixed(2)}</i
+                          >
+                        </span>
+
+                        <small>
+                          <i class="bi bi-currency-euro"
+                            >{Math.max(
+                              product.basePrice - product.discountPrice,
+                              0
+                            ).toFixed(2)}</i
+                          >
+                        </small>
+                      {:else}<small
+                          ><i class="bi bi-currency-euro"
+                            >{product.basePrice.toFixed(2)}</i
+                          ></small
+                        >
+                      {/if}
                     </div>
                   </div>
-                  <div
-                    class="d-flex justify-content-between text-muted fs-6 fst-italic"
-                  >
-                    <div><small>Days</small></div>
-                    <div>
-                      <small>{days}</small>
-                    </div>
-                  </div>
-                  <div class="text-end mt-4 mb-2">
+                  <div class="text-end mt-5">
                     <button
                       type="button"
                       class="btn btn-warning rounded-3"
@@ -273,7 +288,10 @@
                     <div>
                       <i class="bi bi-currency-euro"
                         >{(
-                          product.basePrice +
+                          Math.max(
+                            product.basePrice - product.discountPrice,
+                            0
+                          ) +
                           days * product.dailyPrice
                         ).toFixed(2)}</i
                       >

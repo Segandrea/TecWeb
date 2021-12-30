@@ -10,7 +10,7 @@
     const pickr = flatpickr(rangeInput, {
       mode: "range",
       minDate: "today",
-      dateFormat: "d-m-Y",
+      dateFormat: "M j Y",
       defaultDate: [today(1), today(2)],
       onChange: (selectedDates) => {
         rentalPeriod.set(selectedDates);
@@ -19,6 +19,9 @@
         rentalPeriod.set(selectedDates);
       },
       clickOpens: false,
+      locale: {
+        rangeSeparator: " - ",
+      },
     });
 
     document.addEventListener("scroll", () => pickr.close());
