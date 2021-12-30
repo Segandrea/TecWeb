@@ -76,7 +76,10 @@
   </div>
 
   <h2 class="text-center text-decoration-underline mt-5">{product.name}</h2>
-  <div class="row row-cols-1 row-cols-md-3 mt-4 g-4">
+  <div class="w-100 text-center text-muted">
+    <small>{product.status}</small>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 mt-3 g-4">
     <!-- stars and reviews -->
     <div class="col">
       <div class="card h-100 text-center">
@@ -136,8 +139,18 @@
           </div>
           <div class="text-center">
             <small class="text-muted fw-bold">
-              <i class="bi bi-currency-euro">{product.basePrice.toFixed(2)}</i
-              ><sub>/base</sub>
+              {#if product.discountPrice && product.discountPrice > 0}<i
+                  class="bi bi-currency-euro text-success"
+                  >{product.basePrice > product.discountPrice
+                    ? (product.basePrice - product.discountPrice).toFixed(2)
+                    : 0}</i
+                >
+                <i
+                  class="bi bi-currency-euro text-decoration-line-through text-danger"
+                  >{product.basePrice.toFixed(2)}</i
+                >{:else}<i class="bi bi-currency-euro"
+                  >{product.basePrice.toFixed(2)}</i
+                >{/if}<sub>/base</sub>
             </small>
           </div>
         </div>

@@ -52,6 +52,7 @@ getJSON("/api/backoffice/products")
             <th scope="col">name</th>
             <th scope="col">status</th>
             <th scope="col">visible</th>
+            <th scope="col">discount</th>
             <th scope="col">base price</th>
             <th scope="col">daily price</th>
             <th scope="col">rating</th>
@@ -69,6 +70,7 @@ getJSON("/api/backoffice/products")
             <td>{{ product.name }}</td>
             <td>{{ product.status }}</td>
             <td>{{ product.visible }}</td>
+            <td>€ {{ product.discountPrice.toFixed(2) }}</td>
             <td>€ {{ product.basePrice.toFixed(2) }}</td>
             <td>€ {{ product.dailyPrice.toFixed(2) }}</td>
             <td>{{ product.rating }}</td>

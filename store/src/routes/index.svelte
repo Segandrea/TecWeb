@@ -99,9 +99,18 @@
               <div><small>Base</small></div>
               <div>
                 <small
-                  ><i class="bi bi-currency-euro"
-                    >{product.basePrice.toFixed(2)}</i
-                  ></small
+                  >{#if product.discountPrice && product.discountPrice > 0}<i
+                      class="bi bi-currency-euro text-success"
+                      >{product.basePrice > product.discountPrice
+                        ? (product.basePrice - product.discountPrice).toFixed(2)
+                        : 0}</i
+                    >
+                    <i
+                      class="bi bi-currency-euro text-decoration-line-through text-danger"
+                      >{product.basePrice.toFixed(2)}</i
+                    >{:else}<i class="bi bi-currency-euro"
+                      >{product.basePrice.toFixed(2)}</i
+                    >{/if}</small
                 >
               </div>
             </div>

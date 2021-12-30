@@ -205,7 +205,7 @@ function removeImage(index) {
           ></textarea>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="productImage" class="form-label">Image</label>
           <input
             id="productImage"
@@ -217,7 +217,7 @@ function removeImage(index) {
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="productBasePrice" class="form-label">Base price</label>
           <div class="input-group">
             <span class="input-group-text">€</span>
@@ -234,7 +234,7 @@ function removeImage(index) {
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="productDailyPrice" class="form-label">Daily price</label>
           <div class="input-group">
             <span class="input-group-text">€</span>
@@ -243,6 +243,25 @@ function removeImage(index) {
               class="form-control"
               type="number"
               id="productDailyPrice"
+              value="0"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="productDiscountPrice" class="form-label"
+            >Discount price</label
+          >
+          <div class="input-group">
+            <span class="input-group-text">€</span>
+            <input
+              v-model="product.discountPrice"
+              class="form-control"
+              type="number"
+              id="productDiscountPrice"
               value="0"
               step="0.01"
               min="0"
