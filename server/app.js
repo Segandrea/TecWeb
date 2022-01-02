@@ -88,7 +88,7 @@ app.listen(port, () => {
 function authenticateUser(req, email, password, done) {
   const path = req.baseUrl + req.path;
   const role = {
-    "/api/admindashboard/signin": "admin",
+    "/api/dashboard/signin": "admin",
     "/api/backoffice/signin": "employee",
     "/api/store/signin": "customer",
   }[path];

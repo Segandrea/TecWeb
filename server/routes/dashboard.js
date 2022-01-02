@@ -1,13 +1,15 @@
 const express = require("express");
 const passport = require("passport");
 
-const handler = require("./handler");
-
-const User = require("../models/user").User;
-const Order = require("../models/order").Order;
-const Coupon = require("../models/coupon").Coupon;
-const Upload = require("../models/upload").Upload;
-const Product = require("../models/product").Product;
+/*
+ * const handler = require("./handler");
+ *
+ * const User = require("../models/user").User;
+ * const Order = require("../models/order").Order;
+ * const Coupon = require("../models/coupon").Coupon;
+ * const Upload = require("../models/upload").Upload;
+ * const Product = require("../models/product").Product;
+ */
 
 const router = express.Router();
 
