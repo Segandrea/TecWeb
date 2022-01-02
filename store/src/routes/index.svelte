@@ -49,6 +49,17 @@
 
 <main class="container">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {#if products.length <= 0}
+      <div class="col w-100 h-100">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+            <h5 class="card-title text-center py-5">
+              Oops... Seems like there are no games for this rental period 😭
+            </h5>
+          </div>
+        </div>
+      </div>
+    {/if}
     {#each products as product}
       <div class="col">
         <div class="card h-100">
