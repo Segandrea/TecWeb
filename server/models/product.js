@@ -23,9 +23,14 @@ const ProductSchema = new Schema({
   description: { type: String, required: true },
   basePrice: { type: Number, min: 0, required: true },
   dailyPrice: { type: Number, min: 0, required: true },
-  discountPrice: { type: Number, min: 0, default: 0, required: true },
+  discountPrice: {
+    type: Number,
+    min: 0,
+    default: 0,
+    required: () => this.discountPrice <= this.basePrice,
+  },
   reviews: [ReviewSchema],
-  rating: { type: Number, min: 0, max: 5, required: true },
+  rating: { type: Number, min: 0, max: 5, default: 0, required: true },
 });
 
 ProductSchema.pre("save", function (next) {

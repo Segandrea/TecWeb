@@ -23,36 +23,40 @@ const product = ref({
   status: "brand-new",
   basePrice: 0,
   dailyPrice: 0,
-  rating: 0,
+  discountPrice: 0,
 });
 
 function createProduct() {
-  if (!product.value.visible || imageInput.value.files.length > 0) {
-    toUploads(imageInput.value.files)
-      .catch((err) => {
-        // eslint-disable-next-line
-        console.error(err);
-        alert.value.error("Something wrong with image files!");
-      })
-      .then((uploads) =>
-        postJSON("/api/backoffice/products", {
-          ...product.value,
-          uploads,
-        })
-      )
-      .then((body) =>
-        router.replace({ name: "UpdateProduct", params: { id: body._id } })
-      )
-      .catch(onStatus(400, () => alert.value.error("Invalid data supplied")))
-      .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
-      .catch((err) => {
-        // eslint-disable-next-line
-        console.error(err);
-        alert.value.error("Something went wrong!");
-      });
-  } else {
-    alert.value.error("Visible products must have at least an image");
+  if (product.value.visible && imageInput.value.files.length <= 0) {
+    return alert.value.error("Visible products must have at least an image");
   }
+
+  if (product.value.discountPrice > product.value.basePrice) {
+    return alert.value.error("Discount price must be lesser than base price");
+  }
+
+  toUploads(imageInput.value.files)
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something wrong with image files!");
+    })
+    .then((uploads) =>
+      postJSON("/api/backoffice/products", {
+        ...product.value,
+        uploads,
+      })
+    )
+    .then((body) =>
+      router.replace({ name: "UpdateProduct", params: { id: body._id } })
+    )
+    .catch(onStatus(400, () => alert.value.error("Invalid data supplied")))
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something went wrong!");
+    });
 }
 </script>
 
@@ -118,7 +122,7 @@ function createProduct() {
           ></textarea>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="productImage" class="form-label">Image</label>
           <input
             id="productImage"
@@ -130,7 +134,26 @@ function createProduct() {
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <label for="productDiscountPrice" class="form-label"
+            >Discount price</label
+          >
+          <div class="input-group">
+            <span class="input-group-text">€</span>
+            <input
+              v-model="product.discountPrice"
+              class="form-control"
+              type="number"
+              id="productDiscountPrice"
+              value="0"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-3">
           <label for="productBasePrice" class="form-label">Base price</label>
           <div class="input-group">
             <span class="input-group-text">€</span>
@@ -147,7 +170,7 @@ function createProduct() {
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="productDailyPrice" class="form-label">Daily price</label>
           <div class="input-group">
             <span class="input-group-text">€</span>

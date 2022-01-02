@@ -32,44 +32,48 @@ getJSON(`/api/backoffice/products/${productId}`)
 
 function updateProduct() {
   if (
-    !product.value.visible ||
-    (product.value.images || []).length + imageInput.value.files.length > 0
+    product.value.visible &&
+    (product.value.images || []).length + imageInput.value.files.length <= 0
   ) {
-    toUploads(imageInput.value.files)
-      .catch((err) => {
-        // eslint-disable-next-line
-        console.error(err);
-        alert.value.error("Something wrong with image files!");
-      })
-      .then((uploads) =>
-        putJSON(`/api/backoffice/products/${productId}`, {
-          ...product.value,
-          uploads,
-        })
-      )
-      .then((body) => {
-        product.value = body;
-
-        // clear the HTML input element
-        imageInput.value.value = null;
-
-        // set the focus on last item of the carousel
-        if (carouselItems.length > 0) {
-          carouselItems.forEach((item) => item.classList.remove("active"));
-          carouselItems.at(-1).classList.add("active");
-        }
-
-        alert.value.info("Success");
-      })
-      .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
-      .catch((err) => {
-        // eslint-disable-next-line
-        console.error(err);
-        alert.value.error("Something went wrong!");
-      });
-  } else {
-    alert.value.error("Visible products must have at least an image");
+    return alert.value.error("Visible products must have at least an image");
   }
+
+  if (product.value.discountPrice > product.value.basePrice) {
+    return alert.value.error("Discount price must be lesser than base price");
+  }
+
+  toUploads(imageInput.value.files)
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something wrong with image files!");
+    })
+    .then((uploads) =>
+      putJSON(`/api/backoffice/products/${productId}`, {
+        ...product.value,
+        uploads,
+      })
+    )
+    .then((body) => {
+      product.value = body;
+
+      // clear the HTML input element
+      imageInput.value.value = null;
+
+      // set the focus on last item of the carousel
+      if (carouselItems.length > 0) {
+        carouselItems.forEach((item) => item.classList.remove("active"));
+        carouselItems.at(-1).classList.add("active");
+      }
+
+      alert.value.info("Success");
+    })
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+        console.error(err);
+      alert.value.error("Something went wrong!");
+    });
 }
 
 const carouselItems = [];
@@ -218,6 +222,25 @@ function removeImage(index) {
         </div>
 
         <div class="col-md-3">
+          <label for="productDiscountPrice" class="form-label"
+            >Discount price</label
+          >
+          <div class="input-group">
+            <span class="input-group-text">€</span>
+            <input
+              v-model="product.discountPrice"
+              class="form-control"
+              type="number"
+              id="productDiscountPrice"
+              value="0"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-3">
           <label for="productBasePrice" class="form-label">Base price</label>
           <div class="input-group">
             <span class="input-group-text">€</span>
@@ -251,25 +274,6 @@ function removeImage(index) {
           </div>
         </div>
 
-        <div class="col-md-3">
-          <label for="productDiscountPrice" class="form-label"
-            >Discount price</label
-          >
-          <div class="input-group">
-            <span class="input-group-text">€</span>
-            <input
-              v-model="product.discountPrice"
-              class="form-control"
-              type="number"
-              id="productDiscountPrice"
-              value="0"
-              step="0.01"
-              min="0"
-              required
-            />
-          </div>
-        </div>
-
         <div class="col-12">
           <button type="submit" class="btn btn-danger">Update</button>
         </div>
@@ -277,7 +281,7 @@ function removeImage(index) {
     </form>
 
     <template v-if="product.reviews && product.reviews.length > 0">
-      <h3 class="mt-4 text-center">Review list</h3>
+      <h3 class="mt-4 text-center">Reviews</h3>
       <div class="table-responsive">
         <table class="table table-hover mb-4">
           <thead>

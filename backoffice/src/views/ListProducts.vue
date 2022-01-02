@@ -52,7 +52,7 @@ getJSON("/api/backoffice/products")
             <th scope="col">name</th>
             <th scope="col">status</th>
             <th scope="col">visible</th>
-            <th scope="col">discount</th>
+            <th scope="col">discount price</th>
             <th scope="col">base price</th>
             <th scope="col">daily price</th>
             <th scope="col">rating</th>
