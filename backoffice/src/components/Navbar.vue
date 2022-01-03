@@ -45,6 +45,14 @@ async function signout() {
             </li>
             <li class="nav-item">
               <router-link
+                :to="{ name: 'ListEmployees' }"
+                class="nav-link"
+                active-class="active"
+                >Employees</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
                 :to="{ name: 'ListProducts' }"
                 class="nav-link"
                 active-class="active"
