@@ -37,18 +37,10 @@ async function signout() {
           <ul class="navbar-nav flex-fill">
             <li class="nav-item">
               <router-link
-                :to="{ name: 'ListCustomers' }"
+                :to="{ name: 'ListOrders' }"
                 class="nav-link"
                 active-class="active"
-                >Customers</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link
-                :to="{ name: 'ListEmployees' }"
-                class="nav-link"
-                active-class="active"
-                >Employees</router-link
+                >Orders</router-link
               >
             </li>
             <li class="nav-item">
@@ -69,10 +61,18 @@ async function signout() {
             </li>
             <li class="nav-item">
               <router-link
-                :to="{ name: 'ListOrders' }"
+                :to="{ name: 'ListCustomers' }"
                 class="nav-link"
                 active-class="active"
-                >Orders</router-link
+                >Customers</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
+                :to="{ name: 'ListEmployees' }"
+                class="nav-link"
+                active-class="active"
+                >Employees</router-link
               >
             </li>
           </ul>

@@ -79,7 +79,7 @@ function updateEmployee() {
             type="email"
             id="email"
             required
-            :readonly="!isAdmin()"
+            :disabled="!isAdmin()"
           />
         </div>
 
@@ -90,7 +90,7 @@ function updateEmployee() {
               class="form-check-input"
               type="checkbox"
               id="blocked"
-              :readonly="!isAdmin()"
+              :disabled="!isAdmin()"
             /><label class="form-check-label" for="blocked">Blocked</label>
           </div>
         </div>
