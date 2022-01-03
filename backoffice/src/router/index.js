@@ -17,6 +17,9 @@ import UpdateOrder from "../views/UpdateOrder.vue";
 import Signin from "../views/Signin.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
+import UpdateEmployee from "../views/UpdateEmployee.vue";
+import ListEmployees from "../views/ListEmployees.vue";
+
 const routes = [
   {
     path: "/",
@@ -112,6 +115,22 @@ const routes = [
     component: Signin,
     meta: {
       restricted: false,
+    },
+  },
+  {
+    path: "/employees/:id",
+    name: "UpdateEmployee",
+    component: UpdateEmployee,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/employees",
+    name: "ListEmployees",
+    component: ListEmployees,
+    meta: {
+      restricted: true,
     },
   },
   {
