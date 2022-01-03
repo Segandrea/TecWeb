@@ -20,6 +20,15 @@ const alert = ref();
 const employeeId = route.params.id;
 const employee = ref({});
 
+function userRole() {
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  return user.role;
+}
+
+function isAdmin() {
+  return userRole() === "admin";
+}
+
 getJSON(`/api/backoffice/employees/${employeeId}`)
   .then((body) => (employee.value = body))
   .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
@@ -29,7 +38,7 @@ getJSON(`/api/backoffice/employees/${employeeId}`)
     alert.value.error("Something went wrong!");
   });
 
-function UpdateEmployee() {
+function updateEmployee() {
   putJSON(`/api/backoffice/employees/${employeeId}`, employee.value)
     .then((body) => {
       employee.value = body;
@@ -50,7 +59,7 @@ function UpdateEmployee() {
     <nav class="mb-4" aria-label="breadcrumb">
       <ol class="breadcrumb fw-bold">
         <li class="breadcrumb-item">
-          <router-link :to="{ name: 'ListCEmployees' }">Employees</router-link>
+          <router-link :to="{ name: 'ListEmployees' }">Employees</router-link>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
           {{ employee._id }}
@@ -60,7 +69,7 @@ function UpdateEmployee() {
 
     <Alert ref="alert" />
 
-    <form @submit.prevent="UpdateEmployee">
+    <form @submit.prevent="updateEmployee">
       <div class="row g-4">
         <div class="col-md-4">
           <label for="email" class="form-label">Email</label>
@@ -70,6 +79,7 @@ function UpdateEmployee() {
             type="email"
             id="email"
             required
+            :readonly="!isAdmin()"
           />
         </div>
 
@@ -80,12 +90,15 @@ function UpdateEmployee() {
               class="form-check-input"
               type="checkbox"
               id="blocked"
+              :readonly="!isAdmin()"
             /><label class="form-check-label" for="blocked">Blocked</label>
           </div>
         </div>
 
         <div class="col-12">
-          <button type="submit" class="btn btn-danger">Update</button>
+          <button type="submit" class="btn btn-danger" :disabled="!isAdmin()">
+            Update
+          </button>
         </div>
       </div>
     </form>
