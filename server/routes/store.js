@@ -180,22 +180,34 @@ function createReview(req, res) {
 async function createOrder(req, res) {
   const user = req.user;
   let { products, coupons, startDate, endDate } = req.body;
+  const [productsLen, couponsLen] = [products.length, coupons.length];
 
-  products = await Product.find({ _id: { $in: products } }).then((products) =>
-    products.map((product) => ({
-      productId: product._id,
-      name: product.name,
-      imageUrl: product.images[0].url,
-      basePrice: product.basePrice,
-      dailyPrice: product.dailyPrice,
-      discountPrice: product.discountPrice,
-    }))
-  );
+  if (productsLen <= 0) {
+    return res.sendStatus(400);
+  }
+  products = await Product.find({ _id: { $in: products }, visible: true })
+    .lean()
+    .then((products) =>
+      products.map((product) => ({
+        productId: product._id,
+        name: product.name,
+        imageUrl: product.images[0].url,
+        basePrice: product.basePrice,
+        dailyPrice: product.dailyPrice,
+        discountPrice: product.discountPrice,
+      }))
+    );
+  if (products.length !== productsLen) {
+    return res.sendStatus(400);
+  }
 
-  // FIXME: delete used coupons
-  coupons = await Coupon.find({ _id: { $in: coupons } }, "-_id").then(
-    (coupons) => coupons
-  );
+  coupons = await Coupon.find({ _id: { $in: coupons } }).lean();
+  if (coupons.length !== couponsLen) {
+    return res.sendStatus(400);
+  }
+  await Coupon.deleteMany({
+    _id: { $in: coupons.map((coupon) => coupon._id) },
+  });
 
   return Order.create({
     customerId: user._id,

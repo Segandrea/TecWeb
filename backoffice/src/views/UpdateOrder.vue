@@ -171,6 +171,7 @@ function updateOrder() {
         <thead>
           <tr>
             <th scope="col">customer</th>
+            <th v-if="order.employeeId" scope="col">employee</th>
             <th scope="col">state</th>
             <th scope="col">start date</th>
             <th scope="col">end date</th>
@@ -179,7 +180,7 @@ function updateOrder() {
         </thead>
         <tbody>
           <tr>
-            <th scope="row">
+            <td>
               <router-link
                 v-if="order.customerId"
                 :to="{
@@ -189,7 +190,18 @@ function updateOrder() {
               >
                 {{ order.customerId }}
               </router-link>
-            </th>
+            </td>
+            <td v-if="order.employeeId">
+              <router-link
+                v-if="order.employeeId"
+                :to="{
+                  name: 'UpdateEmployee',
+                  params: { id: order.employeeId },
+                }"
+              >
+                {{ order.employeeId }}
+              </router-link>
+            </td>
             <td>{{ order.state }}</td>
             <td>{{ formatDate(order.startDate) }}</td>
             <td>{{ formatDate(order.endDate) }}</td>

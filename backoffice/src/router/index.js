@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import UpdateEmployee from "../views/UpdateEmployee.vue";
+import ListEmployees from "../views/ListEmployees.vue";
+
 import UpdateCustomer from "../views/UpdateCustomer.vue";
 import ListCustomers from "../views/ListCustomers.vue";
 
@@ -20,52 +23,30 @@ import PageNotFound from "../views/PageNotFound.vue";
 const routes = [
   {
     path: "/",
-    redirect: { name: "ListCustomers" },
+    redirect: { name: "ListOrders" },
     name: "Home",
     meta: {
       restricted: false,
     },
   },
+
   {
-    path: "/customers/:id",
-    name: "UpdateCustomer",
-    component: UpdateCustomer,
+    path: "/orders/:id",
+    name: "UpdateOrder",
+    component: UpdateOrder,
     meta: {
       restricted: true,
     },
   },
   {
-    path: "/customers",
-    name: "ListCustomers",
-    component: ListCustomers,
+    path: "/orders",
+    name: "ListOrders",
+    component: ListOrders,
     meta: {
       restricted: true,
     },
   },
-  {
-    path: "/coupons/:id",
-    name: "UpdateCoupon",
-    component: UpdateCoupon,
-    meta: {
-      restricted: true,
-    },
-  },
-  {
-    path: "/coupons",
-    name: "ListCoupons",
-    component: ListCoupons,
-    meta: {
-      restricted: true,
-    },
-  },
-  {
-    path: "/coupons",
-    name: "CreateCoupon",
-    component: CreateCoupon,
-    meta: {
-      restricted: true,
-    },
-  },
+
   {
     path: "/products/:id",
     name: "UpdateProduct",
@@ -90,22 +71,66 @@ const routes = [
       restricted: true,
     },
   },
+
   {
-    path: "/orders",
-    name: "ListOrders",
-    component: ListOrders,
+    path: "/coupons/:id",
+    name: "UpdateCoupon",
+    component: UpdateCoupon,
     meta: {
       restricted: true,
     },
   },
   {
-    path: "/orders/:id",
-    name: "UpdateOrder",
-    component: UpdateOrder,
+    path: "/coupons",
+    name: "ListCoupons",
+    component: ListCoupons,
     meta: {
       restricted: true,
     },
   },
+  {
+    path: "/coupons",
+    name: "CreateCoupon",
+    component: CreateCoupon,
+    meta: {
+      restricted: true,
+    },
+  },
+
+  {
+    path: "/customers/:id",
+    name: "UpdateCustomer",
+    component: UpdateCustomer,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/customers",
+    name: "ListCustomers",
+    component: ListCustomers,
+    meta: {
+      restricted: true,
+    },
+  },
+
+  {
+    path: "/employees/:id",
+    name: "UpdateEmployee",
+    component: UpdateEmployee,
+    meta: {
+      restricted: true,
+    },
+  },
+  {
+    path: "/employees",
+    name: "ListEmployees",
+    component: ListEmployees,
+    meta: {
+      restricted: true,
+    },
+  },
+
   {
     path: "/signin",
     name: "Signin",
@@ -114,6 +139,7 @@ const routes = [
       restricted: false,
     },
   },
+
   {
     path: "/:pathMatch(.*)*",
     component: PageNotFound,

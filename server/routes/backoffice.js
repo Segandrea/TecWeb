@@ -21,6 +21,14 @@ function restrict(req, res, next) {
   }
 }
 
+function restrictAdmin(req, res, next) {
+  if (req.user && req.user.role === "admin") {
+    return next();
+  } else {
+    return res.sendStatus(401);
+  }
+}
+
 router.post("/signin", (req, res, next) => {
   passport.authenticate("local", (err, user) => {
     if (err) {
@@ -209,4 +217,54 @@ function updateOrder(req, res) {
       console.log(err);
       res.sendStatus(500);
     });
+}
+
+router.put(
+  "/employees/:id",
+  restrictAdmin,
+  handler.oneByFilterAndUpdate(User, {
+    filter: filterEmployee,
+    body: deserializeEmployee,
+    serialize: serializeEmployee,
+  })
+);
+
+router.get(
+  "/employees/:id",
+  restrict,
+  handler.oneByFilter(User, {
+    filter: filterEmployee,
+    serialize: serializeEmployee,
+  })
+);
+
+router.get(
+  "/employees",
+  restrict,
+  handler.listAll(User, "employees", {
+    filter: (req) => {
+      const filter = JSON.parse(req.query.filter || "{}");
+      return { ...filter, role: "employee" };
+    },
+    serialize: serializeEmployee,
+  })
+);
+
+function filterEmployee(req) {
+  return { _id: req.params.id || null, role: "employee" };
+}
+
+function deserializeEmployee(req) {
+  return {
+    email: req.body.email,
+    blocked: req.body.blocked,
+  };
+}
+
+function serializeEmployee(user) {
+  return {
+    _id: user._id,
+    email: user.email,
+    blocked: user.blocked,
+  };
 }

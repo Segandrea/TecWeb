@@ -16,10 +16,10 @@ const router = useRouter();
 const route = useRoute();
 
 const alert = ref();
-const products = ref([]);
+const employees = ref([]);
 
-getJSON("/api/backoffice/products")
-  .then((body) => (products.value = body.products))
+getJSON("/api/backoffice/employees")
+  .then((body) => (employees.value = body.employees))
   .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
   .catch((err) => {
     // eslint-disable-next-line
@@ -33,12 +33,7 @@ getJSON("/api/backoffice/products")
   <main class="container w-100 h-100 py-4">
     <nav class="mb-4" aria-label="breadcrumb">
       <ol class="breadcrumb fw-bold">
-        <li class="breadcrumb-item active" aria-current="page">Products</li>
-        <li class="breadcrumb-item">
-          <router-link :to="{ name: 'CreateProduct' }">
-            <small><i class="bi bi-plus-circle"></i></small>
-          </router-link>
-        </li>
+        <li class="breadcrumb-item active" aria-current="page">Employees</li>
       </ol>
     </nav>
 
@@ -49,31 +44,21 @@ getJSON("/api/backoffice/products")
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">name</th>
-            <th scope="col">status</th>
-            <th scope="col">visible</th>
-            <th scope="col">discount price</th>
-            <th scope="col">base price</th>
-            <th scope="col">daily price</th>
-            <th scope="col">rating</th>
+            <th scope="col">email</th>
+            <th scope="col">blocked</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product._id">
+          <tr v-for="employee in employees" :key="employee._id">
             <th scope="row">
               <router-link
-                :to="{ name: 'UpdateProduct', params: { id: product._id } }"
+                :to="{ name: 'UpdateEmployee', params: { id: employee._id } }"
               >
-                {{ product._id }}
+                {{ employee._id }}
               </router-link>
             </th>
-            <td>{{ product.name }}</td>
-            <td>{{ product.status }}</td>
-            <td>{{ product.visible }}</td>
-            <td>€ {{ product.discountPrice.toFixed(2) }}</td>
-            <td>€ {{ product.basePrice.toFixed(2) }}</td>
-            <td>€ {{ product.dailyPrice.toFixed(2) }}</td>
-            <td>{{ product.rating }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.blocked }}</td>
           </tr>
         </tbody>
       </table>

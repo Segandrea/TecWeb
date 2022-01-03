@@ -26,11 +26,13 @@
   import {
     cart,
     cartItems,
+    clearCart,
     removeFromCart,
     coupons,
     couponItems,
     addCoupon,
     removeCoupon,
+    clearCoupons,
     rentalPeriod,
   } from "$lib/stores";
 
@@ -92,13 +94,22 @@
   }
 
   function createOrder() {
+    if ($rentalPeriod.length !== 2) {
+      alert.error("Please, specify a valid rental period");
+      return;
+    }
+
     postJSON("/api/store/orders", {
       products: $cartItems.map((p) => p._id),
       coupons: $couponItems.map((c) => c._id),
       startDate: $rentalPeriod[0],
       endDate: $rentalPeriod[1],
     })
-      .then(() => alert.info("Success"))
+      .then(() => {
+        alert.info("Success");
+        clearCoupons();
+        clearCart();
+      })
       .catch(
         redirectOnStatus(
           401,
@@ -198,8 +209,10 @@
         <div class="col">
           <hr />
           <form on:submit|preventDefault={createOrder}>
-            <button type="submit" class="btn btn-warning btn-lg w-100"
-              >Checkout</button
+            <button
+              type="submit"
+              class="btn btn-warning btn-lg w-100"
+              disabled={$cartItems.length <= 0}>Checkout</button
             >
           </form>
         </div>
