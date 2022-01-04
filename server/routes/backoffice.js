@@ -29,6 +29,14 @@ function restrictAdmin(req, res, next) {
   }
 }
 
+function restrictEmployee(req, res, next) {
+  if (req.user && req.user.role === "employee") {
+    return next();
+  } else {
+    return res.sendStatus(401);
+  }
+}
+
 router.post("/signin", (req, res, next) => {
   passport.authenticate("local", (err, user) => {
     if (err) {
@@ -97,7 +105,7 @@ router.get("/coupons/:id", restrict, handler.byId(Coupon));
 router.get("/coupons", restrict, handler.listAll(Coupon, "coupons"));
 router.post("/coupons", restrict, handler.create(Coupon));
 
-router.put("/orders/:id", restrict, updateOrder);
+router.put("/orders/:id", restrictEmployee, updateOrder);
 router.get("/orders/:id", restrict, handler.byId(Order));
 router.get(
   "/orders",

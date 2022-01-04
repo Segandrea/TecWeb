@@ -41,41 +41,37 @@ router.post("/signout", restrict, (req, res) => {
   res.sendStatus(200);
 });
 
-router.get(
-  "/statistics",
-  /* restrict, */ async (req, res) => {
-    const mostPopularProducts = await Product.find({}, "_id")
-      .sort({ rating: -1 })
-      .limit(3);
+router.get("/statistics", restrict, async (req, res) => {
+  const mostPopularProducts = await Product.find({}, "_id")
+    .sort({ rating: -1 })
+    .limit(3);
 
-    const mostActiveCustomers = await Order.aggregate()
-      .group({ _id: "$customerId", count: { $sum: 1 } })
-      .sort({ count: -1 })
-      .limit(3)
-      .exec();
+  const mostActiveCustomers = await Order.aggregate()
+    .group({ _id: "$customerId", count: { $sum: 1 } })
+    .sort({ count: -1 })
+    .limit(3)
+    .exec();
 
-    const mostActiveEmployees = await Order.aggregate()
-      .match({ employeeId: { $exists: true, $ne: null } })
-      .group({ _id: "$employeeId", count: { $sum: 1 } })
-      .sort({ count: -1 })
-      .limit(3)
-      .exec();
+  const mostActiveEmployees = await Order.aggregate()
+    .match({ employeeId: { $exists: true, $ne: null } })
+    .group({ _id: "$employeeId", count: { $sum: 1 } })
+    .sort({ count: -1 })
+    .limit(3)
+    .exec();
 
-    // bugfix income calculation
-    const monthlyIncome = await Order.aggregate()
-      .group({
-        _id: { year: { $year: "$endDate" }, month: { $month: "$endDate" } },
-        income: { $sum: "$totalPrice" },
-      })
-      .exec();
+  const monthlyIncome = await Order.aggregate()
+    .group({
+      _id: { year: { $year: "$endDate" }, month: { $month: "$endDate" } },
+      income: { $sum: "$totalPrice" },
+    })
+    .exec();
 
-    return res.json({
-      monthlyIncome,
-      mostPopularProducts,
-      mostActiveEmployees,
-      mostActiveCustomers,
-    });
-  }
-);
+  return res.json({
+    monthlyIncome,
+    mostPopularProducts,
+    mostActiveEmployees,
+    mostActiveCustomers,
+  });
+});
 
 module.exports = router;

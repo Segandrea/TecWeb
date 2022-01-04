@@ -156,8 +156,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  const ROLES = ["employee", "admin"];
 
-  if (to.meta.restricted && user.role !== "employee") {
+  if (to.meta.restricted && !ROLES.includes(user.role)) {
     next({ name: "Signin", params: { returnTo: to.fullPath } });
   } else {
     next();
