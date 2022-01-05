@@ -56,6 +56,24 @@
       }
     </script>
 
+    <script type="module">
+      import { getJSON, redirectOnStatus } from "./assets/js/http.js";
+
+      const dataset = {};
+
+      getJSON("/api/dashboard/statistics")
+        .then((body) => {
+          dataset.monthlyIncome = body.monthlyIncome;
+          dataset.mostPopularProducts = body.mostPopularProducts;
+          dataset.mostActiveEmployees = body.mostActiveEmployees;
+          dataset.mostActiveCustomers = body.mostActiveCustomers;
+        })
+        .catch(redirectOnStatus(401, "/dashboard/signin.html"))
+        .catch((err) => {
+          console.error(err);
+          alert("Something went wrong!");
+      });
+    </script>
     <title>Charts</title>
   </head>
   <body>
