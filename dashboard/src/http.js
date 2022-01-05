@@ -39,10 +39,10 @@ export function onStatus(status, callback) {
   };
 }
 
-export function redirectOnStatus(status, router, location) {
+export function redirectOnStatus(status, location) {
   return ([err, res]) => {
     if (res && res.status === status) {
-      router.push(location);
+      window.location.replace(location);
     } else {
       return Promise.reject([err, res]);
     }

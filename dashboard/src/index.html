@@ -1,1 +1,149 @@
-<h1> hello world </h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <link rel="icon" href="./assets/favicon.ico" />
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      integrity="sha384-tKLJeE1ALTUwtXlaGjJYM3sejfssWdAaWR2s97axw4xkiAdMzQjtOjgcyw0Y50KU"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap -->
+
+    <!-- Chart.js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.js"
+      integrity="sha384-p5rhGQSv0Tcys48SLwALtuoX/iOwTE2sQp6+3eI0/gf7ngDsLiVqBGW2bZYq4Ww9"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Chart.js -->
+
+    <script>
+      function userRole() {
+        const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+        return user.role;
+      }
+
+      function isAdmin() {
+        return userRole() === "admin";
+      }
+
+      async function signout() {
+        await fetch("/api/dashboard/signout", { method: "POST" });
+        sessionStorage.removeItem("user");
+        window.location.replace("/dashboard/signin.html");
+      }
+
+      if(!isAdmin()) {
+        window.location.replace("/dashboard/signin.html");
+      }
+    </script>
+
+    <title>Charts</title>
+  </head>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but Charts can't properly be displayed without JavaScript
+        enabled. Please enable it to continue.</strong
+      >
+    </noscript>
+
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="./assets/nolonoloplus-light.png" width="30" height="30" />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul
+              class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+              style="--bs-scroll-height: 100px"
+            >
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#"
+                  >Fixme</a
+                >
+              </li>
+            </ul>
+            <form class="d-flex" onsubmit="signout()">
+              <button class="btn btn-outline-warning" type="submit">
+                Sign out
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Hello World</h1>
+      <canvas id="myChart" width="400" height="400"></canvas>
+      <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+      </script>
+    </main>
+  </body>
+</html>
