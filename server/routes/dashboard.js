@@ -42,7 +42,7 @@ router.post("/signout", restrict, (req, res) => {
 });
 
 router.get("/statistics", restrict, async (req, res) => {
-  const mostPopularProducts = await Product.find({}, "_id")
+  const mostPopularProducts = await Product.find({}, "_id name rating")
     .sort({ rating: -1 })
     .limit(3);
 
@@ -63,6 +63,7 @@ router.get("/statistics", restrict, async (req, res) => {
     .group({
       _id: { year: { $year: "$endDate" }, month: { $month: "$endDate" } },
       income: { $sum: "$totalPrice" },
+      count: { $sum: 1 },
     })
     .exec();
 

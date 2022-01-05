@@ -61,38 +61,143 @@
     <script type="module">
       import { getJSON, redirectOnStatus } from "./assets/js/http.js";
 
-      getJSON("/api/dashboard/statistics")
-        .then(({ monthlyIncome }) => {
-          const context = document
-            .getElementById("monthlyIncomeChart")
-            .getContext("2d");
+      function setupMonthlyIncomeChart(monthlyIncome) {
+        const context = document
+          .getElementById("monthlyIncomeChart")
+          .getContext("2d");
 
-          const monthlyIncomeChart = new Chart(context, {
-            type: "line",
-            data: {
-              datasets: [
-                {
-                  label: "Monthly income",
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgb(255, 99, 132)",
-                  data: monthlyIncome.map(
-                    ({ _id: { year, month }, income }) => ({
-                      x: `${year}-${month.toString().padStart(2, "0")}`,
-                      y: income,
-                    })
-                  ),
-                },
-              ],
+        const monthlyIncomeChart = new Chart(context, {
+          data: {
+            datasets: [
+              {
+                type: "line",
+                label: "Monthly Income",
+                data: monthlyIncome.map(({ income }) => income),
+                backgroundColor: "rgb(255, 99, 132)",
+                borderColor: "rgb(255, 99, 132)",
+              },
+              {
+                type: "bar",
+                label: "Monthly Orders",
+                data: monthlyIncome.map(({ count }) => count),
+                backgroundColor: "rgba(255, 99, 132, 0.1)",
+                borderColor: "rgb(255, 99, 132)",
+              },
+            ],
+            labels: monthlyIncome.map(
+              ({ _id: { year, month } }) =>
+                `${year}-${month.toString().padStart(2, "0")}`
+            ),
+          },
+          options: {
+            scales: {
+              y: {
+                ticks: { callback: (value) => `€ ${value.toFixed(2)}` },
+              },
             },
-            options: {
-              scales: {
-                y: {
-                  ticks: { callback: (value) => `€ ${value.toFixed(2)}` },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    if (context.datasetIndex === 0) {
+                      return ` € ${context.raw.toFixed(2)}`;
+                    }
+
+                    return " " + context.formattedValue;
+                  },
                 },
               },
             },
-          });
-        })
+          },
+        });
+      }
+
+      function setupMostActiveCustomersChart(mostActiveCustomers) {
+        const context = document
+          .getElementById("mostActiveCustomersChart")
+          .getContext("2d");
+
+        const mostActiveCustomersChart = new Chart(context, {
+          type: "doughnut",
+          data: {
+            labels: mostActiveCustomers.map(({ _id }) => _id),
+            datasets: [
+              {
+                data: mostActiveCustomers.map(({ count }) => count),
+                backgroundColor: [
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                  "rgb(255, 99, 132)",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          },
+        });
+      }
+
+      function setupMostPopularProductsChart(mostPopularProducts) {
+        const context = document
+          .getElementById("mostPopularProductsChart")
+          .getContext("2d");
+
+        const mostPopularProductsChart = new Chart(context, {
+          type: "doughnut",
+          data: {
+            labels: mostPopularProducts.map(({ name }) => name),
+            datasets: [
+              {
+                data: mostPopularProducts.map(({ rating }) => rating),
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          },
+        });
+      }
+
+      function setupMostActiveEmployeesChart(mostActiveEmployees) {
+        const context = document
+          .getElementById("mostActiveEmployeesChart")
+          .getContext("2d");
+
+        const mostActiveEmployeesChart = new Chart(context, {
+          type: "doughnut",
+          data: {
+            labels: mostActiveEmployees.map(({ _id }) => _id),
+            datasets: [
+              {
+                data: mostActiveEmployees.map(({ count }) => count),
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          },
+        });
+      }
+
+      getJSON("/api/dashboard/statistics")
+        .then(
+          ({
+            monthlyIncome,
+            mostActiveCustomers,
+            mostPopularProducts,
+            mostActiveEmployees,
+          }) => {
+            setupMonthlyIncomeChart(monthlyIncome);
+            setupMostActiveCustomersChart(mostActiveCustomers);
+            setupMostPopularProductsChart(mostPopularProducts);
+            setupMostActiveEmployeesChart(mostActiveEmployees);
+          }
+        )
         .catch(redirectOnStatus(401, "/dashboard/signin.html"))
         .catch((err) => {
           console.error(err);
@@ -135,9 +240,12 @@
               style="--bs-scroll-height: 100px"
             >
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"
-                  >Fixme</a
+                <a class="nav-link active" aria-current="page" href="#0"
+                  >Home</a
                 >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/backoffice">Backoffice</a>
               </li>
             </ul>
             <form class="d-flex" onsubmit="signout();">
@@ -150,13 +258,40 @@
       </nav>
     </header>
 
-    <main class="container w-100 h-100">
+    <main class="container w-100 h-100 py-5">
       <div class="row">
         <div class="col m-auto">
           <canvas
             id="monthlyIncomeChart"
             width="200"
-            aria-label="Monthly Income"
+            aria-label="Monthly Income Chart"
+            role="img"
+          ></canvas>
+        </div>
+      </div>
+
+      <div class="row row-cols-3 pt-5">
+        <div class="col m-auto">
+          <h2>Most Active Employees</h2>
+          <canvas
+            id="mostActiveEmployeesChart"
+            aria-label="Most Active Employees Chart"
+            role="img"
+          ></canvas>
+        </div>
+        <div class="col m-auto">
+          <h2>Most Popular Products</h2>
+          <canvas
+            id="mostPopularProductsChart"
+            aria-label="Most Popular Products Chart"
+            role="img"
+          ></canvas>
+        </div>
+        <div class="col m-auto">
+          <h2>Most Active Customers</h2>
+          <canvas
+            id="mostActiveCustomersChart"
+            aria-label="Most Active Customers Chart"
             role="img"
           ></canvas>
         </div>
