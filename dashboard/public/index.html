@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>Dashboard</title>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -59,28 +61,50 @@
     <script type="module">
       import { getJSON, redirectOnStatus } from "./assets/js/http.js";
 
-      const dataset = {};
-
       getJSON("/api/dashboard/statistics")
-        .then((body) => {
-          dataset.monthlyIncome = body.monthlyIncome;
-          dataset.mostPopularProducts = body.mostPopularProducts;
-          dataset.mostActiveEmployees = body.mostActiveEmployees;
-          dataset.mostActiveCustomers = body.mostActiveCustomers;
+        .then(({ monthlyIncome }) => {
+          const context = document
+            .getElementById("monthlyIncomeChart")
+            .getContext("2d");
+
+          const monthlyIncomeChart = new Chart(context, {
+            type: "line",
+            data: {
+              datasets: [
+                {
+                  label: "Monthly income",
+                  borderColor: "rgb(255, 99, 132)",
+                  backgroundColor: "rgb(255, 99, 132)",
+                  data: monthlyIncome.map(
+                    ({ _id: { year, month }, income }) => ({
+                      x: `${year}-${month.toString().padStart(2, "0")}`,
+                      y: income,
+                    })
+                  ),
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  ticks: { callback: (value) => `€ ${value.toFixed(2)}` },
+                },
+              },
+            },
+          });
         })
         .catch(redirectOnStatus(401, "/dashboard/signin.html"))
         .catch((err) => {
           console.error(err);
           alert("Something went wrong!");
-      });
+        });
     </script>
-    <title>Charts</title>
   </head>
   <body>
     <noscript>
       <strong
-        >We're sorry but Charts can't properly be displayed without JavaScript
-        enabled. Please enable it to continue.</strong
+        >We're sorry but this site can't properly be displayed without
+        JavaScript enabled. Please enable it to continue.</strong
       >
     </noscript>
 
@@ -116,7 +140,7 @@
                 >
               </li>
             </ul>
-            <form class="d-flex" onsubmit="signout()">
+            <form class="d-flex" onsubmit="signout();">
               <button class="btn btn-outline-warning" type="submit">
                 Sign out
               </button>
@@ -126,48 +150,17 @@
       </nav>
     </header>
 
-    <main>
-      <h1>Hello World</h1>
-      <canvas id="myChart" width="400" height="400"></canvas>
-      <script>
-        const ctx = document.getElementById("myChart").getContext("2d");
-        const myChart = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [
-              {
-                label: "# of Votes",
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                  "rgba(255, 99, 132, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(153, 102, 255, 0.2)",
-                  "rgba(255, 159, 64, 0.2)",
-                ],
-                borderColor: [
-                  "rgba(255, 99, 132, 1)",
-                  "rgba(54, 162, 235, 1)",
-                  "rgba(255, 206, 86, 1)",
-                  "rgba(75, 192, 192, 1)",
-                  "rgba(153, 102, 255, 1)",
-                  "rgba(255, 159, 64, 1)",
-                ],
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-      </script>
+    <main class="container w-100 h-100">
+      <div class="row">
+        <div class="col m-auto">
+          <canvas
+            id="monthlyIncomeChart"
+            width="200"
+            aria-label="Monthly Income"
+            role="img"
+          ></canvas>
+        </div>
+      </div>
     </main>
   </body>
 </html>
