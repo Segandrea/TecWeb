@@ -8,6 +8,15 @@ async function signout() {
   sessionStorage.removeItem("user");
   router.push({ name: "Signin" });
 }
+
+function userRole() {
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  return user.role;
+}
+
+function isAdmin() {
+  return userRole() === "admin";
+}
 </script>
 
 <template>
@@ -74,6 +83,9 @@ async function signout() {
                 active-class="active"
                 >Employees</router-link
               >
+            </li>
+            <li v-if="isAdmin()" class="nav-item">
+              <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
           </ul>
           <form @submit.prevent="signout">
