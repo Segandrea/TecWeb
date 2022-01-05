@@ -5,7 +5,7 @@ const env = process.env.NODE_ENV || "development";
 const prod = env === "production";
 
 const projectDir = path.resolve(__dirname, "..");
-const dashboardStaticPath = path.resolve(projectDir, "dashboard", "src");
+const dashboardStaticPath = path.resolve(projectDir, "dashboard", "public");
 const backofficeStaticPath = path.resolve(projectDir, "backoffice", "dist");
 const storeStaticPath = path.resolve(projectDir, "store", "build");
 
