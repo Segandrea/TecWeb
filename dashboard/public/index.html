@@ -133,6 +133,18 @@
               },
             ],
           },
+          options: {
+            plugins: {
+              legend: {
+                position: "bottom",
+                onClick: (e, legendItem, legend) => {
+                  window.location.href = `/backoffice/customers/${
+                    mostActiveCustomers[legendItem.index]._id
+                  }`;
+                },
+              },
+            },
+          },
         });
       }
 
@@ -157,6 +169,18 @@
               },
             ],
           },
+          options: {
+            plugins: {
+              legend: {
+                position: "bottom",
+                onClick: (e, legendItem, legend) => {
+                  window.location.href = `/backoffice/products/${
+                    mostPopularProducts[legendItem.index]._id
+                  }`;
+                },
+              },
+            },
+          },
         });
       }
 
@@ -180,6 +204,18 @@
                 hoverOffset: 4,
               },
             ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                position: "bottom",
+                onClick: (e, legendItem, legend) => {
+                  window.location.href = `/backoffice/employees/${
+                    mostActiveEmployees[legendItem.index]._id
+                  }`;
+                },
+              },
+            },
           },
         });
       }
@@ -270,17 +306,17 @@
         </div>
       </div>
 
-      <div class="row row-cols-3 pt-5">
+      <div class="row row-cols-3 pt-5 text-center">
         <div class="col m-auto">
-          <h2>Most Active Employees</h2>
+          <h2 class="mb-4">Most Active Customers</h2>
           <canvas
-            id="mostActiveEmployeesChart"
-            aria-label="Most Active Employees Chart"
+            id="mostActiveCustomersChart"
+            aria-label="Most Active Customers Chart"
             role="img"
           ></canvas>
         </div>
         <div class="col m-auto">
-          <h2>Most Popular Products</h2>
+          <h2 class="mb-4">Most Popular Products</h2>
           <canvas
             id="mostPopularProductsChart"
             aria-label="Most Popular Products Chart"
@@ -288,10 +324,10 @@
           ></canvas>
         </div>
         <div class="col m-auto">
-          <h2>Most Active Customers</h2>
+          <h2 class="mb-4">Most Active Employees</h2>
           <canvas
-            id="mostActiveCustomersChart"
-            aria-label="Most Active Customers Chart"
+            id="mostActiveEmployeesChart"
+            aria-label="Most Active Employees Chart"
             role="img"
           ></canvas>
         </div>
