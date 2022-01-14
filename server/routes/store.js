@@ -240,20 +240,31 @@ function listProducts(req, res) {
         Product.find({
           visible: true,
           _id: { $nin: products },
-        }).then((products) => res.json({ products }))
+        }).sort({ name: 1, status: 1, basePrice: -1, dailyPrice: -1 })
       )
+      .then((products) => res.json({ products }))
       .catch((err) => {
         console.log(err);
         res.sendStatus(500);
       });
   }
 
-  return handler.listAll(Product, "products", {
-    filter: (req) => ({
-      ...JSON.parse(req.query.filter || "{}"),
-      visible: true,
-    }),
-  })(req, res);
+  /*
+    db.products.aggregate([
+        { $sort: { name: -1, status: 1, basePrice: -1, dailyPrice: -1 }},
+        { $group: { _id: "$name", group: { $addToSet: "$_id" }}},
+    ]).map((res) => db.products.findOne(res.group[0]))
+   */
+  return Product.aggregate([
+    { $sort: { name: 1, status: 1, basePrice: -1, dailyPrice: -1 } },
+    { $group: { _id: "$name", group: { $push: "$_id" } } },
+  ])
+    .then((res) => Product.find({ _id: { $in: res.map((a) => a.group[0]) } }))
+    .then((products) => res.json({ products }))
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
 }
 
 function rentedProducts(start, end) {
