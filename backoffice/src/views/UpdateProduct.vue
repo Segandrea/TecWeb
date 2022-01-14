@@ -6,7 +6,13 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
-import { getJSON, putJSON, redirectOnStatus } from "../http";
+import {
+  getJSON,
+  putJSON,
+  deleteJSON,
+  onStatus,
+  redirectOnStatus,
+} from "../http";
 import { signinRoute, toUploads } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
@@ -29,6 +35,21 @@ getJSON(`/api/backoffice/products/${productId}`)
     console.error(err);
     alert.value.error("Something went wrong!");
   });
+
+function deleteProduct() {
+  deleteJSON(`/api/backoffice/products/${productId}`, false)
+    .then(() => router.push({ name: "ListProducts" }))
+    .catch(onStatus(404, () => alert.value.error("Product Not Found")))
+    .catch(
+      onStatus(409, () =>
+        alert.value.error("Products already ordered can't be removed")
+      )
+    )
+    .catch((err) => {
+      console.error(err);
+      alert.value.error("Something went wrong!");
+    });
+}
 
 function updateProduct() {
   if (
@@ -276,6 +297,13 @@ function removeImage(index) {
 
         <div class="col-12">
           <button type="submit" class="btn btn-danger">Update</button>
+          <button
+            type="button"
+            class="btn btn-danger ms-3"
+            @click="deleteProduct"
+          >
+            Delete Product
+          </button>
         </div>
       </div>
     </form>

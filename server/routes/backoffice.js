@@ -95,6 +95,7 @@ router.get(
   })
 );
 
+router.delete("/products/:id", restrict, deleteProduct);
 router.put("/products/:id", restrict, updateProduct);
 router.get("/products/:id", restrict, handler.byId(Product));
 router.get("/products", restrict, handler.listAll(Product, "products"));
@@ -193,6 +194,27 @@ function upload(uploads) {
 
 function toImage(upload) {
   return { url: `/media/images/${upload._id}` };
+}
+
+function deleteProduct(req, res) {
+  const id = req.params.id;
+  Order.exists({ "products.productId": id })
+    .then((found) => {
+      if (found) {
+        return res.sendStatus(409);
+      } else {
+        Product.findByIdAndDelete(id).then((product) => {
+          if (!product) {
+            return res.sendStatus(404);
+          }
+          return res.sendStatus(200);
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
 }
 
 function updateOrder(req, res) {

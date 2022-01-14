@@ -29,6 +29,11 @@ export function getJSON(url, parse = true) {
   return parse ? promise.then((res) => res.json()) : promise;
 }
 
+export function deleteJSON(url, parse = true) {
+  const promise = send("DELETE", url);
+  return parse ? promise.then((res) => res.json()) : promise;
+}
+
 export function onStatus(status, callback) {
   return ([err, res]) => {
     if (res && res.status === status) {
