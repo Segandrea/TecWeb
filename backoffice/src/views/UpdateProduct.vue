@@ -38,7 +38,7 @@ getJSON(`/api/backoffice/products/${productId}`)
 
 function deleteProduct() {
   deleteJSON(`/api/backoffice/products/${productId}`, false)
-    .then(() => router.push({ name: "ListProducts" }))
+    .then(() => router.replace({ name: "ListProducts" }))
     .catch(onStatus(404, () => alert.value.error("Product Not Found")))
     .catch(
       onStatus(409, () =>
