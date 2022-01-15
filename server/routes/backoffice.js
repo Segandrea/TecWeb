@@ -90,6 +90,7 @@ router.get("/coupons", restrict, handler.listAll(Coupon, "coupons"));
 router.post("/coupons", restrict, handler.create(Coupon));
 
 router.put("/orders/:id", restrict, updateOrder);
+router.delete("/orders/:id", restrict, deleteOrder);
 router.get("/orders/:id", restrict, handler.byId(Order));
 router.get(
   "/orders",
@@ -204,6 +205,23 @@ function updateOrder(req, res) {
       }
 
       return order.save().then((order) => res.json(order));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+}
+
+function deleteOrder(req, res) {
+  const { id } = req.params;
+  const today = new Date();
+  Order.deleteOne({ _id: id, state: "open", startDate: { $gt: today } })
+    .then(({ deletedCount }) => {
+      if (deletedCount === 1) {
+        return res.sendStatus(200);
+      } else {
+        return res.sendStatus(422);
+      }
     })
     .catch((err) => {
       console.log(err);

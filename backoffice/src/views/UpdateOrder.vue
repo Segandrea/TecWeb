@@ -4,7 +4,13 @@ import { ref } from "vue";
 
 import { DatePicker } from "v-calendar";
 
-import { getJSON, putJSON, redirectOnStatus } from "../http";
+import {
+  getJSON,
+  putJSON,
+  redirectOnStatus,
+  deleteJSON,
+  onStatus,
+} from "../http";
 import { signinRoute, formatDate } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
@@ -48,6 +54,18 @@ getJSON(`/api/backoffice/orders/${orderId}`)
     console.error(err);
     alert.value.error("Something went wrong!");
   });
+
+function deleteOrder() {
+  deleteJSON(`/api/backoffice/orders/${orderId}`, false)
+    .then(() => router.replace({ name: "ListOrders" }))
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch(onStatus(422, () => alert.value.error("Unable to delete order")))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something went wrong!");
+    });
+}
 
 function updateOrder() {
   order.value.state = updatePayload.value.state;
@@ -162,6 +180,14 @@ function updateOrder() {
 
         <div class="col-12">
           <button type="submit" class="btn btn-danger">Update</button>
+          <button
+            v-if="new Date() < new Date(order.startDate)"
+            type="button"
+            class="btn btn-warning ms-2"
+            @click="deleteOrder"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </form>

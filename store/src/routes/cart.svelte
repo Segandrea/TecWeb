@@ -209,9 +209,10 @@
         <div class="col">
           <hr />
           <form on:submit|preventDefault={createOrder}>
+            <small class="text-muted ">* Charges may be applied</small>
             <button
               type="submit"
-              class="btn btn-warning btn-lg w-100"
+              class="btn btn-warning btn-lg w-100 mt-2"
               disabled={$cartItems.length <= 0}>Checkout</button
             >
           </form>
