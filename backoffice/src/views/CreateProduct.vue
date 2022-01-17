@@ -20,6 +20,7 @@ const imageInput = ref();
 
 const product = ref({
   visible: false,
+  category: "party",
   status: "brand-new",
   basePrice: 0,
   dailyPrice: 0,
@@ -84,7 +85,23 @@ function createProduct() {
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <label for="productCategory" class="form-label">Category</label>
+          <select
+            v-model="product.category"
+            class="form-select"
+            id="productCategory"
+            required
+          >
+            <option value="party" selected>Party</option>
+            <option value="cards">Cards</option>
+            <option value="mistery">Mistery</option>
+            <option value="puzzle">Puzzle</option>
+            <option value="dices">Dices</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
           <label for="productStatus" class="form-label">Status</label>
           <select
             v-model="product.status"
@@ -98,7 +115,7 @@ function createProduct() {
           </select>
         </div>
 
-        <div class="d-flex col-md-4 align-items-end">
+        <div class="d-flex col-md-2 align-items-end">
           <div class="form-check form-switch pb-1">
             <input
               v-model="product.visible"

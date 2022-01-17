@@ -19,6 +19,11 @@ const ProductSchema = new Schema({
     enum: ["brand-new", "refurbished", "damaged"],
     required: true,
   },
+  category: {
+    type: String,
+    enum: ["party", "cards", "mistery", "puzzle", "dices"],
+    required: true,
+  },
   visible: { type: Boolean, required: true },
   description: { type: String, required: true },
   basePrice: { type: Number, min: 0, required: true },
