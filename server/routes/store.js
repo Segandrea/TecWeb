@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 
 const handler = require("./handler");
+const mongoose = require("mongoose");
 
 const User = require("../models/user").User;
 const Order = require("../models/order").Order;
@@ -231,6 +232,7 @@ function serializeOrder(order) {
 
 function listProducts(req, res) {
   const params = JSON.parse(req.query.params || "{}");
+  const filter = mongoose.sanitizeFilter(JSON.parse(req.query.filter || "{}"));
 
   if (req.user && params.rentalPeriod && params.rentalPeriod.length === 2) {
     const [start, end] = params.rentalPeriod.map((s) => new Date(s));
@@ -238,6 +240,7 @@ function listProducts(req, res) {
     return rentedProducts(start, end)
       .then((products) =>
         Product.find({
+          ...filter,
           visible: true,
           _id: { $nin: products },
         }).sort({ name: 1, status: 1, basePrice: -1, dailyPrice: -1 })
@@ -255,11 +258,18 @@ function listProducts(req, res) {
         { $group: { _id: "$name", group: { $addToSet: "$_id" }}},
     ]).map((res) => db.products.findOne(res.group[0]))
    */
+  // TODO: filter by visibility
   return Product.aggregate([
     { $sort: { name: 1, status: 1, basePrice: -1, dailyPrice: -1 } },
     { $group: { _id: "$name", group: { $push: "$_id" } } },
   ])
-    .then((res) => Product.find({ _id: { $in: res.map((a) => a.group[0]) } }))
+    .then((res) =>
+      Product.find({
+        ...filter,
+        visible: true,
+        _id: { $in: res.map((a) => a.group[0]) },
+      })
+    )
     .then((products) => res.json({ products }))
     .catch((err) => {
       console.log(err);
