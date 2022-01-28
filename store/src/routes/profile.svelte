@@ -44,7 +44,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
 
-  import { postJSON, putJSON, redirectOnStatus } from "$lib/http";
+  import { postJSON, putJSON, redirectOnStatus, deleteJSON } from "$lib/http";
   import { clearCart, clearCoupons } from "$lib/stores";
   import { formatDate } from "$lib/utils";
 
@@ -75,6 +75,27 @@
         alert.info("Profile updated successfully");
       })
       .catch(onStatus(400, () => alert.error("Invalid profile data")))
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
+  }
+
+  function deleteOrder(order) {
+    deleteJSON(`/api/store/orders/${order._id}`, { parse: false })
+      .then(() => {
+        const index = orders.indexOf(order);
+        orders.splice(index, 1);
+        orders = orders;
+        alert.info("Order cancelled");
+      })
       .catch(
         redirectOnStatus(
           401,
@@ -158,7 +179,7 @@
         <ul class="list-group">
           {#each orders as order}
             <div class="list-group-item">
-              <div class="row row-cols-1 row-cols-lg-5 g-2">
+              <div class="row row-cols-1 row-cols-lg-6 g-1">
                 <div class="col text-truncate">
                   <h6>Order No.</h6>
                   <a href={path(`/orders/${order._id}`)}
@@ -184,6 +205,15 @@
                     >{order.totalPrice.toFixed(2)}</i
                   >
                 </div>
+                {#if order.state === "open" && new Date() < new Date(order.startDate)}
+                  <div class="col">
+                    <button
+                      type="button"
+                      class=" btn btn-outline-warning mt-2"
+                      on:click={() => deleteOrder(order)}>Delete Order</button
+                    >
+                  </div>
+                {/if}
               </div>
             </div>
           {/each}

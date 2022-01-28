@@ -139,6 +139,7 @@ router.post("/orders", restrict, createOrder);
 router.post("/products/:id/reviews", restrict, createReview);
 router.get("/products/:id", handler.byId(Product));
 router.get("/products", listProducts);
+router.delete("/orders/:id", restrict, deleteOrder);
 
 router.get(
   "/coupons/:code",
@@ -273,4 +274,21 @@ function rentedProducts(start, end) {
           .flat() //                              [{ "productId": "..." }, ]
           .map((product) => product.productId) // ["...", ]
     );
+}
+
+function deleteOrder(req, res) {
+  const { id } = req.params;
+  const today = new Date();
+  Order.deleteOne({ _id: id, state: "open", startDate: { $gt: today } })
+    .then(({ deletedCount }) => {
+      if (deletedCount === 1) {
+        return res.sendStatus(200);
+      } else {
+        return res.sendStatus(422);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
 }
