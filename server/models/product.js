@@ -34,7 +34,7 @@ const ProductSchema = new Schema({
 });
 
 ProductSchema.pre("save", function (next) {
-  if (this.isModified("reviews") || this.isNew) {
+  if (this.isModified("reviews") || this.isModified("rating") || this.isNew) {
     const reviews = this.reviews || [];
     const len = Math.max(reviews.length, 1);
 

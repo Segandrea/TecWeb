@@ -24,6 +24,11 @@ const port = 8000;
 app.use(logger("dev"));
 
 // setup static folders
+app.use("/dashboard", express.static(config.dashboard.staticPath));
+app.use("/dashboard/*", (req, res) =>
+  res.sendFile(config.dashboard.fallbackPage)
+);
+
 app.use("/backoffice", express.static(config.backoffice.staticPath));
 app.use("/backoffice/*", (req, res) =>
   res.sendFile(config.backoffice.fallbackPage)
@@ -66,14 +71,15 @@ passport.deserializeUser(deserializeUser);
 // session user serializer
 passport.serializeUser(serializeUser);
 
-// register store routes
+// register routes
+app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/backoffice", require("./routes/backoffice"));
 app.use("/api/store", require("./routes/store"));
 app.use("/media", require("./routes/media"));
 
 // start server at the specified port
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port} (${config.env})`);
+  console.log(`Server running on http://localhost:${port} (${config.env})\n`);
 });
 
 /*
@@ -82,7 +88,7 @@ app.listen(port, () => {
 function authenticateUser(req, email, password, done) {
   const path = req.baseUrl + req.path;
   const role = {
-    "/api/admindashboard/signin": "admin",
+    "/api/dashboard/signin": "admin",
     "/api/backoffice/signin": "employee",
     "/api/store/signin": "customer",
   }[path];

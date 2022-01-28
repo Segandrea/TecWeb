@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <link rel="icon" href="./favicon.ico" />
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      integrity="sha384-tKLJeE1ALTUwtXlaGjJYM3sejfssWdAaWR2s97axw4xkiAdMzQjtOjgcyw0Y50KU"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap -->
+
+    <!-- Chart.js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.js"
+      integrity="sha384-p5rhGQSv0Tcys48SLwALtuoX/iOwTE2sQp6+3eI0/gf7ngDsLiVqBGW2bZYq4Ww9"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Chart.js -->
+
+    <script>
+      function userRole() {
+        const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+        return user.role;
+      }
+
+      function isAdmin() {
+        return userRole() === "admin";
+      }
+
+      async function signout() {
+        await fetch("/api/dashboard/signout", { method: "POST" });
+        sessionStorage.removeItem("user");
+        window.location.replace("/dashboard/signin.html");
+      }
+
+      if (!isAdmin()) {
+        window.location.replace("/dashboard/signin.html");
+      }
+    </script>
+
+    <script type="module">
+      import { getJSON, redirectOnStatus } from "./assets/js/http.js";
+
+      function setupMonthlyIncomeChart(monthlyIncome) {
+        const context = document
+          .getElementById("monthlyIncomeChart")
+          .getContext("2d");
+
+        const monthlyIncomeChart = new Chart(context, {
+          data: {
+            datasets: [
+              {
+                type: "line",
+                label: "Monthly Income",
+                data: monthlyIncome.map(({ income }) => income),
+                backgroundColor: "rgb(255, 99, 132)",
+                borderColor: "rgb(255, 99, 132)",
+              },
+              {
+                type: "bar",
+                label: "Monthly Orders",
+                data: monthlyIncome.map(({ count }) => count),
+                backgroundColor: "rgba(255, 99, 132, 0.1)",
+                borderColor: "rgb(255, 99, 132)",
+              },
+            ],
+            labels: monthlyIncome.map(
+              ({ _id: { year, month } }) =>
+                `${year}-${month.toString().padStart(2, "0")}`
+            ),
+          },
+          options: {
+            scales: {
+              y: {
+                ticks: { callback: (value) => `€ ${value.toFixed(2)}` },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    if (context.datasetIndex === 0) {
+                      return ` € ${context.raw.toFixed(2)}`;
+                    }
+
+                    return " " + context.formattedValue;
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function setupMostActiveCustomersChart(mostActiveCustomers) {
+        const context = document
+          .getElementById("mostActiveCustomersChart")
+          .getContext("2d");
+
+        const mostActiveCustomersChart = new Chart(context, {
+          type: "doughnut",
+          data: {
+            labels: mostActiveCustomers.map(({ _id }) => _id),
+            datasets: [
+              {
+                data: mostActiveCustomers.map(({ count }) => count),
+                backgroundColor: [
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                  "rgb(255, 99, 132)",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                position: "bottom",
+                onClick: (e, legendItem, legend) => {
+                  window.location.href = `/backoffice/customers/${
+                    mostActiveCustomers[legendItem.index]._id
+                  }`;
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function setupMostPopularProductsChart(mostPopularProducts) {
+        const context = document
+          .getElementById("mostPopularProductsChart")
+          .getContext("2d");
+
+        const mostPopularProductsChart = new Chart(context, {
+          type: "doughnut",
+          data: {
+            labels: mostPopularProducts.map(({ name }) => name),
+            datasets: [
+              {
+                data: mostPopularProducts.map(({ rating }) => rating),
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                position: "bottom",
+                onClick: (e, legendItem, legend) => {
+                  window.location.href = `/backoffice/products/${
+                    mostPopularProducts[legendItem.index]._id
+                  }`;
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function setupMostActiveEmployeesChart(mostActiveEmployees) {
+        const context = document
+          .getElementById("mostActiveEmployeesChart")
+          .getContext("2d");
+
+        const mostActiveEmployeesChart = new Chart(context, {
+          type: "doughnut",
+          data: {
+            labels: mostActiveEmployees.map(({ _id }) => _id),
+            datasets: [
+              {
+                data: mostActiveEmployees.map(({ count }) => count),
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                position: "bottom",
+                onClick: (e, legendItem, legend) => {
+                  window.location.href = `/backoffice/employees/${
+                    mostActiveEmployees[legendItem.index]._id
+                  }`;
+                },
+              },
+            },
+          },
+        });
+      }
+
+      getJSON("/api/dashboard/statistics")
+        .then(
+          ({
+            monthlyIncome,
+            mostActiveCustomers,
+            mostPopularProducts,
+            mostActiveEmployees,
+          }) => {
+            setupMonthlyIncomeChart(monthlyIncome);
+            setupMostActiveCustomersChart(mostActiveCustomers);
+            setupMostPopularProductsChart(mostPopularProducts);
+            setupMostActiveEmployeesChart(mostActiveEmployees);
+          }
+        )
+        .catch(redirectOnStatus(401, "/dashboard/signin.html"))
+        .catch((err) => {
+          console.error(err);
+          alert("Something went wrong!");
+        });
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but this site can't properly be displayed without
+        JavaScript enabled. Please enable it to continue.</strong
+      >
+    </noscript>
+
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img
+              src="./assets/images/nolonoloplus-light.png"
+              width="30"
+              height="30"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul
+              class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+              style="--bs-scroll-height: 100px"
+            >
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#0"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/backoffice">Backoffice</a>
+              </li>
+            </ul>
+            <form class="d-flex" onsubmit="signout();">
+              <button class="btn btn-outline-warning" type="submit">
+                Sign out
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container w-100 h-100 py-5">
+      <div class="row">
+        <div class="col m-auto">
+          <canvas
+            id="monthlyIncomeChart"
+            width="200"
+            aria-label="Monthly Income Chart"
+            role="img"
+          ></canvas>
+        </div>
+      </div>
+
+      <div class="row row-cols-3 pt-5 text-center">
+        <div class="col m-auto">
+          <h2 class="mb-4">Most Active Customers</h2>
+          <canvas
+            id="mostActiveCustomersChart"
+            aria-label="Most Active Customers Chart"
+            role="img"
+          ></canvas>
+        </div>
+        <div class="col m-auto">
+          <h2 class="mb-4">Most Popular Products</h2>
+          <canvas
+            id="mostPopularProductsChart"
+            aria-label="Most Popular Products Chart"
+            role="img"
+          ></canvas>
+        </div>
+        <div class="col m-auto">
+          <h2 class="mb-4">Most Active Employees</h2>
+          <canvas
+            id="mostActiveEmployeesChart"
+            aria-label="Most Active Employees Chart"
+            role="img"
+          ></canvas>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

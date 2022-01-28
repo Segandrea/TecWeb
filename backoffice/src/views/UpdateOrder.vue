@@ -35,6 +35,15 @@ const order = ref({
 
 const updatePayload = ref({});
 
+function userRole() {
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  return user.role;
+}
+
+function isEmployee() {
+  return userRole() === "employee";
+}
+
 getJSON(`/api/backoffice/orders/${orderId}`)
   .then((body) => {
     order.value = body;
@@ -131,12 +140,14 @@ function updateOrder() {
                 <input
                   class="form-control"
                   :value="inputValue.start"
+                  :disabled="!isEmployee()"
                   v-on="inputEvents.start"
                   aria-label="Start date"
                 />
                 <input
                   class="form-control"
                   :value="inputValue.end"
+                  :disabled="!isEmployee()"
                   v-on="inputEvents.end"
                   aria-label="End date"
                 />
@@ -160,7 +171,7 @@ function updateOrder() {
               step="0.01"
               min="0"
               required
-              :disabled="updatePayload.state !== 'closed'"
+              :disabled="updatePayload.state !== 'closed' || !isEmployee()"
             />
           </div>
         </div>
@@ -171,6 +182,7 @@ function updateOrder() {
             v-model="updatePayload.state"
             class="form-select"
             id="orderState"
+            :disabled="!isEmployee()"
             required
           >
             <option value="open" selected>Open</option>
@@ -179,7 +191,13 @@ function updateOrder() {
         </div>
 
         <div class="col-12">
-          <button type="submit" class="btn btn-danger">Update</button>
+          <button
+            type="submit"
+            class="btn btn-danger"
+            :disabled="!isEmployee()"
+          >
+            Update
+          </button>
           <button
             v-if="new Date() < new Date(order.startDate)"
             type="button"
@@ -197,6 +215,7 @@ function updateOrder() {
         <thead>
           <tr>
             <th scope="col">customer</th>
+            <th v-if="order.employeeId" scope="col">employee</th>
             <th scope="col">state</th>
             <th scope="col">start date</th>
             <th scope="col">end date</th>
@@ -205,7 +224,7 @@ function updateOrder() {
         </thead>
         <tbody>
           <tr>
-            <th scope="row">
+            <td>
               <router-link
                 v-if="order.customerId"
                 :to="{
@@ -215,7 +234,18 @@ function updateOrder() {
               >
                 {{ order.customerId }}
               </router-link>
-            </th>
+            </td>
+            <td v-if="order.employeeId">
+              <router-link
+                v-if="order.employeeId"
+                :to="{
+                  name: 'UpdateEmployee',
+                  params: { id: order.employeeId },
+                }"
+              >
+                {{ order.employeeId }}
+              </router-link>
+            </td>
             <td>{{ order.state }}</td>
             <td>{{ formatDate(order.startDate) }}</td>
             <td>{{ formatDate(order.endDate) }}</td>
