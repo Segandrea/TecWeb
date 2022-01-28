@@ -107,11 +107,43 @@ router.get("/coupons", restrict, handler.listAll(Coupon, "coupons"));
 router.post("/coupons", restrict, handler.create(Coupon));
 
 router.put("/orders/:id", restrictEmployee, updateOrder);
+router.delete("/orders/:id", restrict, deleteOrder);
 router.get("/orders/:id", restrict, handler.byId(Order));
 router.get(
   "/orders",
   restrict,
   handler.listAll(Order, "orders", { sort: { startDate: -1, state: -1 } })
+);
+
+router.put(
+  "/employees/:id",
+  restrictAdmin,
+  handler.oneByFilterAndUpdate(User, {
+    filter: filterEmployee,
+    body: deserializeEmployee,
+    serialize: serializeEmployee,
+  })
+);
+
+router.get(
+  "/employees/:id",
+  restrict,
+  handler.oneByFilter(User, {
+    filter: filterEmployee,
+    serialize: serializeEmployee,
+  })
+);
+
+router.get(
+  "/employees",
+  restrict,
+  handler.listAll(User, "employees", {
+    filter: (req) => {
+      const filter = JSON.parse(req.query.filter || "{}");
+      return { ...filter, role: "employee" };
+    },
+    serialize: serializeEmployee,
+  })
 );
 
 module.exports = router;
@@ -249,36 +281,23 @@ function updateOrder(req, res) {
     });
 }
 
-router.put(
-  "/employees/:id",
-  restrictAdmin,
-  handler.oneByFilterAndUpdate(User, {
-    filter: filterEmployee,
-    body: deserializeEmployee,
-    serialize: serializeEmployee,
-  })
-);
+function deleteOrder(req, res) {
+  const { id } = req.params;
+  const today = new Date();
+  Order.deleteOne({ _id: id, state: "open", startDate: { $gt: today } })
+    .then(({ deletedCount }) => {
+      if (deletedCount === 1) {
+        return res.sendStatus(200);
+      } else {
+        return res.sendStatus(422);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+}
 
-router.get(
-  "/employees/:id",
-  restrict,
-  handler.oneByFilter(User, {
-    filter: filterEmployee,
-    serialize: serializeEmployee,
-  })
-);
-
-router.get(
-  "/employees",
-  restrict,
-  handler.listAll(User, "employees", {
-    filter: (req) => {
-      const filter = JSON.parse(req.query.filter || "{}");
-      return { ...filter, role: "employee" };
-    },
-    serialize: serializeEmployee,
-  })
-);
 
 function filterEmployee(req) {
   return { _id: req.params.id || null, role: "employee" };

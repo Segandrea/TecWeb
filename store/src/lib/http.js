@@ -51,6 +51,13 @@ export function getJSON(url, { query, fetch, parse } = {}) {
   return _parse ? promise.then((res) => res.json()) : promise;
 }
 
+export function deleteJSON(url, { query, fetch, parse } = {}) {
+  const _parse = typeof parse !== "undefined" ? parse : true;
+  const promise = send("DELETE", url, { query, fetch });
+
+  return _parse ? promise.then((res) => res.json()) : promise;
+}
+
 export function onStatus(status, callback) {
   return ([err, res]) => {
     if (res && res.status === status) {
