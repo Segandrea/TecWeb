@@ -298,7 +298,6 @@ function deleteOrder(req, res) {
     });
 }
 
-
 function filterEmployee(req) {
   return { _id: req.params.id || null, role: "employee" };
 }

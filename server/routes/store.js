@@ -240,11 +240,28 @@ function listProducts(req, res) {
 
     return rentedProducts(start, end)
       .then((products) =>
-        Product.find({
-          ...filter,
-          visible: true,
-          _id: { $nin: products },
-        }).sort({ name: 1, status: 1, basePrice: -1, dailyPrice: -1 })
+        Product.find({})
+          .or([
+            {
+              ...filter,
+              unavailability: { $exists: false },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.start": { $gt: end },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.end": { $lt: start },
+              visible: true,
+              _id: { $nin: products },
+            },
+          ])
+          .sort({ name: 1, status: 1, basePrice: -1, dailyPrice: -1 })
       )
       .then((products) => res.json({ products }))
       .catch((err) => {
