@@ -1,7 +1,14 @@
 <script>
   import { onMount } from "svelte";
 
-  import { rentalPeriod, cartItems } from "$lib/stores";
+  import {
+    rentalPeriod,
+    cartItems,
+    category,
+    basePriceSort,
+    dailyPriceSort,
+    ratingSort,
+  } from "$lib/stores";
   import { path } from "$lib/utils";
 
   let rangeInput;
@@ -75,11 +82,86 @@
             readonly
             required
           />
-          <span
-            id="calendarRange"
-            class="input-group-text bg-warning border-warning"
-            ><i class="bi bi-calendar-range" /></span
-          >
+          <button
+            class="btn btn-warning dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ><i class="bi bi-funnel" />
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+            <li><h5 class="dropdown-header">Category</h5></li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => category.set(undefined)}>All</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => category.set("party")}>Party</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => category.set("cards")}>Cards</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => category.set("dices")}>Dices</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => category.set("puzzle")}>Puzzle</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => category.set("mistery")}>Mistery</button
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => basePriceSort.update((sortOrder) => -sortOrder)}
+                ><i class="bi bi-sort-{$basePriceSort >= 0 ? 'up' : 'down'}" /> Base
+                Price</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() =>
+                  dailyPriceSort.update((sortOrder) => -sortOrder)}
+                ><i class="bi bi-sort-{$dailyPriceSort >= 0 ? 'up' : 'down'}" />
+                Daily Price</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() => ratingSort.update((sortOrder) => -sortOrder)}
+                ><i class="bi bi-sort-{$ratingSort >= 0 ? 'up' : 'down'}" /> Rating</button
+              >
+            </li>
+          </ul>
         </div>
       </div>
     </div>

@@ -5,8 +5,9 @@ const env = process.env.NODE_ENV || "development";
 const prod = env === "production";
 
 const projectDir = path.resolve(__dirname, "..");
-const dashboardStaticPath = path.resolve(projectDir, "dashboard", "public");
 const backofficeStaticPath = path.resolve(projectDir, "backoffice", "dist");
+const dashboardStaticPath = path.resolve(projectDir, "dashboard", "public");
+const serverStaticPath = path.resolve(projectDir, "server", "public");
 const storeStaticPath = path.resolve(projectDir, "store", "build");
 
 module.exports = {
@@ -24,6 +25,9 @@ module.exports = {
   backoffice: {
     staticPath: backofficeStaticPath,
     fallbackPage: path.resolve(backofficeStaticPath, "index.html"),
+  },
+  server: {
+    staticPath: serverStaticPath,
   },
   store: {
     staticPath: storeStaticPath,
