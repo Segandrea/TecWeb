@@ -244,7 +244,21 @@ function listProducts(req, res) {
           .or([
             {
               ...filter,
-              unavailability: { $exists: false },
+              unavailability: { $exists: false, },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.start": { $exists: false, },
+              "unavailability.end": { $exists: false },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.start": { $eq: null },
+              "unavailability.end": { $eq: null },
               visible: true,
               _id: { $nin: products },
             },

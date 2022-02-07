@@ -17,6 +17,7 @@
 </script>
 
 <script>
+  import Alert from "$lib/components/Alert.svelte";
   import StarRating from "svelte-star-rating";
 
   import { rentalPeriod, cart, addToCart } from "$lib/stores";
@@ -24,6 +25,7 @@
   import { onDestroy } from "svelte";
 
   export let products;
+  let alert;
 
   const unsubscribe = rentalPeriod.subscribe((range) => {
     if (range && range.length === 2) {
@@ -48,6 +50,8 @@
 </svelte:head>
 
 <main class="container">
+  <Alert bind:this={alert} />
+
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
     {#if products.length <= 0}
       <div class="col w-100 h-100">

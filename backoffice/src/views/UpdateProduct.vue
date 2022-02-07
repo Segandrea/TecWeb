@@ -6,6 +6,8 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
+import { DatePicker } from "v-calendar";
+
 import {
   getJSON,
   putJSON,
@@ -13,6 +15,7 @@ import {
   onStatus,
   redirectOnStatus,
 } from "../http";
+
 import { signinRoute, toUploads } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
@@ -25,10 +28,27 @@ const alert = ref();
 const imageInput = ref();
 
 const productId = route.params.id;
-const product = ref({});
+const product = ref({
+  unavailability: {},
+});
+
+function deserializeProduct(body) {
+  const unavailability = body.unavailability || {};
+
+  unavailability.start = unavailability.start
+    ? new Date(unavailability.start)
+    : null;
+
+  unavailability.end = unavailability.end ? new Date(unavailability.end) : null;
+
+  body.unavailability = unavailability;
+  return body;
+}
 
 getJSON(`/api/backoffice/products/${productId}`)
-  .then((body) => (product.value = body))
+  .then((body) => {
+    product.value = deserializeProduct(body);
+  })
   .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
   .catch((err) => {
     // eslint-disable-next-line
@@ -63,6 +83,11 @@ function updateProduct() {
     return alert.value.error("Discount price must be lesser than base price");
   }
 
+  const unavailability = product.value.unavailability || {};
+  if ((unavailability.start || -Infinity) > (unavailability.end || Infinity)) {
+    return alert.value.error("Unavailability start must be lesser than end");
+  }
+
   toUploads(imageInput.value.files)
     .catch((err) => {
       // eslint-disable-next-line
@@ -76,7 +101,7 @@ function updateProduct() {
       })
     )
     .then((body) => {
-      product.value = body;
+      product.value = deserializeProduct(body);
 
       // clear the HTML input element
       imageInput.value.value = null;
@@ -181,7 +206,7 @@ function removeImage(index) {
 
     <form @submit.prevent="updateProduct">
       <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="name" class="form-label">Name</label>
           <input
             v-model="product.name"
@@ -192,7 +217,7 @@ function removeImage(index) {
           />
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="productCategory" class="form-label">Category</label>
           <select
             v-model="product.category"
@@ -208,7 +233,7 @@ function removeImage(index) {
           </select>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="productStatus" class="form-label">Status</label>
           <select
             v-model="product.status"
@@ -222,7 +247,33 @@ function removeImage(index) {
           </select>
         </div>
 
-        <div class="d-flex col-md-2 align-items-end">
+        <div class="col-md-4">
+          <div class="form-label">Unavailability</div>
+          <DatePicker
+            v-model="product.unavailability"
+            :clearable="true"
+            is-range
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  :value="inputValue.start"
+                  v-on="inputEvents.start"
+                  aria-label="Start"
+                />
+                <input
+                  class="form-control"
+                  :value="inputValue.end"
+                  v-on="inputEvents.end"
+                  aria-label="End date"
+                />
+              </div>
+            </template>
+          </DatePicker>
+        </div>
+
+        <div class="d-flex col-md-1 align-items-end">
           <div class="form-check form-switch pb-1">
             <input
               v-model="product.visible"

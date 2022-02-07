@@ -6,6 +6,8 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
+import { DatePicker } from "v-calendar";
+
 import { postJSON, onStatus, redirectOnStatus } from "../http";
 import { signinRoute, toUploads } from "../utils";
 
@@ -25,6 +27,7 @@ const product = ref({
   basePrice: 0,
   dailyPrice: 0,
   discountPrice: 0,
+  unavailability: {},
 });
 
 function createProduct() {
@@ -34,6 +37,11 @@ function createProduct() {
 
   if (product.value.discountPrice > product.value.basePrice) {
     return alert.value.error("Discount price must be lesser than base price");
+  }
+
+  const unavailability = product.value.unavailability || {};
+  if ((unavailability.start || -Infinity) > (unavailability.end || Infinity)) {
+    return alert.value.error("Unavailability start must be lesser than end");
   }
 
   toUploads(imageInput.value.files)
@@ -74,7 +82,7 @@ function createProduct() {
 
     <form @submit.prevent="createProduct">
       <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="name" class="form-label">Name</label>
           <input
             v-model="product.name"
@@ -85,7 +93,7 @@ function createProduct() {
           />
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="productCategory" class="form-label">Category</label>
           <select
             v-model="product.category"
@@ -101,7 +109,7 @@ function createProduct() {
           </select>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="productStatus" class="form-label">Status</label>
           <select
             v-model="product.status"
@@ -115,7 +123,33 @@ function createProduct() {
           </select>
         </div>
 
-        <div class="d-flex col-md-2 align-items-end">
+        <div class="col-md-4">
+          <div class="form-label">Unavailability</div>
+          <DatePicker
+            v-model="product.unavailability"
+            :clearable="true"
+            is-range
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  :value="inputValue.start"
+                  v-on="inputEvents.start"
+                  aria-label="Start"
+                />
+                <input
+                  class="form-control"
+                  :value="inputValue.end"
+                  v-on="inputEvents.end"
+                  aria-label="End date"
+                />
+              </div>
+            </template>
+          </DatePicker>
+        </div>
+
+        <div class="d-flex col-md-1 align-items-end">
           <div class="form-check form-switch pb-1">
             <input
               v-model="product.visible"
