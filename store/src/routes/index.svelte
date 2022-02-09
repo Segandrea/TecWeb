@@ -20,17 +20,18 @@
   import Alert from "$lib/components/Alert.svelte";
   import StarRating from "svelte-star-rating";
 
-  import { rentalPeriod, cart, addToCart } from "$lib/stores";
+  import { rentalPeriod, cart, addToCart, category } from "$lib/stores";
   import { path, isAuth } from "$lib/utils";
   import { onDestroy } from "svelte";
 
   export let products;
   let alert;
 
-  const unsubscribe = rentalPeriod.subscribe((range) => {
+  const unsubscribeRentalPeriod = rentalPeriod.subscribe((range) => {
     if (range && range.length === 2) {
       const query = new URLSearchParams({
         params: JSON.stringify({ rentalPeriod: range }),
+        filter: JSON.stringify({ category: $category }),
       });
 
       getJSON(`/api/store/products?${query}`)
@@ -42,7 +43,26 @@
     }
   });
 
-  onDestroy(unsubscribe);
+  const unsubscribeCategory = category.subscribe((category) => {
+    const query = new URLSearchParams({
+      filter: JSON.stringify({ category }),
+    });
+
+    const range = $rentalPeriod;
+    if (range && range.length === 2) {
+      query.set("params", JSON.stringify({ rentalPeriod: range }));
+    }
+
+    getJSON(`/api/store/products?${query}`)
+      .then((body) => (products = body.products))
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
+  });
+
+  onDestroy(unsubscribeCategory);
+  onDestroy(unsubscribeRentalPeriod);
 </script>
 
 <svelte:head>
