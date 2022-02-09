@@ -37,7 +37,7 @@ app.use("/backoffice/*", (req, res) =>
 app.use("/store", express.static(config.store.staticPath));
 app.use("/store/*", (req, res) => res.sendFile(config.store.fallbackPage));
 
-app.use(express.static("./public"));
+app.use(express.static(config.server.staticPath));
 
 // setup express session backend
 app.use(
