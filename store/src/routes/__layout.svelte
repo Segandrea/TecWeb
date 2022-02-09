@@ -1,14 +1,7 @@
 <script>
   import { onMount } from "svelte";
 
-  import {
-    rentalPeriod,
-    cartItems,
-    category,
-    basePriceSort,
-    dailyPriceSort,
-    ratingSort,
-  } from "$lib/stores";
+  import { rentalPeriod, cartItems, category, sortBy } from "$lib/stores";
   import { path } from "$lib/utils";
 
   let rangeInput;
@@ -138,9 +131,11 @@
               <button
                 type="button"
                 class="dropdown-item"
-                on:click={() => basePriceSort.update((sortOrder) => -sortOrder)}
-                ><i class="bi bi-sort-{$basePriceSort >= 0 ? 'up' : 'down'}" /> Base
-                Price</button
+                on:click={() =>
+                  sortBy.update((o) => ({ ...o, basePrice: -o.basePrice }))}
+                ><i
+                  class="bi bi-sort-{$sortBy.basePrice >= 0 ? 'up' : 'down'}"
+                /> Base Price</button
               >
             </li>
             <li>
@@ -148,8 +143,10 @@
                 type="button"
                 class="dropdown-item"
                 on:click={() =>
-                  dailyPriceSort.update((sortOrder) => -sortOrder)}
-                ><i class="bi bi-sort-{$dailyPriceSort >= 0 ? 'up' : 'down'}" />
+                  sortBy.update((o) => ({ ...o, dailyPrice: -o.dailyPrice }))}
+                ><i
+                  class="bi bi-sort-{$sortBy.dailyPrice >= 0 ? 'up' : 'down'}"
+                />
                 Daily Price</button
               >
             </li>
@@ -157,8 +154,9 @@
               <button
                 type="button"
                 class="dropdown-item"
-                on:click={() => ratingSort.update((sortOrder) => -sortOrder)}
-                ><i class="bi bi-sort-{$ratingSort >= 0 ? 'up' : 'down'}" /> Rating</button
+                on:click={() =>
+                  sortBy.update((o) => ({ ...o, rating: -o.rating }))}
+                ><i class="bi bi-sort-{$sortBy.rating >= 0 ? 'up' : 'down'}" /> Rating</button
               >
             </li>
           </ul>

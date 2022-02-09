@@ -20,7 +20,7 @@
   import Alert from "$lib/components/Alert.svelte";
   import StarRating from "svelte-star-rating";
 
-  import { rentalPeriod, cart, addToCart, category } from "$lib/stores";
+  import { rentalPeriod, cart, addToCart, category, sortBy } from "$lib/stores";
   import { path, isAuth } from "$lib/utils";
   import { onDestroy } from "svelte";
 
@@ -61,6 +61,17 @@
       });
   });
 
+  const unsubscribeSortBy = sortBy.subscribe((sortBy) => {
+    products.sort(
+      (l, r) =>
+        sortBy.basePrice * (l.basePrice - r.basePrice) ||
+        sortBy.dailyPrice * (l.dailyPrice - r.dailyPrice) ||
+        sortBy.rating * (l.rating - r.rating)
+    );
+    products = products;
+  });
+
+  onDestroy(unsubscribeSortBy);
   onDestroy(unsubscribeCategory);
   onDestroy(unsubscribeRentalPeriod);
 </script>
