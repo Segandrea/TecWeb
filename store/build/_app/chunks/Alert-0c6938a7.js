@@ -1,5 +1,4 @@
 import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, t as text, k as space, c as claim_element, a as children, g as claim_text, n as claim_space, d as detach, b as attr, V as toggle_class, f as insert_hydration, F as append_hydration, h as set_data, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, x as transition_in, u as transition_out, l as empty, r as group_outros, w as check_outros, D as create_slot } from "./vendor-15d99854.js";
-import { r as router$1 } from "./singletons-12a22614.js";
 function create_if_block(ctx) {
   let div;
   let t0_value = ctx[0].message + "";
@@ -185,9 +184,4 @@ class Alert extends SvelteComponent {
     return this.$$.ctx[2];
   }
 }
-const router = router$1;
-const goto = goto_;
-async function goto_(href, opts) {
-  return router.goto(href, opts, []);
-}
-export { Alert as A, goto as g };
+export { Alert as A };

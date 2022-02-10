@@ -20,9 +20,7 @@ var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 import { N as derived, C as writable } from "./vendor-15d99854.js";
 const rentalPeriod = writable([]);
 const category = writable(void 0);
-const basePriceSort = writable(-1);
-const dailyPriceSort = writable(-1);
-const ratingSort = writable(-1);
+const sortBy = writable({ rating: -1, basePrice: 0, dailyPrice: 0 });
 const cart = writable({});
 function addToCart(product) {
   cart.update((cart2) => __spreadProps(__spreadValues({}, cart2), { [product._id]: product }));
@@ -52,4 +50,4 @@ function clearCoupons() {
 }
 const couponItems = derived(coupons, ($coupons) => Object.values($coupons));
 rentalPeriod.subscribe(() => clearCart());
-export { rentalPeriod as a, basePriceSort as b, cartItems as c, dailyPriceSort as d, category as e, cart as f, addToCart as g, clearCoupons as h, clearCart as i, coupons as j, couponItems as k, addCoupon as l, removeCoupon as m, removeFromCart as n, ratingSort as r };
+export { category as a, cart as b, cartItems as c, addToCart as d, clearCoupons as e, clearCart as f, coupons as g, couponItems as h, addCoupon as i, removeCoupon as j, removeFromCart as k, rentalPeriod as r, sortBy as s };

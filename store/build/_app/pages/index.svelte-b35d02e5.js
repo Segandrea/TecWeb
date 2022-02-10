@@ -1,12 +1,13 @@
-import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, t as text, c as claim_element, a as children, g as claim_text, d as detach, b as attr, f as insert_hydration, F as append_hydration, k as space, n as claim_space, E as src_url_equal, h as set_data, u as transition_out, w as check_outros, x as transition_in, D as create_slot, P as query_selector_all, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, Q as destroy_each, L as component_subscribe, R as onDestroy, r as group_outros, T as set_style, O as noop, U as StarRating, j as create_component, m as claim_component, o as mount_component, v as destroy_component, G as listen } from "../chunks/vendor-15d99854.js";
+import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, t as text, c as claim_element, a as children, g as claim_text, d as detach, b as attr, f as insert_hydration, F as append_hydration, k as space, n as claim_space, E as src_url_equal, h as set_data, u as transition_out, w as check_outros, x as transition_in, D as create_slot, j as create_component, P as query_selector_all, m as claim_component, o as mount_component, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, v as destroy_component, Q as destroy_each, L as component_subscribe, R as onDestroy, r as group_outros, M as binding_callbacks, T as set_style, O as noop, U as StarRating, G as listen } from "../chunks/vendor-15d99854.js";
 import { g as getJSON } from "../chunks/http-cb35e292.js";
-import { a as rentalPeriod, f as cart, g as addToCart } from "../chunks/stores-63e23ef0.js";
+import { A as Alert } from "../chunks/Alert-0c6938a7.js";
+import { r as rentalPeriod, a as category, s as sortBy, b as cart, d as addToCart } from "../chunks/stores-ca4624c0.js";
 import { p as path, i as isAuth } from "../chunks/utils-af6e44bf.js";
 import "../chunks/paths-28a87002.js";
 var index_svelte_svelte_type_style_lang = "";
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[6] = list[i];
+  child_ctx[14] = list[i];
   return child_ctx;
 }
 function create_if_block_3(ctx) {
@@ -91,7 +92,7 @@ function create_if_block_2(ctx) {
   let current;
   starrating = new StarRating({
     props: {
-      rating: ctx[6].rating,
+      rating: ctx[14].rating,
       config: {
         emptyColor: "rgba(127, 127, 127, 0.1)",
         size: 16
@@ -112,7 +113,7 @@ function create_if_block_2(ctx) {
     p(ctx2, dirty) {
       const starrating_changes = {};
       if (dirty & 1)
-        starrating_changes.rating = ctx2[6].rating;
+        starrating_changes.rating = ctx2[14].rating;
       starrating.$set(starrating_changes);
     },
     i(local) {
@@ -169,7 +170,7 @@ function create_if_block_1(ctx) {
   let mounted;
   let dispose;
   function click_handler() {
-    return ctx[4](ctx[6]);
+    return ctx[6](ctx[14]);
   }
   return {
     c() {
@@ -187,7 +188,7 @@ function create_if_block_1(ctx) {
     h() {
       attr(button, "type", "button");
       attr(button, "class", "btn btn-warning rounded-3");
-      button.disabled = button_disabled_value = ctx[6]._id in ctx[1];
+      button.disabled = button_disabled_value = ctx[14]._id in ctx[2];
     },
     m(target, anchor) {
       insert_hydration(target, button, anchor);
@@ -199,7 +200,7 @@ function create_if_block_1(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty & 3 && button_disabled_value !== (button_disabled_value = ctx[6]._id in ctx[1])) {
+      if (dirty & 5 && button_disabled_value !== (button_disabled_value = ctx[14]._id in ctx[2])) {
         button.disabled = button_disabled_value;
       }
     },
@@ -214,7 +215,7 @@ function create_if_block_1(ctx) {
 function create_else_block(ctx) {
   let small;
   let i;
-  let t_value = ctx[6].basePrice.toFixed(2) + "";
+  let t_value = ctx[14].basePrice.toFixed(2) + "";
   let t;
   return {
     c() {
@@ -242,7 +243,7 @@ function create_else_block(ctx) {
       append_hydration(i, t);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && t_value !== (t_value = ctx2[6].basePrice.toFixed(2) + ""))
+      if (dirty & 1 && t_value !== (t_value = ctx2[14].basePrice.toFixed(2) + ""))
         set_data(t, t_value);
     },
     d(detaching) {
@@ -254,12 +255,12 @@ function create_else_block(ctx) {
 function create_if_block(ctx) {
   let span;
   let i0;
-  let t0_value = ctx[6].basePrice.toFixed(2) + "";
+  let t0_value = ctx[14].basePrice.toFixed(2) + "";
   let t0;
   let t1;
   let small;
   let i1;
-  let t2_value = Math.max(ctx[6].basePrice - ctx[6].discountPrice, 0).toFixed(2) + "";
+  let t2_value = Math.max(ctx[14].basePrice - ctx[14].discountPrice, 0).toFixed(2) + "";
   let t2;
   return {
     c() {
@@ -305,9 +306,9 @@ function create_if_block(ctx) {
       append_hydration(i1, t2);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && t0_value !== (t0_value = ctx2[6].basePrice.toFixed(2) + ""))
+      if (dirty & 1 && t0_value !== (t0_value = ctx2[14].basePrice.toFixed(2) + ""))
         set_data(t0, t0_value);
-      if (dirty & 1 && t2_value !== (t2_value = Math.max(ctx2[6].basePrice - ctx2[6].discountPrice, 0).toFixed(2) + ""))
+      if (dirty & 1 && t2_value !== (t2_value = Math.max(ctx2[14].basePrice - ctx2[14].discountPrice, 0).toFixed(2) + ""))
         set_data(t2, t2_value);
     },
     d(detaching) {
@@ -332,12 +333,12 @@ function create_each_block(ctx) {
   let div2;
   let h5;
   let a1;
-  let t1_value = ctx[6].name + "";
+  let t1_value = ctx[14].name + "";
   let t1;
   let a1_href_value;
   let t2;
   let h6;
-  let t3_value = ctx[6].status + "";
+  let t3_value = ctx[14].status + "";
   let t3;
   let t4;
   let div0;
@@ -345,7 +346,7 @@ function create_each_block(ctx) {
   let if_block0;
   let t5;
   let p;
-  let t6_value = ctx[6].description + "";
+  let t6_value = ctx[14].description + "";
   let t6;
   let t7;
   let div1;
@@ -357,7 +358,7 @@ function create_each_block(ctx) {
   let t10;
   let div4;
   let i;
-  let t11_value = ctx[6].dailyPrice.toFixed(2) + "";
+  let t11_value = ctx[14].dailyPrice.toFixed(2) + "";
   let t11;
   let t12;
   let div8;
@@ -371,7 +372,7 @@ function create_each_block(ctx) {
   const if_block_creators = [create_if_block_2, create_else_block_2];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
-    if (ctx2[6].rating)
+    if (ctx2[14].rating)
       return 0;
     return 1;
   }
@@ -385,7 +386,7 @@ function create_each_block(ctx) {
   let current_block_type = select_block_type_1();
   let if_block1 = current_block_type(ctx);
   function select_block_type_2(ctx2, dirty) {
-    if (ctx2[6].discountPrice && ctx2[6].discountPrice > 0)
+    if (ctx2[14].discountPrice && ctx2[14].discountPrice > 0)
       return create_if_block;
     return create_else_block;
   }
@@ -520,13 +521,13 @@ function create_each_block(ctx) {
       this.h();
     },
     h() {
-      if (!src_url_equal(img.src, img_src_value = ctx[6].images[0].url))
+      if (!src_url_equal(img.src, img_src_value = ctx[14].images[0].url))
         attr(img, "src", img_src_value);
       attr(img, "class", "card-img-top");
       attr(img, "height", "200");
-      attr(img, "alt", img_alt_value = ctx[6].name + " image");
-      attr(a0, "href", a0_href_value = path(`/products/${ctx[6]._id}`));
-      attr(a1, "href", a1_href_value = path(`/products/${ctx[6]._id}`));
+      attr(img, "alt", img_alt_value = ctx[14].name + " image");
+      attr(a0, "href", a0_href_value = path(`/products/${ctx[14]._id}`));
+      attr(a1, "href", a1_href_value = path(`/products/${ctx[14]._id}`));
       attr(a1, "class", "link-dark");
       attr(h5, "class", "card-title text-truncate");
       attr(h6, "class", "card-subtitle mb-2 text-muted text-truncate");
@@ -584,21 +585,21 @@ function create_each_block(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx2[6].images[0].url)) {
+      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx2[14].images[0].url)) {
         attr(img, "src", img_src_value);
       }
-      if (!current || dirty & 1 && img_alt_value !== (img_alt_value = ctx2[6].name + " image")) {
+      if (!current || dirty & 1 && img_alt_value !== (img_alt_value = ctx2[14].name + " image")) {
         attr(img, "alt", img_alt_value);
       }
-      if (!current || dirty & 1 && a0_href_value !== (a0_href_value = path(`/products/${ctx2[6]._id}`))) {
+      if (!current || dirty & 1 && a0_href_value !== (a0_href_value = path(`/products/${ctx2[14]._id}`))) {
         attr(a0, "href", a0_href_value);
       }
-      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx2[6].name + ""))
+      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx2[14].name + ""))
         set_data(t1, t1_value);
-      if (!current || dirty & 1 && a1_href_value !== (a1_href_value = path(`/products/${ctx2[6]._id}`))) {
+      if (!current || dirty & 1 && a1_href_value !== (a1_href_value = path(`/products/${ctx2[14]._id}`))) {
         attr(a1, "href", a1_href_value);
       }
-      if ((!current || dirty & 1) && t3_value !== (t3_value = ctx2[6].status + ""))
+      if ((!current || dirty & 1) && t3_value !== (t3_value = ctx2[14].status + ""))
         set_data(t3, t3_value);
       let previous_block_index = current_block_type_index;
       current_block_type_index = select_block_type(ctx2);
@@ -620,10 +621,10 @@ function create_each_block(ctx) {
         transition_in(if_block0, 1);
         if_block0.m(div0, null);
       }
-      if ((!current || dirty & 1) && t6_value !== (t6_value = ctx2[6].description + ""))
+      if ((!current || dirty & 1) && t6_value !== (t6_value = ctx2[14].description + ""))
         set_data(t6, t6_value);
       if_block1.p(ctx2, dirty);
-      if ((!current || dirty & 1) && t11_value !== (t11_value = ctx2[6].dailyPrice.toFixed(2) + ""))
+      if ((!current || dirty & 1) && t11_value !== (t11_value = ctx2[14].dailyPrice.toFixed(2) + ""))
         set_data(t11, t11_value);
       if (current_block_type_1 === (current_block_type_1 = select_block_type_2(ctx2)) && if_block2) {
         if_block2.p(ctx2, dirty);
@@ -658,10 +659,15 @@ function create_each_block(ctx) {
 function create_fragment(ctx) {
   let t0;
   let main;
-  let div;
+  let alert_1;
   let t1;
+  let div;
   let t2;
+  let t3;
   let current;
+  let alert_1_props = {};
+  alert_1 = new Alert({ props: alert_1_props });
+  ctx[5](alert_1);
   let if_block = ctx[0].length <= 0 && create_if_block_3();
   let each_value = ctx[0];
   let each_blocks = [];
@@ -671,20 +677,22 @@ function create_fragment(ctx) {
   const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
   });
-  const default_slot_template = ctx[3].default;
-  const default_slot = create_slot(default_slot_template, ctx, ctx[2], null);
+  const default_slot_template = ctx[4].default;
+  const default_slot = create_slot(default_slot_template, ctx, ctx[3], null);
   return {
     c() {
       t0 = space();
       main = element("main");
+      create_component(alert_1.$$.fragment);
+      t1 = space();
       div = element("div");
       if (if_block)
         if_block.c();
-      t1 = space();
+      t2 = space();
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      t2 = space();
+      t3 = space();
       if (default_slot)
         default_slot.c();
       this.h();
@@ -695,17 +703,19 @@ function create_fragment(ctx) {
       t0 = claim_space(nodes);
       main = claim_element(nodes, "MAIN", { class: true });
       var main_nodes = children(main);
+      claim_component(alert_1.$$.fragment, main_nodes);
+      t1 = claim_space(main_nodes);
       div = claim_element(main_nodes, "DIV", { class: true });
       var div_nodes = children(div);
       if (if_block)
         if_block.l(div_nodes);
-      t1 = claim_space(div_nodes);
+      t2 = claim_space(div_nodes);
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].l(div_nodes);
       }
       div_nodes.forEach(detach);
       main_nodes.forEach(detach);
-      t2 = claim_space(nodes);
+      t3 = claim_space(nodes);
       if (default_slot)
         default_slot.l(nodes);
       this.h();
@@ -718,33 +728,37 @@ function create_fragment(ctx) {
     m(target, anchor) {
       insert_hydration(target, t0, anchor);
       insert_hydration(target, main, anchor);
+      mount_component(alert_1, main, null);
+      append_hydration(main, t1);
       append_hydration(main, div);
       if (if_block)
         if_block.m(div, null);
-      append_hydration(div, t1);
+      append_hydration(div, t2);
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].m(div, null);
       }
-      insert_hydration(target, t2, anchor);
+      insert_hydration(target, t3, anchor);
       if (default_slot) {
         default_slot.m(target, anchor);
       }
       current = true;
     },
     p(ctx2, [dirty]) {
+      const alert_1_changes = {};
+      alert_1.$set(alert_1_changes);
       if (ctx2[0].length <= 0) {
         if (if_block)
           ;
         else {
           if_block = create_if_block_3();
           if_block.c();
-          if_block.m(div, t1);
+          if_block.m(div, t2);
         }
       } else if (if_block) {
         if_block.d(1);
         if_block = null;
       }
-      if (dirty & 3) {
+      if (dirty & 5) {
         each_value = ctx2[0];
         let i;
         for (i = 0; i < each_value.length; i += 1) {
@@ -766,14 +780,15 @@ function create_fragment(ctx) {
         check_outros();
       }
       if (default_slot) {
-        if (default_slot.p && (!current || dirty & 4)) {
-          update_slot_base(default_slot, default_slot_template, ctx2, ctx2[2], !current ? get_all_dirty_from_scope(ctx2[2]) : get_slot_changes(default_slot_template, ctx2[2], dirty, null), null);
+        if (default_slot.p && (!current || dirty & 8)) {
+          update_slot_base(default_slot, default_slot_template, ctx2, ctx2[3], !current ? get_all_dirty_from_scope(ctx2[3]) : get_slot_changes(default_slot_template, ctx2[3], dirty, null), null);
         }
       }
     },
     i(local) {
       if (current)
         return;
+      transition_in(alert_1.$$.fragment, local);
       for (let i = 0; i < each_value.length; i += 1) {
         transition_in(each_blocks[i]);
       }
@@ -781,6 +796,7 @@ function create_fragment(ctx) {
       current = true;
     },
     o(local) {
+      transition_out(alert_1.$$.fragment, local);
       each_blocks = each_blocks.filter(Boolean);
       for (let i = 0; i < each_blocks.length; i += 1) {
         transition_out(each_blocks[i]);
@@ -793,11 +809,13 @@ function create_fragment(ctx) {
         detach(t0);
       if (detaching)
         detach(main);
+      ctx[5](null);
+      destroy_component(alert_1);
       if (if_block)
         if_block.d();
       destroy_each(each_blocks, detaching);
       if (detaching)
-        detach(t2);
+        detach(t3);
       if (default_slot)
         default_slot.d(detaching);
     }
@@ -813,30 +831,68 @@ function load({ fetch }) {
   });
 }
 function instance($$self, $$props, $$invalidate) {
+  let $sortBy;
+  let $rentalPeriod;
+  let $category;
   let $cart;
-  component_subscribe($$self, cart, ($$value) => $$invalidate(1, $cart = $$value));
+  component_subscribe($$self, sortBy, ($$value) => $$invalidate(7, $sortBy = $$value));
+  component_subscribe($$self, rentalPeriod, ($$value) => $$invalidate(8, $rentalPeriod = $$value));
+  component_subscribe($$self, category, ($$value) => $$invalidate(9, $category = $$value));
+  component_subscribe($$self, cart, ($$value) => $$invalidate(2, $cart = $$value));
   let { $$slots: slots = {}, $$scope } = $$props;
   let { products } = $$props;
-  const unsubscribe = rentalPeriod.subscribe((range) => {
+  let alert;
+  function sortProducts(sortBy2) {
+    products.sort((l, r) => sortBy2.rating * (l.rating - r.rating) || sortBy2.basePrice * (l.basePrice - r.basePrice) || sortBy2.dailyPrice * (l.dailyPrice - r.dailyPrice));
+    $$invalidate(0, products);
+  }
+  const unsubscribeRentalPeriod = rentalPeriod.subscribe((range) => {
     if (range && range.length === 2) {
       const query = new URLSearchParams({
-        params: JSON.stringify({ rentalPeriod: range })
+        params: JSON.stringify({ rentalPeriod: range }),
+        filter: JSON.stringify({ category: $category })
       });
-      getJSON(`/api/store/products?${query}`).then((body) => $$invalidate(0, products = body.products)).catch((err) => {
+      getJSON(`/api/store/products?${query}`).then((body) => {
+        $$invalidate(0, products = body.products);
+        sortProducts($sortBy);
+      }).catch((err) => {
         console.error(err);
         alert.error("Something went wrong");
       });
     }
   });
-  onDestroy(unsubscribe);
+  const unsubscribeCategory = category.subscribe((category2) => {
+    const query = new URLSearchParams({ filter: JSON.stringify({ category: category2 }) });
+    const range = $rentalPeriod;
+    if (range && range.length === 2) {
+      query.set("params", JSON.stringify({ rentalPeriod: range }));
+    }
+    getJSON(`/api/store/products?${query}`).then((body) => {
+      $$invalidate(0, products = body.products);
+      sortProducts($sortBy);
+    }).catch((err) => {
+      console.error(err);
+      alert.error("Something went wrong");
+    });
+  });
+  const unsubscribeSortBy = sortBy.subscribe(sortProducts);
+  onDestroy(unsubscribeSortBy);
+  onDestroy(unsubscribeCategory);
+  onDestroy(unsubscribeRentalPeriod);
+  function alert_1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      alert = $$value;
+      $$invalidate(1, alert);
+    });
+  }
   const click_handler = (product) => addToCart(product);
   $$self.$$set = ($$props2) => {
     if ("products" in $$props2)
       $$invalidate(0, products = $$props2.products);
     if ("$$scope" in $$props2)
-      $$invalidate(2, $$scope = $$props2.$$scope);
+      $$invalidate(3, $$scope = $$props2.$$scope);
   };
-  return [products, $cart, $$scope, slots, click_handler];
+  return [products, alert, $cart, $$scope, slots, alert_1_binding, click_handler];
 }
 class Routes extends SvelteComponent {
   constructor(options) {
