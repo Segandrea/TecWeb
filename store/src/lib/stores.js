@@ -13,9 +13,7 @@ export const category = writable(undefined);
 /**
  * Sort filter
  */
-export const basePriceSort = writable(-1);
-export const dailyPriceSort = writable(-1);
-export const ratingSort = writable(-1);
+export const sortBy = writable({ rating: -1, basePrice: 0, dailyPrice: 0 });
 
 /**
  * Cart

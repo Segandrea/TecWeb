@@ -1,17 +1,12 @@
 <script>
   import { onMount } from "svelte";
 
-  import {
-    rentalPeriod,
-    cartItems,
-    category,
-    basePriceSort,
-    dailyPriceSort,
-    ratingSort,
-  } from "$lib/stores";
+  import { rentalPeriod, cartItems, category, sortBy } from "$lib/stores";
   import { path } from "$lib/utils";
 
   let rangeInput;
+  const sortSeq = [0, 1, -1];
+  const sortSeqClass = ["bi-sort-down", "bi-filter", "bi-sort-up"];
 
   onMount(() => {
     const pickr = flatpickr(rangeInput, {
@@ -138,9 +133,12 @@
               <button
                 type="button"
                 class="dropdown-item"
-                on:click={() => basePriceSort.update((sortOrder) => -sortOrder)}
-                ><i class="bi bi-sort-{$basePriceSort >= 0 ? 'up' : 'down'}" /> Base
-                Price</button
+                on:click={() =>
+                  sortBy.update((o) => ({
+                    ...o,
+                    rating: sortSeq[o.rating + 1],
+                  }))}
+                ><i class="bi {sortSeqClass[$sortBy.rating + 1]}" /> Rating</button
               >
             </li>
             <li>
@@ -148,17 +146,24 @@
                 type="button"
                 class="dropdown-item"
                 on:click={() =>
-                  dailyPriceSort.update((sortOrder) => -sortOrder)}
-                ><i class="bi bi-sort-{$dailyPriceSort >= 0 ? 'up' : 'down'}" />
-                Daily Price</button
+                  sortBy.update((o) => ({
+                    ...o,
+                    basePrice: sortSeq[o.basePrice + 1],
+                  }))}
+                ><i class="bi {sortSeqClass[$sortBy.basePrice + 1]}" /> Base Price</button
               >
             </li>
             <li>
               <button
                 type="button"
                 class="dropdown-item"
-                on:click={() => ratingSort.update((sortOrder) => -sortOrder)}
-                ><i class="bi bi-sort-{$ratingSort >= 0 ? 'up' : 'down'}" /> Rating</button
+                on:click={() =>
+                  sortBy.update((o) => ({
+                    ...o,
+                    dailyPrice: sortSeq[o.dailyPrice + 1],
+                  }))}
+                ><i class="bi {sortSeqClass[$sortBy.dailyPrice + 1]}" />
+                Daily Price</button
               >
             </li>
           </ul>

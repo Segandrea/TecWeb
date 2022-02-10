@@ -11,6 +11,11 @@ const ReviewSchema = new Schema({
   rating: { type: Number, min: 0, max: 5, required: true },
 });
 
+const UnavailabilitySchema = new Schema({
+  start: { type: Date, required: false },
+  end: { type: Date, required: false },
+});
+
 const ProductSchema = new Schema({
   name: { type: String, required: true },
   images: [ImageSchema],
@@ -36,6 +41,7 @@ const ProductSchema = new Schema({
   },
   reviews: [ReviewSchema],
   rating: { type: Number, min: 0, max: 5, default: 0, required: true },
+  unavailability: { type: UnavailabilitySchema, required: false },
 });
 
 ProductSchema.pre("save", function (next) {

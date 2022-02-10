@@ -17,22 +17,38 @@
 </script>
 
 <script>
+  import Alert from "$lib/components/Alert.svelte";
   import StarRating from "svelte-star-rating";
 
-  import { rentalPeriod, cart, addToCart } from "$lib/stores";
+  import { rentalPeriod, cart, addToCart, category, sortBy } from "$lib/stores";
   import { path, isAuth } from "$lib/utils";
   import { onDestroy } from "svelte";
 
   export let products;
+  let alert;
 
-  const unsubscribe = rentalPeriod.subscribe((range) => {
+  function sortProducts(sortBy) {
+    products.sort(
+      (l, r) =>
+        sortBy.rating * (l.rating - r.rating) ||
+        sortBy.basePrice * (l.basePrice - r.basePrice) ||
+        sortBy.dailyPrice * (l.dailyPrice - r.dailyPrice)
+    );
+    products = products;
+  }
+
+  const unsubscribeRentalPeriod = rentalPeriod.subscribe((range) => {
     if (range && range.length === 2) {
       const query = new URLSearchParams({
         params: JSON.stringify({ rentalPeriod: range }),
+        filter: JSON.stringify({ category: $category }),
       });
 
       getJSON(`/api/store/products?${query}`)
-        .then((body) => (products = body.products))
+        .then((body) => {
+          products = body.products;
+          sortProducts($sortBy);
+        })
         .catch((err) => {
           console.error(err);
           alert.error("Something went wrong");
@@ -40,7 +56,32 @@
     }
   });
 
-  onDestroy(unsubscribe);
+  const unsubscribeCategory = category.subscribe((category) => {
+    const query = new URLSearchParams({
+      filter: JSON.stringify({ category }),
+    });
+
+    const range = $rentalPeriod;
+    if (range && range.length === 2) {
+      query.set("params", JSON.stringify({ rentalPeriod: range }));
+    }
+
+    getJSON(`/api/store/products?${query}`)
+      .then((body) => {
+        products = body.products;
+        sortProducts($sortBy);
+      })
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
+  });
+
+  const unsubscribeSortBy = sortBy.subscribe(sortProducts);
+
+  onDestroy(unsubscribeSortBy);
+  onDestroy(unsubscribeCategory);
+  onDestroy(unsubscribeRentalPeriod);
 </script>
 
 <svelte:head>
@@ -48,6 +89,8 @@
 </svelte:head>
 
 <main class="container">
+  <Alert bind:this={alert} />
+
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
     {#if products.length <= 0}
       <div class="col w-100 h-100">
