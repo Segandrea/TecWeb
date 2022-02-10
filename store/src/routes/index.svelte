@@ -27,6 +27,16 @@
   export let products;
   let alert;
 
+  function sortProducts(sortBy) {
+    products.sort(
+      (l, r) =>
+        sortBy.rating * (l.rating - r.rating) ||
+        sortBy.basePrice * (l.basePrice - r.basePrice) ||
+        sortBy.dailyPrice * (l.dailyPrice - r.dailyPrice)
+    );
+    products = products;
+  }
+
   const unsubscribeRentalPeriod = rentalPeriod.subscribe((range) => {
     if (range && range.length === 2) {
       const query = new URLSearchParams({
@@ -35,7 +45,10 @@
       });
 
       getJSON(`/api/store/products?${query}`)
-        .then((body) => (products = body.products))
+        .then((body) => {
+          products = body.products;
+          sortProducts($sortBy);
+        })
         .catch((err) => {
           console.error(err);
           alert.error("Something went wrong");
@@ -54,22 +67,17 @@
     }
 
     getJSON(`/api/store/products?${query}`)
-      .then((body) => (products = body.products))
+      .then((body) => {
+        products = body.products;
+        sortProducts($sortBy);
+      })
       .catch((err) => {
         console.error(err);
         alert.error("Something went wrong");
       });
   });
 
-  const unsubscribeSortBy = sortBy.subscribe((sortBy) => {
-    products.sort(
-      (l, r) =>
-        sortBy.basePrice * (l.basePrice - r.basePrice) ||
-        sortBy.dailyPrice * (l.dailyPrice - r.dailyPrice) ||
-        sortBy.rating * (l.rating - r.rating)
-    );
-    products = products;
-  });
+  const unsubscribeSortBy = sortBy.subscribe(sortProducts);
 
   onDestroy(unsubscribeSortBy);
   onDestroy(unsubscribeCategory);

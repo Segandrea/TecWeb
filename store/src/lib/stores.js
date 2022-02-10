@@ -13,7 +13,7 @@ export const category = writable(undefined);
 /**
  * Sort filter
  */
-export const sortBy = writable({ basePrice: -1, dailyPrice: -1, rating: -1 });
+export const sortBy = writable({ rating: -1, basePrice: 0, dailyPrice: 0 });
 
 /**
  * Cart

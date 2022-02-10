@@ -5,6 +5,8 @@
   import { path } from "$lib/utils";
 
   let rangeInput;
+  const sortSeq = [0, 1, -1];
+  const sortSeqClass = ["bi-sort-down", "bi-filter", "bi-sort-up"];
 
   onMount(() => {
     const pickr = flatpickr(rangeInput, {
@@ -132,10 +134,11 @@
                 type="button"
                 class="dropdown-item"
                 on:click={() =>
-                  sortBy.update((o) => ({ ...o, basePrice: -o.basePrice }))}
-                ><i
-                  class="bi bi-sort-{$sortBy.basePrice >= 0 ? 'up' : 'down'}"
-                /> Base Price</button
+                  sortBy.update((o) => ({
+                    ...o,
+                    rating: sortSeq[o.rating + 1],
+                  }))}
+                ><i class="bi {sortSeqClass[$sortBy.rating + 1]}" /> Rating</button
               >
             </li>
             <li>
@@ -143,20 +146,24 @@
                 type="button"
                 class="dropdown-item"
                 on:click={() =>
-                  sortBy.update((o) => ({ ...o, dailyPrice: -o.dailyPrice }))}
-                ><i
-                  class="bi bi-sort-{$sortBy.dailyPrice >= 0 ? 'up' : 'down'}"
-                />
+                  sortBy.update((o) => ({
+                    ...o,
+                    basePrice: sortSeq[o.basePrice + 1],
+                  }))}
+                ><i class="bi {sortSeqClass[$sortBy.basePrice + 1]}" /> Base Price</button
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                on:click={() =>
+                  sortBy.update((o) => ({
+                    ...o,
+                    dailyPrice: sortSeq[o.dailyPrice + 1],
+                  }))}
+                ><i class="bi {sortSeqClass[$sortBy.dailyPrice + 1]}" />
                 Daily Price</button
-              >
-            </li>
-            <li>
-              <button
-                type="button"
-                class="dropdown-item"
-                on:click={() =>
-                  sortBy.update((o) => ({ ...o, rating: -o.rating }))}
-                ><i class="bi bi-sort-{$sortBy.rating >= 0 ? 'up' : 'down'}" /> Rating</button
               >
             </li>
           </ul>
