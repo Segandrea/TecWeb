@@ -264,6 +264,7 @@ function updateOrder(req, res) {
         return res.sendStatus(409);
       }
 
+      order.billingAddress = body.billingAddress || "";
       order.startDate = body.startDate || order.startDate;
       order.endDate = body.endDate || order.endDate;
 

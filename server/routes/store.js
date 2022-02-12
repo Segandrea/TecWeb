@@ -235,6 +235,7 @@ async function createOrder(req, res) {
 
   return Order.create({
     customerId: user._id,
+    billingAddress: user.customer.billingAddress || "",
     state: "open",
     startDate,
     endDate,

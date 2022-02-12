@@ -49,6 +49,7 @@ getJSON(`/api/backoffice/orders/${orderId}`)
     order.value = body;
 
     updatePayload.value = {
+      billingAddress: body.billingAddress,
       state: body.state,
       range: {
         start: new Date(body.startDate),
@@ -77,6 +78,7 @@ function deleteOrder() {
 }
 
 function updateOrder() {
+  order.value.billingAddress = updatePayload.value.billingAddress;
   order.value.state = updatePayload.value.state;
   order.value.startDate = updatePayload.value.range.start;
   order.value.endDate = updatePayload.value.range.end;
@@ -90,6 +92,7 @@ function updateOrder() {
       order.value = body;
 
       updatePayload.value = {
+        billingAddress: body.billingAddress,
         state: body.state,
         range: {
           start: new Date(body.startDate),
@@ -132,7 +135,7 @@ function updateOrder() {
       @submit.prevent="updateOrder"
     >
       <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="form-label">Rental Period</div>
           <DatePicker v-model="updatePayload.range" is-range>
             <template v-slot="{ inputValue, inputEvents }">
@@ -156,7 +159,7 @@ function updateOrder() {
           </DatePicker>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="orderPenaltyPrice" class="form-label"
             >Penalty price</label
           >
@@ -176,7 +179,20 @@ function updateOrder() {
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <label for="orderBillingAddress" class="form-label"
+            >Billing Address</label
+          >
+          <input
+            v-model="updatePayload.billingAddress"
+            class="form-control"
+            type="text"
+            id="orderBillingAddress"
+            :disabled="!isEmployee()"
+          />
+        </div>
+
+        <div class="col-md-3">
           <label for="orderState" class="form-label">State</label>
           <select
             v-model="updatePayload.state"
