@@ -6,14 +6,15 @@ import { writable, derived } from "svelte/store";
 export const rentalPeriod = writable([]);
 
 /**
- * Category
+ * Filtering
  */
 export const category = writable(undefined);
-
-/**
- * Sort filter
- */
 export const sortBy = writable({ rating: -1, basePrice: 0, dailyPrice: 0 });
+
+export function clearFilters() {
+  sortBy.set({ rating: -1, basePrice: 0, dailyPrice: 0 });
+  category.set(undefined);
+}
 
 /**
  * Cart

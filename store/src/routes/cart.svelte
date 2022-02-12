@@ -27,6 +27,7 @@
     cart,
     cartItems,
     clearCart,
+    clearFilters,
     removeFromCart,
     coupons,
     couponItems,
@@ -107,6 +108,7 @@
     })
       .then(() => {
         alert.info("Success");
+        clearFilters();
         clearCoupons();
         clearCart();
       })
