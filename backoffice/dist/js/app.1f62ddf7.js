@@ -2685,12 +2685,12 @@ const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_6 = {
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_7 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "w-100 text-center" }, "Order", -1)
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_8 = ["onSubmit"]
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_9 = { class: "row g-4" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_10 = { class: "col-md-4" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_10 = { class: "col-md-3" }
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_11 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "form-label" }, "Rental Period", -1)
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_12 = { class: "input-group" }
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_13 = ["value", "disabled"]
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_14 = ["value", "disabled"]
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_15 = { class: "col-md-4" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_15 = { class: "col-md-3" }
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_16 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "orderPenaltyPrice",
   class: "form-label"
@@ -2698,51 +2698,57 @@ const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_16 = /*#__PURE__*/Ob
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_17 = { class: "input-group" }
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_18 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_19 = ["disabled"]
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_20 = { class: "col-md-4" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_20 = { class: "col-md-3" }
 const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_21 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+  for: "orderBillingAddress",
+  class: "form-label"
+}, "Billing Address", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_22 = ["disabled"]
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_23 = { class: "col-md-3" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_24 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "orderState",
   class: "form-label"
 }, "State", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_22 = ["disabled"]
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_23 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("option", {
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_25 = ["disabled"]
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_26 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("option", {
   value: "open",
   selected: ""
 }, "Open", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_24 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("option", { value: "closed" }, "Closed", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_25 = [
-  UpdateOrdervue_type_script_setup_true_lang_js_hoisted_23,
-  UpdateOrdervue_type_script_setup_true_lang_js_hoisted_24
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_27 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("option", { value: "closed" }, "Closed", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_28 = [
+  UpdateOrdervue_type_script_setup_true_lang_js_hoisted_26,
+  UpdateOrdervue_type_script_setup_true_lang_js_hoisted_27
 ]
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_26 = { class: "col-12" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_27 = ["disabled"]
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_28 = { class: "table-responsive" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_29 = { class: "table table-hover mb-5" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_30 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "customer", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_31 = {
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_29 = { class: "col-12" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_30 = ["disabled"]
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_31 = { class: "table-responsive" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_32 = { class: "table table-hover mb-5" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_33 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "customer", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_34 = {
   key: 0,
   scope: "col"
 }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_32 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "state", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_33 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "start date", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_34 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "end date", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_35 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "days", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_36 = { key: 0 }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_37 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "w-100 text-center" }, "Pricing", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_38 = { class: "table-responsive" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_39 = { class: "table table-hover mb-5" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_40 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "subtotal", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_41 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "discounts", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_42 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "coupons", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_43 = {
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_35 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "state", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_36 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "start date", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_37 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "end date", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_38 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "days", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_39 = { key: 0 }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_40 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "w-100 text-center" }, "Pricing", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_41 = { class: "table-responsive" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_42 = { class: "table table-hover mb-5" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_43 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "subtotal", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_44 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "discounts", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_45 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "coupons", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_46 = {
   key: 0,
   scope: "col"
 }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_44 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "total", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_45 = { key: 0 }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_46 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "w-100 text-center" }, "Products", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_47 = { class: "table-responsive" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_48 = { class: "table table-hover mb-5" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_49 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_47 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "total", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_48 = { key: 0 }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_49 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "w-100 text-center" }, "Products", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_50 = { class: "table-responsive" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_51 = { class: "table table-hover mb-5" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_52 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
   /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tr", null, [
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "#"),
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "name"),
@@ -2751,17 +2757,17 @@ const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_49 = /*#__PURE__*/Ob
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "discount price")
   ])
 ], -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_50 = { scope: "row" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_51 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "w-100 text-center" }, "Coupons", -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_52 = { class: "table-responsive" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_53 = { class: "table table-hover" }
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_54 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_53 = { scope: "row" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_54 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "w-100 text-center" }, "Coupons", -1)
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_55 = { class: "table-responsive" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_56 = { class: "table table-hover" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_57 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
   /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tr", null, [
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "code"),
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "value")
   ])
 ], -1)
-const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_55 = { scope: "row" }
+const UpdateOrdervue_type_script_setup_true_lang_js_hoisted_58 = { scope: "row" }
 
 
 
@@ -2811,6 +2817,7 @@ getJSON(`/api/backoffice/orders/${orderId}`)
     order.value = body;
 
     updatePayload.value = {
+      billingAddress: body.billingAddress,
       state: body.state,
       range: {
         start: new Date(body.startDate),
@@ -2839,6 +2846,7 @@ function deleteOrder() {
 }
 
 function updateOrder() {
+  order.value.billingAddress = updatePayload.value.billingAddress;
   order.value.state = updatePayload.value.state;
   order.value.startDate = updatePayload.value.range.start;
   order.value.endDate = updatePayload.value.range.end;
@@ -2852,6 +2860,7 @@ function updateOrder() {
       order.value = body;
 
       updatePayload.value = {
+        billingAddress: body.billingAddress,
         state: body.state,
         range: {
           start: new Date(body.startDate),
@@ -2946,22 +2955,34 @@ return (_ctx, _cache) => {
               ]),
               Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_20, [
                 UpdateOrdervue_type_script_setup_true_lang_js_hoisted_21,
+                Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
+                  "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ((updatePayload.value.billingAddress) = $event)),
+                  class: "form-control",
+                  type: "text",
+                  id: "orderBillingAddress",
+                  disabled: !isEmployee()
+                }, null, 8, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_22), [
+                  [vue_runtime_esm_bundler["K" /* vModelText */], updatePayload.value.billingAddress]
+                ])
+              ]),
+              Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_23, [
+                UpdateOrdervue_type_script_setup_true_lang_js_hoisted_24,
                 Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("select", {
-                  "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ((updatePayload.value.state) = $event)),
+                  "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ((updatePayload.value.state) = $event)),
                   class: "form-select",
                   id: "orderState",
                   disabled: !isEmployee(),
                   required: ""
-                }, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_25, 8, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_22), [
+                }, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_28, 8, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_25), [
                   [vue_runtime_esm_bundler["J" /* vModelSelect */], updatePayload.value.state]
                 ])
               ]),
-              Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_26, [
+              Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_29, [
                 Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
                   type: "submit",
                   class: "btn btn-danger",
                   disabled: !isEmployee()
-                }, " Update ", 8, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_27),
+                }, " Update ", 8, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_30),
                 (new Date() < new Date(order.value.startDate))
                   ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("button", {
                       key: 0,
@@ -2974,18 +2995,18 @@ return (_ctx, _cache) => {
             ])
           ], 40, UpdateOrdervue_type_script_setup_true_lang_js_hoisted_8))
         : Object(vue_runtime_esm_bundler["f" /* createCommentVNode */])("", true),
-      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_28, [
-        Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_29, [
+      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_31, [
+        Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_32, [
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
             Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tr", null, [
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_30,
-              (order.value.employeeId)
-                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_31, "employee"))
-                : Object(vue_runtime_esm_bundler["f" /* createCommentVNode */])("", true),
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_32,
               UpdateOrdervue_type_script_setup_true_lang_js_hoisted_33,
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_34,
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_35
+              (order.value.employeeId)
+                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_34, "employee"))
+                : Object(vue_runtime_esm_bundler["f" /* createCommentVNode */])("", true),
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_35,
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_36,
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_37,
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_38
             ])
           ]),
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tbody", null, [
@@ -3007,7 +3028,7 @@ return (_ctx, _cache) => {
                   : Object(vue_runtime_esm_bundler["f" /* createCommentVNode */])("", true)
               ]),
               (order.value.employeeId)
-                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("td", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_36, [
+                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("td", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_39, [
                     (order.value.employeeId)
                       ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["e" /* createBlock */])(_component_router_link, {
                           key: 0,
@@ -3032,18 +3053,18 @@ return (_ctx, _cache) => {
           ])
         ])
       ]),
-      UpdateOrdervue_type_script_setup_true_lang_js_hoisted_37,
-      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_38, [
-        Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_39, [
+      UpdateOrdervue_type_script_setup_true_lang_js_hoisted_40,
+      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_41, [
+        Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_42, [
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
             Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tr", null, [
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_40,
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_41,
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_42,
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_43,
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_44,
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_45,
               (order.value.state === 'closed')
-                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_43, "penalty"))
+                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_46, "penalty"))
                 : Object(vue_runtime_esm_bundler["f" /* createCommentVNode */])("", true),
-              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_44
+              UpdateOrdervue_type_script_setup_true_lang_js_hoisted_47
             ])
           ]),
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tbody", null, [
@@ -3052,23 +3073,23 @@ return (_ctx, _cache) => {
               Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, "€ " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(order.value.discountsPrice.toFixed(2)), 1),
               Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, "€ " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(order.value.couponsPrice.toFixed(2)), 1),
               (order.value.state === 'closed')
-                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("td", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_45, " € " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(order.value.penaltyPrice.toFixed(2)), 1))
+                ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("td", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_48, " € " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(order.value.penaltyPrice.toFixed(2)), 1))
                 : Object(vue_runtime_esm_bundler["f" /* createCommentVNode */])("", true),
               Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, "€ " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(order.value.totalPrice.toFixed(2)), 1)
             ])
           ])
         ])
       ]),
-      UpdateOrdervue_type_script_setup_true_lang_js_hoisted_46,
-      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_47, [
-        Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_48, [
-          UpdateOrdervue_type_script_setup_true_lang_js_hoisted_49,
+      UpdateOrdervue_type_script_setup_true_lang_js_hoisted_49,
+      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_50, [
+        Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_51, [
+          UpdateOrdervue_type_script_setup_true_lang_js_hoisted_52,
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tbody", null, [
             (Object(vue_runtime_esm_bundler["v" /* openBlock */])(true), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])(vue_runtime_esm_bundler["a" /* Fragment */], null, Object(vue_runtime_esm_bundler["B" /* renderList */])(order.value.products, (product) => {
               return (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("tr", {
                 key: product.productId
               }, [
-                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_50, [
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_53, [
                   Object(vue_runtime_esm_bundler["k" /* createVNode */])(_component_router_link, {
                     to: {
                   name: 'UpdateProduct',
@@ -3092,16 +3113,16 @@ return (_ctx, _cache) => {
       ]),
       (order.value.coupons && order.value.coupons.length > 0)
         ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])(vue_runtime_esm_bundler["a" /* Fragment */], { key: 1 }, [
-            UpdateOrdervue_type_script_setup_true_lang_js_hoisted_51,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_52, [
-              Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_53, [
-                UpdateOrdervue_type_script_setup_true_lang_js_hoisted_54,
+            UpdateOrdervue_type_script_setup_true_lang_js_hoisted_54,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_55, [
+              Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_56, [
+                UpdateOrdervue_type_script_setup_true_lang_js_hoisted_57,
                 Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tbody", null, [
                   (Object(vue_runtime_esm_bundler["v" /* openBlock */])(true), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])(vue_runtime_esm_bundler["a" /* Fragment */], null, Object(vue_runtime_esm_bundler["B" /* renderList */])(order.value.coupons, (coupon) => {
                     return (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("tr", {
                       key: coupon.code
                     }, [
-                      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_55, Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.code), 1),
+                      Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", UpdateOrdervue_type_script_setup_true_lang_js_hoisted_58, Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.code), 1),
                       Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, "€ " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.value.toFixed(2)), 1)
                     ]))
                   }), 128))
@@ -3508,4 +3529,4 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAABgCAYAAAGh
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.b56040df.js.map
+//# sourceMappingURL=app.1f62ddf7.js.map

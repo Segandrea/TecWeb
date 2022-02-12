@@ -12,7 +12,7 @@ function get_each_context_1(ctx, list, i) {
   child_ctx[4] = list[i];
   return child_ctx;
 }
-function create_if_block_1(ctx) {
+function create_if_block_2(ctx) {
   let div2;
   let div1;
   let h5;
@@ -79,7 +79,7 @@ function create_if_block_1(ctx) {
     }
   };
 }
-function create_if_block(ctx) {
+function create_if_block_1(ctx) {
   let h3;
   let t0;
   let t1;
@@ -270,6 +270,73 @@ function create_each_block_1(ctx) {
     d(detaching) {
       if (detaching)
         detach(tr);
+    }
+  };
+}
+function create_if_block(ctx) {
+  let h3;
+  let t0;
+  let t1;
+  let div2;
+  let div1;
+  let div0;
+  let t2_value = ctx[0].billingAddress + "";
+  let t2;
+  return {
+    c() {
+      h3 = element("h3");
+      t0 = text("Billing Address");
+      t1 = space();
+      div2 = element("div");
+      div1 = element("div");
+      div0 = element("div");
+      t2 = text(t2_value);
+      this.h();
+    },
+    l(nodes) {
+      h3 = claim_element(nodes, "H3", { class: true });
+      var h3_nodes = children(h3);
+      t0 = claim_text(h3_nodes, "Billing Address");
+      h3_nodes.forEach(detach);
+      t1 = claim_space(nodes);
+      div2 = claim_element(nodes, "DIV", { class: true });
+      var div2_nodes = children(div2);
+      div1 = claim_element(div2_nodes, "DIV", { class: true });
+      var div1_nodes = children(div1);
+      div0 = claim_element(div1_nodes, "DIV", { class: true });
+      var div0_nodes = children(div0);
+      t2 = claim_text(div0_nodes, t2_value);
+      div0_nodes.forEach(detach);
+      div1_nodes.forEach(detach);
+      div2_nodes.forEach(detach);
+      this.h();
+    },
+    h() {
+      attr(h3, "class", "text-center mt-5");
+      attr(div0, "class", "card-text");
+      attr(div1, "class", "card-body");
+      attr(div2, "class", "card text-center");
+    },
+    m(target, anchor) {
+      insert_hydration(target, h3, anchor);
+      append_hydration(h3, t0);
+      insert_hydration(target, t1, anchor);
+      insert_hydration(target, div2, anchor);
+      append_hydration(div2, div1);
+      append_hydration(div1, div0);
+      append_hydration(div0, t2);
+    },
+    p(ctx2, dirty) {
+      if (dirty & 1 && t2_value !== (t2_value = ctx2[0].billingAddress + ""))
+        set_data(t2, t2_value);
+    },
+    d(detaching) {
+      if (detaching)
+        detach(h3);
+      if (detaching)
+        detach(t1);
+      if (detaching)
+        detach(div2);
     }
   };
 }
@@ -605,12 +672,14 @@ function create_fragment(ctx) {
   let t39;
   let t40;
   let t41;
-  let h32;
   let t42;
+  let h32;
   let t43;
+  let t44;
   let div26;
-  let if_block0 = ctx[0].penaltyPrice > 0 && create_if_block_1(ctx);
-  let if_block1 = ctx[0].coupons && ctx[0].coupons.length > 0 && create_if_block(ctx);
+  let if_block0 = ctx[0].penaltyPrice > 0 && create_if_block_2(ctx);
+  let if_block1 = ctx[0].coupons && ctx[0].coupons.length > 0 && create_if_block_1(ctx);
+  let if_block2 = ctx[0].billingAddress && create_if_block(ctx);
   let each_value = ctx[0].products;
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
@@ -701,9 +770,12 @@ function create_fragment(ctx) {
       if (if_block1)
         if_block1.c();
       t41 = space();
+      if (if_block2)
+        if_block2.c();
+      t42 = space();
       h32 = element("h3");
-      t42 = text("Products");
-      t43 = space();
+      t43 = text("Products");
+      t44 = space();
       div26 = element("div");
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
@@ -867,11 +939,14 @@ function create_fragment(ctx) {
       if (if_block1)
         if_block1.l(main_nodes);
       t41 = claim_space(main_nodes);
+      if (if_block2)
+        if_block2.l(main_nodes);
+      t42 = claim_space(main_nodes);
       h32 = claim_element(main_nodes, "H3", { class: true });
       var h32_nodes = children(h32);
-      t42 = claim_text(h32_nodes, "Products");
+      t43 = claim_text(h32_nodes, "Products");
       h32_nodes.forEach(detach);
-      t43 = claim_space(main_nodes);
+      t44 = claim_space(main_nodes);
       div26 = claim_element(main_nodes, "DIV", { class: true });
       var div26_nodes = children(div26);
       for (let i = 0; i < each_blocks.length; i += 1) {
@@ -1006,9 +1081,12 @@ function create_fragment(ctx) {
       if (if_block1)
         if_block1.m(main, null);
       append_hydration(main, t41);
+      if (if_block2)
+        if_block2.m(main, null);
+      append_hydration(main, t42);
       append_hydration(main, h32);
-      append_hydration(h32, t42);
-      append_hydration(main, t43);
+      append_hydration(h32, t43);
+      append_hydration(main, t44);
       append_hydration(main, div26);
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].m(div26, null);
@@ -1033,7 +1111,7 @@ function create_fragment(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_1(ctx2);
+          if_block0 = create_if_block_2(ctx2);
           if_block0.c();
           if_block0.m(div25, t35);
         }
@@ -1047,13 +1125,25 @@ function create_fragment(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block(ctx2);
+          if_block1 = create_if_block_1(ctx2);
           if_block1.c();
           if_block1.m(main, t41);
         }
       } else if (if_block1) {
         if_block1.d(1);
         if_block1 = null;
+      }
+      if (ctx2[0].billingAddress) {
+        if (if_block2) {
+          if_block2.p(ctx2, dirty);
+        } else {
+          if_block2 = create_if_block(ctx2);
+          if_block2.c();
+          if_block2.m(main, t42);
+        }
+      } else if (if_block2) {
+        if_block2.d(1);
+        if_block2 = null;
       }
       if (dirty & 1) {
         each_value = ctx2[0].products;
@@ -1083,6 +1173,8 @@ function create_fragment(ctx) {
         if_block0.d();
       if (if_block1)
         if_block1.d();
+      if (if_block2)
+        if_block2.d();
       destroy_each(each_blocks, detaching);
     }
   };

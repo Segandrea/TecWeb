@@ -746,7 +746,7 @@ function create_fragment(ctx) {
       attr(input0, "id", "password");
       attr(input0, "name", "password");
       attr(input0, "type", "password");
-      attr(input0, "class", "form-control border-bottom-0 rounded-0 rounded-top svelte-ou1abz");
+      attr(input0, "class", "form-control rounded-0 rounded-top svelte-ou1abz");
       input0.required = true;
       attr(label0, "for", "password");
       attr(label0, "class", "svelte-ou1abz");
