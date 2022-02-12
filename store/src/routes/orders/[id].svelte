@@ -158,6 +158,17 @@
     </div>
   {/if}
 
+  {#if order.billingAddress}
+    <h3 class="text-center mt-5">Billing Address</h3>
+    <div class="card text-center">
+      <div class="card-body">
+        <div class="card-text">
+          {order.billingAddress}
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <h3 class="text-center mt-5">Products</h3>
   <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-1">
     {#each order.products as product}

@@ -168,7 +168,7 @@
             type="password"
             bind:value={newPassword}
             on:change={checkValidity}
-            class="form-control border-bottom-0 rounded-0 rounded-top"
+            class="form-control rounded-0 rounded-top"
             required
           />
           <label for="password">Password</label>

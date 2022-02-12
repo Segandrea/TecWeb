@@ -45,6 +45,7 @@ const OrderSchema = new Schema({
       message: () => "Invalid employee",
     },
   },
+  billingAddress: { type: String, required: false },
   state: { type: String, enum: ["open", "closed"], required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
