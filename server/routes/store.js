@@ -84,15 +84,9 @@ router.post("/signout", restrict, (req, res) => {
   res.sendStatus(200);
 });
 
-router.get("/profile", restrict, (req, res) => {
-  const user = req.user;
-  res.json({
-    _id: user._id,
-    email: user.email,
-    username: user.customer.username,
-    billingAddress: user.customer.billingAddress || "",
-  });
-});
+router.get("/profile", restrict, (req, res) =>
+  res.json(serializeCustomer(req.user))
+);
 
 router.put(
   "/profile",
@@ -106,14 +100,11 @@ router.put(
         billingAddress: req.body.billingAddress,
       },
     }),
-    serialize: (user) => ({
-      _id: user._id,
-      email: user.email,
-      username: user.customer.username,
-      billingAddress: user.customer.billingAddress || "",
-    }),
+    serialize: serializeCustomer,
   })
 );
+
+router.put("/profile/password", restrict, changePassword);
 
 router.get(
   "/orders/:id",
@@ -153,6 +144,37 @@ module.exports = router;
 /**
  *
  */
+function serializeCustomer(user) {
+  return {
+    _id: user._id,
+    email: user.email,
+    username: user.customer.username,
+    billingAddress: user.customer.billingAddress || "",
+  };
+}
+
+function changePassword(req, res) {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (user) {
+        user.password = req.body.password;
+        return user
+          .save()
+          .then((user) => res.json(serializeCustomer(user)))
+          .catch((err) => {
+            console.log(err);
+            return res.sendStatus(500);
+          });
+      } else {
+        return res.sendStatus(422);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.sendStatus(500);
+    });
+}
+
 function createReview(req, res) {
   const productId = req.params.id;
   const username = req.user.customer.username;
@@ -240,11 +262,42 @@ function listProducts(req, res) {
 
     return rentedProducts(start, end)
       .then((products) =>
-        Product.find({
-          ...filter,
-          visible: true,
-          _id: { $nin: products },
-        }).sort({ name: 1, status: 1, basePrice: -1, dailyPrice: -1 })
+        Product.find({})
+          .or([
+            {
+              ...filter,
+              unavailability: { $exists: false },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.start": { $exists: false },
+              "unavailability.end": { $exists: false },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.start": { $eq: null },
+              "unavailability.end": { $eq: null },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.start": { $gt: end },
+              visible: true,
+              _id: { $nin: products },
+            },
+            {
+              ...filter,
+              "unavailability.end": { $lt: start },
+              visible: true,
+              _id: { $nin: products },
+            },
+          ])
+          .sort({ name: 1, status: 1, basePrice: -1, dailyPrice: -1 })
       )
       .then((products) => res.json({ products }))
       .catch((err) => {

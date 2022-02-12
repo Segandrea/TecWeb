@@ -50,6 +50,9 @@
 
   let alert;
 
+  export let confirmPassword;
+  export let confirmInput;
+  export let newPassword;
   export let profile;
   export let orders;
 
@@ -88,6 +91,42 @@
       });
   }
 
+  function changePassword() {
+    putJSON("/api/store/profile/password", { password: newPassword })
+      .then((body) => {
+        profile = body;
+        alert.info("Password changed successfully");
+      })
+      .catch(onStatus(400, () => alert.error("Invalid password")))
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", { returnTo: path($page.path), required: true })
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      })
+      .finally(() => {
+        newPassword = "";
+        confirmPassword = "";
+      });
+  }
+
+  function checkValidity() {
+    console.log(newPassword);
+    console.log(confirmInput);
+    console.log(confirmPassword);
+    if (newPassword && newPassword === confirmPassword) {
+      console.log(newPassword && newPassword === confirmPassword);
+      confirmInput.setCustomValidity("");
+    } else {
+      confirmInput.setCustomValidity("Passwords do not match");
+    }
+  }
+
   function deleteOrder(order) {
     deleteJSON(`/api/store/orders/${order._id}`, { parse: false })
       .then(() => {
@@ -121,7 +160,40 @@
     <div class="col col-lg-3 text-center">
       <h2 class="py-4">Profile</h2>
 
-      <form on:submit|preventDefault={updateProfile}>
+      <form on:submit|preventDefault={changePassword}>
+        <div class="form-floating">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            bind:value={newPassword}
+            on:change={checkValidity}
+            class="form-control border-bottom-0 rounded-0 rounded-top"
+            required
+          />
+          <label for="password">Password</label>
+        </div>
+
+        <div class="form-floating">
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            on:change={checkValidity}
+            bind:this={confirmInput}
+            bind:value={confirmPassword}
+            class="form-control border-top-0 rounded-0 rounded-bottom"
+            required
+          />
+          <label for="confirmPassword">Confirm Password</label>
+        </div>
+
+        <button class="btn btn-lg btn-warning my-2 w-100" type="submit"
+          >Change password</button
+        >
+      </form>
+
+      <form class="mt-5" on:submit|preventDefault={updateProfile}>
         <div class="form-floating">
           <input
             id="email"
@@ -219,7 +291,7 @@
           {/each}
         </ul>
       {:else}
-        <div class="card h-100">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">You don't have any orders yet 😅</h5>
             <a class="card-link" href={path("/")}>Back to shopping</a>

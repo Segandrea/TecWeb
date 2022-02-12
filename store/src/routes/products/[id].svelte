@@ -170,20 +170,20 @@
       <h2>Reviews</h2>
       <div class="row row-cols-1 row-cols-md-3">
         {#each product.reviews as review}
-          <div class="col text-truncate">
+          <div class="col">
             <div class="card-body">
               <h3 class="card-title">{review.username}</h3>
-              <p class="card-text">
-                {review.content}
-              </p>
               <div
-                class="card-subtitle d-flex justify-content-center mb-2 fs-6"
+                class="card-subtitle d-flex justify-content-center mt-2 mb-1 fs-6"
               >
                 <StarRating
                   rating={review.rating}
                   config={{ emptyColor: "rgba(127, 127, 127, 0.1)", size: 16 }}
                 />
               </div>
+              <p class="card-text">
+                {review.content}
+              </p>
             </div>
           </div>
         {/each}
