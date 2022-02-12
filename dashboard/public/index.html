@@ -62,6 +62,10 @@
       import { getJSON, redirectOnStatus } from "./assets/js/http.js";
 
       function setupMonthlyIncomeChart(monthlyIncome) {
+        monthlyIncome.sort(
+          (l, r) => l._id.year - r._id.year || l._id.month - r._id.month
+        );
+
         const context = document
           .getElementById("monthlyIncomeChart")
           .getContext("2d");
