@@ -67,11 +67,19 @@ router.get("/statistics", restrict, async (req, res) => {
     })
     .exec();
 
+  const averageRentalPeriod = await Order.aggregate()
+    .group({
+      _id: "",
+      value: { $avg: "$days" },
+    })
+    .exec();
+
   return res.json({
     monthlyIncome,
     mostPopularProducts,
     mostActiveEmployees,
     mostActiveCustomers,
+    averageRentalPeriod: averageRentalPeriod[0].value,
   });
 });
 
