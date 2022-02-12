@@ -1,4 +1,21 @@
-import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, t as text, k as space, c as claim_element, a as children, g as claim_text, d as detach, n as claim_space, b as attr, f as insert_hydration, F as append_hydration, h as set_data, O as noop } from "../chunks/vendor-15d99854.js";
+import {
+  S as SvelteComponent,
+  i as init,
+  s as safe_not_equal,
+  e as element,
+  t as text,
+  k as space,
+  c as claim_element,
+  a as children,
+  g as claim_text,
+  d as detach,
+  n as claim_space,
+  b as attr,
+  f as insert_hydration,
+  F as append_hydration,
+  h as set_data,
+  O as noop,
+} from "../chunks/vendor-15d99854.js";
 function create_fragment(ctx) {
   let main;
   let div1;
@@ -61,39 +78,37 @@ function create_fragment(ctx) {
       append_hydration(h4, t3);
     },
     p(ctx2, [dirty]) {
-      if (dirty & 1)
-        set_data(t1, ctx2[0]);
-      if (dirty & 2)
-        set_data(t3, ctx2[1]);
+      if (dirty & 1) set_data(t1, ctx2[0]);
+      if (dirty & 2) set_data(t3, ctx2[1]);
     },
     i: noop,
     o: noop,
     d(detaching) {
-      if (detaching)
-        detach(main);
-    }
+      if (detaching) detach(main);
+    },
   };
 }
 function load({ error, status }) {
   return {
-    props: { message: error.message, status }
+    props: { message: error.message, status },
   };
 }
 function instance($$self, $$props, $$invalidate) {
   let { status } = $$props;
   let { message } = $$props;
   $$self.$$set = ($$props2) => {
-    if ("status" in $$props2)
-      $$invalidate(0, status = $$props2.status);
-    if ("message" in $$props2)
-      $$invalidate(1, message = $$props2.message);
+    if ("status" in $$props2) $$invalidate(0, (status = $$props2.status));
+    if ("message" in $$props2) $$invalidate(1, (message = $$props2.message));
   };
   return [status, message];
 }
 class _error extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance, create_fragment, safe_not_equal, { status: 0, message: 1 });
+    init(this, options, instance, create_fragment, safe_not_equal, {
+      status: 0,
+      message: 1,
+    });
   }
 }
 export { _error as default, load };

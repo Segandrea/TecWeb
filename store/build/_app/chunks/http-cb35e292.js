@@ -6,12 +6,14 @@ function send(method, url, { query, headers, body, fetch: fetch2 } = {}) {
   return _fetch(_url, {
     headers,
     method,
-    body
-  }).catch((err) => {
-    return Promise.reject([err, void 0]);
-  }).then((res) => {
-    return res.ok ? Promise.resolve(res) : Promise.reject([void 0, res]);
-  });
+    body,
+  })
+    .catch((err) => {
+      return Promise.reject([err, void 0]);
+    })
+    .then((res) => {
+      return res.ok ? Promise.resolve(res) : Promise.reject([void 0, res]);
+    });
 }
 const JSON_CONTENT = { "Content-Type": "application/json" };
 function postJSON(url, object, { query, fetch: fetch2, parse } = {}) {
@@ -20,7 +22,7 @@ function postJSON(url, object, { query, fetch: fetch2, parse } = {}) {
     query,
     headers: JSON_CONTENT,
     body: JSON.stringify(object),
-    fetch: fetch2
+    fetch: fetch2,
   });
   return _parse ? promise.then((res) => res.json()) : promise;
 }
@@ -30,7 +32,7 @@ function putJSON(url, object, { query, fetch: fetch2, parse } = {}) {
     query,
     headers: JSON_CONTENT,
     body: JSON.stringify(object),
-    fetch: fetch2
+    fetch: fetch2,
   });
   return _parse ? promise.then((res) => res.json()) : promise;
 }
@@ -62,4 +64,11 @@ function redirectOnStatus(status, goto, location) {
     }
   };
 }
-export { putJSON as a, deleteJSON as d, getJSON as g, onStatus as o, postJSON as p, redirectOnStatus as r };
+export {
+  putJSON as a,
+  deleteJSON as d,
+  getJSON as g,
+  onStatus as o,
+  postJSON as p,
+  redirectOnStatus as r,
+};

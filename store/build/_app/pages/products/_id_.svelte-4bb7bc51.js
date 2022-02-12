@@ -1,7 +1,41 @@
-import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, k as space, c as claim_element, a as children, n as claim_space, d as detach, E as src_url_equal, b as attr, V as toggle_class, f as insert_hydration, F as append_hydration, U as StarRating, t as text, g as claim_text, x as transition_in, j as create_component, m as claim_component, o as mount_component, h as set_data, u as transition_out, v as destroy_component, w as check_outros, Q as destroy_each, D as create_slot, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, L as component_subscribe, r as group_outros, G as listen } from "../../chunks/vendor-15d99854.js";
+import {
+  S as SvelteComponent,
+  i as init,
+  s as safe_not_equal,
+  e as element,
+  k as space,
+  c as claim_element,
+  a as children,
+  n as claim_space,
+  d as detach,
+  E as src_url_equal,
+  b as attr,
+  V as toggle_class,
+  f as insert_hydration,
+  F as append_hydration,
+  U as StarRating,
+  t as text,
+  g as claim_text,
+  x as transition_in,
+  j as create_component,
+  m as claim_component,
+  o as mount_component,
+  h as set_data,
+  u as transition_out,
+  v as destroy_component,
+  w as check_outros,
+  Q as destroy_each,
+  D as create_slot,
+  H as update_slot_base,
+  I as get_all_dirty_from_scope,
+  J as get_slot_changes,
+  L as component_subscribe,
+  r as group_outros,
+  G as listen,
+} from "../../chunks/vendor-15d99854.js";
 import { p as path, i as isAuth } from "../../chunks/utils-af6e44bf.js";
 import { g as getJSON, o as onStatus } from "../../chunks/http-cb35e292.js";
-import { f as cart, g as addToCart } from "../../chunks/stores-63e23ef0.js";
+import { b as cart, d as addToCart } from "../../chunks/stores-01e7ca86.js";
 import { p as page } from "../../chunks/stores-5878e4bb.js";
 import "../../chunks/paths-28a87002.js";
 var _id__svelte_svelte_type_style_lang = "";
@@ -32,16 +66,20 @@ function create_each_block_1(ctx) {
     l(nodes) {
       div = claim_element(nodes, "DIV", { class: true });
       var div_nodes = children(div);
-      img = claim_element(div_nodes, "IMG", { src: true, class: true, alt: true });
+      img = claim_element(div_nodes, "IMG", {
+        src: true,
+        class: true,
+        alt: true,
+      });
       t = claim_space(div_nodes);
       div_nodes.forEach(detach);
       this.h();
     },
     h() {
-      if (!src_url_equal(img.src, img_src_value = ctx[9].url))
+      if (!src_url_equal(img.src, (img_src_value = ctx[9].url)))
         attr(img, "src", img_src_value);
       attr(img, "class", "d-block m-auto h-100");
-      attr(img, "alt", img_alt_value = `${ctx[0].name} image ${ctx[11]}`);
+      attr(img, "alt", (img_alt_value = `${ctx[0].name} image ${ctx[11]}`));
       attr(div, "class", "carousel-item h-100");
       toggle_class(div, "active", ctx[11] === 0);
     },
@@ -51,17 +89,19 @@ function create_each_block_1(ctx) {
       append_hydration(div, t);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && !src_url_equal(img.src, img_src_value = ctx2[9].url)) {
+      if (dirty & 1 && !src_url_equal(img.src, (img_src_value = ctx2[9].url))) {
         attr(img, "src", img_src_value);
       }
-      if (dirty & 1 && img_alt_value !== (img_alt_value = `${ctx2[0].name} image ${ctx2[11]}`)) {
+      if (
+        dirty & 1 &&
+        img_alt_value !== (img_alt_value = `${ctx2[0].name} image ${ctx2[11]}`)
+      ) {
         attr(img, "alt", img_alt_value);
       }
     },
     d(detaching) {
-      if (detaching)
-        detach(div);
-    }
+      if (detaching) detach(div);
+    },
   };
 }
 function create_else_block_1(ctx) {
@@ -82,10 +122,14 @@ function create_else_block_1(ctx) {
       this.h();
     },
     h() {
-      attr(a, "href", a_href_value = path("/signin", {
-        returnTo: path(ctx[2].path),
-        required: true
-      }));
+      attr(
+        a,
+        "href",
+        (a_href_value = path("/signin", {
+          returnTo: path(ctx[2].path),
+          required: true,
+        }))
+      );
       attr(a, "class", "btn btn-warning rounded-3");
       attr(a, "role", "button");
     },
@@ -94,17 +138,20 @@ function create_else_block_1(ctx) {
       append_hydration(a, t);
     },
     p(ctx2, dirty) {
-      if (dirty & 4 && a_href_value !== (a_href_value = path("/signin", {
-        returnTo: path(ctx2[2].path),
-        required: true
-      }))) {
+      if (
+        dirty & 4 &&
+        a_href_value !==
+          (a_href_value = path("/signin", {
+            returnTo: path(ctx2[2].path),
+            required: true,
+          }))
+      ) {
         attr(a, "href", a_href_value);
       }
     },
     d(detaching) {
-      if (detaching)
-        detach(a);
-    }
+      if (detaching) detach(a);
+    },
   };
 }
 function create_if_block_2(ctx) {
@@ -140,16 +187,19 @@ function create_if_block_2(ctx) {
       }
     },
     p(ctx2, dirty) {
-      if (dirty & 3 && button_disabled_value !== (button_disabled_value = ctx2[0]._id in ctx2[1])) {
+      if (
+        dirty & 3 &&
+        button_disabled_value !==
+          (button_disabled_value = ctx2[0]._id in ctx2[1])
+      ) {
         button.disabled = button_disabled_value;
       }
     },
     d(detaching) {
-      if (detaching)
-        detach(button);
+      if (detaching) detach(button);
       mounted = false;
       dispose();
-    }
+    },
   };
 }
 function create_else_block(ctx) {
@@ -177,18 +227,23 @@ function create_else_block(ctx) {
       append_hydration(i, t);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && t_value !== (t_value = ctx2[0].basePrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t_value !== (t_value = ctx2[0].basePrice.toFixed(2) + "")
+      )
         set_data(t, t_value);
     },
     d(detaching) {
-      if (detaching)
-        detach(i);
-    }
+      if (detaching) detach(i);
+    },
   };
 }
 function create_if_block_1(ctx) {
   let i0;
-  let t0_value = (ctx[0].basePrice > ctx[0].discountPrice ? (ctx[0].basePrice - ctx[0].discountPrice).toFixed(2) : 0) + "";
+  let t0_value =
+    (ctx[0].basePrice > ctx[0].discountPrice
+      ? (ctx[0].basePrice - ctx[0].discountPrice).toFixed(2)
+      : 0) + "";
   let t0;
   let t1;
   let i1;
@@ -217,7 +272,11 @@ function create_if_block_1(ctx) {
     },
     h() {
       attr(i0, "class", "bi bi-currency-euro text-success");
-      attr(i1, "class", "bi bi-currency-euro text-decoration-line-through text-danger");
+      attr(
+        i1,
+        "class",
+        "bi bi-currency-euro text-decoration-line-through text-danger"
+      );
     },
     m(target, anchor) {
       insert_hydration(target, i0, anchor);
@@ -227,19 +286,26 @@ function create_if_block_1(ctx) {
       append_hydration(i1, t2);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && t0_value !== (t0_value = (ctx2[0].basePrice > ctx2[0].discountPrice ? (ctx2[0].basePrice - ctx2[0].discountPrice).toFixed(2) : 0) + ""))
+      if (
+        dirty & 1 &&
+        t0_value !==
+          (t0_value =
+            (ctx2[0].basePrice > ctx2[0].discountPrice
+              ? (ctx2[0].basePrice - ctx2[0].discountPrice).toFixed(2)
+              : 0) + "")
+      )
         set_data(t0, t0_value);
-      if (dirty & 1 && t2_value !== (t2_value = ctx2[0].basePrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t2_value !== (t2_value = ctx2[0].basePrice.toFixed(2) + "")
+      )
         set_data(t2, t2_value);
     },
     d(detaching) {
-      if (detaching)
-        detach(i0);
-      if (detaching)
-        detach(t1);
-      if (detaching)
-        detach(i1);
-    }
+      if (detaching) detach(i0);
+      if (detaching) detach(t1);
+      if (detaching) detach(i1);
+    },
   };
 }
 function create_if_block(ctx) {
@@ -258,9 +324,10 @@ function create_if_block(ctx) {
   for (let i = 0; i < each_value.length; i += 1) {
     each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
   }
-  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
-    each_blocks[i] = null;
-  });
+  const out = (i) =>
+    transition_out(each_blocks[i], 1, 1, () => {
+      each_blocks[i] = null;
+    });
   return {
     c() {
       div2 = element("div");
@@ -347,8 +414,7 @@ function create_if_block(ctx) {
       }
     },
     i(local) {
-      if (current)
-        return;
+      if (current) return;
       for (let i = 0; i < each_value.length; i += 1) {
         transition_in(each_blocks[i]);
       }
@@ -362,10 +428,9 @@ function create_if_block(ctx) {
       current = false;
     },
     d(detaching) {
-      if (detaching)
-        detach(div2);
+      if (detaching) detach(div2);
       destroy_each(each_blocks, detaching);
-    }
+    },
   };
 }
 function create_each_block(ctx) {
@@ -375,12 +440,12 @@ function create_each_block(ctx) {
   let t0_value = ctx[6].username + "";
   let t0;
   let t1;
-  let p;
-  let t2_value = ctx[6].content + "";
-  let t2;
-  let t3;
   let div0;
   let starrating;
+  let t2;
+  let p;
+  let t3_value = ctx[6].content + "";
+  let t3;
   let t4;
   let current;
   starrating = new StarRating({
@@ -388,9 +453,9 @@ function create_each_block(ctx) {
       rating: ctx[6].rating,
       config: {
         emptyColor: "rgba(127, 127, 127, 0.1)",
-        size: 16
-      }
-    }
+        size: 16,
+      },
+    },
   });
   return {
     c() {
@@ -399,11 +464,11 @@ function create_each_block(ctx) {
       h3 = element("h3");
       t0 = text(t0_value);
       t1 = space();
-      p = element("p");
-      t2 = text(t2_value);
-      t3 = space();
       div0 = element("div");
       create_component(starrating.$$.fragment);
+      t2 = space();
+      p = element("p");
+      t3 = text(t3_value);
       t4 = space();
       this.h();
     },
@@ -417,15 +482,15 @@ function create_each_block(ctx) {
       t0 = claim_text(h3_nodes, t0_value);
       h3_nodes.forEach(detach);
       t1 = claim_space(div1_nodes);
-      p = claim_element(div1_nodes, "P", { class: true });
-      var p_nodes = children(p);
-      t2 = claim_text(p_nodes, t2_value);
-      p_nodes.forEach(detach);
-      t3 = claim_space(div1_nodes);
       div0 = claim_element(div1_nodes, "DIV", { class: true });
       var div0_nodes = children(div0);
       claim_component(starrating.$$.fragment, div0_nodes);
       div0_nodes.forEach(detach);
+      t2 = claim_space(div1_nodes);
+      p = claim_element(div1_nodes, "P", { class: true });
+      var p_nodes = children(p);
+      t3 = claim_text(p_nodes, t3_value);
+      p_nodes.forEach(detach);
       div1_nodes.forEach(detach);
       t4 = claim_space(div2_nodes);
       div2_nodes.forEach(detach);
@@ -433,10 +498,14 @@ function create_each_block(ctx) {
     },
     h() {
       attr(h3, "class", "card-title");
+      attr(
+        div0,
+        "class",
+        "card-subtitle d-flex justify-content-center mt-2 mb-1 fs-6"
+      );
       attr(p, "class", "card-text");
-      attr(div0, "class", "card-subtitle d-flex justify-content-center mb-2 fs-6");
       attr(div1, "class", "card-body");
-      attr(div2, "class", "col text-truncate");
+      attr(div2, "class", "col");
     },
     m(target, anchor) {
       insert_hydration(target, div2, anchor);
@@ -444,27 +513,31 @@ function create_each_block(ctx) {
       append_hydration(div1, h3);
       append_hydration(h3, t0);
       append_hydration(div1, t1);
-      append_hydration(div1, p);
-      append_hydration(p, t2);
-      append_hydration(div1, t3);
       append_hydration(div1, div0);
       mount_component(starrating, div0, null);
+      append_hydration(div1, t2);
+      append_hydration(div1, p);
+      append_hydration(p, t3);
       append_hydration(div2, t4);
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && t0_value !== (t0_value = ctx2[6].username + ""))
+      if (
+        (!current || dirty & 1) &&
+        t0_value !== (t0_value = ctx2[6].username + "")
+      )
         set_data(t0, t0_value);
-      if ((!current || dirty & 1) && t2_value !== (t2_value = ctx2[6].content + ""))
-        set_data(t2, t2_value);
       const starrating_changes = {};
-      if (dirty & 1)
-        starrating_changes.rating = ctx2[6].rating;
+      if (dirty & 1) starrating_changes.rating = ctx2[6].rating;
       starrating.$set(starrating_changes);
+      if (
+        (!current || dirty & 1) &&
+        t3_value !== (t3_value = ctx2[6].content + "")
+      )
+        set_data(t3, t3_value);
     },
     i(local) {
-      if (current)
-        return;
+      if (current) return;
       transition_in(starrating.$$.fragment, local);
       current = true;
     },
@@ -473,10 +546,9 @@ function create_each_block(ctx) {
       current = false;
     },
     d(detaching) {
-      if (detaching)
-        detach(div2);
+      if (detaching) detach(div2);
       destroy_component(starrating);
-    }
+    },
   };
 }
 function create_fragment(ctx) {
@@ -557,20 +629,21 @@ function create_fragment(ctx) {
   let each_value_1 = ctx[0].images;
   let each_blocks = [];
   for (let i2 = 0; i2 < each_value_1.length; i2 += 1) {
-    each_blocks[i2] = create_each_block_1(get_each_context_1(ctx, each_value_1, i2));
+    each_blocks[i2] = create_each_block_1(
+      get_each_context_1(ctx, each_value_1, i2)
+    );
   }
   starrating = new StarRating({
     props: {
       rating: ctx[0].rating,
       config: {
         emptyColor: "rgba(127, 127, 127, 0.1)",
-        size: 16
-      }
-    }
+        size: 16,
+      },
+    },
   });
   function select_block_type(ctx2, dirty) {
-    if (isAuth())
-      return create_if_block_2;
+    if (isAuth()) return create_if_block_2;
     return create_else_block_1;
   }
   let current_block_type = select_block_type();
@@ -582,7 +655,8 @@ function create_fragment(ctx) {
   }
   let current_block_type_1 = select_block_type_1(ctx);
   let if_block1 = current_block_type_1(ctx);
-  let if_block2 = ctx[0].reviews && ctx[0].reviews.length > 0 && create_if_block(ctx);
+  let if_block2 =
+    ctx[0].reviews && ctx[0].reviews.length > 0 && create_if_block(ctx);
   const default_slot_template = ctx[4].default;
   const default_slot = create_slot(default_slot_template, ctx, ctx[3], null);
   return {
@@ -659,11 +733,9 @@ function create_fragment(ctx) {
       p = element("p");
       t26 = text(t26_value);
       t27 = space();
-      if (if_block2)
-        if_block2.c();
+      if (if_block2) if_block2.c();
       t28 = space();
-      if (default_slot)
-        default_slot.c();
+      if (default_slot) default_slot.c();
       this.h();
     },
     l(nodes) {
@@ -673,7 +745,7 @@ function create_fragment(ctx) {
         id: true,
         class: true,
         "data-bs-touch": true,
-        "data-bs-interval": true
+        "data-bs-interval": true,
       });
       var div1_nodes = children(div1);
       div0 = claim_element(div1_nodes, "DIV", { class: true });
@@ -687,10 +759,13 @@ function create_fragment(ctx) {
         class: true,
         type: true,
         "data-bs-target": true,
-        "data-bs-slide": true
+        "data-bs-slide": true,
       });
       var button0_nodes = children(button0);
-      span0 = claim_element(button0_nodes, "SPAN", { class: true, "aria-hidden": true });
+      span0 = claim_element(button0_nodes, "SPAN", {
+        class: true,
+        "aria-hidden": true,
+      });
       children(span0).forEach(detach);
       t1 = claim_space(button0_nodes);
       span1 = claim_element(button0_nodes, "SPAN", { class: true });
@@ -703,10 +778,13 @@ function create_fragment(ctx) {
         class: true,
         type: true,
         "data-bs-target": true,
-        "data-bs-slide": true
+        "data-bs-slide": true,
       });
       var button1_nodes = children(button1);
-      span2 = claim_element(button1_nodes, "SPAN", { class: true, "aria-hidden": true });
+      span2 = claim_element(button1_nodes, "SPAN", {
+        class: true,
+        "aria-hidden": true,
+      });
       children(span2).forEach(detach);
       t4 = claim_space(button1_nodes);
       span3 = claim_element(button1_nodes, "SPAN", { class: true });
@@ -827,12 +905,10 @@ function create_fragment(ctx) {
       p_nodes.forEach(detach);
       div19_nodes.forEach(detach);
       t27 = claim_space(main_nodes);
-      if (if_block2)
-        if_block2.l(main_nodes);
+      if (if_block2) if_block2.l(main_nodes);
       main_nodes.forEach(detach);
       t28 = claim_space(nodes);
-      if (default_slot)
-        default_slot.l(nodes);
+      if (default_slot) default_slot.l(nodes);
       this.h();
     },
     h() {
@@ -859,12 +935,16 @@ function create_fragment(ctx) {
       attr(div2, "class", "w-100 text-center text-muted");
       attr(div3, "class", "card-title fs-5 fw-bold");
       attr(div4, "class", "mt-2 d-flex justify-content-center text-center");
-      attr(a, "href", a_href_value = path(`/products/${ctx[0]._id}/reviews`));
+      attr(a, "href", (a_href_value = path(`/products/${ctx[0]._id}/reviews`)));
       attr(div5, "class", "d-flex justify-content-center text-center");
       attr(div6, "class", "card-body");
       attr(div7, "class", "card h-100 text-center");
       attr(div8, "class", "col");
-      attr(div9, "class", "card-body d-flex align-items-center justify-content-center");
+      attr(
+        div9,
+        "class",
+        "card-body d-flex align-items-center justify-content-center"
+      );
       attr(div10, "class", "card h-100 text-center");
       attr(div11, "class", "col");
       attr(div12, "class", "card-title fs-5 fw-bold");
@@ -955,8 +1035,7 @@ function create_fragment(ctx) {
       append_hydration(div19, p);
       append_hydration(p, t26);
       append_hydration(main, t27);
-      if (if_block2)
-        if_block2.m(main, null);
+      if (if_block2) if_block2.m(main, null);
       insert_hydration(target, t28, anchor);
       if (default_slot) {
         default_slot.m(target, anchor);
@@ -982,21 +1061,38 @@ function create_fragment(ctx) {
         }
         each_blocks.length = each_value_1.length;
       }
-      if ((!current || dirty & 1) && t7_value !== (t7_value = ctx2[0].name + ""))
+      if (
+        (!current || dirty & 1) &&
+        t7_value !== (t7_value = ctx2[0].name + "")
+      )
         set_data(t7, t7_value);
-      if ((!current || dirty & 1) && t9_value !== (t9_value = ctx2[0].status + ""))
+      if (
+        (!current || dirty & 1) &&
+        t9_value !== (t9_value = ctx2[0].status + "")
+      )
         set_data(t9, t9_value);
       const starrating_changes = {};
-      if (dirty & 1)
-        starrating_changes.rating = ctx2[0].rating;
+      if (dirty & 1) starrating_changes.rating = ctx2[0].rating;
       starrating.$set(starrating_changes);
-      if (!current || dirty & 1 && a_href_value !== (a_href_value = path(`/products/${ctx2[0]._id}/reviews`))) {
+      if (
+        !current ||
+        (dirty & 1 &&
+          a_href_value !==
+            (a_href_value = path(`/products/${ctx2[0]._id}/reviews`)))
+      ) {
         attr(a, "href", a_href_value);
       }
       if_block0.p(ctx2, dirty);
-      if ((!current || dirty & 1) && t19_value !== (t19_value = ctx2[0].dailyPrice.toFixed(2) + ""))
+      if (
+        (!current || dirty & 1) &&
+        t19_value !== (t19_value = ctx2[0].dailyPrice.toFixed(2) + "")
+      )
         set_data(t19, t19_value);
-      if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx2)) && if_block1) {
+      if (
+        current_block_type_1 ===
+          (current_block_type_1 = select_block_type_1(ctx2)) &&
+        if_block1
+      ) {
         if_block1.p(ctx2, dirty);
       } else {
         if_block1.d(1);
@@ -1006,7 +1102,10 @@ function create_fragment(ctx) {
           if_block1.m(small2, sub1);
         }
       }
-      if ((!current || dirty & 1) && t26_value !== (t26_value = ctx2[0].description + ""))
+      if (
+        (!current || dirty & 1) &&
+        t26_value !== (t26_value = ctx2[0].description + "")
+      )
         set_data(t26, t26_value);
       if (ctx2[0].reviews && ctx2[0].reviews.length > 0) {
         if (if_block2) {
@@ -1029,13 +1128,21 @@ function create_fragment(ctx) {
       }
       if (default_slot) {
         if (default_slot.p && (!current || dirty & 8)) {
-          update_slot_base(default_slot, default_slot_template, ctx2, ctx2[3], !current ? get_all_dirty_from_scope(ctx2[3]) : get_slot_changes(default_slot_template, ctx2[3], dirty, null), null);
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            ctx2[3],
+            !current
+              ? get_all_dirty_from_scope(ctx2[3])
+              : get_slot_changes(default_slot_template, ctx2[3], dirty, null),
+            null
+          );
         }
       }
     },
     i(local) {
-      if (current)
-        return;
+      if (current) return;
       transition_in(starrating.$$.fragment, local);
       transition_in(if_block2);
       transition_in(default_slot, local);
@@ -1048,57 +1155,62 @@ function create_fragment(ctx) {
       current = false;
     },
     d(detaching) {
-      if (detaching)
-        detach(main);
+      if (detaching) detach(main);
       destroy_each(each_blocks, detaching);
       destroy_component(starrating);
       if_block0.d();
       if_block1.d();
-      if (if_block2)
-        if_block2.d();
-      if (detaching)
-        detach(t28);
-      if (default_slot)
-        default_slot.d(detaching);
-    }
+      if (if_block2) if_block2.d();
+      if (detaching) detach(t28);
+      if (default_slot) default_slot.d(detaching);
+    },
   };
 }
 function load({ page: page2, fetch }) {
   const productId = page2.params.id;
-  return getJSON(`/api/store/products/${productId}`, { fetch }).then((product) => ({ props: { product } })).catch(onStatus(401, () => ({
-    status: 302,
-    redirect: path("/signin", {
-      returnTo: path(page2.path),
-      required: true
-    })
-  }))).catch(([err, req]) => {
-    console.error(err);
-    return {
-      status: req ? req.status : 500,
-      error: "Unable to reach the server"
-    };
-  });
+  return getJSON(`/api/store/products/${productId}`, { fetch })
+    .then((product) => ({ props: { product } }))
+    .catch(
+      onStatus(401, () => ({
+        status: 302,
+        redirect: path("/signin", {
+          returnTo: path(page2.path),
+          required: true,
+        }),
+      }))
+    )
+    .catch(([err, req]) => {
+      console.error(err);
+      return {
+        status: req ? req.status : 500,
+        error: "Unable to reach the server",
+      };
+    });
 }
 function instance($$self, $$props, $$invalidate) {
   let $cart;
   let $page;
-  component_subscribe($$self, cart, ($$value) => $$invalidate(1, $cart = $$value));
-  component_subscribe($$self, page, ($$value) => $$invalidate(2, $page = $$value));
+  component_subscribe($$self, cart, ($$value) =>
+    $$invalidate(1, ($cart = $$value))
+  );
+  component_subscribe($$self, page, ($$value) =>
+    $$invalidate(2, ($page = $$value))
+  );
   let { $$slots: slots = {}, $$scope } = $$props;
   let { product } = $$props;
   const click_handler = () => addToCart(product);
   $$self.$$set = ($$props2) => {
-    if ("product" in $$props2)
-      $$invalidate(0, product = $$props2.product);
-    if ("$$scope" in $$props2)
-      $$invalidate(3, $$scope = $$props2.$$scope);
+    if ("product" in $$props2) $$invalidate(0, (product = $$props2.product));
+    if ("$$scope" in $$props2) $$invalidate(3, ($$scope = $$props2.$$scope));
   };
   return [product, $cart, $page, $$scope, slots, click_handler];
 }
 class U5Bidu5D extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance, create_fragment, safe_not_equal, { product: 0 });
+    init(this, options, instance, create_fragment, safe_not_equal, {
+      product: 0,
+    });
   }
 }
 export { U5Bidu5D as default, load };

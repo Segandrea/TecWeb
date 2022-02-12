@@ -1,7 +1,51 @@
-import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, k as space, c as claim_element, a as children, n as claim_space, d as detach, E as src_url_equal, b as attr, V as toggle_class, f as insert_hydration, F as append_hydration, U as StarRating, t as text, g as claim_text, O as noop, D as create_slot, j as create_component, m as claim_component, o as mount_component, W as set_input_value, G as listen, X as prevent_default, h as set_data, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, x as transition_in, u as transition_out, v as destroy_component, Q as destroy_each, K as run_all, L as component_subscribe, M as binding_callbacks, Y as to_number } from "../../../chunks/vendor-15d99854.js";
+import {
+  S as SvelteComponent,
+  i as init,
+  s as safe_not_equal,
+  e as element,
+  k as space,
+  c as claim_element,
+  a as children,
+  n as claim_space,
+  d as detach,
+  E as src_url_equal,
+  b as attr,
+  V as toggle_class,
+  f as insert_hydration,
+  F as append_hydration,
+  U as StarRating,
+  t as text,
+  g as claim_text,
+  O as noop,
+  D as create_slot,
+  j as create_component,
+  m as claim_component,
+  o as mount_component,
+  W as set_input_value,
+  G as listen,
+  X as prevent_default,
+  h as set_data,
+  H as update_slot_base,
+  I as get_all_dirty_from_scope,
+  J as get_slot_changes,
+  x as transition_in,
+  u as transition_out,
+  v as destroy_component,
+  Q as destroy_each,
+  K as run_all,
+  L as component_subscribe,
+  M as binding_callbacks,
+  Y as to_number,
+} from "../../../chunks/vendor-15d99854.js";
 import { p as path } from "../../../chunks/utils-af6e44bf.js";
-import { g as getJSON, o as onStatus, p as postJSON, r as redirectOnStatus } from "../../../chunks/http-cb35e292.js";
-import { A as Alert, g as goto } from "../../../chunks/navigation-67443bd6.js";
+import {
+  g as getJSON,
+  o as onStatus,
+  p as postJSON,
+  r as redirectOnStatus,
+} from "../../../chunks/http-cb35e292.js";
+import { A as Alert } from "../../../chunks/Alert-0c6938a7.js";
+import { g as goto } from "../../../chunks/navigation-51f4a605.js";
 import { p as page } from "../../../chunks/stores-5878e4bb.js";
 import "../../../chunks/paths-28a87002.js";
 import "../../../chunks/singletons-12a22614.js";
@@ -28,16 +72,20 @@ function create_each_block(ctx) {
     l(nodes) {
       div = claim_element(nodes, "DIV", { class: true });
       var div_nodes = children(div);
-      img = claim_element(div_nodes, "IMG", { src: true, class: true, alt: true });
+      img = claim_element(div_nodes, "IMG", {
+        src: true,
+        class: true,
+        alt: true,
+      });
       t = claim_space(div_nodes);
       div_nodes.forEach(detach);
       this.h();
     },
     h() {
-      if (!src_url_equal(img.src, img_src_value = ctx[11].url))
+      if (!src_url_equal(img.src, (img_src_value = ctx[11].url)))
         attr(img, "src", img_src_value);
       attr(img, "class", "d-block m-auto h-100");
-      attr(img, "alt", img_alt_value = `${ctx[0].name} image ${ctx[13]}`);
+      attr(img, "alt", (img_alt_value = `${ctx[0].name} image ${ctx[13]}`));
       attr(div, "class", "carousel-item h-100");
       toggle_class(div, "active", ctx[13] === 0);
     },
@@ -47,17 +95,22 @@ function create_each_block(ctx) {
       append_hydration(div, t);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && !src_url_equal(img.src, img_src_value = ctx2[11].url)) {
+      if (
+        dirty & 1 &&
+        !src_url_equal(img.src, (img_src_value = ctx2[11].url))
+      ) {
         attr(img, "src", img_src_value);
       }
-      if (dirty & 1 && img_alt_value !== (img_alt_value = `${ctx2[0].name} image ${ctx2[13]}`)) {
+      if (
+        dirty & 1 &&
+        img_alt_value !== (img_alt_value = `${ctx2[0].name} image ${ctx2[13]}`)
+      ) {
         attr(img, "alt", img_alt_value);
       }
     },
     d(detaching) {
-      if (detaching)
-        detach(div);
-    }
+      if (detaching) detach(div);
+    },
   };
 }
 function create_if_block_1(ctx) {
@@ -105,9 +158,8 @@ function create_if_block_1(ctx) {
       }
     },
     d(detaching) {
-      if (detaching)
-        detach(div1);
-    }
+      if (detaching) detach(div1);
+    },
   };
 }
 function create_if_block(ctx) {
@@ -134,7 +186,7 @@ function create_if_block(ctx) {
     },
     h() {
       attr(a, "class", "card-link");
-      attr(a, "href", a_href_value = path("/"));
+      attr(a, "href", (a_href_value = path("/")));
       attr(div, "class", "text-center");
     },
     m(target, anchor) {
@@ -144,9 +196,8 @@ function create_if_block(ctx) {
     },
     p: noop,
     d(detaching) {
-      if (detaching)
-        detach(div);
-    }
+      if (detaching) detach(div);
+    },
   };
 }
 function create_fragment(ctx) {
@@ -207,10 +258,10 @@ function create_fragment(ctx) {
       rating: ctx[2].rating,
       config: {
         emptyColor: "rgba(127, 127, 127, 0.1)",
-        size: 16
+        size: 16,
       },
-      style: "justify-content: center;"
-    }
+      style: "justify-content: center;",
+    },
   });
   let if_block0 = !ctx[3] && create_if_block_1(ctx);
   let if_block1 = ctx[3] && create_if_block();
@@ -259,14 +310,11 @@ function create_fragment(ctx) {
       t15 = space();
       textarea = element("textarea");
       t16 = space();
-      if (if_block0)
-        if_block0.c();
+      if (if_block0) if_block0.c();
       t17 = space();
-      if (if_block1)
-        if_block1.c();
+      if (if_block1) if_block1.c();
       t18 = space();
-      if (default_slot)
-        default_slot.c();
+      if (default_slot) default_slot.c();
       this.h();
     },
     l(nodes) {
@@ -278,7 +326,7 @@ function create_fragment(ctx) {
         id: true,
         class: true,
         "data-bs-touch": true,
-        "data-bs-interval": true
+        "data-bs-interval": true,
       });
       var div1_nodes = children(div1);
       div0 = claim_element(div1_nodes, "DIV", { class: true });
@@ -292,10 +340,13 @@ function create_fragment(ctx) {
         class: true,
         type: true,
         "data-bs-target": true,
-        "data-bs-slide": true
+        "data-bs-slide": true,
       });
       var button0_nodes = children(button0);
-      span0 = claim_element(button0_nodes, "SPAN", { class: true, "aria-hidden": true });
+      span0 = claim_element(button0_nodes, "SPAN", {
+        class: true,
+        "aria-hidden": true,
+      });
       children(span0).forEach(detach);
       t2 = claim_space(button0_nodes);
       span1 = claim_element(button0_nodes, "SPAN", { class: true });
@@ -308,10 +359,13 @@ function create_fragment(ctx) {
         class: true,
         type: true,
         "data-bs-target": true,
-        "data-bs-slide": true
+        "data-bs-slide": true,
       });
       var button1_nodes = children(button1);
-      span2 = claim_element(button1_nodes, "SPAN", { class: true, "aria-hidden": true });
+      span2 = claim_element(button1_nodes, "SPAN", {
+        class: true,
+        "aria-hidden": true,
+      });
       children(span2).forEach(detach);
       t5 = claim_space(button1_nodes);
       span3 = claim_element(button1_nodes, "SPAN", { class: true });
@@ -347,7 +401,7 @@ function create_fragment(ctx) {
         min: true,
         max: true,
         step: true,
-        placeholder: true
+        placeholder: true,
       });
       div2_nodes.forEach(detach);
       div3_nodes.forEach(detach);
@@ -366,22 +420,19 @@ function create_fragment(ctx) {
         id: true,
         name: true,
         rows: true,
-        placeholder: true
+        placeholder: true,
       });
       children(textarea).forEach(detach);
       div4_nodes.forEach(detach);
       div5_nodes.forEach(detach);
       t16 = claim_space(form_nodes);
-      if (if_block0)
-        if_block0.l(form_nodes);
+      if (if_block0) if_block0.l(form_nodes);
       form_nodes.forEach(detach);
       t17 = claim_space(main_nodes);
-      if (if_block1)
-        if_block1.l(main_nodes);
+      if (if_block1) if_block1.l(main_nodes);
       main_nodes.forEach(detach);
       t18 = claim_space(nodes);
-      if (default_slot)
-        default_slot.l(nodes);
+      if (default_slot) default_slot.l(nodes);
       this.h();
     },
     h() {
@@ -475,11 +526,9 @@ function create_fragment(ctx) {
       append_hydration(div4, textarea);
       set_input_value(textarea, ctx[2].content);
       append_hydration(form, t16);
-      if (if_block0)
-        if_block0.m(form, null);
+      if (if_block0) if_block0.m(form, null);
       append_hydration(main, t17);
-      if (if_block1)
-        if_block1.m(main, null);
+      if (if_block1) if_block1.m(main, null);
       insert_hydration(target, t18, anchor);
       if (default_slot) {
         default_slot.m(target, anchor);
@@ -490,7 +539,7 @@ function create_fragment(ctx) {
           listen(input, "change", ctx[8]),
           listen(input, "input", ctx[8]),
           listen(textarea, "input", ctx[9]),
-          listen(form, "submit", prevent_default(ctx[4]))
+          listen(form, "submit", prevent_default(ctx[4])),
         ];
         mounted = true;
       }
@@ -516,11 +565,13 @@ function create_fragment(ctx) {
         }
         each_blocks.length = each_value.length;
       }
-      if ((!current || dirty & 1) && t8_value !== (t8_value = ctx2[0].name + ""))
+      if (
+        (!current || dirty & 1) &&
+        t8_value !== (t8_value = ctx2[0].name + "")
+      )
         set_data(t8, t8_value);
       const starrating_changes = {};
-      if (dirty & 4)
-        starrating_changes.rating = ctx2[2].rating;
+      if (dirty & 4) starrating_changes.rating = ctx2[2].rating;
       starrating.$set(starrating_changes);
       if (dirty & 4) {
         set_input_value(input, ctx2[2].rating);
@@ -554,13 +605,21 @@ function create_fragment(ctx) {
       }
       if (default_slot) {
         if (default_slot.p && (!current || dirty & 32)) {
-          update_slot_base(default_slot, default_slot_template, ctx2, ctx2[5], !current ? get_all_dirty_from_scope(ctx2[5]) : get_slot_changes(default_slot_template, ctx2[5], dirty, null), null);
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            ctx2[5],
+            !current
+              ? get_all_dirty_from_scope(ctx2[5])
+              : get_slot_changes(default_slot_template, ctx2[5], dirty, null),
+            null
+          );
         }
       }
     },
     i(local) {
-      if (current)
-        return;
+      if (current) return;
       transition_in(alert_1.$$.fragment, local);
       transition_in(starrating.$$.fragment, local);
       transition_in(default_slot, local);
@@ -573,61 +632,72 @@ function create_fragment(ctx) {
       current = false;
     },
     d(detaching) {
-      if (detaching)
-        detach(main);
+      if (detaching) detach(main);
       ctx[7](null);
       destroy_component(alert_1);
       destroy_each(each_blocks, detaching);
       destroy_component(starrating);
-      if (if_block0)
-        if_block0.d();
-      if (if_block1)
-        if_block1.d();
-      if (detaching)
-        detach(t18);
-      if (default_slot)
-        default_slot.d(detaching);
+      if (if_block0) if_block0.d();
+      if (if_block1) if_block1.d();
+      if (detaching) detach(t18);
+      if (default_slot) default_slot.d(detaching);
       mounted = false;
       run_all(dispose);
-    }
+    },
   };
 }
 function load({ page: page2, fetch }) {
   const productId = page2.params.id;
-  return getJSON(`/api/store/products/${productId}`, { fetch }).then((product) => ({ props: { product } })).catch(onStatus(401, () => ({
-    status: 302,
-    redirect: path("/signin", {
-      returnTo: path(page2.path),
-      required: true
-    })
-  }))).catch(([err, req]) => {
-    console.error(err);
-    return {
-      status: req ? req.status : 500,
-      error: "Unable to reach the server"
-    };
-  });
+  return getJSON(`/api/store/products/${productId}`, { fetch })
+    .then((product) => ({ props: { product } }))
+    .catch(
+      onStatus(401, () => ({
+        status: 302,
+        redirect: path("/signin", {
+          returnTo: path(page2.path),
+          required: true,
+        }),
+      }))
+    )
+    .catch(([err, req]) => {
+      console.error(err);
+      return {
+        status: req ? req.status : 500,
+        error: "Unable to reach the server",
+      };
+    });
 }
 function instance($$self, $$props, $$invalidate) {
   let $page;
-  component_subscribe($$self, page, ($$value) => $$invalidate(10, $page = $$value));
+  component_subscribe($$self, page, ($$value) =>
+    $$invalidate(10, ($page = $$value))
+  );
   let { $$slots: slots = {}, $$scope } = $$props;
   let { product } = $$props;
   let alert;
   let review = { content: "", rating: 2.5 };
   let submitted = false;
   function createReview() {
-    postJSON(`/api/store/products/${product._id}/reviews`, review).then((body) => {
-      $$invalidate(0, product = body);
-      $$invalidate(3, submitted = true);
-      alert.info("Thanks for your feedback");
-    }).catch(redirectOnStatus(401, goto, path("/signin", {
-      returnTo: path($page.path),
-      required: true
-    }))).catch((err) => {
-      console.error(err);
-      alert.error("Something went wrong");
-    });
+    postJSON(`/api/store/products/${product._id}/reviews`, review)
+      .then((body) => {
+        $$invalidate(0, (product = body));
+        $$invalidate(3, (submitted = true));
+        alert.info("Thanks for your feedback");
+      })
+      .catch(
+        redirectOnStatus(
+          401,
+          goto,
+          path("/signin", {
+            returnTo: path($page.path),
+            required: true,
+          })
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong");
+      });
   }
   function alert_1_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
@@ -644,10 +714,8 @@ function instance($$self, $$props, $$invalidate) {
     $$invalidate(2, review);
   }
   $$self.$$set = ($$props2) => {
-    if ("product" in $$props2)
-      $$invalidate(0, product = $$props2.product);
-    if ("$$scope" in $$props2)
-      $$invalidate(5, $$scope = $$props2.$$scope);
+    if ("product" in $$props2) $$invalidate(0, (product = $$props2.product));
+    if ("$$scope" in $$props2) $$invalidate(5, ($$scope = $$props2.$$scope));
   };
   return [
     product,
@@ -659,13 +727,15 @@ function instance($$self, $$props, $$invalidate) {
     slots,
     alert_1_binding,
     input_change_input_handler,
-    textarea_input_handler
+    textarea_input_handler,
   ];
 }
 class Reviews extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance, create_fragment, safe_not_equal, { product: 0 });
+    init(this, options, instance, create_fragment, safe_not_equal, {
+      product: 0,
+    });
   }
 }
 export { Reviews as default, load };

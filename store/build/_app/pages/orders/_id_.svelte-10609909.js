@@ -1,5 +1,28 @@
-import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, t as text, k as space, c as claim_element, a as children, g as claim_text, d as detach, n as claim_space, b as attr, f as insert_hydration, F as append_hydration, h as set_data, Q as destroy_each, E as src_url_equal, O as noop } from "../../chunks/vendor-15d99854.js";
-import { i as isAuth, p as path, f as formatDate } from "../../chunks/utils-af6e44bf.js";
+import {
+  S as SvelteComponent,
+  i as init,
+  s as safe_not_equal,
+  e as element,
+  t as text,
+  k as space,
+  c as claim_element,
+  a as children,
+  g as claim_text,
+  d as detach,
+  n as claim_space,
+  b as attr,
+  f as insert_hydration,
+  F as append_hydration,
+  h as set_data,
+  Q as destroy_each,
+  E as src_url_equal,
+  O as noop,
+} from "../../chunks/vendor-15d99854.js";
+import {
+  i as isAuth,
+  p as path,
+  f as formatDate,
+} from "../../chunks/utils-af6e44bf.js";
 import { g as getJSON, o as onStatus } from "../../chunks/http-cb35e292.js";
 import "../../chunks/paths-28a87002.js";
 function get_each_context(ctx, list, i) {
@@ -70,13 +93,15 @@ function create_if_block_1(ctx) {
       append_hydration(div0, t3);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && t3_value !== (t3_value = ctx2[0].penaltyPrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t3_value !== (t3_value = ctx2[0].penaltyPrice.toFixed(2) + "")
+      )
         set_data(t3, t3_value);
     },
     d(detaching) {
-      if (detaching)
-        detach(div2);
-    }
+      if (detaching) detach(div2);
+    },
   };
 }
 function create_if_block(ctx) {
@@ -97,7 +122,9 @@ function create_if_block(ctx) {
   let each_value_1 = ctx[0].coupons;
   let each_blocks = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    each_blocks[i] = create_each_block_1(
+      get_each_context_1(ctx, each_value_1, i)
+    );
   }
   return {
     c() {
@@ -203,14 +230,11 @@ function create_if_block(ctx) {
       }
     },
     d(detaching) {
-      if (detaching)
-        detach(h3);
-      if (detaching)
-        detach(t1);
-      if (detaching)
-        detach(div);
+      if (detaching) detach(h3);
+      if (detaching) detach(t1);
+      if (detaching) detach(div);
       destroy_each(each_blocks, detaching);
-    }
+    },
   };
 }
 function create_each_block_1(ctx) {
@@ -268,9 +292,8 @@ function create_each_block_1(ctx) {
         set_data(t3, t3_value);
     },
     d(detaching) {
-      if (detaching)
-        detach(tr);
-    }
+      if (detaching) detach(tr);
+    },
   };
 }
 function create_each_block(ctx) {
@@ -365,7 +388,7 @@ function create_each_block(ctx) {
         src: true,
         class: true,
         height: true,
-        alt: true
+        alt: true,
       });
       t0 = claim_space(div10_nodes);
       div9 = claim_element(div10_nodes, "DIV", { class: true });
@@ -441,18 +464,30 @@ function create_each_block(ctx) {
       this.h();
     },
     h() {
-      if (!src_url_equal(img.src, img_src_value = ctx[1].imageUrl))
+      if (!src_url_equal(img.src, (img_src_value = ctx[1].imageUrl)))
         attr(img, "src", img_src_value);
       attr(img, "class", "card-img-top");
       attr(img, "height", "228");
-      attr(img, "alt", img_alt_value = ctx[1].name + " image");
+      attr(img, "alt", (img_alt_value = ctx[1].name + " image"));
       attr(h5, "class", "card-title text-center text-truncate mb-5");
       attr(i0, "class", "bi bi-currency-euro");
-      attr(div2, "class", "d-flex justify-content-between orange fw-bolder fst-italic");
+      attr(
+        div2,
+        "class",
+        "d-flex justify-content-between orange fw-bolder fst-italic"
+      );
       attr(i1, "class", "bi bi-currency-euro");
-      attr(div5, "class", "d-flex justify-content-between text-muted fs-6 fst-italic");
+      attr(
+        div5,
+        "class",
+        "d-flex justify-content-between text-muted fs-6 fst-italic"
+      );
       attr(i2, "class", "bi bi-currency-euro");
-      attr(div8, "class", "d-flex justify-content-between text-muted fs-6 fst-italic");
+      attr(
+        div8,
+        "class",
+        "d-flex justify-content-between text-muted fs-6 fst-italic"
+      );
       attr(div9, "class", "card-body");
       attr(div10, "class", "card h-100");
       attr(div11, "class", "col");
@@ -496,25 +531,39 @@ function create_each_block(ctx) {
       append_hydration(div11, t14);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && !src_url_equal(img.src, img_src_value = ctx2[1].imageUrl)) {
+      if (
+        dirty & 1 &&
+        !src_url_equal(img.src, (img_src_value = ctx2[1].imageUrl))
+      ) {
         attr(img, "src", img_src_value);
       }
-      if (dirty & 1 && img_alt_value !== (img_alt_value = ctx2[1].name + " image")) {
+      if (
+        dirty & 1 &&
+        img_alt_value !== (img_alt_value = ctx2[1].name + " image")
+      ) {
         attr(img, "alt", img_alt_value);
       }
       if (dirty & 1 && t1_value !== (t1_value = ctx2[1].name + ""))
         set_data(t1, t1_value);
-      if (dirty & 1 && t5_value !== (t5_value = ctx2[1].dailyPrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t5_value !== (t5_value = ctx2[1].dailyPrice.toFixed(2) + "")
+      )
         set_data(t5, t5_value);
-      if (dirty & 1 && t9_value !== (t9_value = ctx2[1].basePrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t9_value !== (t9_value = ctx2[1].basePrice.toFixed(2) + "")
+      )
         set_data(t9, t9_value);
-      if (dirty & 1 && t13_value !== (t13_value = ctx2[1].discountPrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t13_value !== (t13_value = ctx2[1].discountPrice.toFixed(2) + "")
+      )
         set_data(t13, t13_value);
     },
     d(detaching) {
-      if (detaching)
-        detach(div11);
-    }
+      if (detaching) detach(div11);
+    },
   };
 }
 function create_fragment(ctx) {
@@ -610,7 +659,8 @@ function create_fragment(ctx) {
   let t43;
   let div26;
   let if_block0 = ctx[0].penaltyPrice > 0 && create_if_block_1(ctx);
-  let if_block1 = ctx[0].coupons && ctx[0].coupons.length > 0 && create_if_block(ctx);
+  let if_block1 =
+    ctx[0].coupons && ctx[0].coupons.length > 0 && create_if_block(ctx);
   let each_value = ctx[0].products;
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
@@ -686,8 +736,7 @@ function create_fragment(ctx) {
       t32 = text("\u20AC ");
       t33 = text(t33_value);
       t34 = space();
-      if (if_block0)
-        if_block0.c();
+      if (if_block0) if_block0.c();
       t35 = space();
       div24 = element("div");
       div23 = element("div");
@@ -698,8 +747,7 @@ function create_fragment(ctx) {
       t38 = text("\u20AC ");
       t39 = text(t39_value);
       t40 = space();
-      if (if_block1)
-        if_block1.c();
+      if (if_block1) if_block1.c();
       t41 = space();
       h32 = element("h3");
       t42 = text("Products");
@@ -843,8 +891,7 @@ function create_fragment(ctx) {
       div20_nodes.forEach(detach);
       div21_nodes.forEach(detach);
       t34 = claim_space(div25_nodes);
-      if (if_block0)
-        if_block0.l(div25_nodes);
+      if (if_block0) if_block0.l(div25_nodes);
       t35 = claim_space(div25_nodes);
       div24 = claim_element(div25_nodes, "DIV", { class: true });
       var div24_nodes = children(div24);
@@ -864,8 +911,7 @@ function create_fragment(ctx) {
       div24_nodes.forEach(detach);
       div25_nodes.forEach(detach);
       t40 = claim_space(main_nodes);
-      if (if_block1)
-        if_block1.l(main_nodes);
+      if (if_block1) if_block1.l(main_nodes);
       t41 = claim_space(main_nodes);
       h32 = claim_element(main_nodes, "H3", { class: true });
       var h32_nodes = children(h32);
@@ -991,8 +1037,7 @@ function create_fragment(ctx) {
       append_hydration(div19, t32);
       append_hydration(div19, t33);
       append_hydration(div25, t34);
-      if (if_block0)
-        if_block0.m(div25, null);
+      if (if_block0) if_block0.m(div25, null);
       append_hydration(div25, t35);
       append_hydration(div25, div24);
       append_hydration(div24, div23);
@@ -1003,8 +1048,7 @@ function create_fragment(ctx) {
       append_hydration(div22, t38);
       append_hydration(div22, t39);
       append_hydration(main, t40);
-      if (if_block1)
-        if_block1.m(main, null);
+      if (if_block1) if_block1.m(main, null);
       append_hydration(main, t41);
       append_hydration(main, h32);
       append_hydration(h32, t42);
@@ -1017,17 +1061,32 @@ function create_fragment(ctx) {
     p(ctx2, [dirty]) {
       if (dirty & 1 && t4_value !== (t4_value = ctx2[0].state + ""))
         set_data(t4, t4_value);
-      if (dirty & 1 && t8_value !== (t8_value = formatDate(ctx2[0].startDate) + ""))
+      if (
+        dirty & 1 &&
+        t8_value !== (t8_value = formatDate(ctx2[0].startDate) + "")
+      )
         set_data(t8, t8_value);
-      if (dirty & 1 && t12_value !== (t12_value = formatDate(ctx2[0].endDate) + ""))
+      if (
+        dirty & 1 &&
+        t12_value !== (t12_value = formatDate(ctx2[0].endDate) + "")
+      )
         set_data(t12, t12_value);
       if (dirty & 1 && t16_value !== (t16_value = ctx2[0].days + ""))
         set_data(t16, t16_value);
-      if (dirty & 1 && t23_value !== (t23_value = ctx2[0].subtotalPrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t23_value !== (t23_value = ctx2[0].subtotalPrice.toFixed(2) + "")
+      )
         set_data(t23, t23_value);
-      if (dirty & 1 && t28_value !== (t28_value = ctx2[0].discountsPrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t28_value !== (t28_value = ctx2[0].discountsPrice.toFixed(2) + "")
+      )
         set_data(t28, t28_value);
-      if (dirty & 1 && t33_value !== (t33_value = ctx2[0].couponsPrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t33_value !== (t33_value = ctx2[0].couponsPrice.toFixed(2) + "")
+      )
         set_data(t33, t33_value);
       if (ctx2[0].penaltyPrice > 0) {
         if (if_block0) {
@@ -1041,7 +1100,10 @@ function create_fragment(ctx) {
         if_block0.d(1);
         if_block0 = null;
       }
-      if (dirty & 1 && t39_value !== (t39_value = ctx2[0].totalPrice.toFixed(2) + ""))
+      if (
+        dirty & 1 &&
+        t39_value !== (t39_value = ctx2[0].totalPrice.toFixed(2) + "")
+      )
         set_data(t39, t39_value);
       if (ctx2[0].coupons && ctx2[0].coupons.length > 0) {
         if (if_block1) {
@@ -1077,53 +1139,56 @@ function create_fragment(ctx) {
     i: noop,
     o: noop,
     d(detaching) {
-      if (detaching)
-        detach(main);
-      if (if_block0)
-        if_block0.d();
-      if (if_block1)
-        if_block1.d();
+      if (detaching) detach(main);
+      if (if_block0) if_block0.d();
+      if (if_block1) if_block1.d();
       destroy_each(each_blocks, detaching);
-    }
+    },
   };
 }
 async function load({ page, fetch }) {
   const orderId = page.params.id;
   if (isAuth()) {
-    return await getJSON(`/api/store/orders/${orderId}`, { fetch }).then((order) => ({ props: { order } })).catch(onStatus(401, () => ({
-      status: 302,
-      redirect: path("/signin", {
-        returnTo: path(page.path),
-        required: true
-      })
-    }))).catch(([err, req]) => {
-      console.error(err);
-      return {
-        status: req ? req.status : 500,
-        error: "Unable to reach the server"
-      };
-    });
+    return await getJSON(`/api/store/orders/${orderId}`, { fetch })
+      .then((order) => ({ props: { order } }))
+      .catch(
+        onStatus(401, () => ({
+          status: 302,
+          redirect: path("/signin", {
+            returnTo: path(page.path),
+            required: true,
+          }),
+        }))
+      )
+      .catch(([err, req]) => {
+        console.error(err);
+        return {
+          status: req ? req.status : 500,
+          error: "Unable to reach the server",
+        };
+      });
   }
   return {
     status: 302,
     redirect: path("/signin", {
       returnTo: path(page.path),
-      required: true
-    })
+      required: true,
+    }),
   };
 }
 function instance($$self, $$props, $$invalidate) {
   let { order } = $$props;
   $$self.$$set = ($$props2) => {
-    if ("order" in $$props2)
-      $$invalidate(0, order = $$props2.order);
+    if ("order" in $$props2) $$invalidate(0, (order = $$props2.order));
   };
   return [order];
 }
 class U5Bidu5D extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance, create_fragment, safe_not_equal, { order: 0 });
+    init(this, options, instance, create_fragment, safe_not_equal, {
+      order: 0,
+    });
   }
 }
 export { U5Bidu5D as default, load };

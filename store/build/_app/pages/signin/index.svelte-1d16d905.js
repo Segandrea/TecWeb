@@ -1,5 +1,40 @@
-import { S as SvelteComponent, i as init, s as safe_not_equal, D as create_slot, e as element, t as text, k as space, j as create_component, P as query_selector_all, c as claim_element, a as children, g as claim_text, d as detach, n as claim_space, m as claim_component, E as src_url_equal, b as attr, F as append_hydration, f as insert_hydration, o as mount_component, W as set_input_value, G as listen, X as prevent_default, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, x as transition_in, u as transition_out, v as destroy_component, K as run_all, L as component_subscribe, A as onMount, M as binding_callbacks } from "../../chunks/vendor-15d99854.js";
-import { A as Alert, g as goto } from "../../chunks/navigation-67443bd6.js";
+import {
+  S as SvelteComponent,
+  i as init,
+  s as safe_not_equal,
+  D as create_slot,
+  e as element,
+  t as text,
+  k as space,
+  j as create_component,
+  P as query_selector_all,
+  c as claim_element,
+  a as children,
+  g as claim_text,
+  d as detach,
+  n as claim_space,
+  m as claim_component,
+  E as src_url_equal,
+  b as attr,
+  F as append_hydration,
+  f as insert_hydration,
+  o as mount_component,
+  W as set_input_value,
+  G as listen,
+  X as prevent_default,
+  H as update_slot_base,
+  I as get_all_dirty_from_scope,
+  J as get_slot_changes,
+  x as transition_in,
+  u as transition_out,
+  v as destroy_component,
+  K as run_all,
+  L as component_subscribe,
+  A as onMount,
+  M as binding_callbacks,
+} from "../../chunks/vendor-15d99854.js";
+import { A as Alert } from "../../chunks/Alert-0c6938a7.js";
+import { g as goto } from "../../chunks/navigation-51f4a605.js";
 import { p as page } from "../../chunks/stores-5878e4bb.js";
 import { p as postJSON, o as onStatus } from "../../chunks/http-cb35e292.js";
 import { p as path } from "../../chunks/utils-af6e44bf.js";
@@ -88,15 +123,20 @@ function create_fragment(ctx) {
       a1 = element("a");
       t15 = text("Sign up");
       t16 = space();
-      if (default_slot)
-        default_slot.c();
+      if (default_slot) default_slot.c();
       this.h();
     },
     l(nodes) {
-      const head_nodes = query_selector_all('[data-svelte="svelte-lc09lw"]', document.head);
+      const head_nodes = query_selector_all(
+        '[data-svelte="svelte-lc09lw"]',
+        document.head
+      );
       style = claim_element(head_nodes, "STYLE", {});
       var style_nodes = children(style);
-      t0 = claim_text(style_nodes, "body {\n      background-color: #f5f5f5;\n    }");
+      t0 = claim_text(
+        style_nodes,
+        "body {\n      background-color: #f5f5f5;\n    }"
+      );
       style_nodes.forEach(detach);
       head_nodes.forEach(detach);
       t1 = claim_space(nodes);
@@ -128,7 +168,7 @@ function create_fragment(ctx) {
         name: true,
         autocomplete: true,
         placeholder: true,
-        class: true
+        class: true,
       });
       t6 = claim_space(div0_nodes);
       label0 = claim_element(div0_nodes, "LABEL", { for: true });
@@ -146,7 +186,7 @@ function create_fragment(ctx) {
         autocomplete: true,
         placeholder: true,
         class: true,
-        minlength: true
+        minlength: true,
       });
       t9 = claim_space(div1_nodes);
       label1 = claim_element(div1_nodes, "LABEL", { for: true });
@@ -173,12 +213,16 @@ function create_fragment(ctx) {
       div3_nodes.forEach(detach);
       main_nodes.forEach(detach);
       t16 = claim_space(nodes);
-      if (default_slot)
-        default_slot.l(nodes);
+      if (default_slot) default_slot.l(nodes);
       this.h();
     },
     h() {
-      if (!src_url_equal(img.src, img_src_value = path("/nolonoloplus-dark.png")))
+      if (
+        !src_url_equal(
+          img.src,
+          (img_src_value = path("/nolonoloplus-dark.png"))
+        )
+      )
         attr(img, "src", img_src_value);
       attr(img, "alt", "Nolo Nolo Plus Logo");
       attr(a0, "href", path("/"));
@@ -209,7 +253,11 @@ function create_fragment(ctx) {
       attr(p, "class", "mt-2");
       attr(form, "class", "svelte-1m6hkte");
       attr(div2, "class", "col m-auto");
-      attr(div3, "class", "row d-flex text-center align-items-center m-auto w-100 h-100");
+      attr(
+        div3,
+        "class",
+        "row d-flex text-center align-items-center m-auto w-100 h-100"
+      );
       attr(main, "class", "w-100 h-100 container");
     },
     m(target, anchor) {
@@ -259,7 +307,7 @@ function create_fragment(ctx) {
         dispose = [
           listen(input0, "input", ctx[7]),
           listen(input1, "input", ctx[9]),
-          listen(form, "submit", prevent_default(ctx[3]))
+          listen(form, "submit", prevent_default(ctx[3])),
         ];
         mounted = true;
       }
@@ -275,13 +323,21 @@ function create_fragment(ctx) {
       }
       if (default_slot) {
         if (default_slot.p && (!current || dirty & 16)) {
-          update_slot_base(default_slot, default_slot_template, ctx2, ctx2[4], !current ? get_all_dirty_from_scope(ctx2[4]) : get_slot_changes(default_slot_template, ctx2[4], dirty, null), null);
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            ctx2[4],
+            !current
+              ? get_all_dirty_from_scope(ctx2[4])
+              : get_slot_changes(default_slot_template, ctx2[4], dirty, null),
+            null
+          );
         }
       }
     },
     i(local) {
-      if (current)
-        return;
+      if (current) return;
       transition_in(alert_1.$$.fragment, local);
       transition_in(default_slot, local);
       current = true;
@@ -293,25 +349,23 @@ function create_fragment(ctx) {
     },
     d(detaching) {
       detach(style);
-      if (detaching)
-        detach(t1);
-      if (detaching)
-        detach(main);
+      if (detaching) detach(t1);
+      if (detaching) detach(main);
       ctx[6](null);
       destroy_component(alert_1);
       ctx[8](null);
-      if (detaching)
-        detach(t16);
-      if (default_slot)
-        default_slot.d(detaching);
+      if (detaching) detach(t16);
+      if (default_slot) default_slot.d(detaching);
       mounted = false;
       run_all(dispose);
-    }
+    },
   };
 }
 function instance($$self, $$props, $$invalidate) {
   let $page;
-  component_subscribe($$self, page, ($$value) => $$invalidate(10, $page = $$value));
+  component_subscribe($$self, page, ($$value) =>
+    $$invalidate(10, ($page = $$value))
+  );
   let { $$slots: slots = {}, $$scope } = $$props;
   let alert;
   let emailInput;
@@ -323,18 +377,23 @@ function instance($$self, $$props, $$invalidate) {
     }
   });
   function signin() {
-    postJSON("/api/store/signin", customer).then((body) => {
-      const returnTo = $page.query.get("returnTo") || path("/");
-      sessionStorage.setItem("user", JSON.stringify(body));
-      goto(returnTo);
-    }).catch(onStatus(401, () => {
-      $$invalidate(2, customer = {});
-      emailInput.focus();
-      alert.error("Signin required");
-    })).catch((err) => {
-      console.error(err);
-      alert.error("Something went wrong!");
-    });
+    postJSON("/api/store/signin", customer)
+      .then((body) => {
+        const returnTo = $page.query.get("returnTo") || path("/");
+        sessionStorage.setItem("user", JSON.stringify(body));
+        goto(returnTo);
+      })
+      .catch(
+        onStatus(401, () => {
+          $$invalidate(2, (customer = {}));
+          emailInput.focus();
+          alert.error("Signin required");
+        })
+      )
+      .catch((err) => {
+        console.error(err);
+        alert.error("Something went wrong!");
+      });
   }
   function alert_1_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
@@ -357,8 +416,7 @@ function instance($$self, $$props, $$invalidate) {
     $$invalidate(2, customer);
   }
   $$self.$$set = ($$props2) => {
-    if ("$$scope" in $$props2)
-      $$invalidate(4, $$scope = $$props2.$$scope);
+    if ("$$scope" in $$props2) $$invalidate(4, ($$scope = $$props2.$$scope));
   };
   return [
     alert,
@@ -370,7 +428,7 @@ function instance($$self, $$props, $$invalidate) {
     alert_1_binding,
     input0_input_handler,
     input0_binding,
-    input1_input_handler
+    input1_input_handler,
   ];
 }
 class Signin extends SvelteComponent {

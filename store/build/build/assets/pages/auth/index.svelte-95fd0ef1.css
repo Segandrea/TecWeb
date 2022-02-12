@@ -1,1 +1,12 @@
-main.svelte-1gc5ydd{background-color:#f5f5f5;padding:0!important;margin:0!important}form.svelte-1gc5ydd{max-width:330px;margin:auto}.form-floating.svelte-1gc5ydd:focus-within{z-index:2}
+main.svelte-1gc5ydd {
+  background-color: #f5f5f5;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+form.svelte-1gc5ydd {
+  max-width: 330px;
+  margin: auto;
+}
+.form-floating.svelte-1gc5ydd:focus-within {
+  z-index: 2;
+}

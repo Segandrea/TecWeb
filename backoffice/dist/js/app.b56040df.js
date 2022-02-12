@@ -174,6 +174,13 @@ module.exports = __webpack_require__("56d7");
 
 /***/ }),
 
+/***/ "145c":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "1683":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1552,10 +1559,13 @@ return (_ctx, _cache) => {
 const ListCoupons_exports_ = ListCouponsvue_type_script_setup_true_lang_js;
 
 /* harmony default export */ var ListCoupons = (ListCoupons_exports_);
+// EXTERNAL MODULE: ./node_modules/v-calendar/lib/esm/index.js + 65 modules
+var esm = __webpack_require__("7b37");
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/views/UpdateProduct.vue?vue&type=script&setup=true&lang=js
 
 
-const _withScopeId = n => (Object(vue_runtime_esm_bundler["y" /* pushScopeId */])("data-v-45cd9cd3"),n=n(),Object(vue_runtime_esm_bundler["w" /* popScopeId */])(),n)
+const _withScopeId = n => (Object(vue_runtime_esm_bundler["y" /* pushScopeId */])("data-v-38ede352"),n=n(),Object(vue_runtime_esm_bundler["w" /* popScopeId */])(),n)
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_1 = { class: "container w-100 h-100 py-4" }
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_2 = {
   class: "mb-4",
@@ -1582,24 +1592,24 @@ const UpdateProductvue_type_script_setup_true_lang_js_hoisted_9 = {
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_10 = { class: "carousel-inner h-100 text-center" }
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_11 = ["src", "alt"]
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_12 = ["onClick"]
-const UpdateProductvue_type_script_setup_true_lang_js_hoisted_13 = /*#__PURE__*/Object(vue_runtime_esm_bundler["i" /* createStaticVNode */])("<button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselControls\" data-bs-slide=\"prev\" data-v-45cd9cd3><span class=\"carousel-control-prev-icon\" aria-hidden=\"true\" data-v-45cd9cd3></span><span class=\"visually-hidden\" data-v-45cd9cd3>Previous</span></button><button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#carouselControls\" data-bs-slide=\"next\" data-v-45cd9cd3><span class=\"carousel-control-next-icon\" aria-hidden=\"true\" data-v-45cd9cd3></span><span class=\"visually-hidden\" data-v-45cd9cd3>Next</span></button>", 2)
+const UpdateProductvue_type_script_setup_true_lang_js_hoisted_13 = /*#__PURE__*/Object(vue_runtime_esm_bundler["i" /* createStaticVNode */])("<button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselControls\" data-bs-slide=\"prev\" data-v-38ede352><span class=\"carousel-control-prev-icon\" aria-hidden=\"true\" data-v-38ede352></span><span class=\"visually-hidden\" data-v-38ede352>Previous</span></button><button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#carouselControls\" data-bs-slide=\"next\" data-v-38ede352><span class=\"carousel-control-next-icon\" aria-hidden=\"true\" data-v-38ede352></span><span class=\"visually-hidden\" data-v-38ede352>Next</span></button>", 2)
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_15 = ["onSubmit"]
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_16 = { class: "row g-4" }
-const UpdateProductvue_type_script_setup_true_lang_js_hoisted_17 = { class: "col-md-4" }
+const UpdateProductvue_type_script_setup_true_lang_js_hoisted_17 = { class: "col-md-3" }
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_18 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "name",
   class: "form-label"
 }, "Name", -1))
-const UpdateProductvue_type_script_setup_true_lang_js_hoisted_19 = { class: "col-md-3" }
+const UpdateProductvue_type_script_setup_true_lang_js_hoisted_19 = { class: "col-md-2" }
 const UpdateProductvue_type_script_setup_true_lang_js_hoisted_20 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productCategory",
   class: "form-label"
 }, "Category", -1))
-const UpdateProductvue_type_script_setup_true_lang_js_hoisted_21 = /*#__PURE__*/Object(vue_runtime_esm_bundler["i" /* createStaticVNode */])("<option value=\"party\" data-v-45cd9cd3>Party</option><option value=\"cards\" data-v-45cd9cd3>Cards</option><option value=\"mistery\" data-v-45cd9cd3>Mistery</option><option value=\"puzzle\" data-v-45cd9cd3>Puzzle</option><option value=\"dices\" data-v-45cd9cd3>Dices</option>", 5)
+const UpdateProductvue_type_script_setup_true_lang_js_hoisted_21 = /*#__PURE__*/Object(vue_runtime_esm_bundler["i" /* createStaticVNode */])("<option value=\"party\" data-v-38ede352>Party</option><option value=\"cards\" data-v-38ede352>Cards</option><option value=\"mistery\" data-v-38ede352>Mistery</option><option value=\"puzzle\" data-v-38ede352>Puzzle</option><option value=\"dices\" data-v-38ede352>Dices</option>", 5)
 const _hoisted_26 = [
   UpdateProductvue_type_script_setup_true_lang_js_hoisted_21
 ]
-const _hoisted_27 = { class: "col-md-3" }
+const _hoisted_27 = { class: "col-md-2" }
 const _hoisted_28 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productStatus",
   class: "form-label"
@@ -1612,57 +1622,65 @@ const _hoisted_32 = [
   _hoisted_30,
   _hoisted_31
 ]
-const _hoisted_33 = { class: "d-flex col-md-2 align-items-end" }
-const _hoisted_34 = { class: "form-check form-switch pb-1" }
-const _hoisted_35 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const _hoisted_33 = { class: "col-md-4" }
+const _hoisted_34 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "form-label" }, "Unavailability", -1))
+const _hoisted_35 = { class: "input-group" }
+const _hoisted_36 = ["value"]
+const _hoisted_37 = ["value"]
+const _hoisted_38 = { class: "d-flex col-md-1 align-items-end" }
+const _hoisted_39 = { class: "form-check form-switch pb-1" }
+const _hoisted_40 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   class: "form-check-label",
   for: "productVisible"
 }, "Visible", -1))
-const _hoisted_36 = { class: "col-md-12" }
-const _hoisted_37 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const _hoisted_41 = { class: "col-md-12" }
+const _hoisted_42 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productDescription",
   class: "form-label"
 }, "Description", -1))
-const _hoisted_38 = { class: "col-md-3" }
-const _hoisted_39 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const _hoisted_43 = { class: "col-md-3" }
+const _hoisted_44 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productImage",
   class: "form-label"
 }, "Image", -1))
-const _hoisted_40 = { class: "col-md-3" }
-const _hoisted_41 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const _hoisted_45 = { class: "col-md-3" }
+const _hoisted_46 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productDiscountPrice",
   class: "form-label"
 }, "Discount price", -1))
-const _hoisted_42 = { class: "input-group" }
-const _hoisted_43 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1))
-const _hoisted_44 = { class: "col-md-3" }
-const _hoisted_45 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const _hoisted_47 = { class: "input-group" }
+const _hoisted_48 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1))
+const _hoisted_49 = { class: "col-md-3" }
+const _hoisted_50 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productBasePrice",
   class: "form-label"
 }, "Base price", -1))
-const _hoisted_46 = { class: "input-group" }
-const _hoisted_47 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1))
-const _hoisted_48 = { class: "col-md-3" }
-const _hoisted_49 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const _hoisted_51 = { class: "input-group" }
+const _hoisted_52 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1))
+const _hoisted_53 = { class: "col-md-3" }
+const _hoisted_54 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productDailyPrice",
   class: "form-label"
 }, "Daily price", -1))
-const _hoisted_50 = { class: "input-group" }
-const _hoisted_51 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1))
-const _hoisted_52 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
+const _hoisted_55 = { class: "input-group" }
+const _hoisted_56 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1))
+const _hoisted_57 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
   type: "submit",
   class: "btn btn-danger"
 }, "Update", -1))
-const _hoisted_53 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "mt-4 text-center" }, "Reviews", -1))
-const _hoisted_54 = { class: "table-responsive" }
-const _hoisted_55 = { class: "table table-hover mb-4" }
-const _hoisted_56 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
+const _hoisted_58 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("h3", { class: "mt-4 text-center" }, "Reviews", -1))
+const _hoisted_59 = { class: "table-responsive" }
+const _hoisted_60 = { class: "table table-hover mb-4" }
+const _hoisted_61 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
   /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tr", null, [
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "username"),
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "content"),
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "rating")
   ])
 ], -1))
+
+
+
 
 
 
@@ -1684,10 +1702,27 @@ const alert = Object(vue_runtime_esm_bundler["A" /* ref */])();
 const imageInput = Object(vue_runtime_esm_bundler["A" /* ref */])();
 
 const productId = route.params.id;
-const product = Object(vue_runtime_esm_bundler["A" /* ref */])({});
+const product = Object(vue_runtime_esm_bundler["A" /* ref */])({
+  unavailability: {},
+});
+
+function deserializeProduct(body) {
+  const unavailability = body.unavailability || {};
+
+  unavailability.start = unavailability.start
+    ? new Date(unavailability.start)
+    : null;
+
+  unavailability.end = unavailability.end ? new Date(unavailability.end) : null;
+
+  body.unavailability = unavailability;
+  return body;
+}
 
 getJSON(`/api/backoffice/products/${productId}`)
-  .then((body) => (product.value = body))
+  .then((body) => {
+    product.value = deserializeProduct(body);
+  })
   .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
   .catch((err) => {
     // eslint-disable-next-line
@@ -1722,6 +1757,11 @@ function updateProduct() {
     return alert.value.error("Discount price must be lesser than base price");
   }
 
+  const unavailability = product.value.unavailability || {};
+  if ((unavailability.start || -Infinity) > (unavailability.end || Infinity)) {
+    return alert.value.error("Unavailability start must be lesser than end");
+  }
+
   toUploads(imageInput.value.files)
     .catch((err) => {
       // eslint-disable-next-line
@@ -1735,7 +1775,7 @@ function updateProduct() {
       })
     )
     .then((body) => {
-      product.value = body;
+      product.value = deserializeProduct(body);
 
       // clear the HTML input element
       imageInput.value.value = null;
@@ -1864,22 +1904,45 @@ return (_ctx, _cache) => {
             ])
           ]),
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_33, [
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_34, [
+            _hoisted_34,
+            Object(vue_runtime_esm_bundler["k" /* createVNode */])(Object(vue_runtime_esm_bundler["H" /* unref */])(esm["a" /* DatePicker */]), {
+              modelValue: product.value.unavailability,
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ((product.value.unavailability) = $event)),
+              clearable: true,
+              "is-range": ""
+            }, {
+              default: Object(vue_runtime_esm_bundler["M" /* withCtx */])(({ inputValue, inputEvents }) => [
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_35, [
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.start
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.start), { "aria-label": "Start" }), null, 16, _hoisted_36),
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.end
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.end), { "aria-label": "End date" }), null, 16, _hoisted_37)
+                ])
+              ]),
+              _: 1
+            }, 8, ["modelValue"])
+          ]),
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_38, [
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_39, [
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ((product.value.visible) = $event)),
+                "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ((product.value.visible) = $event)),
                 class: "form-check-input",
                 type: "checkbox",
                 id: "productVisible"
               }, null, 512), [
                 [vue_runtime_esm_bundler["I" /* vModelCheckbox */], product.value.visible]
               ]),
-              _hoisted_35
+              _hoisted_40
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_36, [
-            _hoisted_37,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_41, [
+            _hoisted_42,
             Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("textarea", {
-              "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ((product.value.description) = $event)),
+              "onUpdate:modelValue": _cache[5] || (_cache[5] = $event => ((product.value.description) = $event)),
               class: "form-control",
               id: "productDescription",
               rows: "5",
@@ -1888,8 +1951,8 @@ return (_ctx, _cache) => {
               [vue_runtime_esm_bundler["K" /* vModelText */], product.value.description]
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_38, [
-            _hoisted_39,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_43, [
+            _hoisted_44,
             Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
               id: "productImage",
               ref_key: "imageInput",
@@ -1900,12 +1963,12 @@ return (_ctx, _cache) => {
               multiple: ""
             }, null, 512)
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_40, [
-            _hoisted_41,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_42, [
-              _hoisted_43,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_45, [
+            _hoisted_46,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_47, [
+              _hoisted_48,
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[5] || (_cache[5] = $event => ((product.value.discountPrice) = $event)),
+                "onUpdate:modelValue": _cache[6] || (_cache[6] = $event => ((product.value.discountPrice) = $event)),
                 class: "form-control",
                 type: "number",
                 id: "productDiscountPrice",
@@ -1918,12 +1981,12 @@ return (_ctx, _cache) => {
               ])
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_44, [
-            _hoisted_45,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_46, [
-              _hoisted_47,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_49, [
+            _hoisted_50,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_51, [
+              _hoisted_52,
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[6] || (_cache[6] = $event => ((product.value.basePrice) = $event)),
+                "onUpdate:modelValue": _cache[7] || (_cache[7] = $event => ((product.value.basePrice) = $event)),
                 class: "form-control",
                 type: "number",
                 id: "productBasePrice",
@@ -1936,12 +1999,12 @@ return (_ctx, _cache) => {
               ])
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_48, [
-            _hoisted_49,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_50, [
-              _hoisted_51,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_53, [
+            _hoisted_54,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_55, [
+              _hoisted_56,
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[7] || (_cache[7] = $event => ((product.value.dailyPrice) = $event)),
+                "onUpdate:modelValue": _cache[8] || (_cache[8] = $event => ((product.value.dailyPrice) = $event)),
                 class: "form-control",
                 type: "number",
                 id: "productDailyPrice",
@@ -1955,7 +2018,7 @@ return (_ctx, _cache) => {
             ])
           ]),
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "col-12" }, [
-            _hoisted_52,
+            _hoisted_57,
             Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
               type: "button",
               class: "btn btn-danger ms-3",
@@ -1966,10 +2029,10 @@ return (_ctx, _cache) => {
       ], 40, UpdateProductvue_type_script_setup_true_lang_js_hoisted_15),
       (product.value.reviews && product.value.reviews.length > 0)
         ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])(vue_runtime_esm_bundler["a" /* Fragment */], { key: 1 }, [
-            _hoisted_53,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_54, [
-              Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", _hoisted_55, [
-                _hoisted_56,
+            _hoisted_58,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_59, [
+              Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("table", _hoisted_60, [
+                _hoisted_61,
                 Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tbody", null, [
                   (Object(vue_runtime_esm_bundler["v" /* openBlock */])(true), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])(vue_runtime_esm_bundler["a" /* Fragment */], null, Object(vue_runtime_esm_bundler["B" /* renderList */])(product.value.reviews, (review) => {
                     return (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["g" /* createElementBlock */])("tr", {
@@ -1993,8 +2056,8 @@ return (_ctx, _cache) => {
 });
 // CONCATENATED MODULE: ./src/views/UpdateProduct.vue?vue&type=script&setup=true&lang=js
  
-// EXTERNAL MODULE: ./src/views/UpdateProduct.vue?vue&type=style&index=0&id=45cd9cd3&scoped=true&lang=css
-var UpdateProductvue_type_style_index_0_id_45cd9cd3_scoped_true_lang_css = __webpack_require__("ddcb");
+// EXTERNAL MODULE: ./src/views/UpdateProduct.vue?vue&type=style&index=0&id=38ede352&scoped=true&lang=css
+var UpdateProductvue_type_style_index_0_id_38ede352_scoped_true_lang_css = __webpack_require__("7654");
 
 // CONCATENATED MODULE: ./src/views/UpdateProduct.vue
 
@@ -2003,7 +2066,7 @@ var UpdateProductvue_type_style_index_0_id_45cd9cd3_scoped_true_lang_css = __web
 
 
 
-const UpdateProduct_exports_ = /*#__PURE__*/exportHelper_default()(UpdateProductvue_type_script_setup_true_lang_js, [['__scopeId',"data-v-45cd9cd3"]])
+const UpdateProduct_exports_ = /*#__PURE__*/exportHelper_default()(UpdateProductvue_type_script_setup_true_lang_js, [['__scopeId',"data-v-38ede352"]])
 
 /* harmony default export */ var UpdateProduct = (UpdateProduct_exports_);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/views/CreateProduct.vue?vue&type=script&setup=true&lang=js
@@ -2023,12 +2086,12 @@ const CreateProductvue_type_script_setup_true_lang_js_hoisted_2 = /*#__PURE__*/O
 ], -1)
 const CreateProductvue_type_script_setup_true_lang_js_hoisted_3 = ["onSubmit"]
 const CreateProductvue_type_script_setup_true_lang_js_hoisted_4 = { class: "row g-4" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_5 = { class: "col-md-4" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_5 = { class: "col-md-3" }
 const CreateProductvue_type_script_setup_true_lang_js_hoisted_6 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "name",
   class: "form-label"
 }, "Name", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_7 = { class: "col-md-3" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_7 = { class: "col-md-2" }
 const CreateProductvue_type_script_setup_true_lang_js_hoisted_8 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productCategory",
   class: "form-label"
@@ -2037,7 +2100,7 @@ const CreateProductvue_type_script_setup_true_lang_js_hoisted_9 = /*#__PURE__*/O
 const CreateProductvue_type_script_setup_true_lang_js_hoisted_14 = [
   CreateProductvue_type_script_setup_true_lang_js_hoisted_9
 ]
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_15 = { class: "col-md-3" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_15 = { class: "col-md-2" }
 const CreateProductvue_type_script_setup_true_lang_js_hoisted_16 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productStatus",
   class: "form-label"
@@ -2053,49 +2116,56 @@ const CreateProductvue_type_script_setup_true_lang_js_hoisted_20 = [
   CreateProductvue_type_script_setup_true_lang_js_hoisted_18,
   CreateProductvue_type_script_setup_true_lang_js_hoisted_19
 ]
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_21 = { class: "d-flex col-md-2 align-items-end" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_22 = { class: "form-check form-switch pb-1" }
-const _hoisted_23 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_21 = { class: "col-md-4" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_22 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "form-label" }, "Unavailability", -1)
+const _hoisted_23 = { class: "input-group" }
+const _hoisted_24 = ["value"]
+const _hoisted_25 = ["value"]
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_26 = { class: "d-flex col-md-1 align-items-end" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_27 = { class: "form-check form-switch pb-1" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_28 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   class: "form-check-label",
   for: "productVisible"
 }, "Visible", -1)
-const _hoisted_24 = { class: "col-md-12" }
-const _hoisted_25 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_29 = { class: "col-md-12" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_30 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productDescription",
   class: "form-label"
 }, "Description", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_26 = { class: "col-md-3" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_27 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_31 = { class: "col-md-3" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_32 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productImage",
   class: "form-label"
 }, "Image", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_28 = { class: "col-md-3" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_29 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_33 = { class: "col-md-3" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_34 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productDiscountPrice",
   class: "form-label"
 }, "Discount price", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_30 = { class: "input-group" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_31 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_32 = { class: "col-md-3" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_33 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_35 = { class: "input-group" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_36 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_37 = { class: "col-md-3" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_38 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productBasePrice",
   class: "form-label"
 }, "Base price", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_34 = { class: "input-group" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_35 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_36 = { class: "col-md-3" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_37 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_39 = { class: "input-group" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_40 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_41 = { class: "col-md-3" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_42 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "productDailyPrice",
   class: "form-label"
 }, "Daily price", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_38 = { class: "input-group" }
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_39 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
-const CreateProductvue_type_script_setup_true_lang_js_hoisted_40 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "col-12" }, [
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_43 = { class: "input-group" }
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_44 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
+const CreateProductvue_type_script_setup_true_lang_js_hoisted_45 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "col-12" }, [
   /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
     type: "submit",
     class: "btn btn-danger"
   }, "Create")
 ], -1)
+
+
 
 
 
@@ -2123,6 +2193,7 @@ const product = Object(vue_runtime_esm_bundler["A" /* ref */])({
   basePrice: 0,
   dailyPrice: 0,
   discountPrice: 0,
+  unavailability: {},
 });
 
 function createProduct() {
@@ -2132,6 +2203,11 @@ function createProduct() {
 
   if (product.value.discountPrice > product.value.basePrice) {
     return alert.value.error("Discount price must be lesser than base price");
+  }
+
+  const unavailability = product.value.unavailability || {};
+  if ((unavailability.start || -Infinity) > (unavailability.end || Infinity)) {
+    return alert.value.error("Unavailability start must be lesser than end");
   }
 
   toUploads(imageInput.value.files)
@@ -2206,22 +2282,45 @@ return (_ctx, _cache) => {
             ])
           ]),
           Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_21, [
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_22, [
+            CreateProductvue_type_script_setup_true_lang_js_hoisted_22,
+            Object(vue_runtime_esm_bundler["k" /* createVNode */])(Object(vue_runtime_esm_bundler["H" /* unref */])(esm["a" /* DatePicker */]), {
+              modelValue: product.value.unavailability,
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ((product.value.unavailability) = $event)),
+              clearable: true,
+              "is-range": ""
+            }, {
+              default: Object(vue_runtime_esm_bundler["M" /* withCtx */])(({ inputValue, inputEvents }) => [
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_23, [
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.start
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.start), { "aria-label": "Start" }), null, 16, _hoisted_24),
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.end
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.end), { "aria-label": "End date" }), null, 16, _hoisted_25)
+                ])
+              ]),
+              _: 1
+            }, 8, ["modelValue"])
+          ]),
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_26, [
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_27, [
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ((product.value.visible) = $event)),
+                "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ((product.value.visible) = $event)),
                 class: "form-check-input",
                 type: "checkbox",
                 id: "productVisible"
               }, null, 512), [
                 [vue_runtime_esm_bundler["I" /* vModelCheckbox */], product.value.visible]
               ]),
-              _hoisted_23
+              CreateProductvue_type_script_setup_true_lang_js_hoisted_28
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", _hoisted_24, [
-            _hoisted_25,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_29, [
+            CreateProductvue_type_script_setup_true_lang_js_hoisted_30,
             Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("textarea", {
-              "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ((product.value.description) = $event)),
+              "onUpdate:modelValue": _cache[5] || (_cache[5] = $event => ((product.value.description) = $event)),
               class: "form-control",
               id: "productDescription",
               rows: "5",
@@ -2230,8 +2329,8 @@ return (_ctx, _cache) => {
               [vue_runtime_esm_bundler["K" /* vModelText */], product.value.description]
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_26, [
-            CreateProductvue_type_script_setup_true_lang_js_hoisted_27,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_31, [
+            CreateProductvue_type_script_setup_true_lang_js_hoisted_32,
             Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
               id: "productImage",
               ref_key: "imageInput",
@@ -2242,12 +2341,12 @@ return (_ctx, _cache) => {
               multiple: ""
             }, null, 512)
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_28, [
-            CreateProductvue_type_script_setup_true_lang_js_hoisted_29,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_30, [
-              CreateProductvue_type_script_setup_true_lang_js_hoisted_31,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_33, [
+            CreateProductvue_type_script_setup_true_lang_js_hoisted_34,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_35, [
+              CreateProductvue_type_script_setup_true_lang_js_hoisted_36,
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[5] || (_cache[5] = $event => ((product.value.discountPrice) = $event)),
+                "onUpdate:modelValue": _cache[6] || (_cache[6] = $event => ((product.value.discountPrice) = $event)),
                 class: "form-control",
                 type: "number",
                 id: "productDiscountPrice",
@@ -2260,12 +2359,12 @@ return (_ctx, _cache) => {
               ])
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_32, [
-            CreateProductvue_type_script_setup_true_lang_js_hoisted_33,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_34, [
-              CreateProductvue_type_script_setup_true_lang_js_hoisted_35,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_37, [
+            CreateProductvue_type_script_setup_true_lang_js_hoisted_38,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_39, [
+              CreateProductvue_type_script_setup_true_lang_js_hoisted_40,
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[6] || (_cache[6] = $event => ((product.value.basePrice) = $event)),
+                "onUpdate:modelValue": _cache[7] || (_cache[7] = $event => ((product.value.basePrice) = $event)),
                 class: "form-control",
                 type: "number",
                 id: "productBasePrice",
@@ -2278,12 +2377,12 @@ return (_ctx, _cache) => {
               ])
             ])
           ]),
-          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_36, [
-            CreateProductvue_type_script_setup_true_lang_js_hoisted_37,
-            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_38, [
-              CreateProductvue_type_script_setup_true_lang_js_hoisted_39,
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_41, [
+            CreateProductvue_type_script_setup_true_lang_js_hoisted_42,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateProductvue_type_script_setup_true_lang_js_hoisted_43, [
+              CreateProductvue_type_script_setup_true_lang_js_hoisted_44,
               Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
-                "onUpdate:modelValue": _cache[7] || (_cache[7] = $event => ((product.value.dailyPrice) = $event)),
+                "onUpdate:modelValue": _cache[8] || (_cache[8] = $event => ((product.value.dailyPrice) = $event)),
                 class: "form-control",
                 type: "number",
                 id: "productDailyPrice",
@@ -2296,7 +2395,7 @@ return (_ctx, _cache) => {
               ])
             ])
           ]),
-          CreateProductvue_type_script_setup_true_lang_js_hoisted_40
+          CreateProductvue_type_script_setup_true_lang_js_hoisted_45
         ])
       ], 40, CreateProductvue_type_script_setup_true_lang_js_hoisted_3)
     ])
@@ -2568,9 +2667,6 @@ return (_ctx, _cache) => {
 const ListOrders_exports_ = ListOrdersvue_type_script_setup_true_lang_js;
 
 /* harmony default export */ var ListOrders = (ListOrders_exports_);
-// EXTERNAL MODULE: ./node_modules/v-calendar/lib/esm/index.js + 65 modules
-var esm = __webpack_require__("7b37");
-
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/views/UpdateOrder.vue?vue&type=script&setup=true&lang=js
 
 
@@ -3386,10 +3482,14 @@ Object(vue_runtime_esm_bundler["d" /* createApp */])(App).use(src_router).mount(
 
 /***/ }),
 
-/***/ "6832":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "7654":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// extracted by mini-css-extract-plugin
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_v16_dist_index_js_ref_1_1_UpdateProduct_vue_vue_type_style_index_0_id_38ede352_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("145c");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_v16_dist_index_js_ref_1_1_UpdateProduct_vue_vue_type_style_index_0_id_38ede352_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_v16_dist_index_js_ref_1_1_UpdateProduct_vue_vue_type_style_index_0_id_38ede352_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+
 
 /***/ }),
 
@@ -3405,18 +3505,7 @@ Object(vue_runtime_esm_bundler["d" /* createApp */])(App).use(src_router).mount(
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAABgCAYAAAGh5oayAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpaItDnbQIpKhOlkQFXHUKhShQqgVWnUwufRDaNKQpLg4Cq4FBz8Wqw4uzro6uAqC4AeIm5uToouU+L+00CLGg+N+vLv3uHsHCLUS06yOMUDTbTOViIuZ7IoYeEUPhhBCBAMys4xZSUrCc3zdw8fXuxjP8j735wipOYsBPpF4hhmmTbxOPLVpG5z3icOsKKvE58SjJl2Q+JHrSoPfOBdcFnhm2Eyn5ojDxGKhjZU2ZkVTI54kjqqaTvlCpsEq5y3OWqnCmvfkLwzm9OUlrtMcRAILWIQEEQoq2EAJNmK06qRYSNF+3MMfcf0SuRRybYCRYx5laJBdP/gf/O7Wyk+MN5KCcaDzxXE+hoHALlCvOs73sePUTwD/M3Clt/zlGjD9SXq1pUWPgN5t4OK6pSl7wOUO0P9kyKbsSn6aQj4PvJ/RN2WBvluge7XRW3Mfpw9AmrpK3gAHh8BIgbLXPN7d1d7bv2ea/f0Ac19yp+8hN8gAAAAJcEhZcwAALiMAAC4jAXilP3YAAA3DSURBVHja7V1rkBXFFf76AlEQNETxBan4KKJiLLm7WGBCkIAPVECiMYmYCGolFpYxpCpKlPgqH1illVKiRilCjPL4oW4hoBAVgbsgKUGoJJLEB5Ioa4yIlrzJ7t4vP+hhe3tPz/TMnb27Qn9Vt+5MP06f06cfp3vO9AAdCpJMEx5LSMpkhzeXiiwYkXcDgFJKAdhol2yGN5eKFFnUBTTq641SePtVHskv+VReVweNvQBUlEHL24ZQwQq8HUBPfV1vZ4oLtyvtSv1/o6kqO/yLCJJDSPa3VeFqpmKb1VhE8g6z4vR/6/AVxWEwdQlgA4DTlVKKJPX/JqXUicY9y/U10wDcYpZ8jcSqvi1JPap9BgXfyis46NSaGXRzHBmrBZIfkdyVeWiy2jeTwgNSN42/kZxA8kNbGSR7kdxKcoaP0uLSJ7ZJqY2SHGHdPyC1YVd63Zveby4Vd7ha1F9IDhEIkeRZ1v2VMQW3St8+3fhAanQ01DCT5DrPPJvyKHgVybMNBnpII0vMfWx6V6HjBMlJ8qUUBcemDwg4sAeKAUlN3rTy8iy4RHKeETeb5FZHniVCuJjep2CS7GlcbyH5smNgOF4IE9Pbs1NXkj309e9ITtLm3Q6Sw/V1H9eIo5T60Cg0MX2rvCTnAPiqUmqYaVeS/ATAV5RShYiQufwR7p3pxXlYV88AR5V/pq/7eY7J7vSvndm3VVVrCf8uVKMSrGvRZFIacenZ1GUWEOaHTjaa9dYqUz7dI8/R7FmSk0m+mMZyyGsYPVIw8o+1FuUbErpZbPpUqwuSR+jrcyxD7lpH/xbT+6xXryW5R1gtLLLuG0k2x6wuFqUteCXJCY5lyr3W/aSEZc29vgU/LGQWW7AVtSUpfUBAQEB6KNfY5tqaF3fZK5grs9LLCvNZzH36cqq+Nwf+m/Xlzsw1awBAkw4ud/hikWSNY6+dJK+w8rxJN87wKGtSAk+Z6JvLNOdGorVw2aZvD7PjBKYfscLvjJt1SQ71mZWz0t8vbH3NQ5LAXTWRH1jpzwewGsAykr8UmJlhNNUbrOheCRU/y6O1pabPlcVB5TLWGETEBXlUwOe60m4WavgF/X+fEPdqjGZWJmjuIQ/tpqZvN2cuO71nm1FaGoFJLgdwDoDPAPS24tYDGKhvGwA8DuBcnR4AmpRS3TxG69sBNBravL9S+vua88DrQfUoAHQZtl7ZDJzm6KOHJlnBJKeS3ExyF8kVJAd5DpC3kvzUGoQm50U/IFhaFVpOXySrrJCRoQn6cqm+v9yIG5eDIm4xfp93hk2v3XqgGS1YZR/poDutPIeQ3C5YTK97GiAPJaTLRD+VGSpZYR57Id2N8J0Js0CflFZZKvq+wg60BL5O3z5hbtoZ6SfHeJb9JEHgBUkMV0LfV+C1msZMoYb/oP+fE+L+JdBq0nHbEzS3xEO7qemnXVUdYoRFRsRb+r+3o7mZed720B7tyk1ozqno+wjbzdFHa+OsMpL3OJZ4NQnlfcOR74k86AcEBAQEBAQEBLTXGvdj1xYoyfd0+MMZaV/lMP1md6TAPs/2R2akPd8h8OWdQeC9MQKrHMrpJi3WqwVpT2uLK7FSyrXI/of2adlA8sKEMi826O32qKC09L1q/USj1p/V/xfouF6OZt4v5snepzFlzfLctslEP0JzqfiJftyyRdLwGP2/HcBcfT3RirPxgXH9RwDT0OJi2Dtm9/ISTz1kpR/hSF1zdVJtvqJrbi7JyHWyWcfN1fdLjfSLk96AJFlKGCvWxGg3M31Dw2wuFdlYqrlA0vAI/b/I6KcFq88tNPKN0v+LY8pM2k9eEBOXB30AQNdvr3up1X00fkQCC3kOj2FwXkxZixN4ed6DX2/6rif95fpiubkUCanmF6xReJu+fEc3nwFG3HsCvbo0ApE81aD3Vw+B6yqssNbCK92fhb3kX0cPyIW4wTH9qyZhn3mKx05lZvqGttfqPtzGaaYQudJbeEr/nyDEmTv7Pay4VxIqeZiHIiqhH6FW99OX2vRpAGP19Sajub2vK3GIbYwopZYbFbyT5OMAtgG4yRgLah2MfGoI8wKAeiPuQaVUU4X0W7cIpcQp6R3dSqbH2NYzrbg5MUbBz2Kaa3dXpjzo21MSl9UeFTcvnm+FNxpxlwj5+pJ8VT9JbCB5v6dVdzjJ1STLCZv3megHBAQEBOj3TSL81opbkvQQO4H2WY7paE1n2f/aZsVFT92vz0h7mkPg2/LgPRc/KvtlTH35VaXU5gy0JwI41giapv/P9FxwtKuGP8905ox/Oafm/cZTIQMTZp5oGXm0Rz6XW0L/mGyXpOArC30vwqMMYnfp/yk6bpDDNt7IeHR1lPWa54ZfJvq+Aj+qiawlebK+/qeOi9zzNxvpL5K86Uh+xwifldB1tsXwk5m+r8AfmK6FlpNa5MP1mJH+fzpsR4xAqxIEnh3DTyr6WZxL+8Xsf9UKG36R5/r0GJpvVLD/lQf95BHauG/WQV2MGi0ItVwbo4ERQpz5SOZQjxkjFf1KBH5GB31fiDsmZr17SML+1ziP/a/U9AsphT0uZv9L2nYZGENuSkJxYzxYqoS+l8DXmU8lLK3/XtBwX6NZmaeTFD1e91nqoeHM9H0FXiQtDKw5rz4mjr7vjJOc6Ln/lYm+r8DRwuCGmEJvsi0zknsEXlZ7lNfgIXBm+gEBAQEBAQEBAQEBAQEBAQEHJKxH3XQ99hbyLbHSL6ky32cxHdYc6LosCJXUG8C3HOknuN7w0N+MOdcKXlBleS5NmX7Bga5g6XnpWOt+KfQ3TLDv0K7vAXhGyHcRgC4dXIFvIfquTFv8CsARVtjzONhgvL2z/3gr4yA1RicgC/lmWvnWdSKZThWG500Hgz7tD2UVYLwvpvEutMuKxoUO15XRaXqvfoh5j+OYIAmvV+CWIrnEPF9ho6km/7m19FECY0caLjo0XXWMfIN8j0bRpxJtZHZsSOuKY7oAVeoK0BH8tyq/VOwTuflHv6b6YsnXyLKftL+hlNqKlif7Ea5O6L0NSql1QuVcBOA/AE6yoh4G0ENZwL635HZZaQcAmJFCIX0AnG0Fb1dKvZpBuVXn30aZqo0hqajqfBVsG1iLAEAptRHAa0b4KSTPTjM869eO5lvBOwF8WSk1WXp9WCm1TBtvNk5JUSdj87CeO5B/i2bblUKh4FZwV0OAgWhxM2ulYI2nAHzTuJ8IYDXJY9HWZ2ehUNZP0eI2FmG6UirpvdCvC2FpXMvymn+rwj/X1vYo7yzL3/JUVATPs0I/LjeXxzevKLalpfhR15iW/l+l1FrjfjaAx4xe/2Pt5m4bZXsB/Elg7zIh7LmMCprv2eu6AbAPCSg7GmASqsJ/8+7yZUrt94K3NSwFHg1HegU1rZA0PBvDzU60fn+3uxZ6qJXvBaVU2aroY4R0/1ZKvZFkqaLl7fAIO1LMnxcLa/2XlVJ7Ug7PVeO/IMyxmZdIBdRFJ6QfJwyzkjfwU3qjI0ItgP4e85vkAvm2B49ThM2T6SlkHJPT8Fw1/gvD1n3X2btLNdsAmifEv99l2Pqv+ayDxwrD2GLBaFiIfQemRzgKQB8PBb8phJ1Hcp551KbR8osk3wZwlxW1Sik1NYViThDCajMouKP434/GUnGkpVwArPPd6BgjDGN7HXmeNq6vsYyIlUqpz4SG0QDgRwKtHwLYI3iKrhNGhp8rpYamrJenhbBrE9apWzoR/6ai2szlhXIhWcHaEBnlMTybw7QLC9zmvZqjh6t7tSHmgz8DqNXLyulpK0Up9SSAMwB8mCJbXWfh3zKJN4C4bf8Paooavq4eAQEBAQEBAQEBAQFfZFjnNtP3vVbjTGdWcrZzBXxflfKZ7+yDUblDEiqlvyPfACHtyCrzPj+lgi8/GBV8n1UJt0bnc8d9udw8LzQ6kiOPs7tzkqmbdR4i9cEW3TtLvReqWJa9HdqA1ueRX+3IZzsTLJTOKhcqv5c+X3y2PmN8q1bGVu02MyOH88ZdT6t259B4qsF/bi39RMlnS/DgvEAQ0sYVMeX0S/gKs/OMdZ8vNAvlzRJoTaqgnqrKf54KvlE6J4/kpVb4PCvfeEGYno4yFrkeHpB8kuQdepp42T4G1sC4lHJtFWgcn7GOqs5/ngp+xWJkrg5XxufIo/nrMCPfXCvfUgf9xYKwjyTwdKeQp5RCpqF5vQrTEfznqdweQosbb8Q/5hriLId71zemhwuCvujB1wgh38IUcj2Qx8ma7c1/NYysMWjrTGQ788E2tkgOQ8v3FCJIjyPHC2HzPA0kG4tTyJWXM19H8Z9bD56TNIyYH03VGEDybivsTQf9T6x0ZXOYj+HrXaEH9PWUKbdXYdqb/2r04NExvdfVi0cDqEnqvSQHI/qgTguWawfBuMqpAXCyFbxKe25UrfdWg/9CO/fe4cIw66PgE9DWR1sanqUNhaLwbY9WSxHI3/r4RQrRpG+NZDGw2p1/1c4K/o1V8Cal1EmOtMsBnKNv12slR9/c3qKUOtqRbz1kr8cG7PN/bsC+114Ha8XYMjcBGCy9ahMj19OQfbRexD43nUZH1geVUk0dzX+eCn7HmiOmx6S9JmYhPzPlPO+DRp/vuTjK657hBbRSZ+E/L+WeJjB1fkz6Q4V9Xec3bxw0+pKcqr9Vs1l/r2aXPudzBcn7SQ7KUcbD9Z76ar2bVI5RyOTOxn9AQEBAQEBAQEBAgIT/A/3kGaRip9a0AAAAAElFTkSuQmCC"
 
-/***/ }),
-
-/***/ "ddcb":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_v16_dist_index_js_ref_1_1_UpdateProduct_vue_vue_type_style_index_0_id_45cd9cd3_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6832");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_v16_dist_index_js_ref_1_1_UpdateProduct_vue_vue_type_style_index_0_id_45cd9cd3_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_v16_dist_index_js_ref_1_1_UpdateProduct_vue_vue_type_style_index_0_id_45cd9cd3_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
-
-
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.ec33de82.js.map
+//# sourceMappingURL=app.b56040df.js.map
