@@ -142,7 +142,7 @@
         </div>
       </div>
 
-      <div class="row" style="min-height: 28vh;">
+      <div class="row" style="min-height: 25vh;">
         <div class="col">
           <form on:submit|preventDefault={fetchCoupon}>
             <div class="input-group">
@@ -163,19 +163,21 @@
           <ul class="list-group mb-2">
             {#each $couponItems as coupon}
               <li class="list-group-item fw-bold">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <i
-                      class="bi bi-x-circle text-danger me-2"
+                      class="bi bi-x-circle text-danger"
                       on:click={() => removeCoupon(coupon)}
                     />
                     <span class="text-info">{coupon.code}</span>
                   </div>
-                  <span>
-                    <i class="bi bi-currency-euro black">
-                      {coupon.value.toFixed(2)}
+                  <div style="min-width: 28%;">
+                    <i class="bi bi-currency-euro text-truncate black">
+                      <span>
+                        {coupon.value.toFixed(2)}
+                      </span>
                     </i>
-                  </span>
+                  </div>
                 </div>
               </li>
             {/each}
