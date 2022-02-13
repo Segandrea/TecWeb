@@ -36,7 +36,7 @@ getJSON(`/api/backoffice/coupons/${couponId}`)
 function updateCoupon() {
   const data = coupon.value;
 
-  if (data.customerId && !data.customerId.trim()) {
+  if (!(data.customerId || "").trim()) {
     delete data.customerId;
   }
 

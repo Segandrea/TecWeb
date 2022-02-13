@@ -63,6 +63,7 @@ getJSON("/api/backoffice/coupons")
             </th>
             <td>
               <router-link
+                v-if="!!coupon.customerId"
                 :to="{
                   name: 'UpdateCustomer',
                   params: { id: coupon.customerId },
