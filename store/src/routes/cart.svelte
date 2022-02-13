@@ -119,6 +119,13 @@
           path("/signin", { returnTo: path($page.path), required: true })
         )
       )
+      .catch(
+        onStatus(422, (res) => {
+          res.json().then((err) => {
+            alert.error(`Invalid coupon: ${err.invalidCoupon.code}`);
+          });
+        })
+      )
       .catch((err) => {
         console.error(err);
         alert.error("Something went wrong");

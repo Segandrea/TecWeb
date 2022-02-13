@@ -2,8 +2,16 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
-import { getJSON, putJSON, redirectOnStatus } from "../http";
+import { DatePicker } from "v-calendar";
+
 import { signinRoute } from "../utils";
+import {
+  getJSON,
+  putJSON,
+  deleteJSON,
+  redirectOnStatus,
+  onStatus,
+} from "../http";
 
 import Navbar from "../components/Navbar.vue";
 import Alert from "../components/Alert.vue";
@@ -26,12 +34,34 @@ getJSON(`/api/backoffice/coupons/${couponId}`)
   });
 
 function updateCoupon() {
-  putJSON(`/api/backoffice/coupons/${couponId}`, coupon.value)
+  const data = coupon.value;
+
+  if (!data.customerId.trim()) {
+    delete data.customerId;
+  }
+
+  if (data.validity && (!data.validity.start || !data.validity.end)) {
+    delete data.validity;
+  }
+
+  putJSON(`/api/backoffice/coupons/${couponId}`, data)
     .then((body) => {
       coupon.value = body;
       alert.value.info("Success");
     })
     .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something went wrong!");
+    });
+}
+
+function deleteCoupon() {
+  deleteJSON(`/api/backoffice/coupons/${couponId}`, false)
+    .then(() => router.replace({ name: "ListCoupons" }))
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch(onStatus(422, () => alert.value.error("Unable to delete coupon")))
     .catch((err) => {
       // eslint-disable-next-line
       console.error(err);
@@ -58,7 +88,7 @@ function updateCoupon() {
 
     <form @submit.prevent="updateCoupon">
       <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="couponCode" class="form-label">Code</label>
           <input
             v-model="coupon.code"
@@ -69,7 +99,7 @@ function updateCoupon() {
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="couponValue" class="form-label">Value</label>
           <div class="input-group">
             <span class="input-group-text">€</span>
@@ -86,8 +116,47 @@ function updateCoupon() {
           </div>
         </div>
 
+        <div class="col-md-3">
+          <label for="couponCustomerId" class="form-label">Customer Id</label>
+          <input
+            v-model="coupon.customerId"
+            class="form-control"
+            type="text"
+            id="couponCustomerId"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-label">Validity Dates</div>
+          <DatePicker v-model="coupon.validity" is-range>
+            <template v-slot="{ inputValue, inputEvents }">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  :value="inputValue.start"
+                  v-on="inputEvents.start"
+                  aria-label="Start date"
+                />
+                <input
+                  class="form-control"
+                  :value="inputValue.end"
+                  v-on="inputEvents.end"
+                  aria-label="End date"
+                />
+              </div>
+            </template>
+          </DatePicker>
+        </div>
+
         <div class="col-12">
           <button type="submit" class="btn btn-danger">Update</button>
+          <button
+            type="button"
+            class="btn btn-warning ms-2"
+            @click="deleteCoupon"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </form>

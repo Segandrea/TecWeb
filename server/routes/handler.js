@@ -37,7 +37,7 @@ function byId(model, { id, select, serialize } = {}) {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       });
   };
@@ -63,7 +63,7 @@ function byIdAndUpdate(model, { id, select, body, serialize } = {}) {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       });
   };
@@ -86,7 +86,7 @@ function oneByFilter(model, { filter, select, serialize } = {}) {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       });
   };
@@ -113,7 +113,7 @@ function oneByFilterAndUpdate(model, { filter, select, body, serialize } = {}) {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       });
   };
@@ -132,7 +132,7 @@ function listAll(model, namespace, { filter, select, sort, serialize } = {}) {
         res.json({ [namespace]: entities.map((e) => _serialize(e, req)) })
       )
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       });
   };
