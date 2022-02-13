@@ -1234,7 +1234,7 @@ getJSON(`/api/backoffice/coupons/${couponId}`)
 function updateCoupon() {
   const data = coupon.value;
 
-  if (data.customerId && !data.customerId.trim()) {
+  if (!(data.customerId || "").trim()) {
     delete data.customerId;
   }
 
@@ -1457,7 +1457,7 @@ const coupon = Object(vue_runtime_esm_bundler["A" /* ref */])({
 function createCoupon() {
   const data = coupon.value;
 
-  if (data.customerId && !data.customerId.trim()) {
+  if (!(data.customerId || "").trim()) {
     delete data.customerId;
   }
 
@@ -1673,17 +1673,20 @@ return (_ctx, _cache) => {
                   }, 1032, ["to"])
                 ]),
                 Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, [
-                  Object(vue_runtime_esm_bundler["k" /* createVNode */])(_component_router_link, {
-                    to: {
+                  (!!coupon.customerId)
+                    ? (Object(vue_runtime_esm_bundler["v" /* openBlock */])(), Object(vue_runtime_esm_bundler["e" /* createBlock */])(_component_router_link, {
+                        key: 0,
+                        to: {
                   name: 'UpdateCustomer',
                   params: { id: coupon.customerId },
                 }
-                  }, {
-                    default: Object(vue_runtime_esm_bundler["M" /* withCtx */])(() => [
-                      Object(vue_runtime_esm_bundler["j" /* createTextVNode */])(Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.customerId), 1)
-                    ]),
-                    _: 2
-                  }, 1032, ["to"])
+                      }, {
+                        default: Object(vue_runtime_esm_bundler["M" /* withCtx */])(() => [
+                          Object(vue_runtime_esm_bundler["j" /* createTextVNode */])(Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.customerId), 1)
+                        ]),
+                        _: 2
+                      }, 1032, ["to"]))
+                    : Object(vue_runtime_esm_bundler["f" /* createCommentVNode */])("", true)
                 ]),
                 Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.code), 1),
                 Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, "€ " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.value.toFixed(2)), 1),
@@ -3680,4 +3683,4 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAABgCAYAAAGh
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.abcbe88f.js.map
+//# sourceMappingURL=app.09e7a211.js.map
