@@ -11,8 +11,12 @@ const Product = require("../models/product").Product;
 
 const router = express.Router();
 
+function isAuth(user) {
+  return !!user && user.role === "customer";
+}
+
 function restrict(req, res, next) {
-  if (req.user && req.user.role === "customer") {
+  if (isAuth(req.user)) {
     return next();
   } else {
     return res.sendStatus(401);
@@ -258,7 +262,11 @@ function listProducts(req, res) {
   const params = JSON.parse(req.query.params || "{}");
   const filter = mongoose.sanitizeFilter(JSON.parse(req.query.filter || "{}"));
 
-  if (req.user && params.rentalPeriod && params.rentalPeriod.length === 2) {
+  if (
+    isAuth(req.user) &&
+    params.rentalPeriod &&
+    params.rentalPeriod.length === 2
+  ) {
     const [start, end] = params.rentalPeriod.map((s) => new Date(s));
 
     return rentedProducts(start, end)
@@ -307,13 +315,6 @@ function listProducts(req, res) {
       });
   }
 
-  /*
-    db.products.aggregate([
-        { $sort: { name: -1, status: 1, basePrice: -1, dailyPrice: -1 }},
-        { $group: { _id: "$name", group: { $addToSet: "$_id" }}},
-    ]).map((res) => db.products.findOne(res.group[0]))
-   */
-  // TODO: filter by visibility
   return Product.aggregate([
     { $sort: { name: 1, status: 1, basePrice: -1, dailyPrice: -1 } },
     { $group: { _id: "$name", group: { $push: "$_id" } } },
