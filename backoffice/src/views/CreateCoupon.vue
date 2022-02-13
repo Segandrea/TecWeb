@@ -2,6 +2,8 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
+import { DatePicker } from "v-calendar";
+
 import { postJSON, onStatus, redirectOnStatus } from "../http";
 import { signinRoute } from "../utils";
 
@@ -16,6 +18,7 @@ const coupon = ref({
   code: "",
   value: 0,
   customerId: "",
+  validity: {},
 });
 
 function createCoupon() {
@@ -23,6 +26,10 @@ function createCoupon() {
 
   if (!data.customerId.trim()) {
     delete data.customerId;
+  }
+
+  if (data.validity && (!data.validity.start || !data.validity.end)) {
+    delete data.validity;
   }
 
   postJSON("/api/backoffice/coupons", data)
@@ -52,7 +59,7 @@ function createCoupon() {
 
     <form @submit.prevent="createCoupon">
       <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="couponCode" class="form-label">Code</label>
           <input
             v-model="coupon.code"
@@ -63,7 +70,7 @@ function createCoupon() {
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="couponValue" class="form-label">Value</label>
           <div class="input-group">
             <span class="input-group-text">€</span>
@@ -80,7 +87,7 @@ function createCoupon() {
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="couponCustomerId" class="form-label">Customer Id</label>
           <input
             v-model="coupon.customerId"
@@ -88,6 +95,28 @@ function createCoupon() {
             type="text"
             id="couponCustomerId"
           />
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-label">Validity Dates</div>
+          <DatePicker v-model="coupon.validity" is-range>
+            <template v-slot="{ inputValue, inputEvents }">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  :value="inputValue.start"
+                  v-on="inputEvents.start"
+                  aria-label="Start date"
+                />
+                <input
+                  class="form-control"
+                  :value="inputValue.end"
+                  v-on="inputEvents.end"
+                  aria-label="End date"
+                />
+              </div>
+            </template>
+          </DatePicker>
         </div>
 
         <div class="col-12">

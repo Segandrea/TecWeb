@@ -245,7 +245,7 @@ function deleteProduct(req, res) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }
@@ -278,7 +278,7 @@ function updateOrder(req, res) {
       return order.save().then((order) => res.json(order));
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }
@@ -294,7 +294,7 @@ function deleteCoupon(req, res) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }
@@ -311,7 +311,7 @@ function deleteOrder(req, res) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }

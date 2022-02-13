@@ -162,7 +162,7 @@ function changePassword(req, res) {
           .save()
           .then((user) => res.json(serializeCustomer(user)))
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             return res.sendStatus(500);
           });
       } else {
@@ -170,7 +170,7 @@ function changePassword(req, res) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return res.sendStatus(500);
     });
 }
@@ -188,7 +188,7 @@ function createReview(req, res) {
           .save()
           .then((product) => res.json(product))
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             return res.sendStatus(500);
           });
       } else {
@@ -196,7 +196,7 @@ function createReview(req, res) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }
@@ -209,6 +209,7 @@ async function createOrder(req, res) {
   if (productsLen <= 0) {
     return res.sendStatus(400);
   }
+
   products = await Product.find({ _id: { $in: products }, visible: true })
     .lean()
     .then((products) =>
@@ -221,6 +222,7 @@ async function createOrder(req, res) {
         discountPrice: product.discountPrice,
       }))
     );
+
   if (products.length !== productsLen) {
     return res.sendStatus(400);
   }
@@ -229,6 +231,21 @@ async function createOrder(req, res) {
   if (coupons.length !== couponsLen) {
     return res.sendStatus(400);
   }
+
+  for (const coupon of coupons) {
+    const validity = coupon.validity;
+    if (validity) {
+      const rentalStart = new Date(startDate);
+      const rentalEnd = new Date(endDate);
+      const validityStart = new Date(validity.start);
+      const validityEnd = new Date(validity.end);
+
+      if (rentalEnd < validityStart || rentalStart > validityEnd) {
+        return res.status(422).json({ invalidCoupon: coupon });
+      }
+    }
+  }
+
   await Coupon.deleteMany({
     _id: { $in: coupons.map((coupon) => coupon._id) },
   });
@@ -306,7 +323,7 @@ function listProducts(req, res) {
       )
       .then((products) => res.json({ products }))
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       });
   }
@@ -324,7 +341,7 @@ function listProducts(req, res) {
     )
     .then((products) => res.json({ products }))
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }
@@ -360,7 +377,7 @@ function deleteOrder(req, res) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }
@@ -369,7 +386,7 @@ function checkCouponValidity(req, res) {
   Coupon.findOne({ code: req.params.code })
     .then((coupon) => {
       if (coupon) {
-        const customerId = coupon.customerId.trim();
+        const customerId = coupon.customerId;
         if (customerId && !customerId.equals(req.user._id)) {
           return res.sendStatus(404);
         }
@@ -380,7 +397,7 @@ function checkCouponValidity(req, res) {
       return res.sendStatus(404);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 }

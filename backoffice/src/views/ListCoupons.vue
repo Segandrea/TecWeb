@@ -3,7 +3,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
 import { getJSON, redirectOnStatus } from "../http";
-import { signinRoute } from "../utils";
+import { signinRoute, formatDate } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
 import Alert from "../components/Alert.vue";
@@ -45,8 +45,11 @@ getJSON("/api/backoffice/coupons")
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">customer</th>
             <th scope="col">code</th>
             <th scope="col">value</th>
+            <th scope="col">validity start</th>
+            <th scope="col">validity end</th>
           </tr>
         </thead>
         <tbody>
@@ -58,8 +61,32 @@ getJSON("/api/backoffice/coupons")
                 {{ coupon._id }}
               </router-link>
             </th>
+            <td>
+              <router-link
+                :to="{
+                  name: 'UpdateCustomer',
+                  params: { id: coupon.customerId },
+                }"
+              >
+                {{ coupon.customerId }}
+              </router-link>
+            </td>
             <td>{{ coupon.code }}</td>
             <td>€ {{ coupon.value.toFixed(2) }}</td>
+            <td>
+              {{
+                coupon.validity && coupon.validity.start
+                  ? formatDate(coupon.validity.start)
+                  : ""
+              }}
+            </td>
+            <td>
+              {{
+                coupon.validity && coupon.validity.end
+                  ? formatDate(coupon.validity.end)
+                  : ""
+              }}
+            </td>
           </tr>
         </tbody>
       </table>
