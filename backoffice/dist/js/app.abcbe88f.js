@@ -1234,7 +1234,7 @@ getJSON(`/api/backoffice/coupons/${couponId}`)
 function updateCoupon() {
   const data = coupon.value;
 
-  if (!data.customerId.trim()) {
+  if (data.customerId && !data.customerId.trim()) {
     delete data.customerId;
   }
 
@@ -1457,7 +1457,7 @@ const coupon = Object(vue_runtime_esm_bundler["A" /* ref */])({
 function createCoupon() {
   const data = coupon.value;
 
-  if (!data.customerId.trim()) {
+  if (data.customerId && !data.customerId.trim()) {
     delete data.customerId;
   }
 
@@ -3680,4 +3680,4 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAABgCAYAAAGh
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.9d170457.js.map
+//# sourceMappingURL=app.abcbe88f.js.map
