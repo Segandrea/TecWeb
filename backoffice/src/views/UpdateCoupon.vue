@@ -2,7 +2,13 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
-import { getJSON, putJSON, redirectOnStatus } from "../http";
+import {
+  getJSON,
+  putJSON,
+  deleteJSON,
+  redirectOnStatus,
+  onStatus,
+} from "../http";
 import { signinRoute } from "../utils";
 
 import Navbar from "../components/Navbar.vue";
@@ -32,6 +38,18 @@ function updateCoupon() {
       alert.value.info("Success");
     })
     .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something went wrong!");
+    });
+}
+
+function deleteCoupon() {
+  deleteJSON(`/api/backoffice/coupons/${couponId}`, false)
+    .then(() => router.replace({ name: "ListCoupons" }))
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch(onStatus(422, () => alert.value.error("Unable to delete coupon")))
     .catch((err) => {
       // eslint-disable-next-line
       console.error(err);
@@ -88,6 +106,13 @@ function updateCoupon() {
 
         <div class="col-12">
           <button type="submit" class="btn btn-danger">Update</button>
+          <button
+            type="button"
+            class="btn btn-warning ms-2"
+            @click="deleteCoupon"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </form>

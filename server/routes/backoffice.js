@@ -101,6 +101,7 @@ router.get("/products/:id", restrict, handler.byId(Product));
 router.get("/products", restrict, handler.listAll(Product, "products"));
 router.post("/products", restrict, createProduct);
 
+router.delete("/coupons/:id", restrict, deleteCoupon);
 router.put("/coupons/:id", restrict, handler.byIdAndUpdate(Coupon));
 router.get("/coupons/:id", restrict, handler.byId(Coupon));
 router.get("/coupons", restrict, handler.listAll(Coupon, "coupons"));
@@ -275,6 +276,22 @@ function updateOrder(req, res) {
       }
 
       return order.save().then((order) => res.json(order));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+}
+
+function deleteCoupon(req, res) {
+  const { id } = req.params;
+  Coupon.deleteOne({ _id: id })
+    .then(({ deletedCount }) => {
+      if (deletedCount === 1) {
+        return res.sendStatus(200);
+      } else {
+        return res.sendStatus(422);
+      }
     })
     .catch((err) => {
       console.log(err);
