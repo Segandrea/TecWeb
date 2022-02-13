@@ -1,4 +1,4 @@
-import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, k as space, t as text, c as claim_element, a as children, d as detach, n as claim_space, g as claim_text, b as attr, f as insert_hydration, F as append_hydration, G as listen, h as set_data, D as create_slot, j as create_component, P as query_selector_all, m as claim_component, T as set_style, o as mount_component, W as set_input_value, X as prevent_default, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, x as transition_in, u as transition_out, v as destroy_component, Q as destroy_each, K as run_all, L as component_subscribe, M as binding_callbacks, O as noop, E as src_url_equal } from "../chunks/vendor-15d99854.js";
+import { S as SvelteComponent, i as init, s as safe_not_equal, e as element, k as space, t as text, c as claim_element, a as children, d as detach, n as claim_space, g as claim_text, b as attr, T as set_style, f as insert_hydration, F as append_hydration, G as listen, h as set_data, D as create_slot, j as create_component, P as query_selector_all, m as claim_component, o as mount_component, W as set_input_value, X as prevent_default, H as update_slot_base, I as get_all_dirty_from_scope, J as get_slot_changes, x as transition_in, u as transition_out, v as destroy_component, Q as destroy_each, K as run_all, L as component_subscribe, M as binding_callbacks, O as noop, E as src_url_equal } from "../chunks/vendor-15d99854.js";
 import { i as isAuth, p as path, d as datediff } from "../chunks/utils-af6e44bf.js";
 import { A as Alert } from "../chunks/Alert-0c6938a7.js";
 import { g as goto } from "../chunks/navigation-51f4a605.js";
@@ -19,7 +19,7 @@ function get_each_context_1(ctx, list, i) {
 }
 function create_each_block_1(ctx) {
   let li;
-  let div1;
+  let div2;
   let div0;
   let i0;
   let t0;
@@ -27,8 +27,9 @@ function create_each_block_1(ctx) {
   let t1_value = ctx[22].code + "";
   let t1;
   let t2;
-  let span1;
+  let div1;
   let i1;
+  let span1;
   let t3_value = ctx[22].value.toFixed(2) + "";
   let t3;
   let t4;
@@ -40,15 +41,16 @@ function create_each_block_1(ctx) {
   return {
     c() {
       li = element("li");
-      div1 = element("div");
+      div2 = element("div");
       div0 = element("div");
       i0 = element("i");
       t0 = space();
       span0 = element("span");
       t1 = text(t1_value);
       t2 = space();
-      span1 = element("span");
+      div1 = element("div");
       i1 = element("i");
+      span1 = element("span");
       t3 = text(t3_value);
       t4 = space();
       this.h();
@@ -56,9 +58,9 @@ function create_each_block_1(ctx) {
     l(nodes) {
       li = claim_element(nodes, "LI", { class: true });
       var li_nodes = children(li);
-      div1 = claim_element(li_nodes, "DIV", { class: true });
-      var div1_nodes = children(div1);
-      div0 = claim_element(div1_nodes, "DIV", {});
+      div2 = claim_element(li_nodes, "DIV", { class: true });
+      var div2_nodes = children(div2);
+      div0 = claim_element(div2_nodes, "DIV", {});
       var div0_nodes = children(div0);
       i0 = claim_element(div0_nodes, "I", { class: true });
       children(i0).forEach(detach);
@@ -68,38 +70,43 @@ function create_each_block_1(ctx) {
       t1 = claim_text(span0_nodes, t1_value);
       span0_nodes.forEach(detach);
       div0_nodes.forEach(detach);
-      t2 = claim_space(div1_nodes);
-      span1 = claim_element(div1_nodes, "SPAN", {});
-      var span1_nodes = children(span1);
-      i1 = claim_element(span1_nodes, "I", { class: true });
+      t2 = claim_space(div2_nodes);
+      div1 = claim_element(div2_nodes, "DIV", { style: true });
+      var div1_nodes = children(div1);
+      i1 = claim_element(div1_nodes, "I", { class: true });
       var i1_nodes = children(i1);
-      t3 = claim_text(i1_nodes, t3_value);
-      i1_nodes.forEach(detach);
+      span1 = claim_element(i1_nodes, "SPAN", {});
+      var span1_nodes = children(span1);
+      t3 = claim_text(span1_nodes, t3_value);
       span1_nodes.forEach(detach);
+      i1_nodes.forEach(detach);
       div1_nodes.forEach(detach);
+      div2_nodes.forEach(detach);
       t4 = claim_space(li_nodes);
       li_nodes.forEach(detach);
       this.h();
     },
     h() {
-      attr(i0, "class", "bi bi-x-circle text-danger me-2");
+      attr(i0, "class", "bi bi-x-circle text-danger");
       attr(span0, "class", "text-info");
-      attr(i1, "class", "bi bi-currency-euro black");
-      attr(div1, "class", "d-flex justify-content-between");
+      attr(i1, "class", "bi bi-currency-euro text-truncate black");
+      set_style(div1, "min-width", "28%");
+      attr(div2, "class", "d-flex justify-content-between align-items-center");
       attr(li, "class", "list-group-item fw-bold");
     },
     m(target, anchor) {
       insert_hydration(target, li, anchor);
-      append_hydration(li, div1);
-      append_hydration(div1, div0);
+      append_hydration(li, div2);
+      append_hydration(div2, div0);
       append_hydration(div0, i0);
       append_hydration(div0, t0);
       append_hydration(div0, span0);
       append_hydration(span0, t1);
-      append_hydration(div1, t2);
-      append_hydration(div1, span1);
-      append_hydration(span1, i1);
-      append_hydration(i1, t3);
+      append_hydration(div2, t2);
+      append_hydration(div2, div1);
+      append_hydration(div1, i1);
+      append_hydration(i1, span1);
+      append_hydration(span1, t3);
       append_hydration(li, t4);
       if (!mounted) {
         dispose = listen(i0, "click", click_handler);
@@ -1023,7 +1030,7 @@ function create_fragment(ctx) {
       attr(ul, "class", "list-group mb-2");
       attr(div3, "class", "col");
       attr(div4, "class", "row");
-      set_style(div4, "min-height", "28vh");
+      set_style(div4, "min-height", "25vh");
       attr(i0, "class", "bi bi-currency-euro black");
       attr(div5, "class", "col d-flex justify-content-between fst-italic text-muted");
       attr(i1, "class", "bi bi-currency-euro black");
