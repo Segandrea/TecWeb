@@ -110,6 +110,7 @@ router.put(
 
 router.put("/profile/password", restrict, changePassword);
 
+router.delete("/orders/:id", restrict, deleteOrder);
 router.get(
   "/orders/:id",
   restrict,
@@ -135,13 +136,8 @@ router.post("/orders", restrict, createOrder);
 router.post("/products/:id/reviews", restrict, createReview);
 router.get("/products/:id", handler.byId(Product));
 router.get("/products", listProducts);
-router.delete("/orders/:id", restrict, deleteOrder);
 
-router.get(
-  "/coupons/:code",
-  restrict,
-  handler.oneByFilter(Coupon, { filter: (req) => ({ code: req.params.code }) })
-);
+router.get("/coupons/:code", restrict, checkCouponValidity);
 
 module.exports = router;
 
@@ -362,6 +358,26 @@ function deleteOrder(req, res) {
       } else {
         return res.sendStatus(422);
       }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+}
+
+function checkCouponValidity(req, res) {
+  Coupon.findOne({ code: req.params.code })
+    .then((coupon) => {
+      if (coupon) {
+        const customerId = coupon.customerId.trim();
+        if (customerId && !customerId.equals(req.user._id)) {
+          return res.sendStatus(404);
+        }
+
+        return res.json(coupon);
+      }
+
+      return res.sendStatus(404);
     })
     .catch((err) => {
       console.log(err);

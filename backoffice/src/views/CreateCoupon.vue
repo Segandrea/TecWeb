@@ -15,10 +15,17 @@ const alert = ref();
 const coupon = ref({
   code: "",
   value: 0,
+  customerId: "",
 });
 
 function createCoupon() {
-  postJSON("/api/backoffice/coupons", coupon.value)
+  const data = coupon.value;
+
+  if (!data.customerId.trim()) {
+    delete data.customerId;
+  }
+
+  postJSON("/api/backoffice/coupons", data)
     .then((body) =>
       router.replace({ name: "UpdateCoupon", params: { id: body._id } })
     )
@@ -71,6 +78,16 @@ function createCoupon() {
               required
             />
           </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="couponCustomerId" class="form-label">Customer Id</label>
+          <input
+            v-model="coupon.customerId"
+            class="form-control"
+            type="text"
+            id="couponCustomerId"
+          />
         </div>
 
         <div class="col-12">

@@ -32,7 +32,13 @@ getJSON(`/api/backoffice/coupons/${couponId}`)
   });
 
 function updateCoupon() {
-  putJSON(`/api/backoffice/coupons/${couponId}`, coupon.value)
+  const data = coupon.value;
+
+  if (!data.customerId.trim()) {
+    delete data.customerId;
+  }
+
+  putJSON(`/api/backoffice/coupons/${couponId}`, data)
     .then((body) => {
       coupon.value = body;
       alert.value.info("Success");
@@ -102,6 +108,16 @@ function deleteCoupon() {
               required
             />
           </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="couponCustomerId" class="form-label">Customer Id</label>
+          <input
+            v-model="coupon.customerId"
+            class="form-control"
+            type="text"
+            id="couponCustomerId"
+          />
         </div>
 
         <div class="col-12">
