@@ -1283,7 +1283,11 @@ function instance($$self, $$props, $$invalidate) {
     }).catch(redirectOnStatus(401, goto, path("/signin", {
       returnTo: path($page.path),
       required: true
-    }))).catch((err) => {
+    }))).catch(onStatus(422, (res) => {
+      res.json().then((err) => {
+        alert.error(`Invalid coupon: ${err.invalidCoupon.code}`);
+      });
+    })).catch((err) => {
       console.error(err);
       alert.error("Something went wrong");
     });

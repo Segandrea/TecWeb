@@ -1152,6 +1152,9 @@ return (_ctx, _cache) => {
 const ListCustomers_exports_ = ListCustomersvue_type_script_setup_true_lang_js;
 
 /* harmony default export */ var ListCustomers = (ListCustomers_exports_);
+// EXTERNAL MODULE: ./node_modules/v-calendar/lib/esm/index.js + 65 modules
+var esm = __webpack_require__("7b37");
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/views/UpdateCoupon.vue?vue&type=script&setup=true&lang=js
 
 
@@ -1169,24 +1172,34 @@ const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_6 = {
 }
 const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_7 = ["onSubmit"]
 const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_8 = { class: "row g-4" }
-const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_9 = { class: "col-md-4" }
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_9 = { class: "col-md-3" }
 const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_10 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "couponCode",
   class: "form-label"
 }, "Code", -1)
-const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_11 = { class: "col-md-4" }
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_11 = { class: "col-md-3" }
 const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_12 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "couponValue",
   class: "form-label"
 }, "Value", -1)
 const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_13 = { class: "input-group" }
 const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_14 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
-const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_15 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "col-12" }, [
-  /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
-    type: "submit",
-    class: "btn btn-danger"
-  }, "Update")
-], -1)
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_15 = { class: "col-md-3" }
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_16 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+  for: "couponCustomerId",
+  class: "form-label"
+}, "Customer Id", -1)
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_17 = { class: "col-md-3" }
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_18 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "form-label" }, "Validity Dates", -1)
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_19 = { class: "input-group" }
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_20 = ["value"]
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_21 = ["value"]
+const UpdateCouponvue_type_script_setup_true_lang_js_hoisted_22 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
+  type: "submit",
+  class: "btn btn-danger"
+}, "Update", -1)
+
+
 
 
 
@@ -1219,12 +1232,34 @@ getJSON(`/api/backoffice/coupons/${couponId}`)
   });
 
 function updateCoupon() {
-  putJSON(`/api/backoffice/coupons/${couponId}`, coupon.value)
+  const data = coupon.value;
+
+  if (!data.customerId.trim()) {
+    delete data.customerId;
+  }
+
+  if (data.validity && (!data.validity.start || !data.validity.end)) {
+    delete data.validity;
+  }
+
+  putJSON(`/api/backoffice/coupons/${couponId}`, data)
     .then((body) => {
       coupon.value = body;
       alert.value.info("Success");
     })
     .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+      alert.value.error("Something went wrong!");
+    });
+}
+
+function deleteCoupon() {
+  deleteJSON(`/api/backoffice/coupons/${couponId}`, false)
+    .then(() => router.replace({ name: "ListCoupons" }))
+    .catch(redirectOnStatus(401, router, signinRoute(route.fullPath)))
+    .catch(onStatus(422, () => alert.value.error("Unable to delete coupon")))
     .catch((err) => {
       // eslint-disable-next-line
       console.error(err);
@@ -1289,7 +1324,47 @@ return (_ctx, _cache) => {
               ])
             ])
           ]),
-          UpdateCouponvue_type_script_setup_true_lang_js_hoisted_15
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateCouponvue_type_script_setup_true_lang_js_hoisted_15, [
+            UpdateCouponvue_type_script_setup_true_lang_js_hoisted_16,
+            Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
+              "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ((coupon.value.customerId) = $event)),
+              class: "form-control",
+              type: "text",
+              id: "couponCustomerId"
+            }, null, 512), [
+              [vue_runtime_esm_bundler["K" /* vModelText */], coupon.value.customerId]
+            ])
+          ]),
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateCouponvue_type_script_setup_true_lang_js_hoisted_17, [
+            UpdateCouponvue_type_script_setup_true_lang_js_hoisted_18,
+            Object(vue_runtime_esm_bundler["k" /* createVNode */])(Object(vue_runtime_esm_bundler["H" /* unref */])(esm["a" /* DatePicker */]), {
+              modelValue: coupon.value.validity,
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ((coupon.value.validity) = $event)),
+              "is-range": ""
+            }, {
+              default: Object(vue_runtime_esm_bundler["M" /* withCtx */])(({ inputValue, inputEvents }) => [
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", UpdateCouponvue_type_script_setup_true_lang_js_hoisted_19, [
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.start
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.start), { "aria-label": "Start date" }), null, 16, UpdateCouponvue_type_script_setup_true_lang_js_hoisted_20),
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.end
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.end), { "aria-label": "End date" }), null, 16, UpdateCouponvue_type_script_setup_true_lang_js_hoisted_21)
+                ])
+              ]),
+              _: 1
+            }, 8, ["modelValue"])
+          ]),
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "col-12" }, [
+            UpdateCouponvue_type_script_setup_true_lang_js_hoisted_22,
+            Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
+              type: "button",
+              class: "btn btn-warning ms-2",
+              onClick: deleteCoupon
+            }, " Delete ")
+          ])
         ])
       ], 40, UpdateCouponvue_type_script_setup_true_lang_js_hoisted_7)
     ])
@@ -1324,24 +1399,36 @@ const CreateCouponvue_type_script_setup_true_lang_js_hoisted_2 = /*#__PURE__*/Ob
 ], -1)
 const CreateCouponvue_type_script_setup_true_lang_js_hoisted_3 = ["onSubmit"]
 const CreateCouponvue_type_script_setup_true_lang_js_hoisted_4 = { class: "row g-4" }
-const CreateCouponvue_type_script_setup_true_lang_js_hoisted_5 = { class: "col-md-4" }
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_5 = { class: "col-md-3" }
 const CreateCouponvue_type_script_setup_true_lang_js_hoisted_6 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "couponCode",
   class: "form-label"
 }, "Code", -1)
-const CreateCouponvue_type_script_setup_true_lang_js_hoisted_7 = { class: "col-md-4" }
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_7 = { class: "col-md-3" }
 const CreateCouponvue_type_script_setup_true_lang_js_hoisted_8 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
   for: "couponValue",
   class: "form-label"
 }, "Value", -1)
 const CreateCouponvue_type_script_setup_true_lang_js_hoisted_9 = { class: "input-group" }
 const CreateCouponvue_type_script_setup_true_lang_js_hoisted_10 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("span", { class: "input-group-text" }, "€", -1)
-const CreateCouponvue_type_script_setup_true_lang_js_hoisted_11 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "col-12" }, [
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_11 = { class: "col-md-3" }
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_12 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("label", {
+  for: "couponCustomerId",
+  class: "form-label"
+}, "Customer Id", -1)
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_13 = { class: "col-md-3" }
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_14 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "form-label" }, "Validity Dates", -1)
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_15 = { class: "input-group" }
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_16 = ["value"]
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_17 = ["value"]
+const CreateCouponvue_type_script_setup_true_lang_js_hoisted_18 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", { class: "col-12" }, [
   /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("button", {
     type: "submit",
     class: "btn btn-danger"
   }, "Create")
 ], -1)
+
+
 
 
 
@@ -1363,10 +1450,22 @@ const alert = Object(vue_runtime_esm_bundler["A" /* ref */])();
 const coupon = Object(vue_runtime_esm_bundler["A" /* ref */])({
   code: "",
   value: 0,
+  customerId: "",
+  validity: {},
 });
 
 function createCoupon() {
-  postJSON("/api/backoffice/coupons", coupon.value)
+  const data = coupon.value;
+
+  if (!data.customerId.trim()) {
+    delete data.customerId;
+  }
+
+  if (data.validity && (!data.validity.start || !data.validity.end)) {
+    delete data.validity;
+  }
+
+  postJSON("/api/backoffice/coupons", data)
     .then((body) =>
       router.replace({ name: "UpdateCoupon", params: { id: body._id } })
     )
@@ -1422,7 +1521,40 @@ return (_ctx, _cache) => {
               ])
             ])
           ]),
-          CreateCouponvue_type_script_setup_true_lang_js_hoisted_11
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateCouponvue_type_script_setup_true_lang_js_hoisted_11, [
+            CreateCouponvue_type_script_setup_true_lang_js_hoisted_12,
+            Object(vue_runtime_esm_bundler["N" /* withDirectives */])(Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", {
+              "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ((coupon.value.customerId) = $event)),
+              class: "form-control",
+              type: "text",
+              id: "couponCustomerId"
+            }, null, 512), [
+              [vue_runtime_esm_bundler["K" /* vModelText */], coupon.value.customerId]
+            ])
+          ]),
+          Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateCouponvue_type_script_setup_true_lang_js_hoisted_13, [
+            CreateCouponvue_type_script_setup_true_lang_js_hoisted_14,
+            Object(vue_runtime_esm_bundler["k" /* createVNode */])(Object(vue_runtime_esm_bundler["H" /* unref */])(esm["a" /* DatePicker */]), {
+              modelValue: coupon.value.validity,
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ((coupon.value.validity) = $event)),
+              "is-range": ""
+            }, {
+              default: Object(vue_runtime_esm_bundler["M" /* withCtx */])(({ inputValue, inputEvents }) => [
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("div", CreateCouponvue_type_script_setup_true_lang_js_hoisted_15, [
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.start
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.start), { "aria-label": "Start date" }), null, 16, CreateCouponvue_type_script_setup_true_lang_js_hoisted_16),
+                  Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("input", Object(vue_runtime_esm_bundler["p" /* mergeProps */])({
+                    class: "form-control",
+                    value: inputValue.end
+                  }, Object(vue_runtime_esm_bundler["G" /* toHandlers */])(inputEvents.end), { "aria-label": "End date" }), null, 16, CreateCouponvue_type_script_setup_true_lang_js_hoisted_17)
+                ])
+              ]),
+              _: 1
+            }, 8, ["modelValue"])
+          ]),
+          CreateCouponvue_type_script_setup_true_lang_js_hoisted_18
         ])
       ], 40, CreateCouponvue_type_script_setup_true_lang_js_hoisted_3)
     ])
@@ -1462,8 +1594,11 @@ const ListCouponsvue_type_script_setup_true_lang_js_hoisted_8 = { class: "table 
 const ListCouponsvue_type_script_setup_true_lang_js_hoisted_9 = /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("thead", null, [
   /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("tr", null, [
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "#"),
+    /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "customer"),
     /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "code"),
-    /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "value")
+    /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "value"),
+    /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "validity start"),
+    /*#__PURE__*/Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("th", { scope: "col" }, "validity end")
   ])
 ], -1)
 const ListCouponsvue_type_script_setup_true_lang_js_hoisted_10 = { scope: "row" }
@@ -1537,8 +1672,27 @@ return (_ctx, _cache) => {
                     _: 2
                   }, 1032, ["to"])
                 ]),
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, [
+                  Object(vue_runtime_esm_bundler["k" /* createVNode */])(_component_router_link, {
+                    to: {
+                  name: 'UpdateCustomer',
+                  params: { id: coupon.customerId },
+                }
+                  }, {
+                    default: Object(vue_runtime_esm_bundler["M" /* withCtx */])(() => [
+                      Object(vue_runtime_esm_bundler["j" /* createTextVNode */])(Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.customerId), 1)
+                    ]),
+                    _: 2
+                  }, 1032, ["to"])
+                ]),
                 Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.code), 1),
-                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, "€ " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.value.toFixed(2)), 1)
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, "€ " + Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.value.toFixed(2)), 1),
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.validity && coupon.validity.start
+                  ? Object(vue_runtime_esm_bundler["H" /* unref */])(formatDate)(coupon.validity.start)
+                  : ""), 1),
+                Object(vue_runtime_esm_bundler["h" /* createElementVNode */])("td", null, Object(vue_runtime_esm_bundler["F" /* toDisplayString */])(coupon.validity && coupon.validity.end
+                  ? Object(vue_runtime_esm_bundler["H" /* unref */])(formatDate)(coupon.validity.end)
+                  : ""), 1)
               ]))
             }), 128))
           ])
@@ -1559,9 +1713,6 @@ return (_ctx, _cache) => {
 const ListCoupons_exports_ = ListCouponsvue_type_script_setup_true_lang_js;
 
 /* harmony default export */ var ListCoupons = (ListCoupons_exports_);
-// EXTERNAL MODULE: ./node_modules/v-calendar/lib/esm/index.js + 65 modules
-var esm = __webpack_require__("7b37");
-
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/views/UpdateProduct.vue?vue&type=script&setup=true&lang=js
 
 
@@ -3529,4 +3680,4 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAABgCAYAAAGh
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.1f62ddf7.js.map
+//# sourceMappingURL=app.9d170457.js.map
