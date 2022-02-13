@@ -24,7 +24,7 @@ const coupon = ref({
 function createCoupon() {
   const data = coupon.value;
 
-  if (data.customerId && !data.customerId.trim()) {
+  if (!(data.customerId || "").trim()) {
     delete data.customerId;
   }
 
