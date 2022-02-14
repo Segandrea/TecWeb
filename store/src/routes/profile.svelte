@@ -116,9 +116,6 @@
   }
 
   function checkValidity() {
-    console.log(newPassword);
-    console.log(confirmInput);
-    console.log(confirmPassword);
     if (newPassword && newPassword === confirmPassword) {
       console.log(newPassword && newPassword === confirmPassword);
       confirmInput.setCustomValidity("");
