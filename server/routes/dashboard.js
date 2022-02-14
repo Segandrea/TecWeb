@@ -79,7 +79,7 @@ router.get("/statistics", restrict, async (req, res) => {
     mostPopularProducts,
     mostActiveEmployees,
     mostActiveCustomers,
-    averageRentalPeriod: averageRentalPeriod[0].value,
+    averageRentalPeriod: averageRentalPeriod[0] ? averageRentalPeriod[0].value : 0,
   });
 });
 
